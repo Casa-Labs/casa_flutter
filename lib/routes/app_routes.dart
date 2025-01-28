@@ -1,12 +1,17 @@
+import 'package:casa_flutter/src/home/view/screens/home_screen.dart';
+import 'package:casa_flutter/src/notifications/view/screens/notifications_screen.dart';
 import 'package:go_router/go_router.dart';
 
-import '../src/home/view/screens/home_screen.dart';
-
-// Define all routes
+// Define all routes paths
 class AppRoutes {
   static const String home = '/';
-  static const String profile = '/profile';
-  static const String settings = '/settings';
+  static const String notifications = '/notifications';
+}
+
+// Define all route names
+class RouteNames {
+  static const String home = 'home';
+  static const String notifications = 'notifications';
 }
 
 // Central GoRouter instance
@@ -17,15 +22,10 @@ final GoRouter router = GoRouter(
       name: 'home',
       builder: (context, state) => const HomeScreen(),
     ),
-    // GoRoute(
-    //   path: AppRoutes.profile,
-    //   name: 'profile',
-    //   builder: (context, state) => const ProfileScreen(),
-    // ),
-    // GoRoute(
-    //   path: AppRoutes.settings,
-    //   name: 'settings',
-    //   builder: (context, state) => const SettingsScreen(),
-    // ),
+    GoRoute(
+      path: AppRoutes.notifications,
+      name: 'notifications',
+      builder: (context, state) => const NotificationsScreen(),
+    ),
   ],
 );
