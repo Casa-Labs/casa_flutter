@@ -6,13 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'routes/app_routes.dart';
 
 Future<void> main() async {
-  await GetStorage.init(); //keep first
-  WidgetsFlutterBinding.ensureInitialized(); //2nd
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown
-  ]); // mandatory for sizer
-
+  await setup();
   runApp(const MyApp());
 }
 
@@ -26,6 +20,7 @@ class MyApp extends StatelessWidget {
       routeInformationParser: router.routeInformationParser,
       routerDelegate: router.routerDelegate,
       routeInformationProvider: router.routeInformationProvider,
+      title: 'Casa Flutter',
 
       // home: const SplashScreen(),
       // theme: lightMode,
@@ -33,4 +28,11 @@ class MyApp extends StatelessWidget {
       // themeMode: ThemeController.prefThemeMode(),
     );
   }
+}
+
+Future<void> setup() async {
+  await GetStorage.init(); //keep first
+  WidgetsFlutterBinding.ensureInitialized(); //2nd
+  await SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]); // 3rd
 }

@@ -1,0 +1,34 @@
+import 'package:flutter/material.dart';
+
+class LocationScreen extends StatelessWidget {
+  const LocationScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Location'),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                hintText: 'Search a new address',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(),
+                ),
+                fillColor: Colors.grey.shade50,
+                filled: true,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
