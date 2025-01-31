@@ -43,6 +43,7 @@ dependencies:
   google_fonts: ^6.2.1
   flutter_tabler_icons: ^1.43.0
   flutter_svg: ^2.0.17
+  dropdown_button2: ^2.3.9
 
 dev_dependencies:
   flutter_test:
