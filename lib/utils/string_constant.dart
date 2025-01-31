@@ -1,4 +1,4 @@
 class ImageConstants {
-  static String splashBlackIcon = "assets/images/splashBlackIcon.svg";
-  static String sundaeLogo = "assets/images/sundaeLogo.png";
+  static String splashBackground = 'assets/images/splash_background.png';
+  static String authBackground = 'assets/images/auth_background.png';
 }

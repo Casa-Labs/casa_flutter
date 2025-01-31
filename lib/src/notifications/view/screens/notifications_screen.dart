@@ -15,7 +15,12 @@ class NotificationsScreen extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 20),
         children: [
-          Text('New'),
+          Text(
+            'New',
+            style: TextStyle(
+              fontSize: 20,
+            ),
+          ),
           ListView.builder(
               physics: NeverScrollableScrollPhysics(),
               itemCount: 5,
@@ -30,7 +35,12 @@ class NotificationsScreen extends StatelessWidget {
                       'Zara the white croptop is again available in small size...679 people purchased it do you wnat to buy now? 1d',
                 );
               }),
-          Text('Last Week'),
+          Text(
+            'Last Week',
+            style: TextStyle(
+              fontSize: 20,
+            ),
+          ),
           ListView.builder(
               physics: NeverScrollableScrollPhysics(),
               itemCount: 5,
