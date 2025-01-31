@@ -1,4 +1,5 @@
 import 'package:casa_flutter/src/auth/view/screens/welcome_auth_screen.dart';
+import 'package:casa_flutter/src/faq/view/screens/faq_screen.dart';
 import 'package:go_router/go_router.dart';
 
 import '../src/common/service/global_navigator_service.dart';
@@ -66,7 +67,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.faq,
       name: RouteNames.faq,
-      builder: (context, state) => const LocationScreen(),
+      builder: (context, state) => FAQScreen(),
     ),
   ],
 );
