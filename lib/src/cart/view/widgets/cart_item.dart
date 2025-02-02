@@ -1,0 +1,342 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../../../utils/color.dart';
+import '../../../../utils/font.dart';
+import '../../../common/widgets/text_widgets.dart';
+import '../../../home/model/home_models.dart';
+import 'counter_widget.dart';
+
+class CartItem extends StatefulWidget {
+  final ProductModel item;
+  final VoidCallback onDelete;
+  final int index;
+  final Function() totalChange;
+
+  const CartItem({
+    super.key,
+    required this.item,
+    required this.onDelete,
+    required this.index,
+    required this.totalChange,
+  });
+
+  @override
+  State<CartItem> createState() => _CartItemState();
+}
+
+class _CartItemState extends State<CartItem>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<Offset> _offsetAnimation;
+  late Animation<double> _opacityAnimation;
+  bool _isRemoved = false;
+  int selectedSizeIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 700),
+      vsync: this,
+    );
+    _offsetAnimation = Tween<Offset>(
+      begin: const Offset(0, 0),
+      end: const Offset(2, 0), // Move out to the right
+    ).chain(CurveTween(curve: Curves.easeInOutCubic)).animate(_controller);
+
+    _opacityAnimation = Tween<double>(
+      begin: 1.0,
+      end: 0.0,
+    ).animate(_controller);
+    setState(() {});
+  }
+
+  void _showDialog(Widget child, BuildContext ctx) {
+    showCupertinoModalPopup<void>(
+      context: ctx,
+      builder: (BuildContext context) => Container(
+        height: 250,
+        padding: const EdgeInsets.only(top: 6.0, right: 6),
+        // The Bottom margin is provided to align the popup above the system navigation bar.
+        margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        // Provide a background color for the popup.
+        color: CupertinoColors.systemBackground.resolveFrom(context),
+        // Use a SafeArea widget to avoid system overlaps.
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: InkWell(
+                overlayColor: WidgetStateProperty.all(Colors.transparent),
+                splashFactory: NoSplash.splashFactory,
+                onTap: () {
+                  Navigator.pop(ctx);
+                  widget.item.selectedSizePosition = selectedSizeIndex;
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: BodyText(
+                      text: 'Done',
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700),
+                ),
+              ),
+            ),
+            Expanded(child: child),
+          ],
+        ),
+      ),
+    ).then(
+      (value) {
+        setState(() {});
+      },
+    );
+  }
+
+  void _deleteItem() async {
+    await _controller.forward(); // Start animation
+    setState(() {
+      _isRemoved = true; // Remove from UI
+    });
+    widget.onDelete(); // Remove from the controller
+  }
+
+  void _increment() {
+    if (widget.item.quantity! < 50) {
+      setState(() {
+        widget.item.quantity = (widget.item.quantity ?? 0) + 1;
+      });
+      widget.totalChange();
+    } else {}
+  }
+
+  void _decrement() {
+    if (widget.item.quantity! > 1) {
+      setState(() {
+        widget.item.quantity = (widget.item.quantity ?? 0) - 1;
+      });
+      widget.totalChange();
+    } else {}
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_isRemoved) {
+      return const SizedBox.shrink(); // Return an empty widget once removed
+    }
+
+    return SlideTransition(
+      position: _offsetAnimation,
+      child: FadeTransition(
+          opacity: _opacityAnimation,
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Card(
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(4),
+                      child: Image.network(
+                        widget.item.images![0].src.toString(),
+                        fit: BoxFit.cover,
+                        width: 108.25,
+                        height: 166,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: BodyText(
+                                  text: widget.item.title!,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              BodyText(
+                                text:
+                                    "₹${widget.item.price!.replaceAll('Rs.', '').replaceAll(' ', '')}",
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 4),
+                          const BodyText(
+                            text: 'Zara',
+                            fontSize: 16,
+                            color: Colors.black54,
+                          ),
+                          if (widget.item.sizes != null &&
+                              widget.item.sizes!.isNotEmpty)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                SvgPicture.asset('assets/icon/ruler.svg'),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                const BodyText(
+                                  text: 'Size Guide',
+                                  color: Colors.black54,
+                                  fontSize: 10,
+                                )
+                              ],
+                            ),
+                          if (widget.item.sizes != null &&
+                              widget.item.sizes!.isNotEmpty)
+                            Container(
+                              height: 36,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: CColor.languageBorderColor),
+                              child: Row(
+                                children: [
+                                  BodyText(
+                                    text: 'Size:',
+                                    fontSize: 12,
+                                    fontFamily: Font.gilroy,
+                                    color: Colors.black.withOpacity(0.7),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      child: BodyText(
+                                        text: selectedSize(
+                                            widget.item.selectedSizePosition!),
+                                        fontSize: 15,
+                                        color: Colors.black.withOpacity(0.7),
+                                        fontFamily: Font.gilroy,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      _showDialog(
+                                          CupertinoPicker(
+                                            magnification: 1.5,
+                                            squeeze: 0.6,
+                                            useMagnifier: true,
+                                            itemExtent: 30,
+                                            // This sets the initial item.
+                                            scrollController:
+                                                FixedExtentScrollController(
+                                              initialItem: widget
+                                                  .item.selectedSizePosition!,
+                                            ),
+                                            // This is called when selected item is changed.
+                                            onSelectedItemChanged:
+                                                (int selectedItem) {
+                                              setState(() {
+                                                selectedSizeIndex =
+                                                    selectedItem;
+                                              });
+                                            },
+                                            children: List<Widget>.generate(
+                                                widget.item.sizes!.length,
+                                                (int index) {
+                                              return Center(
+                                                child: BodyText(
+                                                    text: widget
+                                                        .item.sizes![index],
+                                                    fontSize: 25),
+                                              );
+                                            }),
+                                          ),
+                                          context);
+                                    },
+                                    highlightColor: Colors.transparent,
+                                    icon: const Icon(
+                                      Icons.keyboard_arrow_down,
+                                      size: 18,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          const SizedBox(
+                            height: 6,
+                          ),
+                          Container(
+                            height: 24,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: const Color(0xFFD9D9D9)),
+                            child: CounterWidget(
+                                count: widget.item.quantity!,
+                                removeTap: _decrement,
+                                addTap: _increment),
+                          ),
+                          IconButton(
+                            highlightColor: Colors.transparent,
+                            icon: SvgPicture.asset(
+                              'assets/icon/delete.svg',
+                              height: 23,
+                              width: 23,
+                            ),
+                            onPressed: _deleteItem,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          )),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  String selectedSize(int size) {
+    var selectedSize = "S";
+    switch (size) {
+      case 0:
+        selectedSize = 'S';
+        break;
+      case 1:
+        selectedSize = 'M';
+        break;
+      case 2:
+        selectedSize = 'L';
+        break;
+      case 3:
+        selectedSize = 'XL';
+        break;
+      case 4:
+        selectedSize = 'XXL';
+        break;
+      default:
+        selectedSize = 'S'; // Optional default case
+    }
+    return selectedSize;
+  }
+}

@@ -10,30 +10,33 @@ class ProductModel {
   int? selectedSizePosition;
   int? quantity;
   List<dynamic>? sizes;
+  bool? isSelected;
 
-  ProductModel(
-      {this.title,
-        this.price,
-        this.wasPrice,
-        this.description = const {},
-        this.images,
-        this.sizes = const [],
-        this.id = '',
-        this.selectedColorPosition = 0,
-        this.selectedSizePosition = 0,
-        this.quantity = 1,
-        this.url});
+  ProductModel({
+    this.title,
+    this.price,
+    this.wasPrice,
+    this.description = const {},
+    this.images,
+    this.sizes = const [],
+    this.id = '',
+    this.selectedColorPosition = 0,
+    this.selectedSizePosition = 0,
+    this.quantity = 1,
+    this.url,
+    this.isSelected = false,
+  });
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     title = json['title'] ?? "";
     price = json['price'] ?? "";
     wasPrice = json['was_price'] ?? "";
-    sizes =  List<dynamic>.from(json['sizes'] ?? []);
-    description =  json['description'] is List
+    sizes = List<dynamic>.from(json['sizes'] ?? []);
+    description = json['description'] is List
         ? {
-      for (var item in json['description'])
-        item.keys.first: item.values.first
-    }
+            for (var item in json['description'])
+              item.keys.first: item.values.first
+          }
         : {}; // Convert list of key-value pairs to a map;
     if (json['images'] != null) {
       images = <Images>[];
@@ -47,14 +50,14 @@ class ProductModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'title' : title,
-      'price' : price,
-      'was_price' : wasPrice,
-      'description' : description,
-      'images' :images != null? images!.map((v) => v.toJson()).toList():[],
-      'url' : url,
-      'sizes' : sizes,
-      'id' : id
+      'title': title,
+      'price': price,
+      'was_price': wasPrice,
+      'description': description,
+      'images': images != null ? images!.map((v) => v.toJson()).toList() : [],
+      'url': url,
+      'sizes': sizes,
+      'id': id,
     };
   }
 
@@ -92,4 +95,3 @@ class Images {
     return data;
   }
 }
-

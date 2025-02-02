@@ -96,3 +96,35 @@ String formatDateTimeForQueryParams(String dateTimeString) {
     throw FormatException("Invalid DateTime format: $dateTimeString");
   }
 }
+
+void showClosetBottomSheet(BuildContext context, Widget widget) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+    ),
+    builder: (context) => widget,
+  );
+}
+
+String multiplyAndFormatPrice(String price, int multiplier) {
+  // Remove commas from the price string
+  String cleanedPrice = price.replaceAll(',', '');
+  String integerPart = cleanedPrice.split('.')[0];
+
+  // Convert the cleaned price string to an integer
+  int priceValue = int.parse(integerPart);
+
+  // Multiply the price by the given multiplier
+  int result = priceValue * multiplier;
+
+  // Format the result with commas
+  final formatter = NumberFormat.decimalPattern(
+      'en_IN'); // 'en_IN' for Indian numbering system
+  String formattedResult = formatter.format(result);
+
+  return formattedResult;
+  // return '';
+}
+
