@@ -21,6 +21,7 @@ class ButtonColor {
 
 class BorderColor {
   static const Color grey = Color(0xffCCCCCC);
+  static const Color black = Color(0xff000000);
 }
 
 class BackgroundColor {

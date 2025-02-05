@@ -39,7 +39,7 @@ class CustomPrimaryButton extends StatelessWidget {
         backgroundColor: backgroundColor,
         minimumSize: size,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(100),
+          borderRadius: BorderRadius.circular(15),
           side: BorderSide(color: borderColor),
         ),
       ),
