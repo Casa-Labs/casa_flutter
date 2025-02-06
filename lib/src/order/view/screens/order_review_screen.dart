@@ -1,6 +1,5 @@
 import 'package:casa_flutter/src/order/controller/order_review_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../common/widgets/app_bar.dart';
@@ -132,8 +131,10 @@ class OrderReviewScreen extends StatelessWidget {
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.end,
                                                 children: [
-                                                  SvgPicture.asset(
-                                                      'assets/icon/ruler.svg'),
+                                                  Icon(Icons
+                                                      .bike_scooter_outlined),
+                                                  // SvgPicture.asset(
+                                                  //     'assets/icon/ruler.svg'),
                                                   const SizedBox(
                                                     width: 10,
                                                   ),
@@ -206,11 +207,12 @@ class OrderReviewScreen extends StatelessWidget {
                                               IconButton(
                                                 highlightColor:
                                                     Colors.transparent,
-                                                icon: SvgPicture.asset(
-                                                  'assets/icon/delete.svg',
-                                                  height: 23,
-                                                  width: 23,
-                                                ),
+                                                icon: Icon(Icons.delete),
+                                                // icon: SvgPicture.asset(
+                                                //   'assets/icon/delete.svg',
+                                                //   height: 23,
+                                                //   width: 23,
+                                                // ),
                                                 onPressed: () {
                                                   orderReviewController
                                                       .deleteItem(product);
@@ -326,11 +328,12 @@ class OrderReviewScreen extends StatelessWidget {
                                     )
                                   ],
                                 ),
-                                Image.asset(
-                                  "assets/images/order_review_1.png",
-                                  height: 104,
-                                  width: 70,
-                                )
+                                // Image.asset(
+                                //   "assets/images/order_review_1.png",
+                                //   height: 104,
+                                //   width: 70,
+                                // )
+                                Icon(Icons.filter_frames_outlined),
                               ],
                             ),
                           ),

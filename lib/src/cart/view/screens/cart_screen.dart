@@ -1,5 +1,7 @@
+import 'package:casa_flutter/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../common/widgets/custom_button.dart';
 import '../../../common/widgets/text_widgets.dart';
@@ -40,7 +42,9 @@ class CartScreen extends StatelessWidget {
           InkWell(
             overlayColor: WidgetStateProperty.all(Colors.transparent),
             splashFactory: NoSplash.splashFactory,
-            onTap: () {},
+            onTap: () {
+              context.pushNamed(RouteNames.faq);
+            },
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: BodyText(

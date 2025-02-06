@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import '../../../common/widgets/text_widgets.dart';
 import '../../../common/widgets/textfields.dart';
 
@@ -110,9 +110,8 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                    overlayColor:
-                              WidgetStateProperty.all(Colors.transparent),
-                          splashFactory: NoSplash.splashFactory,
+                  overlayColor: WidgetStateProperty.all(Colors.transparent),
+                  splashFactory: NoSplash.splashFactory,
                   onTap: () {
                     Navigator.of(context).pop();
                   },
@@ -129,9 +128,8 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                   ),
                 ),
                 InkWell(
-                    overlayColor:
-                              WidgetStateProperty.all(Colors.transparent),
-                          splashFactory: NoSplash.splashFactory,
+                  overlayColor: WidgetStateProperty.all(Colors.transparent),
+                  splashFactory: NoSplash.splashFactory,
                   onTap: () {
                     Navigator.of(context).pop();
                   },

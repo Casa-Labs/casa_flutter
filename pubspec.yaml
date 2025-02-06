@@ -45,6 +45,8 @@ dependencies:
   flutter_svg: ^2.0.17
   dropdown_button2: ^2.3.9
   appinio_swiper: ^2.1.1
+  http: ^1.3.0
+  graphql_flutter: ^5.2.0-beta.8
 
 dev_dependencies:
   flutter_test:

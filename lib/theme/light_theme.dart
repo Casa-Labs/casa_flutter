@@ -120,36 +120,36 @@ ThemeData lightMode = ThemeData(
     fillColor: BackgroundColor.white,
     contentPadding: EdgeInsets.all(10),
     enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(6),
       borderSide: const BorderSide(
-        color: BorderColor.grey,
+        color: BorderColor.black,
         width: 0.5,
       ),
     ),
     disabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(6),
       borderSide: const BorderSide(
-        color: BorderColor.grey,
+        color: BorderColor.black,
         width: 0.5,
       ),
     ),
     focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(6),
       borderSide: const BorderSide(
-        color: BorderColor.grey,
+        color: BorderColor.black,
       ),
     ),
     errorBorder: OutlineInputBorder(
       borderSide: const BorderSide(
         color: ErrorColor.red,
       ),
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(6),
     ),
     focusedErrorBorder: OutlineInputBorder(
       borderSide: const BorderSide(
         color: ErrorColor.red,
       ),
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(6),
     ),
   ),
 );

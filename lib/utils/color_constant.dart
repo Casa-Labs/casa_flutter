@@ -10,6 +10,7 @@ class TextColor {
 class IconColor {
   static const Color grey = Color(0xff7C7B89);
   static const Color black = Color(0xff000000);
+  static const Color blue = Colors.blue;
 }
 
 class ButtonColor {

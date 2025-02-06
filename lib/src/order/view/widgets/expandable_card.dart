@@ -38,11 +38,12 @@ class ExpandableCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Image.asset(
-                          "assets/images/order_review_2.png",
-                          height: 69,
-                          width: 68,
-                        ),
+                        // Image.asset(
+                        //   "assets/images/order_review_2.png",
+                        //   height: 69,
+                        //   width: 68,
+                        // ),
+                        Icon(Icons.filter_frames_outlined),
                         const SizedBox(
                           width: 10,
                         ),

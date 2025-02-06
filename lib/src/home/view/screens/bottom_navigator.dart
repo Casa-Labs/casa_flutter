@@ -1,10 +1,10 @@
+import 'package:casa_flutter/src/explore/view/screens/explore_screen.dart';
 import 'package:casa_flutter/src/home/view/screens/home_screen.dart';
-import 'package:casa_flutter/src/order/view/screens/order_review_screen.dart';
+import 'package:casa_flutter/src/profile/view/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../cart/view/screens/cart_screen.dart';
 import '../../../onboarding/view/screens/onboarding_screen.dart';
-import '../../../search/view/screens/search_screen.dart';
 import '../../../wishlist/view/screens/wishlist_screen.dart';
 
 class NavPage extends StatefulWidget {
@@ -23,10 +23,10 @@ class NavPageState extends State<NavPage> {
 
   final List<Widget> _pages = [
     HomeScreen(),
-    const SearchScreen(),
+    ExploreScreen(),
     CartScreen(),
     WishlistScreen(),
-    OrderReviewScreen(),
+    ProfileScreen(),
   ];
 
   @override
