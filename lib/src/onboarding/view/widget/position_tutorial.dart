@@ -2,22 +2,20 @@ import 'package:casa_flutter/src/onboarding/view/widget/text_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../screens/onboarding_screen.dart';
-
 class PositionTutorial extends StatelessWidget {
   const PositionTutorial(
       {super.key,
-        this.left,
-        this.top,
-        this.right,
-        this.bottom,
-        this.crossAxisAlignment = CrossAxisAlignment.start,
-        required this.text,
-        this.isAbove = true,
-        this.horizontal = 30,
-        this.data = const SizedBox(),
-        this.crossAxisAlignmentSecond = CrossAxisAlignment.center,
-        required this.onTap});
+      this.left,
+      this.top,
+      this.right,
+      this.bottom,
+      this.crossAxisAlignment = CrossAxisAlignment.start,
+      required this.text,
+      this.isAbove = true,
+      this.horizontal = 30,
+      this.data = const SizedBox(),
+      this.crossAxisAlignmentSecond = CrossAxisAlignment.center,
+      required this.onTap});
   final double? left;
   final double? top;
   final double? right;
@@ -57,10 +55,10 @@ class PositionTutorial extends StatelessWidget {
                         data,
                         Container(
                             margin:
-                            EdgeInsets.symmetric(horizontal: horizontal),
+                                EdgeInsets.symmetric(horizontal: horizontal),
                             child: Image.asset("assets/icons/point_arrow.png")
-                          // child: homePage(),
-                        ),
+                            // child: homePage(),
+                            ),
                       ],
                     ),
                   textContainer(text),
@@ -72,7 +70,7 @@ class PositionTutorial extends StatelessWidget {
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: horizontal),
                           child:
-                          Image.asset("assets/icons/point_arrow_down.png"),
+                              Image.asset("assets/icons/point_arrow_down.png"),
                           // child: homePage(),
                         ),
                         const SizedBox(

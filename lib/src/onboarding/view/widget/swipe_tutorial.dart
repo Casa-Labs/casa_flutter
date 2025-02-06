@@ -1,8 +1,6 @@
 import 'package:casa_flutter/src/onboarding/view/widget/text_container.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/onboarding_screen.dart';
-
 class SwipeTutorial extends StatelessWidget {
   const SwipeTutorial({
     super.key,

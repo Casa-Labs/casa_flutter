@@ -1,0 +1,76 @@
+import 'package:casa_flutter/src/auth/view/widgets/auth_button.dart';
+import 'package:casa_flutter/utils/string_constant.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../common/widgets/custom_text_form_field_widget.dart';
+
+class ForgotPasswordScreen extends StatelessWidget {
+  const ForgotPasswordScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 30, left: 20),
+                child: IconButton(
+                    onPressed: () {
+                      context.pop();
+                    },
+                    icon: Icon(Icons.arrow_back_ios)),
+              )),
+          Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  Spacer(flex: 2),
+                  Column(
+                    children: [
+                      Text(
+                        'Forgot Password',
+                        style:
+                            Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                      ),
+                      SizedBox(height: 50),
+                      Image.asset(ImageConstants.forgotPasswordLogo),
+                    ],
+                  ),
+                  Spacer(flex: 1),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Please enter your email address to receive a verification code.',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      SizedBox(height: 25),
+                      Text('Email Address'),
+                      CustomTextFormField(),
+                    ],
+                  ),
+                  Spacer(flex: 1),
+                  TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'Try another way',
+                      )),
+                  Spacer(flex: 1),
+                  AuthButton(type: AuthButtonType.send, onPressed: () {}),
+                  Spacer(flex: 2),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

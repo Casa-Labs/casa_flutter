@@ -14,12 +14,14 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
       this.isFilter = true,
       this.isLeading = true,
       this.isLeadingBack = false,
+      this.isSupport = false,
       this.title = ''});
 
   final bool isNotification;
   final bool isFilter;
   final bool isLeading;
   final bool isLeadingBack;
+  final bool isSupport;
   final String title;
 
   @override
@@ -57,14 +59,17 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                       'Thrift',
                     ],
                     hint: Padding(
-                      padding: EdgeInsets.only(left: isLeadingBack ? 0 : 8),
-                      child: Row(
-                        children: [
-                          BodyText(text: 'CASA',fontFamily: Font.montaga,fontSize: 23),
-                          Icon(Icons.keyboard_arrow_down_rounded,color: CColor.black)
-                        ],
-                      )
-                    ),
+                        padding: EdgeInsets.only(left: isLeadingBack ? 0 : 8),
+                        child: Row(
+                          children: [
+                            BodyText(
+                                text: 'CASA',
+                                fontFamily: Font.montaga,
+                                fontSize: 23),
+                            Icon(Icons.keyboard_arrow_down_rounded,
+                                color: CColor.black)
+                          ],
+                        )),
                     width: 150,
                     mode: DropdownMode.single,
                     fontSize: 15,
@@ -114,9 +119,9 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
               //     ));
             },
             child: Padding(
-              padding: EdgeInsets.all(4.0),
-              child: Icon(Icons.notifications_none_rounded,color: CColor.black)
-            ),
+                padding: EdgeInsets.all(4.0),
+                child: Icon(Icons.notifications_none_rounded,
+                    color: CColor.black)),
           ),
         const SizedBox(width: 5),
         if (isFilter)
@@ -131,9 +136,23 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
               //     ));
             },
             child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Icon(Icons.tune_rounded,color: CColor.black)
-            ),
+                padding: const EdgeInsets.all(4.0),
+                child: Icon(Icons.tune_rounded, color: CColor.black)),
+          ),
+        if (isSupport)
+          InkWell(
+            overlayColor: WidgetStateProperty.all(Colors.transparent),
+            splashFactory: NoSplash.splashFactory,
+            onTap: () {
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (context) => FilterPage(),
+              //     ));
+            },
+            child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Icon(Icons.headphones, color: CColor.black)),
           ),
         const SizedBox(width: 15),
       ],

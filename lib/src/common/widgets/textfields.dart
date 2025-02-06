@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../utils/color.dart';
 import '../../../utils/font.dart';
@@ -181,7 +180,7 @@ class CustomSearchBar extends StatelessWidget {
       decoration: InputDecoration(
         prefixIcon: Padding(
           padding: const EdgeInsets.all(10),
-          child: Icon(Icons.search_rounded,size: 22),
+          child: Icon(Icons.search_rounded, size: 22),
         ),
         counterStyle: TextStyle(
             fontFamily: Font.gilroy,

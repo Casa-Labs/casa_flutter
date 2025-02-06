@@ -1,3 +1,4 @@
+import 'package:casa_flutter/theme/light_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       routerDelegate: router.routerDelegate,
       routeInformationProvider: router.routeInformationProvider,
       title: 'Casa Flutter',
-
+      theme: lightMode,
       // home: const SplashScreen(),
       // theme: lightMode,
       // darkTheme: darkMode,

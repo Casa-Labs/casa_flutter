@@ -65,17 +65,17 @@ class WelcomeAuthScreen extends StatelessWidget {
                   AuthButton(
                       type: AuthButtonType.google,
                       onPressed: () {
-                        context.pushNamed(RouteNames.home);
+                        context.pushNamed(RouteNames.signIn);
                       }),
                   AuthButton(
                       type: AuthButtonType.apple,
                       onPressed: () {
-                        context.pushNamed(RouteNames.home);
+                        context.pushNamed(RouteNames.signIn);
                       }),
                   AuthButton(
                       type: AuthButtonType.email,
                       onPressed: () {
-                        context.pushNamed(RouteNames.home);
+                        context.pushNamed(RouteNames.signIn);
                       }),
                 ],
               ),
