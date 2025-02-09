@@ -68,7 +68,9 @@ class SignInScreen extends StatelessWidget {
                 }),
             Spacer(),
             TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.pushNamed(RouteNames.signUp);
+                },
                 child: Text(
                   'New to CASA? \n Register',
                   textAlign: TextAlign.center,

@@ -152,4 +152,7 @@ ThemeData lightMode = ThemeData(
       borderRadius: BorderRadius.circular(6),
     ),
   ),
+  chipTheme: ChipThemeData(
+    labelPadding: EdgeInsets.symmetric(horizontal: 20),
+  ),
 );

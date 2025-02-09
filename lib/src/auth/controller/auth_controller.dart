@@ -12,6 +12,7 @@ class AuthController extends GetxController {
   // ========= VARIABLES ========= //
 
   bool allowLogin = false;
+  RxBool checkboxValue = false.obs;
 
   // ========== STATES ========== //
 

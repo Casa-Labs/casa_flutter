@@ -1,3 +1,4 @@
+import 'package:casa_flutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 
 class DevelopmentScreen extends StatelessWidget {
@@ -7,7 +8,13 @@ class DevelopmentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Uh Oh! This screen is under development'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(ImageConstants.development),
+            Text('Uh Oh! This screen is under development'),
+          ],
+        ),
       ),
     );
   }

@@ -3,7 +3,17 @@ import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 
 import '../../../../utils/color_constant.dart';
 
-enum AuthButtonType { google, apple, email, signIn, signUp, send, verify, save }
+enum AuthButtonType {
+  google,
+  apple,
+  email,
+  signIn,
+  signUp,
+  send,
+  verify,
+  save,
+  start
+}
 
 class AuthButton extends StatelessWidget {
   final AuthButtonType type;
@@ -54,6 +64,9 @@ class AuthButton extends StatelessWidget {
         break;
       case AuthButtonType.save:
         text = 'SAVE';
+        break;
+      case AuthButtonType.start:
+        text = 'START SHOPPING';
         break;
     }
 

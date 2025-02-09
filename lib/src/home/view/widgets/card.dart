@@ -1,14 +1,20 @@
+import 'package:casa_flutter/routes/app_routes.dart';
+import 'package:casa_flutter/src/explore/view/screens/product_description_screen.dart';
 import 'package:casa_flutter/src/home/controller/home_controller.dart';
 import 'package:casa_flutter/src/home/view/widgets/details_widget.dart';
+import 'package:casa_flutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
+import 'package:share_plus/share_plus.dart';
+
 import '../../../common/widgets/text_widgets.dart';
 import '../../model/home_models.dart';
 
 class Cards extends StatelessWidget {
   final int index;
   final ProductModel product;
-   const Cards({super.key, required this.index, required this.product});
+  const Cards({super.key, required this.index, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -60,10 +66,13 @@ class Cards extends StatelessWidget {
                   //     ),
                   //   ),
                   // )
-                  SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.75,
-                      child: Image.asset('assets/images/placeholder.png',
-                          fit: BoxFit.fill)),
+                  Align(
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.75,
+                        child: Image.asset('assets/images/placeholder.png',
+                            fit: BoxFit.fill)),
+                  ),
                   ClipRRect(
                     borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(20),
@@ -85,7 +94,7 @@ class Cards extends StatelessWidget {
                   ),
                   Positioned(
                     bottom: 0,
-                    left: 0,
+                    left: 15,
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.75,
                       decoration: const BoxDecoration(
@@ -101,7 +110,9 @@ class Cards extends StatelessWidget {
                             overlayColor:
                                 WidgetStateProperty.all(Colors.transparent),
                             splashFactory: NoSplash.splashFactory,
-                            onTap: () {},
+                            onTap: () {
+                              context.pushNamed(RouteNames.store);
+                            },
                             child: CircleAvatar(
                               maxRadius: 24,
                               backgroundColor: const Color(0xFF002957),
@@ -118,7 +129,7 @@ class Cards extends StatelessWidget {
                           //   highlightColor: Colors.grey[100]!,
                           // child:
                           BodyText(
-                            text: product.title ?? "",
+                            text: product.title ?? AppStrings.productName,
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
                             fontSize: 18,
@@ -130,7 +141,8 @@ class Cards extends StatelessWidget {
                           //   highlightColor: Colors.grey[100]!,
                           //   child:
                           BodyText(
-                            text: '₹${product.price}',
+                            // text: '₹${product.price}',
+                            text: '₹ ${AppStrings.productPrice}',
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
                             fontSize: 18,
@@ -142,7 +154,7 @@ class Cards extends StatelessWidget {
                   ),
                   Positioned(
                     top: 0,
-                    left: 0,
+                    left: 10,
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Material(
@@ -175,7 +187,7 @@ class Cards extends StatelessWidget {
                   ),
                   Positioned(
                     bottom: 0,
-                    right: 0,
+                    right: 10,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 8),
@@ -193,6 +205,7 @@ class Cards extends StatelessWidget {
                               splashFactory: NoSplash.splashFactory,
                               onTap: () {
                                 // _addToCart(context, logic);
+                                context.pushNamed(RouteNames.cart);
                               },
                               child: Icon(Icons.add_shopping_cart_outlined,
                                   color: Colors.white, size: 30),
@@ -204,41 +217,16 @@ class Cards extends StatelessWidget {
                                 overlayColor:
                                     WidgetStateProperty.all(Colors.transparent),
                                 splashFactory: NoSplash.splashFactory,
-                                onTap: () {},
+                                onTap: () {
+                                  Share.share(
+                                      'Check out this amazing product at CASA app now !');
+                                },
                                 child: Icon(Icons.share_rounded,
                                     color: Colors.white, size: 30)),
                           ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 0, horizontal: 15),
-                            ),
-                            onPressed: () {
-                              // product.quantity = logic.counter.value;
-                              // final CheckoutController checkoutController =
-                              // Get.put(CheckoutController());
-                              // checkoutController.getListData([product]);
-                              // Get.to(() => OrderSummary())?.whenComplete(() {
-                              //   setState(() {});
-                              // });
-                            },
-                            child: Text(
-                              'Buy now',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                                fontSize: 13,
-                                shadows: [
-                                  Shadow(
-                                    offset: const Offset(1.0, 1.0),
-                                    blurRadius: 6.0,
-                                    color: Colors.black.withOpacity(0.2),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                          BuyNowButton(onPressed: () {
+                            context.pushNamed(RouteNames.orderReview);
+                          }),
                         ],
                       ),
                     ),
@@ -252,5 +240,4 @@ class Cards extends StatelessWidget {
       );
     });
   }
-
 }
