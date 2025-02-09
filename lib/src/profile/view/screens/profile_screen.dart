@@ -2,6 +2,7 @@ import 'package:casa_flutter/routes/app_routes.dart';
 import 'package:casa_flutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -93,7 +94,8 @@ List<ProfileListModel> profileList = [
       onTap: (context) => context.pushNamed(RouteNames.myOrders)),
   ProfileListModel(
       title: 'Share with a Friend',
-      onTap: (context) => context.pushNamed(RouteNames.development)),
+      onTap: (context) =>
+          Share.share('Check out this amazing product at CASA app now !')),
   ProfileListModel(
       title: 'Report an Error',
       onTap: (context) => context.pushNamed(RouteNames.development)),

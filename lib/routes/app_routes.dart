@@ -1,13 +1,22 @@
+import 'package:casa_flutter/src/auth/view/screens/sign_up_details_screen.dart';
+import 'package:casa_flutter/src/auth/view/screens/sign_up_screen.dart';
+import 'package:casa_flutter/src/cart/view/screens/cart_screen.dart';
 import 'package:casa_flutter/src/common/widgets/development_screen.dart';
+import 'package:casa_flutter/src/explore/view/screens/products_list_screen.dart';
+import 'package:casa_flutter/src/explore/view/screens/store_screen.dart';
 import 'package:casa_flutter/src/order/view/screens/current_orders_screen.dart';
+import 'package:casa_flutter/src/order/view/screens/order_review_screen.dart';
+import 'package:casa_flutter/src/payment/view/screens/payment_options_screen.dart';
 import 'package:casa_flutter/src/profile/view/screens/profile_screen.dart';
 import 'package:go_router/go_router.dart';
 
+import '../src/auth/view/screens/change_password_screen.dart';
 import '../src/auth/view/screens/forgot_password_screen.dart';
 import '../src/auth/view/screens/sign_in_screen.dart';
 import '../src/auth/view/screens/welcome_auth_screen.dart';
 import '../src/common/service/global_navigator_service.dart';
 import '../src/explore/view/screens/explore_screen.dart';
+import '../src/explore/view/screens/product_description_screen.dart';
 import '../src/faq/view/screens/faq_screen.dart';
 import '../src/home/view/screens/bottom_navigator.dart';
 import '../src/home/view/screens/home_screen.dart';
@@ -26,7 +35,10 @@ class _AppPaths {
   static const String splash = '/';
   static const String welcomeAuth = '/welcomeAuth';
   static const String signIn = '/signIn';
+  static const String signUp = '/signUp';
+  static const String signUpDetails = '/signUpDetails';
   static const String forgotPassword = '/forgotPassword';
+  static const String changePassword = '/changePassword';
   static const String home = '/home';
   static const String notifications = '/notifications';
   static const String location = '/location';
@@ -42,6 +54,12 @@ class _AppPaths {
   static const String profile = '/profile';
   static const String development = '/development';
   static const String myOrders = '/myOrders';
+  static const String store = '/store';
+  static const String productList = '/productList';
+  static const String productDescription = '/productDescription';
+  static const String paymentOptions = '/paymentOptions';
+  static const String cart = '/cart';
+  static const String orderReview = '/orderReview';
 }
 
 // Public: Use these for named navigation
@@ -50,6 +68,7 @@ class RouteNames {
   static const String welcomeAuth = 'welcomeAuth';
   static const String signIn = 'signIn';
   static const String forgotPassword = 'forgotPassword';
+  static const String changePassword = '/changePassword';
   static const String home = 'home';
   static const String notifications = 'notifications';
   static const String location = 'location';
@@ -65,6 +84,14 @@ class RouteNames {
   static const String profile = 'profile';
   static const String development = 'development';
   static const String myOrders = 'myOrders';
+  static const String signUp = 'signUp';
+  static const String signUpDetails = 'signUpDetails';
+  static const String store = 'store';
+  static const String productList = 'productList';
+  static const String productDescription = 'productDescription';
+  static const String paymentOptions = 'paymentOptions';
+  static const String cart = 'cart';
+  static const String orderReview = 'orderReview';
 }
 
 // Central GoRouter instance
@@ -87,9 +114,24 @@ final GoRouter router = GoRouter(
       builder: (context, state) => const SignInScreen(),
     ),
     GoRoute(
+      path: _AppPaths.signUp,
+      name: RouteNames.signUp,
+      builder: (context, state) => const SignUpScreen(),
+    ),
+    GoRoute(
+      path: _AppPaths.signUpDetails,
+      name: RouteNames.signUpDetails,
+      builder: (context, state) => const SignUpDetailsScreen(),
+    ),
+    GoRoute(
       path: _AppPaths.forgotPassword,
       name: RouteNames.forgotPassword,
       builder: (context, state) => const ForgotPasswordScreen(),
+    ),
+    GoRoute(
+      path: _AppPaths.changePassword,
+      name: RouteNames.changePassword,
+      builder: (context, state) => const ChangePasswordScreen(),
     ),
     GoRoute(
       path: _AppPaths.home,
@@ -165,6 +207,36 @@ final GoRouter router = GoRouter(
       path: _AppPaths.myOrders,
       name: RouteNames.myOrders,
       builder: (context, state) => CurrentOrdersScreen(),
+    ),
+    GoRoute(
+      path: _AppPaths.store,
+      name: RouteNames.store,
+      builder: (context, state) => StoreScreen(),
+    ),
+    GoRoute(
+      path: _AppPaths.productList,
+      name: RouteNames.productList,
+      builder: (context, state) => ProductsListScreen(),
+    ),
+    GoRoute(
+      path: _AppPaths.productDescription,
+      name: RouteNames.productDescription,
+      builder: (context, state) => ProductDescriptionScreen(),
+    ),
+    GoRoute(
+      path: _AppPaths.paymentOptions,
+      name: RouteNames.paymentOptions,
+      builder: (context, state) => PaymentOptionsScreen(),
+    ),
+    GoRoute(
+      path: _AppPaths.cart,
+      name: RouteNames.cart,
+      builder: (context, state) => CartScreen(),
+    ),
+    GoRoute(
+      path: _AppPaths.orderReview,
+      name: RouteNames.orderReview,
+      builder: (context, state) => OrderReviewScreen(),
     ),
   ],
 );

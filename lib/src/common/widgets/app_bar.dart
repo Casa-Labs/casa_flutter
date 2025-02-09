@@ -1,9 +1,11 @@
+import 'package:casa_flutter/routes/app_routes.dart';
 import 'package:casa_flutter/src/common/widgets/dropdown.dart';
 import 'package:casa_flutter/src/common/widgets/text_widgets.dart';
 import 'package:casa_flutter/src/common/widgets/textfields.dart';
 import 'package:casa_flutter/utils/font.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../utils/color.dart';
 
@@ -112,11 +114,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
             overlayColor: WidgetStateProperty.all(Colors.transparent),
             splashFactory: NoSplash.splashFactory,
             onTap: () {
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (context) => NotificationsPage(),
-              //     ));
+              context.pushNamed(RouteNames.notifications);
             },
             child: Padding(
                 padding: EdgeInsets.all(4.0),
@@ -134,6 +132,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
               //     MaterialPageRoute(
               //       builder: (context) => FilterPage(),
               //     ));
+              context.pushNamed(RouteNames.search);
             },
             child: Padding(
                 padding: const EdgeInsets.all(4.0),

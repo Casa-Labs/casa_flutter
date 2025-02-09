@@ -134,13 +134,18 @@ class TabBarSection extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: 5,
                     itemBuilder: (context, index) {
-                      return Container(
-                        width: 80,
-                        margin: EdgeInsets.only(right: 8),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(ImageConstants.zaraLogo),
-                              fit: BoxFit.cover),
+                      return InkWell(
+                        onTap: () {
+                          context.pushNamed(RouteNames.store);
+                        },
+                        child: Container(
+                          width: 80,
+                          margin: EdgeInsets.only(right: 8),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage(ImageConstants.zaraLogo),
+                                fit: BoxFit.cover),
+                          ),
                         ),
                       );
                     }),
@@ -172,37 +177,42 @@ class TabBarSection extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: 5,
                     itemBuilder: (context, index) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 130,
-                            width: 100,
-                            margin: EdgeInsets.only(right: 20),
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      ImageConstants.splashBackground),
-                                  fit: BoxFit.cover),
-                              borderRadius: BorderRadius.circular(15),
+                      return InkWell(
+                        onTap: () {
+                          context.pushNamed(RouteNames.productDescription);
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 130,
+                              width: 100,
+                              margin: EdgeInsets.only(right: 20),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        ImageConstants.splashBackground),
+                                    fit: BoxFit.cover),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 10),
-                          SizedBox(
-                            width: 100,
-                            child: Text(
-                              'GAP Bodycon Dress',
-                              style: Theme.of(context).textTheme.bodySmall,
+                            SizedBox(height: 10),
+                            SizedBox(
+                              width: 100,
+                              child: Text(
+                                'GAP Bodycon Dress',
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            width: 100,
-                            child: Text(
-                              '\$20',
-                              style: Theme.of(context).textTheme.bodySmall,
+                            SizedBox(
+                              width: 100,
+                              child: Text(
+                                '\$20',
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       );
                     }),
               ),
@@ -246,22 +256,27 @@ class TabBarSection extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: 5,
                     itemBuilder: (context, index) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 210,
-                            width: 100,
-                            margin: EdgeInsets.only(right: 20),
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      ImageConstants.splashBackground),
-                                  fit: BoxFit.cover),
-                              borderRadius: BorderRadius.circular(15),
+                      return InkWell(
+                        onTap: () {
+                          context.pushNamed(RouteNames.productDescription);
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 210,
+                              width: 100,
+                              margin: EdgeInsets.only(right: 20),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        ImageConstants.splashBackground),
+                                    fit: BoxFit.cover),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       );
                     }),
               ),

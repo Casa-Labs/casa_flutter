@@ -1,12 +1,17 @@
-import '../widgets/faq_search_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../../../utils/color_constant.dart';
 import '../../controller/faq_controller.dart';
 
-class FAQScreen extends StatelessWidget {
-  FAQScreen({super.key});
+class FAQScreen extends StatefulWidget {
+  const FAQScreen({super.key});
 
+  @override
+  State<FAQScreen> createState() => _FAQScreenState();
+}
+
+class _FAQScreenState extends State<FAQScreen> {
   final faqCtrl = Get.put(FAQController());
 
   @override
@@ -15,7 +20,7 @@ class FAQScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("Help Desk"),
+        title: Text("FAQ"),
         centerTitle: true,
         // leading: InkWell(
         //   overlayColor: WidgetStateProperty.all(Colors.transparent),
@@ -51,12 +56,6 @@ class FAQScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   SizedBox(height: 15),
-                  SizedBox(
-                      height: 40,
-                      child: FAQSearchField(
-                        hintText: "Search Help",
-                      )),
-                  SizedBox(height: 7),
                   Text(
                     "FAQ",
                     style: Theme.of(context).textTheme.bodyMedium,
@@ -104,13 +103,7 @@ class FAQScreen extends StatelessWidget {
                               if (faqEntry.isOpen)
                                 Text(
                                   faqEntry.answer,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(
-                                        color: TextColor.grey,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                  style: Theme.of(context).textTheme.bodyLarge,
                                 ),
                             ],
                           ),
@@ -121,9 +114,9 @@ class FAQScreen extends StatelessWidget {
                               WidgetStateProperty.all(Colors.transparent),
                           splashFactory: NoSplash.splashFactory,
                           onTap: () {
-                            // setState(() {
-                            //   helpdata.isOpen = !helpdata.isOpen;
-                            // });
+                            setState(() {
+                              faqEntry.isOpen = !faqEntry.isOpen;
+                            });
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),

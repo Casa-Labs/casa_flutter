@@ -1,3 +1,4 @@
+import 'package:casa_flutter/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -116,7 +117,10 @@ class WishlistItemScreen extends StatelessWidget {
                         return Column(
                           children: [
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                context
+                                    .pushNamed(RouteNames.productDescription);
+                              },
                               child: Stack(
                                 children: [
                                   SizedBox(

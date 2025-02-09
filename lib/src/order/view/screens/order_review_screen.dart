@@ -1,6 +1,8 @@
+import 'package:casa_flutter/routes/app_routes.dart';
 import 'package:casa_flutter/src/order/controller/order_review_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../common/widgets/app_bar.dart';
 import '../../../common/widgets/text_widgets.dart';
@@ -396,7 +398,9 @@ class OrderReviewScreen extends StatelessWidget {
                       surfaceTintColor: const Color(0xFF2C9D24),
                       backgroundColor: const Color(0xFF2C9D24),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      context.pushNamed(RouteNames.paymentOptions);
+                    },
                     child: BodyText(
                       text: "Pay ₹${orderReviewController.total}",
                       fontSize: 14,

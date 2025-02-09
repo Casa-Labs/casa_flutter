@@ -1,13 +1,13 @@
-import 'package:casa_flutter/routes/app_routes.dart';
-import 'package:casa_flutter/src/auth/view/widgets/auth_button.dart';
-import 'package:casa_flutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../routes/app_routes.dart';
+import '../../../../utils/string_constant.dart';
 import '../../../common/widgets/custom_text_form_field_widget.dart';
+import '../widgets/auth_button.dart';
 
-class ForgotPasswordScreen extends StatelessWidget {
-  const ForgotPasswordScreen({super.key});
+class ChangePasswordScreen extends StatelessWidget {
+  const ChangePasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +34,14 @@ class ForgotPasswordScreen extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        'Forgot Password',
+                        'Create new password',
                         style:
                             Theme.of(context).textTheme.headlineSmall!.copyWith(
                                   fontWeight: FontWeight.w500,
                                 ),
                       ),
                       SizedBox(height: 50),
-                      Image.asset(ImageConstants.forgotPasswordLogo),
+                      Image.asset(ImageConstants.newPassword),
                     ],
                   ),
                   Spacer(flex: 1),
@@ -49,26 +49,22 @@ class ForgotPasswordScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Please enter your email address to receive a verification code.',
+                        'Your New Password Must Be Different From Previously Used Password.',
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       SizedBox(height: 25),
-                      Text('Email Address'),
+                      Text('New Password'),
+                      CustomTextFormField(),
+                      SizedBox(height: 40),
+                      Text('Confirm Password'),
                       CustomTextFormField(),
                     ],
                   ),
-                  Spacer(flex: 1),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Try another way',
-                    ),
-                  ),
-                  Spacer(flex: 1),
+                  Spacer(),
                   AuthButton(
-                      type: AuthButtonType.send,
+                      type: AuthButtonType.save,
                       onPressed: () {
-                        context.pushNamed(RouteNames.changePassword);
+                        context.goNamed(RouteNames.signIn);
                       }),
                   Spacer(flex: 2),
                 ],
