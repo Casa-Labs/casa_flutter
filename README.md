@@ -4,6 +4,57 @@ Flutter app for CASA
 
 ## Getting Started
 
+### **Steps for Handling Conflicts in CASA Project and How to create MR**
+
+1) **Push your branch to your own GitHub repo**
+    - If you haven’t pushed your local branch yet, push it using:
+      ```bash
+      git push origin <task-branch>
+      ```
+
+2) **Sync fork from the CASA development branch to your own repo's development branch**
+    - Fetch updates from the CASA repository:
+      ```bash
+      git checkout development
+      git fetch upstream development
+      git merge upstream/development
+      ```  
+    - Push the updated development branch to your repo:
+      ```bash
+      git push origin development
+      ```
+
+3) **Merge your repo’s development branch into your task branch**
+    - Switch to your task branch:
+      ```bash
+      git checkout <task-branch>
+      ```
+    - Merge development into your task branch:
+      ```bash
+      git merge development
+      ```
+
+4) **Resolve conflicts if they occur**
+    - If there are mismatches, Git will show conflicts.
+    - Open VS Code, resolve conflicts manually.
+    - Once resolved, mark them as resolved:
+      ```bash
+      git add .
+      git commit -m "Resolved merge conflicts"
+      ```
+
+5) **Push your updated task branch to your repo**
+   ```bash
+   git push origin <task-branch>
+   ```
+
+6) **Raise a merge request (PR) from your repo’s task branch to CASA’s development branch**
+    - Open GitHub and create a pull request from `<your-repo>/<task-branch>` → `CASA/development`.
+    - Add relevant details and request reviews if needed.
+
+This process ensures that your fork is always in sync with CASA’s latest changes while minimizing conflicts.
+
+
 # Go Router Navigation
 
 Here’s a list of all possible navigation methods in **GoRouter**, with one-liner explanations:
