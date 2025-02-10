@@ -74,11 +74,15 @@ class ProductCard extends StatelessWidget {
               const SizedBox(height: 5),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Flexible(
-                  child: Text(
-                    description,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        description,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 5),
