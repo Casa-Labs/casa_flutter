@@ -89,7 +89,7 @@ class OrderCard extends StatelessWidget {
                           child: BodyText(
                             text: 'M',
                             fontSize: 14,
-                            color: Colors.black.withOpacity(0.7),
+                            color: Colors.black.withValues(alpha:0.7),
                             fontFamily: Font.gilroy,
                             fontWeight: FontWeight.w600,
                           ),

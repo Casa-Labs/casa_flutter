@@ -93,10 +93,10 @@ class WishlistItemScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const Padding(
+               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 5),
                 child: FilterRow(
-                  item: ['Brand', 'Product', 'Color', 'Price', 'Size'],
+                  brandList: wishlistController.brandFilter,colorList: wishlistController.colorFilter,productList: wishlistController.productFilter,
                 ),
               ),
               Obx(() {

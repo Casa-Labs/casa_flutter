@@ -78,7 +78,6 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                     menufontSize: 20,
                     fullSize: false,
                     onSelected: (selectedItems) {
-                      print('Selected Items: $selectedItems');
                     },
                     label: '',
                   ),

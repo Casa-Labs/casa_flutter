@@ -1,12 +1,17 @@
+import 'package:casa_flutter/src/home/controller/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../utils/color.dart';
 import '../../../utils/font.dart';
 import '../../onboarding/view/widget/common_filter_dialog.dart';
 
 class FilterRow extends StatelessWidget {
-  final List<dynamic> item;
-  const FilterRow({super.key,required this.item});
+  final List? brandList;
+  final List? productList;
+  final List? colorList;
+    FilterRow({super.key,this.brandList, this.productList, this.colorList});
 
+  final homeCtrl = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -20,8 +25,13 @@ class FilterRow extends StatelessWidget {
                 backgroundColor: CColor.filterColor,
                 child:  Icon(Icons.tune_rounded,size: 20,color: CColor.black),
               ),
-              ListView.builder(
-                  itemCount: item.length,
+         _filterItem('Brand', brandList!, context),
+         _filterItem('Product', productList!, context),
+         _filterItem('Color', colorList!, context),
+         _filterItem('Price', [], context),
+         _filterItem('Size', [], context),
+            /*  ListView.builder(
+                  itemCount: 5,
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.horizontal,
@@ -29,7 +39,24 @@ class FilterRow extends StatelessWidget {
                     return InkWell(
                       splashColor: CColor.transparent,
                       highlightColor: CColor.transparent,
-                      onTap: () => _showTextInputDialog(context),
+                      onTap: () {
+                        var children = [];
+                        switch (item[index]) {
+                          case 'Brand':
+                            children = homeCtrl.brandFilter;
+                            break;
+                          case 'Product':
+                            children = homeCtrl.productFilter;
+                            break;
+                          case 'Color':
+                            children = homeCtrl.colorFilter;
+                            break;
+                          default:
+                            children = [];
+                            break;
+                        }
+                        _showTextInputDialog(context,children);
+                          },
                       child: Container(
                         margin: const EdgeInsets.all(5),
                         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -57,14 +84,14 @@ class FilterRow extends StatelessWidget {
                       ),
                     );
                   },
-                ),
+                ),*/
             ],
           ),
         ),
       );
   }
 
-  void _showTextInputDialog(BuildContext context) async {
+  void _showTextInputDialog(BuildContext context, List children ) async {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -76,11 +103,46 @@ class FilterRow extends StatelessWidget {
               contentPadding: EdgeInsets.all(0),
               insetPadding: EdgeInsets.all(20),
               backgroundColor: Colors.white54,
-              content: CommonFilterDialog(),
+              content: CommonFilterDialog(children:children),
             );
           },
         );
       },
+    );
+  }
+
+  _filterItem(String filterName, List children,BuildContext context){
+    return  InkWell(
+      splashColor: CColor.transparent,
+      highlightColor: CColor.transparent,
+      onTap: () {
+        _showTextInputDialog(context,children);
+      },
+      child: Container(
+        margin: const EdgeInsets.all(5),
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        decoration: BoxDecoration(
+          color: CColor.filterColor,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              filterName,
+              style: TextStyle(
+                fontSize: 13,
+                color: CColor.black,
+                fontWeight: FontWeight.w500,
+                fontFamily: Font.gilroy,
+              ),
+            ),
+            const SizedBox(width: 2),
+            Icon(Icons.arrow_drop_down,color: CColor.black)
+          ],
+        ),
+      ),
     );
   }
 }

@@ -216,7 +216,7 @@ class _CartItemState extends State<CartItem>
                                     text: 'Size:',
                                     fontSize: 12,
                                     // fontFamily: Font.gilroy,
-                                    color: Colors.black.withOpacity(0.7),
+                                    color: Colors.black.withValues(alpha: 0.7),
                                     fontWeight: FontWeight.w500,
                                   ),
                                   Expanded(
@@ -226,7 +226,7 @@ class _CartItemState extends State<CartItem>
                                         text: selectedSize(
                                             widget.item.selectedSizePosition!),
                                         fontSize: 15,
-                                        color: Colors.black.withOpacity(0.7),
+                                        color: Colors.black.withValues(alpha:0.7),
                                         // fontFamily: Font.gilroy,
                                         fontWeight: FontWeight.w600,
                                       ),

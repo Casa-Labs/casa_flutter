@@ -9,11 +9,11 @@ import '../../../common/widgets/filter_row.dart';
 import '../../model/home_models.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+   HomeScreen({super.key});
+  final homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
-    final HomeController homeController = Get.put(HomeController());
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -22,9 +22,7 @@ class HomeScreen extends StatelessWidget {
         builder: (logic) {
           return Column(
             children: [
-              FilterRow(
-                item: ['Brand', 'Product', 'Color', 'Price', 'Size'],
-              ),
+              FilterRow(brandList: logic.brandFilter,colorList: logic.colorFilter,productList: logic.productFilter),
               _cardSwiper(logic,context)
             ],
           );

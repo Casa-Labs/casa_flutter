@@ -136,7 +136,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.home,
       name: RouteNames.home,
-      builder: (context, state) => const HomeScreen(),
+      builder: (context, state) =>  HomeScreen(),
     ),
     GoRoute(
       path: _AppPaths.notifications,
