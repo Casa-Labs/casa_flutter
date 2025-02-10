@@ -8,7 +8,7 @@ enum DropdownMode { single, multiple }
 
 class ReusableDropdown extends StatefulWidget {
   final List<String> items;
-  final void Function(List<String>) onSelected;
+  final Function(List<String>) onSelected;
   final String label;
   final DropdownMode mode;
   final double fontSize;
@@ -31,7 +31,7 @@ class ReusableDropdown extends StatefulWidget {
   });
 
   @override
-  _ReusableDropdownState createState() => _ReusableDropdownState();
+  State<ReusableDropdown> createState() => _ReusableDropdownState();
 }
 
 class _ReusableDropdownState extends State<ReusableDropdown> {

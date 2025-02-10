@@ -13,6 +13,9 @@ class WishlistController extends GetxController {
   RxBool isWishItemDeleted = false.obs;
   RxBool isBottomSheet = false.obs;
   RxInt itemIndex = (-1).obs;
+  final List<String> brandFilter  = ['Zara','H&M','Gap', 'CASA', 'Tommy hilfiger'];
+  final List<String> productFilter  = ['Topwear', 'Shirt', 'Sweatshirt', 'T- shirt','Hoodie'];
+  final List<String> colorFilter  = ['Black', 'Brown', 'Green', 'Denim','Zebra print'];
 
   RxString searchQuery = ''.obs;
   RxString selectedImage = ''.obs;

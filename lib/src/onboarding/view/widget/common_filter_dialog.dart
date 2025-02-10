@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/widgets/custom_text_form_field_widget.dart';
 import '../../../common/widgets/text_widgets.dart';
 import '../../../common/widgets/textfields.dart';
 
 class CommonFilterDialog extends StatefulWidget {
-  const CommonFilterDialog({super.key});
+ final List? children;
+   const CommonFilterDialog({super.key, this.children});
 
   @override
   State<CommonFilterDialog> createState() => _CommonFilterDialogState();
@@ -23,89 +25,143 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
         height: MediaQuery.of(context).size.height * .63,
         child: Column(
           children: [
-            SizedBox(height: 40, child: CustomSearchBar()),
-            TabBar(
-              indicatorWeight: 1,
-              dividerHeight: 0,
-              splashFactory: NoSplash.splashFactory,
-              indicator: BoxDecoration(
-                  color: Colors.transparent,
-                  border: Border.all(color: Colors.transparent)),
-              labelPadding: const EdgeInsets.symmetric(horizontal: 2),
-              tabs: [
-                Tab(
-                  child: InkWell(
-                    overlayColor: WidgetStateProperty.all(Colors.transparent),
-                    splashFactory: NoSplash.splashFactory,
-                    onTap: () {
-                      setState(() {
-                        index = 0;
-                      });
-                    },
-                    child: Container(
-                      height: 36,
-                      width: MediaQuery.of(context).size.width,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(30),
-                          color: index == 0 ? Colors.black : Colors.white),
-                      child: Center(
-                        child: BodyText(
-                            text: "MEN",
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: index == 0 ? Colors.white : Colors.black),
+            if (widget.children!.isNotEmpty) ...[
+              SizedBox(height: 40, child: CustomSearchBar()),
+              TabBar(
+                indicatorWeight: 1,
+                dividerHeight: 0,
+                splashFactory: NoSplash.splashFactory,
+                indicator: BoxDecoration(
+                    color: Colors.transparent,
+                    border: Border.all(color: Colors.transparent)),
+                labelPadding: const EdgeInsets.symmetric(horizontal: 2),
+                tabs: [
+                  Tab(
+                    child: InkWell(
+                      overlayColor: WidgetStateProperty.all(Colors.transparent),
+                      splashFactory: NoSplash.splashFactory,
+                      onTap: () {
+                        setState(() {
+                          index = 0;
+                        });
+                      },
+                      child: Container(
+                        height: 36,
+                        width: MediaQuery.of(context).size.width,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 15,
+                        ),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                            borderRadius: BorderRadius.circular(30),
+                            color: index == 0 ? Colors.black : Colors.white),
+                        child: Center(
+                          child: BodyText(
+                              text: "MEN",
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: index == 0 ? Colors.white : Colors.black),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Tab(
-                  child: InkWell(
-                    overlayColor: WidgetStateProperty.all(Colors.transparent),
-                    splashFactory: NoSplash.splashFactory,
-                    onTap: () {
-                      setState(() {
-                        index = 1;
-                      });
-                    },
-                    child: Container(
-                      height: 36,
-                      width: MediaQuery.of(context).size.width,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(30),
-                          color: index == 1 ? Colors.black : Colors.white),
-                      child: Center(
-                        child: BodyText(
-                            text: "WOMEN",
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: index == 1 ? Colors.white : Colors.black),
+                  Tab(
+                    child: InkWell(
+                      overlayColor: WidgetStateProperty.all(Colors.transparent),
+                      splashFactory: NoSplash.splashFactory,
+                      onTap: () {
+                        setState(() {
+                          index = 1;
+                        });
+                      },
+                      child: Container(
+                        height: 36,
+                        width: MediaQuery.of(context).size.width,
+                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                            borderRadius: BorderRadius.circular(30),
+                            color: index == 1 ? Colors.black : Colors.white),
+                        child: Center(
+                          child: BodyText(
+                              text: "WOMEN",
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: index == 1 ? Colors.white : Colors.black),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            Expanded(
-              child: TabBarView(
-                physics: NeverScrollableScrollPhysics(),
-                children: [
-                  _tabbarList(),
-                  _tabbarList(),
                 ],
               ),
+              SizedBox(
+                height: 25,
+              ),
+              Expanded(
+                child: TabBarView(
+                  physics: NeverScrollableScrollPhysics(),
+                  children: [
+                    _tabBarList(),
+                    _tabBarList(),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+            ]
+            else...[
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text('Min'),
+                      Text('Max'),
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 48,
+                      width: 80,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          // border: Border.all(color: Colors.black)
+                      ),
+                      child: CustomTextFormField(
+                          hintText: '\$0',fillColor: Colors.white,),
+                    ),
+                    Container(
+                      height: 2,
+                      width: 30,
+                      color: Colors.black,
+                    ),
+                    Container(
+                      height: 48,
+                      width: 80,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          // border: Border.all(color: Colors.black)
+                      ),
+                      child: CustomTextFormField(hintText:'\$100',fillColor: Colors.white,),
+                    )
+                  ],
+                )
+              ],
             ),
-            SizedBox(
-              height: 20,
-            ),
+            SizedBox(height: 20),
+            ],
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -154,46 +210,44 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
     );
   }
 
-  Widget _tabbarList() {
-    return ListView.separated(
+  Widget _tabBarList() {
+    return ListView.builder(
       itemCount: 5,
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        return Material(
-          elevation: 4,
-          borderRadius: BorderRadius.circular(10),
-          surfaceTintColor: Colors.white,
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
-            child: Row(
-              spacing: 15,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black, width: 1.5),
-                      borderRadius: BorderRadius.circular(40)),
-                  child: CircleAvatar(
-                    maxRadius: 18,
-                    backgroundColor: const Color(0xFF002957),
-                    child: Text(
-                      "ZARA".substring(0, 4).toUpperCase(),
-                      style: const TextStyle(color: Colors.white, fontSize: 12),
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 6),
+          child: Material(
+            elevation: 4,
+            borderRadius: BorderRadius.circular(10),
+            surfaceTintColor: Colors.white,
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
+              child: Row(
+                spacing: 15,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black, width: 1.5),
+                        borderRadius: BorderRadius.circular(40)),
+                    child: CircleAvatar(
+                      maxRadius: 18,
+                      backgroundColor: const Color(0xFF002957),
+                      child: Text(
+                        "ZARA".substring(0, 4).toUpperCase(),
+                        style: const TextStyle(color: Colors.white, fontSize: 12),
+                      ),
                     ),
                   ),
-                ),
-                BodyText(
-                  text: "Zara",
-                  fontSize: 24,
-                )
-              ],
+                  BodyText(
+                    text: widget.children![index],
+                    fontSize: 24,
+                  )
+                ],
+              ),
             ),
           ),
-        );
-      },
-      separatorBuilder: (BuildContext context, int index) {
-        return SizedBox(
-          height: 15,
         );
       },
     );

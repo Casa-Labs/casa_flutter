@@ -1,6 +1,8 @@
 import 'package:casa_flutter/routes/app_routes.dart';
+import 'package:casa_flutter/src/explore/controller/explore_controller.dart';
 import 'package:casa_flutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../common/widgets/filter_row.dart';
@@ -11,6 +13,7 @@ class StoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final exploreCtrl = Get.find<ExploreController>();
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -22,7 +25,7 @@ class StoreScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     FilterRow(
-                      item: ['Brand', 'Product', 'Color', 'Price', 'Size'],
+                      brandList: exploreCtrl.brandFilter,colorList: exploreCtrl.colorFilter,productList: exploreCtrl.productFilter,
                     ),
                     const SizedBox(height: 20),
                     Expanded(

@@ -33,7 +33,7 @@ class ProductCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12), // ✅ Rounded corners
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1), // ✅ Soft shadow
+              color: Colors.black.withValues(alpha: 0.1), // ✅ Soft shadow
               blurRadius: 6,
               spreadRadius: 2,
               offset: const Offset(0, 3),

@@ -684,7 +684,7 @@ class _SetLocationPageState extends State<SetLocationPage> {
                               ),
                               BodyText(
                                 text: 'Using GPS',
-                                color: Colors.pinkAccent.withOpacity(0.5),
+                                color: Colors.pinkAccent.withValues(alpha: 0.5),
                                 fontSize: 18,
                               ),
                             ],

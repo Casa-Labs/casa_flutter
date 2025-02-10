@@ -1,4 +1,5 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
+import 'package:casa_flutter/src/home/model/service/home_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,11 +7,19 @@ import 'package:get/get.dart';
 import '../model/home_models.dart';
 
 class HomeController extends GetxController{
+
+  // ========= CONTROLLERS ========= //
+
+  final AppinioSwiperController controller = AppinioSwiperController();
+
+
+  // ========= VARIABLES ========= //
+
+
+  bool isDisabled = false;
   var products = <ProductModel>[].obs;
   var isLoading = false.obs;
   RxList<ProductModel> reactiveProducts = <ProductModel>[].obs;
-  bool isDisabled = false;
-  final AppinioSwiperController controller = AppinioSwiperController();
   bool isShowReturn = false;
   bool isShowShipping = false;
   var price = ''.obs;
@@ -22,7 +31,13 @@ class HomeController extends GetxController{
   int currentIndex = 0;
   final ValueNotifier<int> counter = ValueNotifier<int>(1);
   IconData? swipeIcon;
+  final List<String> brandFilter  = ['Zara','H&M','Gap', 'CASA', 'Tommy hilfiger'];
+  final List<String> productFilter  = ['Topwear', 'Shirt', 'Sweatshirt', 'T- shirt','Hoodie'];
+  final List<String> colorFilter  = ['Black', 'Brown', 'Green', 'Denim','Zebra print'];
 
+  // ========== STATES ========== //
+
+  // ========== UI FUNCTIONS ========== //
 
   void onEnd() {
     if (kDebugMode) {
@@ -88,5 +103,13 @@ class HomeController extends GetxController{
   changeReturnPolicy(){
     isShowReturn = !isShowReturn;
     update();
+  }
+
+// ========== APIs FUNCTIONS ========== //
+
+  Future<void> getProductCall() async {
+
+
+    await HomeService().getProducts();
   }
 }

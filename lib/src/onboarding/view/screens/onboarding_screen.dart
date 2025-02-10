@@ -64,7 +64,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
           child: SizedBox(
               height: 35,
               width: Get.width * .95,
-              child: const FilterRow(item: [])),
+              child: FilterRow()),
         ),
       ),
       PositionTutorial(
@@ -128,7 +128,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
                 Shadow(
                   offset: const Offset(1.0, 1.0),
                   blurRadius: 6.0,
-                  color: Colors.black.withOpacity(0.2),
+                  color: Colors.black.withValues(alpha:0.2),
                 ),
               ],
             ),

@@ -16,9 +16,9 @@ class ProductDetails extends StatelessWidget {
   final ProductModel product;
   const ProductDetails({super.key, required this.product});
 
+
   @override
   Widget build(BuildContext context) {
-    final homeController = Get.find<HomeController>();
     return GetBuilder<HomeController>(builder: (logic) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10),

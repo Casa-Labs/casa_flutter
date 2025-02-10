@@ -13,6 +13,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool? enabled;
   final TextInputAction? textInputAction;
   final bool obscureText;
+  final Color? fillColor;
   final void Function(String)? onChanged;
   final Widget? prefixIcon;
 
@@ -30,7 +31,7 @@ class CustomTextFormField extends StatelessWidget {
     this.textInputAction = TextInputAction.unspecified,
     this.obscureText = false,
     this.onChanged,
-    this.prefixIcon,
+    this.prefixIcon,  this.fillColor,
   });
 
   @override
@@ -54,8 +55,9 @@ class CustomTextFormField extends StatelessWidget {
           hintText: hintText,
           hintStyle: hintStyle,
           prefixIcon: prefixIcon,
+          fillColor: fillColor,
+          filled: true
         ),
-
         textInputAction: textInputAction,
         obscureText: obscureText,
         onChanged: onChanged,

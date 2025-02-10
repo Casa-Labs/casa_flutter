@@ -48,7 +48,6 @@ class OrderReviewController extends GetxController {
     gst.value = calculateGST(itemtotal.value);
     total.value = itemtotal.value + gst.value;
 
-    print('Total Price: ${formatTotal(total.value)}');
   }
 
   double calculateGST(double totalValue) {
