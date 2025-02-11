@@ -80,19 +80,24 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                   const SizedBox(height: 5),
                   _optionSection(shopFor, () {
-                    Get.bottomSheet(BrandSelection(
-                      titel: "Would you like to shop for?",
-                      onTap: (p0, p1) {
-                        for (var listData in shopForList) {
-                          listData.isSelected = false;
-                        }
-                        shopForList[p1].isSelected = true;
-                        shopFor = shopForList[p1].name;
-                        setState(() {});
-                      },
-                      radioList: shopForList,
-                      brandSelection: shopFor,
-                    ));
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return BrandSelection(
+                            titel: "Would you like to shop for?",
+                            onTap: (p0, p1) {
+                              for (var listData in shopForList) {
+                                listData.isSelected = false;
+                              }
+                              shopForList[p1].isSelected = true;
+                              shopFor = shopForList[p1].name;
+                              setState(() {});
+                            },
+                            radioList: shopForList,
+                            brandSelection: shopFor,
+                          );
+                        },
+                      );
                   }),
                 ],
               ),
@@ -107,19 +112,24 @@ class _SearchScreenState extends State<SearchScreen> {
                   _text('Where would you like to buy from?'),
                   const SizedBox(height: 5),
                   _optionSection(buyFrom, () {
-                    Get.bottomSheet(BrandSelection(
-                      titel: "Where would you like to buy from?",
-                      onTap: (p0, p1) {
-                        for (var listData in buyFromList) {
-                          listData.isSelected = false;
-                        }
-                        buyFromList[p1].isSelected = true;
-                        buyFrom = buyFromList[p1].name;
-                        setState(() {});
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return BrandSelection(
+                          titel: "Where would you like to buy from?",
+                          onTap: (p0, p1) {
+                            for (var listData in buyFromList) {
+                              listData.isSelected = false;
+                            }
+                            buyFromList[p1].isSelected = true;
+                            buyFrom = buyFromList[p1].name;
+                            setState(() {});
+                          },
+                          radioList: buyFromList,
+                          brandSelection: buyFrom,
+                        );
                       },
-                      radioList: buyFromList,
-                      brandSelection: buyFrom,
-                    ));
+                    );
                   }),
                   const SizedBox(
                     height: 5,
@@ -127,19 +137,24 @@ class _SearchScreenState extends State<SearchScreen> {
                   _text('Categories'),
                   const SizedBox(height: 5),
                   _optionSection(categories, () {
-                    Get.bottomSheet(BrandSelection(
-                      titel: "Select Categories",
-                      onTap: (p0, p1) {
-                        for (var listData in categoriesList) {
-                          listData.isSelected = false;
-                        }
-                        categoriesList[p1].isSelected = true;
-                        categories = categoriesList[p1].name;
-                        setState(() {});
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return BrandSelection(
+                          titel: "Select Categories",
+                          onTap: (p0, p1) {
+                            for (var listData in categoriesList) {
+                              listData.isSelected = false;
+                            }
+                            categoriesList[p1].isSelected = true;
+                            categories = categoriesList[p1].name;
+                            setState(() {});
+                          },
+                          radioList: categoriesList,
+                          brandSelection: categories,
+                        );
                       },
-                      radioList: categoriesList,
-                      brandSelection: categories,
-                    ));
+                    );
                   }),
                   const SizedBox(
                     height: 5,
@@ -147,24 +162,29 @@ class _SearchScreenState extends State<SearchScreen> {
                   _text('Style preferences'),
                   const SizedBox(height: 5),
                   _optionSection(style, () {
-                    Get.bottomSheet(BrandSelection(
-                      titel: "Style preferences",
-                      onTap: (p0, p1) {
-                        styleList[p1].isSelected = !styleList[p1].isSelected;
-                        List<String> list = [];
-                        for (var data in styleList) {
-                          if (data.isSelected) {
-                            list.add(data.name);
-                          }
-                        }
-                        String name = list.join(", ");
-                        style = name;
-                        setState(() {});
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return BrandSelection(
+                          titel: "Style preferences",
+                          onTap: (p0, p1) {
+                            styleList[p1].isSelected = !styleList[p1].isSelected;
+                            List<String> list = [];
+                            for (var data in styleList) {
+                              if (data.isSelected) {
+                                list.add(data.name);
+                              }
+                            }
+                            String name = list.join(", ");
+                            style = name;
+                            setState(() {});
+                          },
+                          radioList: styleList,
+                          brandSelection: style,
+                          isGrid: true,
+                        );
                       },
-                      radioList: styleList,
-                      brandSelection: style,
-                      isGrid: true,
-                    ));
+                    );
                   }),
                 ],
               ),
@@ -420,7 +440,7 @@ class _BrandSelectionState extends State<BrandSelection> {
             child: Stack(
               children: [
                 Positioned(
-                  top: Get.width * 0.01,
+                  top: MediaQuery.of(context).size.height * 0.01,
                   child: InkWell(
                       overlayColor: WidgetStateProperty.all(Colors.transparent),
                       splashFactory: NoSplash.splashFactory,
