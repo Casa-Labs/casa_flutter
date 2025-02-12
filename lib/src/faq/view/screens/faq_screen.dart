@@ -1,4 +1,6 @@
+import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../utils/color_constant.dart';
@@ -18,30 +20,8 @@ class _FAQScreenState extends State<FAQScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text("FAQ"),
-        centerTitle: true,
-        // leading: InkWell(
-        //   overlayColor: WidgetStateProperty.all(Colors.transparent),
-        //   splashFactory: NoSplash.splashFactory,
-        //   onTap: () => Get.back(),
-        //   child: Padding(
-        //     padding: const EdgeInsets.all(12),
-        //     child: SvgPicture.asset('assets/icon/arrow_left.svg'),
-        //   ),
-        // ),
-        actions: [
-          // InkWell(
-          //   overlayColor: WidgetStateProperty.all(Colors.transparent),
-          //   splashFactory: NoSplash.splashFactory,
-          //   onTap: () => Get.back(),
-          //   child: Padding(
-          //     padding: const EdgeInsets.all(12),
-          //     child: SvgPicture.asset('assets/icon/setting.svg'),
-          //   ),
-          // ),
-        ],
+      appBar: CommonAppBar(
+        title: 'FAQ',
       ),
       body: SingleChildScrollView(
         child: Column(

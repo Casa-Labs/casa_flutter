@@ -1,3 +1,4 @@
+import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -16,14 +17,12 @@ class WishlistScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: BodyText(
-            text: 'My Closet', fontWeight: FontWeight.w700, fontSize: 23),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        automaticallyImplyLeading: false,
+      appBar: CommonAppBar(
+        title: 'My Closet',
+        showBackButton: false,
+        isBodyText: true,
       ),
+
       body: SingleChildScrollView(
         child: Obx(() {
           return Column(

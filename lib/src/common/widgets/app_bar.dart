@@ -48,7 +48,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                   InkWell(
                     overlayColor: WidgetStateProperty.all(Colors.transparent),
                     splashFactory: NoSplash.splashFactory,
-                    onTap: () => Get.back(),
+                    onTap: () => Navigator.of(context).pop(),
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(12, 12, 2, 12),
                       child: Icon(Icons.arrow_back_ios_new_rounded),
@@ -88,7 +88,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
               ? InkWell(
                   overlayColor: WidgetStateProperty.all(Colors.transparent),
                   splashFactory: NoSplash.splashFactory,
-                  onTap: () => Get.back(),
+                  onTap: () => Navigator.of(context).pop(),
                   child: Padding(
                     padding: const EdgeInsets.all(12),
                     child: Icon(Icons.arrow_back_ios_new_rounded),

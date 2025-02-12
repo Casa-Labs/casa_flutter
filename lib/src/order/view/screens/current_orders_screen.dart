@@ -1,3 +1,4 @@
+import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
 import 'package:casa_flutter/src/order/controller/current_orders_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,13 +20,17 @@ class CurrentOrdersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppbar(
+      appBar: CommonAppBar(
+        isBodyText: true,
+        title: 'Current Orders',
+      ),
+    /*  appBar: CustomAppbar(
         title: 'Current Orders',
         isLeadingBack: true,
         isLeading: false,
         isFilter: false,
         isNotification: false,
-      ),
+      ),*/
       body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: ListView.builder(
