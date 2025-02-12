@@ -1,3 +1,4 @@
+import 'package:casa_flutter/utils/app_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/notification_tile_widget.dart';
@@ -8,10 +9,10 @@ class NotificationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Notifications'),
-        centerTitle: true,
+      appBar: CommonAppBar(
+        title: 'Notifications',
       ),
+
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 20),
         children: [

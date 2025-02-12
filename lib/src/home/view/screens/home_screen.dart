@@ -20,11 +20,13 @@ class HomeScreen extends StatelessWidget {
       appBar: CustomAppbar(),
       body: GetBuilder<HomeController>(
         builder: (logic) {
-          return Column(
-            children: [
-              FilterRow(brandList: logic.brandFilter,colorList: logic.colorFilter,productList: logic.productFilter),
-              _cardSwiper(logic,context)
-            ],
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                FilterRow(brandList: logic.brandFilter,colorList: logic.colorFilter,productList: logic.productFilter),
+                _cardSwiper(logic,context)
+              ],
+            ),
           );
         },
       ),
