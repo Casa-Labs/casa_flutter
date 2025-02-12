@@ -1,5 +1,4 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
-import 'package:casa_flutter/src/home/model/service/home_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -109,7 +108,5 @@ class HomeController extends GetxController{
 
   Future<void> getProductCall() async {
 
-
-    await HomeService().getProducts();
   }
 }
