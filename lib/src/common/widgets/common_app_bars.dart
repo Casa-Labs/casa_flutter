@@ -46,7 +46,6 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: actions,
     );
   }
-
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
