@@ -1,6 +1,5 @@
 import 'package:casa_flutter/routes/app_routes.dart';
 import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
-import 'package:casa_flutter/src/common/widgets/textfields.dart';
 import 'package:casa_flutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -14,14 +13,6 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: CommonAppBar(
         title: 'Profile',
-        widget: Container(
-          height: 40,
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: CustomSearchBar(),
-        ),
       ),
       body: Column(
         children: [
