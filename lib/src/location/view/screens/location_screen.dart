@@ -1,3 +1,4 @@
+import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
 import 'package:flutter/material.dart';
 
 class LocationScreen extends StatelessWidget {
@@ -6,9 +7,8 @@ class LocationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Location'),
-        centerTitle: true,
+      appBar: CommonAppBar(
+        title: 'Location',
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),

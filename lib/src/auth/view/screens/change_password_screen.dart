@@ -17,7 +17,7 @@ class ChangePasswordScreen extends StatelessWidget {
           Align(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: const EdgeInsets.only(top: 30, left: 20),
+                padding: const EdgeInsets.only(top: 50, left: 20),
                 child: IconButton(
                     onPressed: () {
                       context.pop();
