@@ -18,7 +18,6 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onTap,
     this.returnData,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return AppBar(
