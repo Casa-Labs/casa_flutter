@@ -1,4 +1,5 @@
 import 'package:casa_flutter/src/common/widgets/text_widgets.dart';
+import 'package:casa_flutter/src/common/widgets/textfields.dart';
 import 'package:flutter/material.dart';
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -8,6 +9,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isBodyText;
   final dynamic returnData;
   final VoidCallback? onTap;
+  final Widget? widget;
 
   const CommonAppBar({
     Key? key,
@@ -17,6 +19,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.isBodyText = false,
     this.onTap,
     this.returnData,
+    this.widget,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -39,9 +42,9 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
         },
         icon: const Icon(Icons.arrow_back_ios),
       ):const SizedBox(),
-      title: isBodyText?
+      title:widget ?? (isBodyText?
       BodyText(text: title, fontWeight: FontWeight.w700, fontSize: 23):
-      Text(title),
+      Text(title)),
       actions: actions,
     );
   }

@@ -34,7 +34,7 @@ class StoreScreen extends StatelessWidget {
                               const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
                                   crossAxisSpacing: 8,
-                                  childAspectRatio: 0.55,
+                                  childAspectRatio: 0.54,
                                   mainAxisSpacing: 15),
                           itemCount: 5,
                           itemBuilder: (context, index) {
