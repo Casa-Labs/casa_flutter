@@ -1,4 +1,4 @@
-import 'package:casa_flutter/utils/app_bar.dart';
+import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/notification_tile_widget.dart';
@@ -12,7 +12,6 @@ class NotificationsScreen extends StatelessWidget {
       appBar: CommonAppBar(
         title: 'Notifications',
       ),
-
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 20),
         children: [

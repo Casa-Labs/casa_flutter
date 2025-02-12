@@ -1,4 +1,4 @@
-import 'package:casa_flutter/utils/app_bar.dart';
+import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';

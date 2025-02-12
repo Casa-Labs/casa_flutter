@@ -1,10 +1,12 @@
+import 'package:casa_flutter/src/common/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final List<Widget>? actions;
   final bool showBackButton;
-  final dynamic returnData; // ✅ Optional return data
+  final bool isBodyText;
+  final dynamic returnData;
   final VoidCallback? onTap;
 
   const CommonAppBar({
@@ -12,8 +14,9 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.title,
     this.actions,
     this.showBackButton = true,
+    this.isBodyText = false,
     this.onTap,
-    this.returnData, // ✅ Default is null (optional)
+    this.returnData,
   }) : super(key: key);
 
   @override
@@ -26,18 +29,20 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? IconButton(
         onPressed: () {
           if (onTap != null) {
-            onTap!(); // ✅ Custom onTap if provided
+            onTap!();
           } else {
             if (returnData != null) {
-              Navigator.of(context).pop(returnData); // ✅ Pass data only if not null
+              Navigator.of(context).pop(returnData);
             } else {
-              Navigator.of(context).pop(); // ✅ Just pop if no data
+              Navigator.of(context).pop();
             }
           }
         },
         icon: const Icon(Icons.arrow_back_ios),
       ):const SizedBox(),
-      title: Text(title),
+      title: isBodyText?
+      BodyText(text: title, fontWeight: FontWeight.w700, fontSize: 23):
+      Text(title),
       actions: actions,
     );
   }

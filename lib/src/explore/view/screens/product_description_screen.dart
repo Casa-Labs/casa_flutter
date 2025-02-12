@@ -1,3 +1,4 @@
+import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
 import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:casa_flutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +18,8 @@ class ProductDescriptionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Explore'),
-        centerTitle: true,
+      appBar: CommonAppBar(
+        title: 'Explore',
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),

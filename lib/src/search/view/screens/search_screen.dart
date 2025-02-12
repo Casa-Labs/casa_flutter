@@ -1,3 +1,4 @@
+import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -47,24 +48,8 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-        backgroundColor: Colors.white,
-        leading: InkWell(
-            overlayColor: WidgetStateProperty.all(Colors.transparent),
-            splashFactory: NoSplash.splashFactory,
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: const Icon(Icons.arrow_back_ios_new_rounded, size: 20)),
-        leadingWidth: 70,
-        centerTitle: true,
-        title: const BodyText(
-          text: "Narrow your search",
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-        ),
-        toolbarHeight: 70,
+      appBar: CommonAppBar(
+        title: 'Narrow your search',
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
