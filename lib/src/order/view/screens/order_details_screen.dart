@@ -41,7 +41,7 @@ class OrderDetails extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
                 SizedBox(height: 10),
-                OrderCard(),
+                OrderCard(null),
                 SizedBox(height: 10),
                 const BodyText(
                   text: "Order packed",

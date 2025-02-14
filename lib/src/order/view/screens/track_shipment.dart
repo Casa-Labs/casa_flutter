@@ -28,7 +28,7 @@ class TrackShipment extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                OrderCard(),
+                OrderCard(null),
                 SizedBox(height: 10),
                 const BodyText(
                   text: "Order packed",

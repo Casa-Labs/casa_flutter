@@ -1,3 +1,4 @@
+import 'package:casa_flutter/src/order/model/order_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -5,7 +6,8 @@ import '../../../../utils/font.dart';
 import '../../../common/widgets/text_widgets.dart';
 
 class OrderCard extends StatelessWidget {
-  const OrderCard({super.key});
+  final OrderedProductDetails? productDetails;
+  const OrderCard(this.productDetails,{super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +89,7 @@ class OrderCard extends StatelessWidget {
                         child: Container(
                           alignment: Alignment.center,
                           child: BodyText(
-                            text: 'M',
+                            text: '${productDetails!.size}',
                             fontSize: 14,
                             color: Colors.black.withValues(alpha:0.7),
                             fontFamily: Font.gilroy,
@@ -116,9 +118,9 @@ class OrderCard extends StatelessWidget {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: const Color(0xFFD9D9D9)),
-                      child: const Center(
+                      child:  Center(
                         child: BodyText(
-                          text: '1',
+                          text: productDetails!.quantity.toString(),
                           fontSize: 12,
                           fontWeight: FontWeight.w300,
                         ),
