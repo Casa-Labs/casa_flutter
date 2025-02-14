@@ -5,8 +5,8 @@ import '../../../common/widgets/text_widgets.dart';
 import '../../../common/widgets/textfields.dart';
 
 class CommonFilterDialog extends StatefulWidget {
- final List? children;
-   const CommonFilterDialog({super.key, this.children});
+  final List? children;
+  const CommonFilterDialog({super.key, this.children});
 
   @override
   State<CommonFilterDialog> createState() => _CommonFilterDialogState();
@@ -16,6 +16,7 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
   int index = 0;
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return DefaultTabController(
       length: 2,
       initialIndex: index,
@@ -56,12 +57,14 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                             borderRadius: BorderRadius.circular(30),
                             color: index == 0 ? Colors.black : Colors.white),
                         child: Center(
-                          child: BodyText(
-                              text: "MEN",
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: index == 0 ? Colors.white : Colors.black),
-                        ),
+                            child: Text(
+                          "MEN",
+                          style: textTheme.bodyMedium?.copyWith(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: index == 0 ? Colors.white : Colors.black,
+                          ),
+                        )),
                       ),
                     ),
                   ),
@@ -83,12 +86,14 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                             borderRadius: BorderRadius.circular(30),
                             color: index == 1 ? Colors.black : Colors.white),
                         child: Center(
-                          child: BodyText(
-                              text: "WOMEN",
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: index == 1 ? Colors.white : Colors.black),
-                        ),
+                            child: Text(
+                          "WOMEN",
+                          style: textTheme.bodyMedium?.copyWith(
+                            // fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: index == 1 ? Colors.white : Colors.black,
+                          ),
+                        )),
                       ),
                     ),
                   ),
@@ -109,58 +114,62 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
               SizedBox(
                 height: 20,
               ),
-            ]
-            else...[
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: Row(
+            ] else ...[
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text('Min'),
+                        Text('Max'),
+                      ],
+                    ),
+                  ),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text('Min'),
-                      Text('Max'),
-                    ],
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 48,
-                      width: 80,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
+                      Container(
+                        height: 48,
+                        width: 80,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(8),
                           // border: Border.all(color: Colors.black)
+                        ),
+                        child: CustomTextFormField(
+                          hintText: '\$0',
+                          fillColor: Colors.white,
+                        ),
                       ),
-                      child: CustomTextFormField(
-                          hintText: '\$0',fillColor: Colors.white,),
-                    ),
-                    Container(
-                      height: 2,
-                      width: 30,
-                      color: Colors.black,
-                    ),
-                    Container(
-                      height: 48,
-                      width: 80,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
+                      Container(
+                        height: 2,
+                        width: 30,
+                        color: Colors.black,
+                      ),
+                      Container(
+                        height: 48,
+                        width: 80,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(8),
                           // border: Border.all(color: Colors.black)
-                      ),
-                      child: CustomTextFormField(hintText:'\$100',fillColor: Colors.white,),
-                    )
-                  ],
-                )
-              ],
-            ),
-            SizedBox(height: 20),
+                        ),
+                        child: CustomTextFormField(
+                          hintText: '\$100',
+                          fillColor: Colors.white,
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+              SizedBox(height: 20),
             ],
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -172,16 +181,18 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                     Navigator.of(context).pop();
                   },
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white),
-                    child: BodyText(
-                      text: "Clear",
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white),
+                      child: Text(
+                        "Clear",
+                        style: textTheme.bodyMedium?.copyWith(
+                          // fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      )),
                 ),
                 InkWell(
                   overlayColor: WidgetStateProperty.all(Colors.transparent),
@@ -190,17 +201,19 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                     Navigator.of(context).pop();
                   },
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.black),
-                    child: BodyText(
-                      fontWeight: FontWeight.w500,
-                      text: "Done",
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
-                  ),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.black),
+                      child: Text(
+                        "Done",
+                        style: textTheme.bodyMedium?.copyWith(
+                          // fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      )),
                 )
               ],
             ),
@@ -236,13 +249,16 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                       backgroundColor: const Color(0xFF002957),
                       child: Text(
                         "ZARA".substring(0, 4).toUpperCase(),
-                        style: const TextStyle(color: Colors.white, fontSize: 12),
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 12),
                       ),
                     ),
                   ),
-                  BodyText(
-                    text: widget.children![index],
-                    fontSize: 24,
+                  Text(
+                    widget.children![index],
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontSize: 24,
+                        ),
                   )
                 ],
               ),

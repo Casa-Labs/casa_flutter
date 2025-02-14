@@ -24,7 +24,7 @@ class CurrentOrdersScreen extends StatelessWidget {
         isBodyText: true,
         title: 'Current Orders',
       ),
-    /*  appBar: CustomAppbar(
+      /*  appBar: CustomAppbar(
         title: 'Current Orders',
         isLeadingBack: true,
         isLeading: false,
@@ -42,15 +42,19 @@ class CurrentOrdersScreen extends StatelessWidget {
                 children: [
                   OrderCard(),
                   SizedBox(height: 20),
-                  const BodyText(
-                    text: "Delivery by CASA",
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
+                  Text(
+                    "Delivery by CASA",
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          // fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
-                  const BodyText(
-                    text: "Tracking Id :182736223993",
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
+                  Text(
+                    "Tracking Id :182736223993",
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          // fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
                   OrderTracker(statuses: [
                     OrderTrackerModel(
@@ -62,10 +66,12 @@ class CurrentOrdersScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const BodyText(
-                        text: "Order number #17727722262",
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
+                      Text(
+                        "Order number #17727722262",
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              // fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
                       SmallButton(
                         onPressed: () {

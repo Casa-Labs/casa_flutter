@@ -46,11 +46,13 @@ class _CustomDropDownState extends State<CustomDropDown> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                BodyText(
-                  text: widget.label,
-                  fontSize: widget.fontSize,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.black, // Dynamic color
+                Text(
+                  widget.label,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontSize: widget.fontSize,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black, // Dynamic color
+                      ),
                   overflow: TextOverflow.ellipsis,
                 ),
                 const Icon(
@@ -60,18 +62,19 @@ class _CustomDropDownState extends State<CustomDropDown> {
             ),
         items: widget.items
             .map((String item) => DropdownMenuItem<String>(
-          value: item,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: BodyText(
-              text: item,
-              fontSize: widget.menufontSize,
-              fontWeight: FontWeight.w500,
-              color: Colors.white, // Menu item text color
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ))
+                  value: item,
+                  child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        item,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              fontSize: widget.menufontSize,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white, // Menu item text color
+                            ),
+                        overflow: TextOverflow.ellipsis,
+                      )),
+                ))
             .toList(),
         value: dropdownValue,
         onChanged: (String? value) {
@@ -86,11 +89,13 @@ class _CustomDropDownState extends State<CustomDropDown> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      BodyText(
-                        text: dropdownValue ?? 'Select Category',
-                        fontSize: widget.fontSize,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.black, // Dynamic color
+                      Text(
+                        dropdownValue ?? 'Select Category',
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              fontSize: widget.fontSize,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black, // Dynamic color
+                            ),
                         overflow: TextOverflow.ellipsis,
                       ),
                       const Icon(
@@ -119,10 +124,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
           useSafeArea: true,
           offset: Offset(0, 0),
           padding: const EdgeInsets.all(10),
-          width: widget.width ??
-              (widget.fullSize
-                  ? Get.width
-                  : Get.width / 2),
+          width: widget.width ?? (widget.fullSize ? Get.width : Get.width / 2),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14),
             gradient: const LinearGradient(
@@ -142,7 +144,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
           ),
         ),
         menuItemStyleData:
-        const MenuItemStyleData(padding: EdgeInsets.all(5), height: 60),
+            const MenuItemStyleData(padding: EdgeInsets.all(5), height: 60),
         onMenuStateChange: (bool isOpen) {
           setState(() {
             isDropdownOpen = isOpen;

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../common/widgets/filter_row.dart';
-import '../../../common/widgets/text_widgets.dart';
 import '../../controller/wishlist_controller.dart';
 import '../widgets/icons_widget.dart';
 
@@ -93,10 +92,12 @@ class WishlistItemScreen extends StatelessWidget {
                   ),
                 ),
               ),
-               Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 5),
                 child: FilterRow(
-                  brandList: wishlistController.brandFilter,colorList: wishlistController.colorFilter,productList: wishlistController.productFilter,
+                  brandList: wishlistController.brandFilter,
+                  colorList: wishlistController.colorFilter,
+                  productList: wishlistController.productFilter,
                 ),
               ),
               Obx(() {
@@ -173,30 +174,44 @@ class WishlistItemScreen extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          BodyText(
-                                            text: "ZARA",
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 13,
+                                          Text(
+                                            "ZARA",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 13,
+                                                ),
                                           ),
-                                          GestureDetector(
-                                              onTap: () {
-                                                wishlistController
-                                                    .wishRemoveItem();
-                                              },
-                                              child:
-                                                  Icon(Icons.bookmark_rounded))
                                         ],
                                       ),
-                                      BodyText(
-                                        text: itemData.title!,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 13,
+                                      GestureDetector(
+                                        onTap: () {
+                                          wishlistController.wishRemoveItem();
+                                        },
+                                        child: Icon(Icons.bookmark_rounded),
                                       ),
-                                      BodyText(
-                                        text: itemData.price!,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 13,
+                                      Text(
+                                        itemData.title!,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 13,
+                                            ),
+                                      ),
+                                      Text(
+                                        itemData.price!,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 13,
+                                            ),
                                       ),
                                     ],
                                   ),

@@ -39,6 +39,7 @@ class _ReusableDropdownState extends State<ReusableDropdown> {
   bool isDropdownOpen = false;
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Stack(
       children: [
         DropdownButtonHideUnderline(
@@ -48,11 +49,13 @@ class _ReusableDropdownState extends State<ReusableDropdown> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    BodyText(
-                      text: widget.label,
-                      fontSize: widget.fontSize,
-                      fontWeight: FontWeight.normal,
-                      color: Colors.black, // Dynamic color
+                    Text(
+                      widget.label,
+                      style: textTheme.bodyLarge?.copyWith(
+                        fontSize: widget.fontSize,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black, // Dynamic color
+                      ),
                       overflow: TextOverflow.ellipsis,
                     ),
                     const Icon(
@@ -64,15 +67,16 @@ class _ReusableDropdownState extends State<ReusableDropdown> {
                 .map((String item) => DropdownMenuItem<String>(
                       value: item,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: BodyText(
-                          text: item,
-                          fontSize: widget.menufontSize,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white, // Menu item text color
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            item,
+                            style: textTheme.bodyMedium?.copyWith(
+                              fontSize: widget.menufontSize,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white, // Menu item text color
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          )),
                     ))
                 .toList(),
             value: selectedValue,
@@ -88,11 +92,13 @@ class _ReusableDropdownState extends State<ReusableDropdown> {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          BodyText(
-                            text: selectedValue ?? 'Select Category',
-                            fontSize: widget.fontSize,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black, // Dynamic color
+                          Text(
+                            selectedValue ?? 'Select Category',
+                            style: textTheme.bodyLarge?.copyWith(
+                              fontSize: widget.fontSize,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black, // Dynamic color
+                            ),
                             overflow: TextOverflow.ellipsis,
                           ),
                           const Icon(

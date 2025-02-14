@@ -21,19 +21,22 @@ class FilterButton extends StatelessWidget {
           alignment: Alignment.center,
           padding: EdgeInsets.all(8),
           decoration: BoxDecoration(
-              color: Color(0x00d9d9d9), borderRadius: BorderRadius.circular(20)),
+              color: Color(0x00d9d9d9),
+              borderRadius: BorderRadius.circular(20)),
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                BodyText(
-                  text: label,
-                  color: Colors.black,
-                  fontSize: 12,
-                  fontFamily: Font.gilroy,
-                  fontWeight: FontWeight.w600,
+                Text(
+                  label,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontSize: 12,
+                        color: Colors.black,
+                        fontFamily: Font.gilroy, // Custom font
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
                 SizedBox(width: 2),
                 Icon(Icons.arrow_drop_down_rounded)

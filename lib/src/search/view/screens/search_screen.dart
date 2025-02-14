@@ -2,7 +2,6 @@ import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../common/widgets/text_widgets.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -65,24 +64,24 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                   const SizedBox(height: 5),
                   _optionSection(shopFor, () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return BrandSelection(
-                            titel: "Would you like to shop for?",
-                            onTap: (p0, p1) {
-                              for (var listData in shopForList) {
-                                listData.isSelected = false;
-                              }
-                              shopForList[p1].isSelected = true;
-                              shopFor = shopForList[p1].name;
-                              setState(() {});
-                            },
-                            radioList: shopForList,
-                            brandSelection: shopFor,
-                          );
-                        },
-                      );
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return BrandSelection(
+                          titel: "Would you like to shop for?",
+                          onTap: (p0, p1) {
+                            for (var listData in shopForList) {
+                              listData.isSelected = false;
+                            }
+                            shopForList[p1].isSelected = true;
+                            shopFor = shopForList[p1].name;
+                            setState(() {});
+                          },
+                          radioList: shopForList,
+                          brandSelection: shopFor,
+                        );
+                      },
+                    );
                   }),
                 ],
               ),
@@ -153,7 +152,8 @@ class _SearchScreenState extends State<SearchScreen> {
                         return BrandSelection(
                           titel: "Style preferences",
                           onTap: (p0, p1) {
-                            styleList[p1].isSelected = !styleList[p1].isSelected;
+                            styleList[p1].isSelected =
+                                !styleList[p1].isSelected;
                             List<String> list = [];
                             for (var data in styleList) {
                               if (data.isSelected) {
@@ -287,9 +287,11 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget _text(String text, {double? fontSize}) {
-    return BodyText(
-      text: text,
-      fontSize: 16,
+    return Text(
+      text,
+      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            fontSize: 16,
+          ),
     );
   }
 
@@ -342,11 +344,13 @@ class _FilterGenderState extends State<FilterGender> {
                   },
                 ),
                 const SizedBox(width: 60),
-                const BodyText(
-                  text: 'Would like to shop for?',
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                Text(
+                  'Would like to shop for?',
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        // fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                )
               ],
             ),
             const Divider(),
@@ -360,7 +364,12 @@ class _FilterGenderState extends State<FilterGender> {
                 });
                 Get.back();
               },
-              title: const BodyText(text: 'Male'),
+              title: Text(
+                'Male',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+              ),
             ),
             RadioListTile<String>(
               value: 'Female',
@@ -371,19 +380,28 @@ class _FilterGenderState extends State<FilterGender> {
                 });
                 Get.back();
               },
-              title: const BodyText(text: 'Female'),
+              title: Text(
+                'Female',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+              ),
             ),
             RadioListTile<String>(
-              value: 'Others',
-              groupValue: selectedGender,
-              onChanged: (value) {
-                setState(() {
-                  selectedGender = value;
-                });
-                Get.back();
-              },
-              title: const BodyText(text: 'Both'),
-            ),
+                value: 'Others',
+                groupValue: selectedGender,
+                onChanged: (value) {
+                  setState(() {
+                    selectedGender = value;
+                  });
+                  Get.back();
+                },
+                title: Text(
+                  'Both',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                )),
           ],
         ),
       ),
@@ -436,12 +454,9 @@ class _BrandSelectionState extends State<BrandSelection> {
                           size: 20)),
                 ),
                 Align(
-                  alignment: Alignment.topCenter,
-                  child: BodyText(
-                    text: widget.titel,
-                    fontSize: 18,
-                  ),
-                ),
+                    alignment: Alignment.topCenter,
+                    child: Text(widget.titel,
+                        style: Theme.of(context).textTheme.bodyLarge)),
               ],
             ),
           ),
@@ -498,7 +513,8 @@ class _BrandSelectionState extends State<BrandSelection> {
                               const SizedBox(
                                 width: 20,
                               ),
-                              BodyText(text: listData.name, fontSize: 18),
+                              Text(listData.name,
+                                  style: Theme.of(context).textTheme.bodyLarge)
                             ],
                           ),
                         ),
@@ -535,21 +551,24 @@ class _BrandSelectionState extends State<BrandSelection> {
                             setState(() {});
                           },
                           child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black),
-                                color: listData.isSelected
-                                    ? Colors.black
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(5)),
-                            child: BodyText(
-                              text: listData.name,
-                              color: listData.isSelected
-                                  ? Colors.white
-                                  : Colors.black,
-                              fontSize: 11,
-                            ),
-                          ),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black),
+                                  color: listData.isSelected
+                                      ? Colors.black
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Text(
+                                listData.name,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(
+                                      color: listData.isSelected
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                              )),
                         );
                       } else {
                         return Center(
@@ -598,23 +617,27 @@ class _SetLocationPageState extends State<SetLocationPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        scrolledUnderElevation: 0,
-        leading: InkWell(
-          overlayColor: WidgetStateProperty.all(Colors.transparent),
-          splashFactory: NoSplash.splashFactory,
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: const Icon(
-            Icons.arrow_back_ios_new_rounded,
-            size: 20,
+          scrolledUnderElevation: 0,
+          leading: InkWell(
+            overlayColor: WidgetStateProperty.all(Colors.transparent),
+            splashFactory: NoSplash.splashFactory,
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(
+              Icons.arrow_back_ios_new_rounded,
+              size: 20,
+            ),
           ),
-        ),
-        backgroundColor: Colors.white,
-        title: const BodyText(
-            text: 'Your Location', fontSize: 18, fontWeight: FontWeight.w700),
-        centerTitle: true,
-      ),
+          backgroundColor: Colors.white,
+          title: Text(
+            'Your Location',
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
+          )
+          // centerTitle: true,
+          ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -681,16 +704,26 @@ class _SetLocationPageState extends State<SetLocationPage> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const BodyText(
-                                text: 'Current Location',
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.pinkAccent,
+                              Text(
+                                'Current Location',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium
+                                    ?.copyWith(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.pinkAccent,
+                                    ),
                               ),
-                              BodyText(
-                                text: 'Using GPS',
-                                color: Colors.pinkAccent.withValues(alpha: 0.5),
-                                fontSize: 18,
+                              Text(
+                                'Using GPS',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                      color: Colors.pinkAccent.withOpacity(0.5),
+                                      fontSize: 18,
+                                    ),
                               ),
                             ],
                           ),
@@ -698,10 +731,13 @@ class _SetLocationPageState extends State<SetLocationPage> {
                       ),
                     ),
                     const SizedBox(height: 30),
-                    const BodyText(
-                      text: 'Saved Location',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                    Text(
+                      'Saved Location',
+                      style:
+                          Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                     ),
                     const SizedBox(height: 20),
                     ListView.separated(
@@ -709,7 +745,7 @@ class _SetLocationPageState extends State<SetLocationPage> {
                       itemCount: 3,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
-                        return const Row(
+                        return Row(
                           children: [
                             Icon(
                               Icons.location_on_rounded,
@@ -720,16 +756,25 @@ class _SetLocationPageState extends State<SetLocationPage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  BodyText(
-                                    text: 'Home',
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                                  Text(
+                                    'Home',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium
+                                        ?.copyWith(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                   ),
-                                  BodyText(
-                                    text:
-                                        'A1-504 akal society jb nagar andheri east 4000049',
-                                    color: Colors.grey,
-                                    fontSize: 16,
+                                  Text(
+                                    'A1-504 akal society jb nagar andheri east 4000049',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                          color: Colors.grey,
+                                          fontSize: 16,
+                                        ),
                                   ),
                                 ],
                               ),
