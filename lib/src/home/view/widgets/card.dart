@@ -129,7 +129,7 @@ class Cards extends StatelessWidget {
                           //   highlightColor: Colors.grey[100]!,
                           // child:
                           Text(
-                            product.title ?? AppStrings.productName,
+                            product.name ?? AppStrings.productName,
                             style:
                                 Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       fontWeight: FontWeight.w600,
