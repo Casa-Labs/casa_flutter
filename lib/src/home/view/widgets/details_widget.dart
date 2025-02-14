@@ -13,7 +13,7 @@ import '../../../common/widgets/text_widgets.dart';
 import '../../model/home_models.dart';
 
 class ProductDetails extends StatelessWidget {
-  final ProductModel product;
+  final Product product;
   const ProductDetails({super.key, required this.product});
 
 
@@ -32,7 +32,7 @@ class ProductDetails extends StatelessWidget {
               children: [
                 Expanded(
                   child: BodyText(
-                    text: product.title ?? "".toUpperCase(),
+                    text: product.name ?? "".toUpperCase(),
                     fontSize: 18,
                     fontFamily: Font.gilroy,
                   ),
@@ -178,7 +178,7 @@ class ProductDetails extends StatelessWidget {
             // ListView for size selection
             SizedBox(
               height: 50, // Adjust height based on your design
-              child: product.sizes!.isEmpty
+              child: product.size!.isEmpty
                   ? Text(
                       'all sizes available',
                       style: TextStyle(
@@ -193,7 +193,7 @@ class ProductDetails extends StatelessWidget {
                   : ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount:
-                          product.sizes!.length, // Use the sizes list length
+                          product.size!.length, // Use the sizes list length
                       itemBuilder: (context, index) {
                         // final size = products[currentIndex]
                         //     .sizes[
@@ -220,7 +220,7 @@ class ProductDetails extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'size', // Display the size text
+                                  product.size![index], // Display the size text
                                   style: TextStyle(
                                     fontSize: 10,
                                     fontWeight: FontWeight.w400,
@@ -389,10 +389,10 @@ class ProductDetails extends StatelessWidget {
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      Image.network(
-                        product.images![index].src.toString(),
-                        fit: BoxFit.cover,
-                      ),
+                      // Image.network(
+                      //   product.![index].src.toString(),
+                      //   fit: BoxFit.cover,
+                      // ),
                       Align(
                         alignment: Alignment.bottomLeft,
                         child: Padding(
