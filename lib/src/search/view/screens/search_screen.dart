@@ -1,8 +1,10 @@
 import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
+import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../common/widgets/text_widgets.dart';
+import '../widgets/address_display_box.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -65,24 +67,24 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                   const SizedBox(height: 5),
                   _optionSection(shopFor, () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return BrandSelection(
-                            titel: "Would you like to shop for?",
-                            onTap: (p0, p1) {
-                              for (var listData in shopForList) {
-                                listData.isSelected = false;
-                              }
-                              shopForList[p1].isSelected = true;
-                              shopFor = shopForList[p1].name;
-                              setState(() {});
-                            },
-                            radioList: shopForList,
-                            brandSelection: shopFor,
-                          );
-                        },
-                      );
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return BrandSelection(
+                          titel: "Would you like to shop for?",
+                          onTap: (p0, p1) {
+                            for (var listData in shopForList) {
+                              listData.isSelected = false;
+                            }
+                            shopForList[p1].isSelected = true;
+                            shopFor = shopForList[p1].name;
+                            setState(() {});
+                          },
+                          radioList: shopForList,
+                          brandSelection: shopFor,
+                        );
+                      },
+                    );
                   }),
                 ],
               ),
@@ -153,7 +155,8 @@ class _SearchScreenState extends State<SearchScreen> {
                         return BrandSelection(
                           titel: "Style preferences",
                           onTap: (p0, p1) {
-                            styleList[p1].isSelected = !styleList[p1].isSelected;
+                            styleList[p1].isSelected =
+                                !styleList[p1].isSelected;
                             List<String> list = [];
                             for (var data in styleList) {
                               if (data.isSelected) {
@@ -174,65 +177,18 @@ class _SearchScreenState extends State<SearchScreen> {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 20,
+            const SizedBox(height: 20),
+            Divider(color: DividerColor.grey),
+            const SizedBox(height: 20),
+            AddressDisplayBox(
+              addresses: [
+                Address(
+                    label: 'Home',
+                    address:
+                        'A1-504 Akal Society, JB Nagar, Andheri East 4000049'),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: _text('Location and payment methods'),
-            ),
-            const SizedBox(height: 8),
-            _materialWidget(
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Get.to(() => const SetLocationPage());
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _text('Add new location'),
-                        const SizedBox(height: 5),
-                        const Icon(
-                          Icons.arrow_forward,
-                          color: Colors.black54,
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  // const Row(
-                  //   children: [
-                  //     Icon(Icons.location_on),
-                  //     BodyText(
-                  //       text: 'Location',
-                  //       fontSize: 18,
-                  //       fontWeight: FontWeight.w600,
-                  //     )
-                  //   ],
-                  // ),
-                  Row(
-                    children: [
-                      Icon(Icons.location_on),
-                      SizedBox(width: 5),
-                      Expanded(
-                        child: _text(
-                          'A1-504 akal society jb nagar andheri east 4000049',
-                          fontSize: 15,
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             GestureDetector(
               onTap: () {},
               child: _materialWidget(
@@ -248,9 +204,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -583,177 +537,4 @@ class BottomRadio {
 
   BottomRadio(
       {required this.name, this.isSelected = false, required this.slug});
-}
-
-class SetLocationPage extends StatefulWidget {
-  const SetLocationPage({super.key});
-
-  @override
-  State<SetLocationPage> createState() => _SetLocationPageState();
-}
-
-class _SetLocationPageState extends State<SetLocationPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-        leading: InkWell(
-          overlayColor: WidgetStateProperty.all(Colors.transparent),
-          splashFactory: NoSplash.splashFactory,
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: const Icon(
-            Icons.arrow_back_ios_new_rounded,
-            size: 20,
-          ),
-        ),
-        backgroundColor: Colors.white,
-        title: const BodyText(
-            text: 'Your Location', fontSize: 18, fontWeight: FontWeight.w700),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            Container(
-              height: 60,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                border: Border.all(color: Colors.grey.shade300),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Center(
-                child: Row(
-                  children: [
-                    Icon(Icons.search, color: Colors.grey.shade600),
-                    Expanded(
-                      child: TextField(
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.black,
-                        ),
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 14),
-                          hintText: 'Search a new address',
-                          hintStyle: TextStyle(
-                              fontSize: 16, color: Colors.grey.shade500),
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 30),
-                    InkWell(
-                      overlayColor: WidgetStateProperty.all(Colors.transparent),
-                      splashFactory: NoSplash.splashFactory,
-                      onTap: () async {
-                        // Constant.currentPosition =
-                        //     await LocationHandler.getCurrentPosition();
-                        // Constant.currentAddress =
-                        //     await LocationHandler.getAddressFromLatLng(
-                        //         Constant.currentPosition!);
-                        Get.back();
-                        setState(() {});
-                      },
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Icon(
-                            Icons.my_location_rounded,
-                            color: Colors.pinkAccent,
-                            size: 30,
-                          ),
-                          const SizedBox(width: 10),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const BodyText(
-                                text: 'Current Location',
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.pinkAccent,
-                              ),
-                              BodyText(
-                                text: 'Using GPS',
-                                color: Colors.pinkAccent.withValues(alpha: 0.5),
-                                fontSize: 18,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    const BodyText(
-                      text: 'Saved Location',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    const SizedBox(height: 20),
-                    ListView.separated(
-                      shrinkWrap: true,
-                      itemCount: 3,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return const Row(
-                          children: [
-                            Icon(
-                              Icons.location_on_rounded,
-                              color: Colors.deepPurple,
-                            ),
-                            SizedBox(width: 15),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  BodyText(
-                                    text: 'Home',
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  BodyText(
-                                    text:
-                                        'A1-504 akal society jb nagar andheri east 4000049',
-                                    color: Colors.grey,
-                                    fontSize: 16,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return Container(
-                          margin: const EdgeInsets.only(
-                              left: 40, top: 15, bottom: 15),
-                          height: 0.5,
-                          color: Colors.grey.shade400,
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
