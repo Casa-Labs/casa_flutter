@@ -4,7 +4,7 @@ import 'package:casa_flutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:share_plus/share_plus.dart';
+// import 'package:share_plus/share_plus.dart';
 
 import '../../../../routes/app_routes.dart';
 import '../../../common/widgets/add_to_cart_button.dart';
@@ -92,8 +92,8 @@ class ProductDescriptionScreen extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    Share.share(
-                        'Check out this amazing product at CASA app now !');
+                    // Share.share(
+                    //     'Check out this amazing product at CASA app now !');
                   },
                   icon: Icon(Icons.send_outlined),
                 ),
