@@ -1,9 +1,13 @@
+import 'dart:math';
+
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../network/graph_ql_manager.dart';
 import '../model/home_models.dart';
+import '../model/service/home_service.dart';
 
 class HomeController extends GetxController{
 
@@ -16,9 +20,9 @@ class HomeController extends GetxController{
 
 
   bool isDisabled = false;
-  var products = <ProductModel>[].obs;
+  var products = <Product>[].obs;
   var isLoading = false.obs;
-  RxList<ProductModel> reactiveProducts = <ProductModel>[].obs;
+  RxList<Product> reactiveProducts = <Product>[].obs;
   bool isShowReturn = false;
   bool isShowShipping = false;
   var price = ''.obs;
@@ -33,6 +37,7 @@ class HomeController extends GetxController{
   final List<String> brandFilter  = ['Zara','H&M','Gap', 'CASA', 'Tommy hilfiger'];
   final List<String> productFilter  = ['Topwear', 'Shirt', 'Sweatshirt', 'T- shirt','Hoodie'];
   final List<String> colorFilter  = ['Black', 'Brown', 'Green', 'Denim','Zebra print'];
+  final manager = GraphQLManager();
 
   // ========== STATES ========== //
 
@@ -106,7 +111,18 @@ class HomeController extends GetxController{
 
 // ========== APIs FUNCTIONS ========== //
 
-  Future<void> getProductCall() async {
+  Future<List<Product>> fetchProducts() async {
+    try {
+      List<Product> products = [];
+      var response = await manager.getProducts({});
+      products = GetProducts.fromJson(response.data!['getProducts']).data!;
+      // Attempt to convert the document data to a ProductModel
 
+      products.shuffle(Random());
+
+      return products;
+    } catch (e) {
+      return [];
+    }
   }
 }

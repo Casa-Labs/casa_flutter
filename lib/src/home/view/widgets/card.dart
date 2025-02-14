@@ -13,7 +13,7 @@ import '../../model/home_models.dart';
 
 class Cards extends StatelessWidget {
   final int index;
-  final ProductModel product;
+  final Product product;
   const Cards({super.key, required this.index, required this.product});
 
   @override
@@ -129,7 +129,7 @@ class Cards extends StatelessWidget {
                           //   highlightColor: Colors.grey[100]!,
                           // child:
                           BodyText(
-                            text: product.title ?? AppStrings.productName,
+                            text: product.name ?? AppStrings.productName,
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
                             fontSize: 18,
@@ -141,8 +141,8 @@ class Cards extends StatelessWidget {
                           //   highlightColor: Colors.grey[100]!,
                           //   child:
                           BodyText(
-                            // text: '₹${product.price}',
-                            text: '₹ ${AppStrings.productPrice}',
+                            text: '₹${product.price}',
+                            // text: '₹ ${AppStrings.productPrice}',
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
                             fontSize: 18,

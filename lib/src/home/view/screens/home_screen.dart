@@ -9,31 +9,51 @@ import '../../../common/widgets/filter_row.dart';
 import '../../model/home_models.dart';
 
 class HomeScreen extends StatelessWidget {
-   HomeScreen({super.key});
-  final homeController = Get.put(HomeController());
+  HomeScreen({super.key});
+
+  final homeCtrl = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
+    late Future<List<Product>> productsFuture = homeCtrl.fetchProducts();
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CustomAppbar(),
-      body: GetBuilder<HomeController>(
-        builder: (logic) {
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                FilterRow(brandList: logic.brandFilter,colorList: logic.colorFilter,productList: logic.productFilter),
-                _cardSwiper(logic,context)
-              ],
-            ),
-          );
+      body: FutureBuilder(
+        future: productsFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return const Center(child: Text("Error fetching products"));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text("No products available"));
+          } else {
+            var products = snapshot.data;
+            return GetBuilder<HomeController>(
+              builder: (logic) {
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      FilterRow(
+                          brandList: logic.brandFilter,
+                          colorList: logic.colorFilter,
+                          productList: logic.productFilter),
+                      _cardSwiper(logic, context, products)
+                    ],
+                  ),
+                );
+              },
+            );
+          }
         },
       ),
     );
   }
 
-  _cardSwiper(HomeController logic, BuildContext context) {
+  _cardSwiper(
+      HomeController logic, BuildContext context, List<Product>? products) {
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -55,7 +75,7 @@ class HomeScreen extends StatelessWidget {
               initialIndex: logic.cardIndex != -1 ? logic.cardIndex : null,
               onSwipeEnd: logic.swipeEnd,
               cardBuilder: (context, index) {
-                return Cards(index: index, product: ProductModel());
+                return Cards(index: index, product: products![index]);
               },
             ),
           ),
