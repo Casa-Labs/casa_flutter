@@ -435,7 +435,7 @@ import '../utils/preference_manager.dart';
 
 class GraphQLClientService {
   static final HttpLink _httpLink = HttpLink(
-    'https://your-api-url.com/graphql', // Replace with your GraphQL endpoint
+    'https://server.casashop.in/graphql', // Replace with your GraphQL endpoint
   );
 
   static final AuthLink _authLink = AuthLink(

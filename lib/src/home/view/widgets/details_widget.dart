@@ -13,7 +13,7 @@ import '../../../common/widgets/text_widgets.dart';
 import '../../model/home_models.dart';
 
 class ProductDetails extends StatelessWidget {
-  final ProductModel product;
+  final Product product;
   const ProductDetails({super.key, required this.product});
 
   @override
@@ -32,9 +32,10 @@ class ProductDetails extends StatelessWidget {
               children: [
                 Expanded(
                     child: Text(
-                  (product.title ?? "").toUpperCase(),
+                  (product.name ?? "").toUpperCase(),
                   style: textTheme.bodyLarge?.copyWith(
                     fontFamily: Font.gilroy, // Custom font
+
                   ),
                 )),
                 const SizedBox(
@@ -171,7 +172,7 @@ class ProductDetails extends StatelessWidget {
             // ListView for size selection
             SizedBox(
               height: 50, // Adjust height based on your design
-              child: product.sizes!.isEmpty
+              child: product.size!.isEmpty
                   ? Text(
                       'all sizes available',
                       style: textTheme.bodySmall?.copyWith(
@@ -183,7 +184,7 @@ class ProductDetails extends StatelessWidget {
                   : ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount:
-                          product.sizes!.length, // Use the sizes list length
+                          product.size!.length, // Use the sizes list length
                       itemBuilder: (context, index) {
                         // final size = products[currentIndex]
                         //     .sizes[
@@ -210,7 +211,7 @@ class ProductDetails extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'size', // Display the size text
+                                  product.size![index],                                  
                                   style: textTheme.bodySmall?.copyWith(
                                     fontWeight: FontWeight.w400,
                                     color: Colors.grey, // Dynamic color
@@ -375,10 +376,10 @@ class ProductDetails extends StatelessWidget {
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      Image.network(
-                        product.images![index].src.toString(),
-                        fit: BoxFit.cover,
-                      ),
+                      // Image.network(
+                      //   product.![index].src.toString(),
+                      //   fit: BoxFit.cover,
+                      // ),
                       Align(
                         alignment: Alignment.bottomLeft,
                         child: Padding(
