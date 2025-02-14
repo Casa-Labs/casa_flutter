@@ -71,11 +71,17 @@ query GetProducts(\$params: GetProduct!) {
   getProducts(params: \$params) {
     currentPage
     data {
-      authProvider
-      createdAt
-      email
       id
-      role
+      name
+      description
+      price
+      category
+      size
+      stock
+      storeId
+      isNewArrival
+      isTrending
+      createdAt
       updatedAt
     }
     total

@@ -13,7 +13,7 @@ import '../../model/home_models.dart';
 
 class Cards extends StatelessWidget {
   final int index;
-  final ProductModel product;
+  final Product product;
   const Cards({super.key, required this.index, required this.product});
 
   @override
@@ -135,6 +135,7 @@ class Cards extends StatelessWidget {
                                       fontWeight: FontWeight.w600,
                                       color: Colors.white,
                                     ),
+
                           ),
                           // ),
                           const SizedBox(height: 10),
@@ -150,6 +151,7 @@ class Cards extends StatelessWidget {
                                       color: Colors.white,
                                     ),
                           )
+
                           // ),
                         ],
                       ),
