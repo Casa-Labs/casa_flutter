@@ -47,8 +47,13 @@ class _TutorialScreenState extends State<TutorialScreen> {
           padding: const EdgeInsets.only(left: 8),
           child: Row(
             children: [
-              BodyText(text: 'CASA',fontFamily: Font.montaga,fontSize: 23),
-              SvgPicture.asset('assets/icons/arrow_down.svg', height: 18),
+              Text(
+                'CASA',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    // fontSize: 23,
+                    fontFamily: Font.montaga // Custom font
+                    ),
+              )
             ],
           ),
         ),
@@ -61,10 +66,8 @@ class _TutorialScreenState extends State<TutorialScreen> {
         text: "use filters to search specific item",
         data: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 2),
-          child: SizedBox(
-              height: 35,
-              width: Get.width * .95,
-              child: FilterRow()),
+          child:
+              SizedBox(height: 35, width: Get.width * .95, child: FilterRow()),
         ),
       ),
       PositionTutorial(
@@ -94,7 +97,9 @@ class _TutorialScreenState extends State<TutorialScreen> {
           text: "use to add item to cart",
           horizontal: 15,
           isAbove: false,
-          data: Icon(Icons.shopping_cart_outlined,)),
+          data: Icon(
+            Icons.shopping_cart_outlined,
+          )),
       PositionTutorial(
           onTap: widget.onTap,
           bottom: Get.height * 0.106,
@@ -103,7 +108,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
           right: 0.0,
           horizontal: 15,
           isAbove: false,
-          data:Icon(Icons.share_rounded)),
+          data: Icon(Icons.share_rounded)),
       PositionTutorial(
         onTap: widget.onTap,
         bottom: Get.height * 0.01,
@@ -128,7 +133,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
                 Shadow(
                   offset: const Offset(1.0, 1.0),
                   blurRadius: 6.0,
-                  color: Colors.black.withValues(alpha:0.2),
+                  color: Colors.black.withValues(alpha: 0.2),
                 ),
               ],
             ),
@@ -196,4 +201,3 @@ class _TutorialScreenState extends State<TutorialScreen> {
     return homeController.tutorialList[widget.index];
   }
 }
-

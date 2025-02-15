@@ -64,10 +64,17 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                         padding: EdgeInsets.only(left: isLeadingBack ? 0 : 8),
                         child: Row(
                           children: [
-                            BodyText(
-                                text: 'CASA',
-                                fontFamily: Font.montaga,
-                                fontSize: 23),
+                            Text(
+                              'CASA',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(
+                                    fontSize: 23,
+                                    fontFamily:
+                                        Font.montaga, // Custom font, if needed
+                                  ),
+                            ),
                             Icon(Icons.keyboard_arrow_down_rounded,
                                 color: CColor.black)
                           ],
@@ -77,8 +84,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                     fontSize: 15,
                     menufontSize: 20,
                     fullSize: false,
-                    onSelected: (selectedItems) {
-                    },
+                    onSelected: (selectedItems) {},
                     label: '',
                   ),
                 ),
@@ -96,7 +102,12 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                 )
               : SizedBox(),
       title: title != ""
-          ? BodyText(text: title, fontWeight: FontWeight.w700, fontSize: 23)
+          ? Text(
+              title,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+            )
           : Container(
               height: 40,
               decoration: BoxDecoration(

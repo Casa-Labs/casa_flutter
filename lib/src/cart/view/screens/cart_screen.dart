@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../common/widgets/custom_button.dart';
-import '../../../common/widgets/text_widgets.dart';
 import '../../controller/cart_controller.dart';
 import '../widgets/cart_item.dart';
 
@@ -15,6 +14,8 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -27,10 +28,10 @@ class CartScreen extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.center,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: BodyText(
-                      text: 'Clear',
-                      fontSize: 14,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      'Clear',
+                      style: textTheme.bodyMedium,
                     ),
                   ),
                 ),
@@ -45,23 +46,20 @@ class CartScreen extends StatelessWidget {
             onTap: () {
               context.pushNamed(RouteNames.faq);
             },
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: BodyText(
-                text: 'FAQ',
-                fontSize: 15,
-                decoration: TextDecoration.underline,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                'FAQ',
+                style: textTheme.bodyMedium
+                    ?.copyWith(decoration: TextDecoration.underline),
               ),
             ),
           ),
-          const SizedBox(
-            width: 5,
-          )
+          const SizedBox(width: 5),
         ],
-        title: const BodyText(
-          text: 'My Cart',
-          fontSize: 21,
-          fontWeight: FontWeight.w600,
+        title: Text(
+          'My Cart',
+          style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
       ),
@@ -71,16 +69,15 @@ class CartScreen extends StatelessWidget {
             cartController.cartList.isEmpty
                 ? Center(
                     child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 200,
-                      ),
-                      const BodyText(
-                        text: 'Your cart is empty!',
-                        fontSize: 16,
-                      ),
-                    ],
-                  ))
+                      children: [
+                        const SizedBox(height: 200),
+                        Text(
+                          'Your cart is empty!',
+                          style: textTheme.bodyLarge,
+                        ),
+                      ],
+                    ),
+                  )
                 : ListView.separated(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -89,53 +86,40 @@ class CartScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final item = cartController.cartList[index];
                       return CartItem(
-                          item: item,
-                          totalChange: () {},
-                          onDelete: () {},
-                          index: index);
+                        item: item,
+                        totalChange: () {},
+                        onDelete: () {},
+                        index: index,
+                      );
                     },
                     separatorBuilder: (BuildContext context, int index) {
                       return Column(
                         children: [
-                          Divider(
-                            height: 0.5,
-                            color: Colors.grey.shade200,
-                          ),
-                          const SizedBox(
-                            height: 25,
-                          ),
+                          Divider(height: 0.5, color: Colors.grey.shade200),
+                          const SizedBox(height: 25),
                         ],
                       );
                     },
                   ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             if (cartController.cartList.isNotEmpty)
               Column(
                 children: [
-                  Divider(
-                    height: 0.5,
-                    color: Colors.grey.shade200,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  Divider(height: 0.5, color: Colors.grey.shade200),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      const BodyText(
-                        text: 'Total:',
-                        fontSize: 14,
+                      Text(
+                        'Total:',
+                        style: textTheme.bodyMedium,
                       ),
-                      BodyText(
-                        text: ' ₹20',
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
+                      Text(
+                        ' ₹20',
+                        style: textTheme.bodyLarge
+                            ?.copyWith(fontWeight: FontWeight.w600),
                       ),
-                      const SizedBox(
-                        width: 30,
-                      ),
+                      const SizedBox(width: 30),
                     ],
                   ),
                 ],

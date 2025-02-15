@@ -6,14 +6,14 @@ import 'package:casa_flutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:share_plus/share_plus.dart';
+// import 'package:share_plus/share_plus.dart';
 
 import '../../../common/widgets/text_widgets.dart';
 import '../../model/home_models.dart';
 
 class Cards extends StatelessWidget {
   final int index;
-  final ProductModel product;
+  final Product product;
   const Cards({super.key, required this.index, required this.product});
 
   @override
@@ -81,9 +81,9 @@ class Cards extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            Colors.black.withValues(alpha:0.0),
-                            Colors.black.withValues(alpha:0.5),
-                            Colors.black.withValues(alpha:0.7),
+                            Colors.black.withValues(alpha: 0.0),
+                            Colors.black.withValues(alpha: 0.5),
+                            Colors.black.withValues(alpha: 0.7),
                           ],
                           stops: const [0.65, 0.95, 1.0],
                           begin: Alignment.topCenter,
@@ -128,11 +128,14 @@ class Cards extends StatelessWidget {
                           //   baseColor: Colors.grey[400]!,
                           //   highlightColor: Colors.grey[100]!,
                           // child:
-                          BodyText(
-                            text: product.title ?? AppStrings.productName,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
+                          Text(
+                            product.name ?? AppStrings.productName,
+                            style:
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                    ),
+
                           ),
                           // ),
                           const SizedBox(height: 10),
@@ -140,13 +143,15 @@ class Cards extends StatelessWidget {
                           //   baseColor: Colors.grey[400]!,
                           //   highlightColor: Colors.grey[100]!,
                           //   child:
-                          BodyText(
-                            // text: '₹${product.price}',
-                            text: '₹ ${AppStrings.productPrice}',
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                          ),
+                          Text(
+                            '₹ ${AppStrings.productPrice}',
+                            style:
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                    ),
+                          )
+
                           // ),
                         ],
                       ),
@@ -218,8 +223,8 @@ class Cards extends StatelessWidget {
                                     WidgetStateProperty.all(Colors.transparent),
                                 splashFactory: NoSplash.splashFactory,
                                 onTap: () {
-                                  Share.share(
-                                      'Check out this amazing product at CASA app now !');
+                                  // Share.share(
+                                  //     'Check out this amazing product at CASA app now !');
                                 },
                                 child: Icon(Icons.share_rounded,
                                     color: Colors.white, size: 30)),

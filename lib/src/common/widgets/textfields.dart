@@ -34,11 +34,13 @@ class CustomTextField extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        BodyText(
-          text: text,
-          fontSize: fontSize,
-          fontWeight: fontWeight,
-          color: color,
+        Text(
+          text,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                fontSize: fontSize,
+                fontWeight: fontWeight,
+                color: color,
+              ),
           textAlign: textAlign,
         ),
         SizedBox(

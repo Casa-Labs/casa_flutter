@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../common/widgets/app_bar.dart';
-import '../../../common/widgets/text_widgets.dart';
 import '../widgets/button_widget.dart';
 import '../widgets/order_card.dart';
 import '../widgets/order_tracker.dart';
@@ -12,6 +11,7 @@ class TrackShipment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CustomAppbar(
@@ -28,12 +28,14 @@ class TrackShipment extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                OrderCard(null),
+                OrderCard(),
                 SizedBox(height: 10),
-                const BodyText(
-                  text: "Order packed",
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
+                Text(
+                  "Order packed",
+                  style: textTheme.bodyMedium?.copyWith(
+                    // fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 RichText(
                   text: TextSpan(
@@ -57,27 +59,35 @@ class TrackShipment extends StatelessWidget {
                     ],
                   ),
                 ),
-                const BodyText(
-                  text: "vendor : Zara Mumbai",
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
+                Text(
+                  "vendor : Zara Mumbai",
+                  style: textTheme.bodyMedium?.copyWith(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                const BodyText(
-                  text: "Qty : 1",
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
+                Text(
+                  "Qty : 1",
+                  style: textTheme.bodyMedium?.copyWith(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                SizedBox(height: 20),
-                Divider(),
-                const BodyText(
-                  text: "Delivery by CASA",
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
+                const SizedBox(height: 20),
+                const Divider(),
+                Text(
+                  "Delivery by CASA",
+                  style: textTheme.bodyMedium?.copyWith(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                const BodyText(
-                  text: "Tracking Id :182736223993",
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
+                Text(
+                  "Tracking Id :182736223993",
+                  style: textTheme.bodyMedium?.copyWith(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 OrderTracker(statuses: [
                   OrderTrackerModel(
@@ -87,23 +97,29 @@ class TrackShipment extends StatelessWidget {
                   OrderTrackerModel(status: "Order\ndelivered"),
                 ]),
                 const Divider(),
-                const BodyText(
-                  text: "Shipping Address",
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                Text(
+                  "Shipping Address",
+                  style: textTheme.bodyLarge?.copyWith(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 const SizedBox(height: 8),
-                const BodyText(
-                  text: "Steve",
+                Text(
+                  "Steve",
+                  style: textTheme.bodyMedium,
                 ),
-                const BodyText(
-                  text: "A1 - 502 Akal Society",
+                Text(
+                  "A1 - 502 Akal Society",
+                  style: textTheme.bodyMedium,
                 ),
-                const BodyText(
-                  text: "J.B. Nagar Andheri East",
+                Text(
+                  "J.B. Nagar Andheri East",
+                  style: textTheme.bodyMedium,
                 ),
-                const BodyText(
-                  text: "Mumbai, Maharashtra - 400099 India",
+                Text(
+                  "Mumbai, Maharashtra - 400099 India",
+                  style: textTheme.bodyMedium,
                 ),
                 const SizedBox(height: 12),
                 const Divider(),
@@ -123,13 +139,15 @@ class TrackShipment extends StatelessWidget {
                 ),
                 const Divider(),
                 const SizedBox(height: 12),
-                const BodyText(
-                  text: "Order Details",
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
+                Text(
+                  "Order Details",
+                  style: textTheme.bodyLarge?.copyWith(
+                    // fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
                 const SizedBox(height: 8),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -138,21 +156,36 @@ class TrackShipment extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          BodyText(
-                            text: 'Order Date',
-                            fontWeight: FontWeight.w600,
+                          Text(
+                            'Order Date',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                ),
                           ),
                           SizedBox(height: 3),
-                          BodyText(
-                            text: 'Order #',
+                          Text(
+                            'Order #',
                             textAlign: TextAlign.start,
-                            fontWeight: FontWeight.w600,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                ),
                           ),
                           SizedBox(height: 3),
-                          BodyText(
-                            text: 'Order total',
+                          Text(
+                            'Order total',
                             textAlign: TextAlign.start,
-                            fontWeight: FontWeight.w600,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                ),
                           ),
                         ],
                       ),
@@ -161,17 +194,20 @@ class TrackShipment extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        BodyText(
-                          text: '21-07-2024 ',
+                        Text(
+                          '21-07-2024',
+                          style: textTheme.bodyMedium,
                         ),
                         SizedBox(height: 3),
-                        BodyText(
-                          text: '201-2293837-209',
+                        Text(
+                          '201-2293837-209',
                           textAlign: TextAlign.start,
+                          style: textTheme.bodyMedium,
                         ),
                         SizedBox(height: 3),
-                        BodyText(
-                          text: 'Rs.2014(i item)',
+                        Text(
+                          'Rs.2014 (1 item)',
+                          style: textTheme.bodyMedium,
                         ),
                       ],
                     )
@@ -182,8 +218,9 @@ class TrackShipment extends StatelessWidget {
                   onPressed: () {},
                   text: 'Download invoice',
                 ),
-                BodyText(
-                  text: 'package was handed to resident',
+                Text(
+                  'Package was handed to resident',
+                  style: textTheme.bodyMedium,
                 ),
               ],
             ),

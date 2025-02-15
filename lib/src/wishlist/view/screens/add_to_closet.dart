@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../utils/utils.dart';
-import '../../../common/widgets/text_widgets.dart';
 import '../../../common/widgets/textfields.dart';
 import '../../controller/wishlist_controller.dart';
 import 'create_closet_screen.dart';
@@ -33,10 +32,13 @@ class AddToCloset extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const BodyText(
-                          text: 'Add to Closet',
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                        Text(
+                          'Add to Closet',
+                          style:
+                              Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                         ),
                         InkWell(
                           overlayColor:
@@ -160,14 +162,17 @@ class AddToCloset extends StatelessWidget {
                     child: Stack(
                       children: [
                         Align(
-                          alignment: Alignment.center,
-                          child: const BodyText(
-                            text: 'New closet',
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              'New closet',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            )),
                         Align(
                           alignment: Alignment.centerRight,
                           child: Container(

@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../common/widgets/app_bar.dart';
 import '../../../common/widgets/custom_button.dart';
-import '../../../common/widgets/text_widgets.dart';
 import '../../controller/wishlist_controller.dart';
 
 class CreateClosetScreen extends StatelessWidget {
@@ -30,10 +29,13 @@ class CreateClosetScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const BodyText(
-                          text: 'Add to Closet',
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                        Text(
+                          'Add to Closet',
+                          style:
+                              Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    // fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                         ),
                         InkWell(
                           overlayColor:
@@ -63,10 +65,12 @@ class CreateClosetScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const BodyText(
-                        text: 'Choose a closet name:',
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
+                      Text(
+                        'Choose a closet name:',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              // fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
                       Container(
                         height: 40,
@@ -99,10 +103,12 @@ class CreateClosetScreen extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      const BodyText(
-                        text: 'Cover Image:',
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
+                      Text(
+                        'Cover Image:',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              // fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
                       const SizedBox(
                         height: 10,

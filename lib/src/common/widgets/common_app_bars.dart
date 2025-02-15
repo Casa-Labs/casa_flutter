@@ -29,25 +29,33 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       leading: showBackButton
           ? IconButton(
-        onPressed: () {
-          if (onTap != null) {
-            onTap!();
-          } else {
-            if (returnData != null) {
-              Navigator.of(context).pop(returnData);
-            } else {
-              Navigator.of(context).pop();
-            }
-          }
-        },
-        icon: const Icon(Icons.arrow_back_ios),
-      ):const SizedBox(),
-      title:widget ?? (isBodyText?
-      BodyText(text: title, fontWeight: FontWeight.w700, fontSize: 23):
-      Text(title)),
+              onPressed: () {
+                if (onTap != null) {
+                  onTap!();
+                } else {
+                  if (returnData != null) {
+                    Navigator.of(context).pop(returnData);
+                  } else {
+                    Navigator.of(context).pop();
+                  }
+                }
+              },
+              icon: const Icon(Icons.arrow_back_ios),
+            )
+          : const SizedBox(),
+      title: widget ??
+          (isBodyText
+              ? Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                )
+              : Text(title)),
       actions: actions,
     );
   }
+
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
