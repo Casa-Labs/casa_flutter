@@ -1,29 +1,20 @@
 import 'package:casa_flutter/network/graph_ql_manager.dart';
 import 'package:casa_flutter/src/order/model/order_models.dart';
 import 'package:get/get.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 
 class CurrentOrdersController extends GetxController {
-  var orders = <GetOrders>[].obs;
   var isLoading = true.obs;
+  final manager = GraphQLManager();
 
-  void fetchOrders({required String userId}) async {
-    isLoading(true);
+  Future<List<GetOrders>> fetchProducts() async {
     try {
-      QueryResult result = await GraphQLManager().getOrders(userId);
-      if (result.hasException) {
-        print("GraphQL Error: ${result.exception}");
-        Get.snackbar("Error", result.exception.toString());
-        return;
-      }
-      print("API Response: ${result.data}");
-      List<dynamic> data = result.data?['getOrders'] ?? [];
-      List<GetOrders> orderList = data.map((json) => GetOrders.fromJson(json)).toList();
-      orders.assignAll(orderList);
+      List<GetOrders> orderList = [];
+      var response = await manager.getOrders('4ed11705-112e-4874-a646-0aaf496d5ce2');
+      List<dynamic> data = response.data?['getOrders'] ?? [];
+       orderList = data.map((json) => GetOrders.fromJson(json)).toList();
+      return orderList;
     } catch (e) {
-      print('Error => : ${e.toString()}');
-    } finally {
-      isLoading(false);
+      return [];
     }
   }
 }
