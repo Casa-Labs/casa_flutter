@@ -1,6 +1,6 @@
+import 'package:casa_flutter/src/common/widgets/show_toast.dart' show showToast;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../routes/app_routes.dart';
 import '../../../common/widgets/custom_text_form_field_widget.dart';
@@ -15,6 +15,7 @@ class SignUpScreen extends StatelessWidget {
     final authCtrl = Get.find<AuthController>();
 
     return Scaffold(
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Obx(
@@ -38,13 +39,19 @@ class SignUpScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Email Address'),
-                  CustomTextFormField(),
+                  CustomTextFormField(
+                    controller: authCtrl.registeredEmail,
+                  ),
                   SizedBox(height: 20),
                   Text('Password'),
-                  CustomTextFormField(),
+                  CustomTextFormField(
+                    controller: authCtrl.registeredPassword,
+                  ),
                   SizedBox(height: 20),
                   Text('Re-enter Password'),
-                  CustomTextFormField(),
+                  CustomTextFormField(
+                    controller: authCtrl.registeredRenterPassword,
+                  ),
                 ],
               ),
               Spacer(),
@@ -80,8 +87,16 @@ class SignUpScreen extends StatelessWidget {
               AuthButton(
                 type: AuthButtonType.signUp,
                 onPressed: authCtrl.checkboxValue.value
-                    ? () {
-                        context.pushNamed(RouteNames.signUpDetails);
+                    ? () async {
+                        await authCtrl.registerUserCall();
+                        if (authCtrl.message().isNotEmpty && context.mounted) {
+                          showToast(
+                            message: authCtrl.message(),
+                          );
+                          if (authCtrl.isLoggedIn()) {
+                            router.pushNamed(RouteNames.signUpDetails);
+                          }
+                        }
                       }
                     : null,
               ),
