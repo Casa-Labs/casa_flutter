@@ -440,7 +440,8 @@ class GraphQLClientService {
 
   static final AuthLink _authLink = AuthLink(
     getToken: () async =>
-        'Bearer ${PreferenceManager.getString(PreferenceManager.token)}',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZWQxMTcwNS0xMTJlLTQ4NzQtYTY0Ni0wYWFmNDk2ZDVjZTIiLCJyb2xlIjoiQ1VTVE9NRVIiLCJwcm92aWRlciI6bnVsbCwiaWF0IjoxNzM5NTk0NjE4LCJleHAiOjE3NDIxODY2MTh9.gvRxR9WquNVehSKdRbz4CFU5O7WFCgT4SgLUb-ZE-aQ',
+        //'Bearer ${PreferenceManager.getString(PreferenceManager.token)}',
   );
 
   static final Link _link = _authLink.concat(_httpLink);
