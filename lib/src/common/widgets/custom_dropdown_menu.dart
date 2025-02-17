@@ -33,7 +33,7 @@ class CustomDropDownMenu extends StatelessWidget {
         value: initialValue,
         alignment: AlignmentDirectional.topCenter,
         validator: validator,
-        icon: Icon(Icons.keyboard_arrow_down, color: Colors.grey),
+        icon: Icon(Icons.keyboard_arrow_down, color: IconColor.grey),
         dropdownColor: Theme.of(context).colorScheme.surface,
         hint: Center(
           child: Row(
@@ -116,7 +116,7 @@ class CustomDropDownIcon extends StatelessWidget {
         value: initialValue,
         alignment: AlignmentDirectional.topCenter,
         validator: validator,
-        icon: Icon(Icons.keyboard_arrow_down, color: Colors.grey),
+        icon: Icon(Icons.keyboard_arrow_down, color: IconColor.grey),
         dropdownColor: Theme.of(context).colorScheme.surface,
         hint: Center(
           child: Row(

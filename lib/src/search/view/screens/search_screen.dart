@@ -1,4 +1,5 @@
 import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
+import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -46,7 +47,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: BackgroundColor.white,
       appBar: CommonAppBar(
         title: 'Narrow your search',
       ),
@@ -197,7 +198,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         const SizedBox(height: 5),
                         const Icon(
                           Icons.arrow_forward,
-                          color: Colors.black54,
+                          color: IconColor.black54,
                         )
                       ],
                     ),
@@ -242,7 +243,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     _text('Payment Method?'),
                     const Icon(
                       Icons.arrow_forward,
-                      color: Colors.black54,
+                      color: IconColor.black54,
                     )
                   ],
                 ),
@@ -278,7 +279,7 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
             const Icon(
               Icons.arrow_forward,
-              color: Colors.black54,
+              color: IconColor.black54,
             )
           ],
         ),
@@ -298,7 +299,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget _materialWidget(Widget data) {
     return Material(
       elevation: 0,
-      color: Colors.white,
+      color: ButtonColor.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
@@ -328,7 +329,7 @@ class _FilterGenderState extends State<FilterGender> {
     return Container(
       height: 300,
       decoration: const BoxDecoration(
-          color: Colors.white,
+          color: ButtonColor.white,
           borderRadius: BorderRadius.only(topRight: Radius.circular(20))),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -433,7 +434,7 @@ class _BrandSelectionState extends State<BrandSelection> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(20)),
+          color: BackgroundColor.white, borderRadius: BorderRadius.circular(20)),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -492,9 +493,9 @@ class _BrandSelectionState extends State<BrandSelection> {
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(8),
-                                          color: Colors.black,
+                                          color: ButtonColor.black,
                                           border: Border.all(
-                                              color: Colors.black, width: 2)),
+                                              color: ButtonColor.black, width: 2)),
                                       child: Icon(
                                         Icons.check,
                                       ),
@@ -505,9 +506,9 @@ class _BrandSelectionState extends State<BrandSelection> {
                                       height: 23,
                                       clipBehavior: Clip.antiAlias,
                                       decoration: BoxDecoration(
-                                        color: Colors.white,
+                                        color: ButtonColor.white,
                                         border: Border.all(
-                                            color: Colors.black, width: 2),
+                                            color: ButtonColor.black, width: 2),
                                         borderRadius: BorderRadius.circular(8),
                                       )),
                               const SizedBox(
@@ -553,10 +554,10 @@ class _BrandSelectionState extends State<BrandSelection> {
                           child: Container(
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black),
+                                  border: Border.all(color: ButtonColor.black),
                                   color: listData.isSelected
-                                      ? Colors.black
-                                      : Colors.white,
+                                      ? ButtonColor.black
+                                      : ButtonColor.white,
                                   borderRadius: BorderRadius.circular(5)),
                               child: Text(
                                 listData.name,
@@ -565,8 +566,8 @@ class _BrandSelectionState extends State<BrandSelection> {
                                     .bodySmall
                                     ?.copyWith(
                                       color: listData.isSelected
-                                          ? Colors.white
-                                          : Colors.black,
+                                          ? TextColor.white
+                                          : TextColor.black,
                                     ),
                               )),
                         );
@@ -578,9 +579,9 @@ class _BrandSelectionState extends State<BrandSelection> {
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                   border:
-                                      Border.all(color: Colors.grey, width: 2),
+                                      Border.all(color: ButtonColor.grey, width: 2),
                                   borderRadius: BorderRadius.circular(50)),
-                              child: const Icon(Icons.add, color: Colors.grey)),
+                              child: const Icon(Icons.add, color: IconColor.grey)),
                         );
                       }
                     },
@@ -615,7 +616,7 @@ class _SetLocationPageState extends State<SetLocationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: BackgroundColor.white,
       appBar: AppBar(
           scrolledUnderElevation: 0,
           leading: InkWell(
@@ -629,7 +630,7 @@ class _SetLocationPageState extends State<SetLocationPage> {
               size: 20,
             ),
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: BackgroundColor.white,
           title: Text(
             'Your Location',
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -646,7 +647,7 @@ class _SetLocationPageState extends State<SetLocationPage> {
               height: 60,
               padding: const EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
-                color: Colors.grey[100],
+                color: ButtonColor.white,
                 border: Border.all(color: Colors.grey.shade300),
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -658,7 +659,7 @@ class _SetLocationPageState extends State<SetLocationPage> {
                       child: TextField(
                         style: const TextStyle(
                           fontSize: 12,
-                          color: Colors.black,
+                          color: TextColor.black,
                         ),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
@@ -697,7 +698,7 @@ class _SetLocationPageState extends State<SetLocationPage> {
                         children: [
                           const Icon(
                             Icons.my_location_rounded,
-                            color: Colors.pinkAccent,
+                            color: IconColor.pinkAccent,
                             size: 30,
                           ),
                           const SizedBox(width: 10),
@@ -712,7 +713,7 @@ class _SetLocationPageState extends State<SetLocationPage> {
                                     ?.copyWith(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.pinkAccent,
+                                      color: IconColor.pinkAccent,
                                     ),
                               ),
                               Text(
@@ -721,7 +722,7 @@ class _SetLocationPageState extends State<SetLocationPage> {
                                     .textTheme
                                     .bodyMedium
                                     ?.copyWith(
-                                      color: Colors.pinkAccent.withOpacity(0.5),
+                                      color: IconColor.pinkAccent.withOpacity(0.5),
                                       fontSize: 18,
                                     ),
                               ),
@@ -749,7 +750,7 @@ class _SetLocationPageState extends State<SetLocationPage> {
                           children: [
                             Icon(
                               Icons.location_on_rounded,
-                              color: Colors.deepPurple,
+                              color: IconColor.deepPurple,
                             ),
                             SizedBox(width: 15),
                             Expanded(
@@ -772,7 +773,7 @@ class _SetLocationPageState extends State<SetLocationPage> {
                                         .textTheme
                                         .bodyMedium
                                         ?.copyWith(
-                                          color: Colors.grey,
+                                          color: TextColor.grey,
                                           fontSize: 16,
                                         ),
                                   ),

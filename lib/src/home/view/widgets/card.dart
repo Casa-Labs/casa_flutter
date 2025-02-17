@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 // import 'package:share_plus/share_plus.dart';
 
+import '../../../../utils/color_constant.dart';
 import '../../../common/widgets/text_widgets.dart';
 import '../../model/home_models.dart';
 
@@ -119,7 +120,7 @@ class Cards extends StatelessWidget {
                               child: Text(
                                 "ZARA".substring(0, 4).toUpperCase(),
                                 style: const TextStyle(
-                                    color: Colors.white, fontSize: 14),
+                                    color: TextColor.white, fontSize: 14),
                               ),
                             ),
                           ),
@@ -133,7 +134,7 @@ class Cards extends StatelessWidget {
                             style:
                                 Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       fontWeight: FontWeight.w600,
-                                      color: Colors.white,
+                                      color: TextColor.white,
                                     ),
 
                           ),
@@ -148,7 +149,7 @@ class Cards extends StatelessWidget {
                             style:
                                 Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       fontWeight: FontWeight.w600,
-                                      color: Colors.white,
+                                      color: TextColor.white,
                                     ),
                           )
 
@@ -183,7 +184,7 @@ class Cards extends StatelessWidget {
                             child: const Icon(
                               Icons.undo,
                               size: 30,
-                              color: Colors.white,
+                              color: IconColor.white,
                             ),
                           ),
                         ),
@@ -213,7 +214,7 @@ class Cards extends StatelessWidget {
                                 context.pushNamed(RouteNames.cart);
                               },
                               child: Icon(Icons.add_shopping_cart_outlined,
-                                  color: Colors.white, size: 30),
+                                  color: IconColor.white, size: 30),
                             ),
                           ),
                           Padding(
@@ -227,7 +228,7 @@ class Cards extends StatelessWidget {
                                   //     'Check out this amazing product at CASA app now !');
                                 },
                                 child: Icon(Icons.share_rounded,
-                                    color: Colors.white, size: 30)),
+                                    color: IconColor.white, size: 30)),
                           ),
                           BuyNowButton(onPressed: () {
                             context.pushNamed(RouteNames.orderReview);

@@ -30,7 +30,7 @@ class _SelectSizeButtonState extends State<SelectSizeButton> {
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(35),
-              side: const BorderSide(color: Colors.black, width: 0.5),
+              side: const BorderSide(color: BorderColor.black, width: 0.5),
             ),
           ),
           onPressed: () {

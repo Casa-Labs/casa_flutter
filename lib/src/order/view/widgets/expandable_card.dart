@@ -1,4 +1,5 @@
 import 'package:casa_flutter/src/order/controller/order_review_controller.dart';
+import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,8 +14,8 @@ class ExpandableCard extends StatelessWidget {
     return Obx(() {
       return Material(
         elevation: 4,
-        surfaceTintColor: Colors.white,
-        color: Colors.white,
+        surfaceTintColor: ButtonColor.white,
+        color: ButtonColor.white,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
             side: const BorderSide(color: Color(0xFFCBCBCB), width: 0.5)),
@@ -27,7 +28,7 @@ class ExpandableCard extends StatelessWidget {
             // width: 300,
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: ButtonColor.white,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(

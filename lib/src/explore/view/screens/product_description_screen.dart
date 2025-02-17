@@ -158,7 +158,7 @@ class BuyNowButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.white,
+        backgroundColor: ButtonColor.white,
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
       ),
       onPressed: onPressed,
@@ -166,13 +166,13 @@ class BuyNowButton extends StatelessWidget {
         'Buy now',
         style: TextStyle(
           fontWeight: FontWeight.w600,
-          color: Colors.black,
+          color: TextColor.black,
           fontSize: 13,
           shadows: [
             Shadow(
               offset: const Offset(1.0, 1.0),
               blurRadius: 6.0,
-              color: Colors.black.withValues(alpha: 0.2),
+              color: TextColor.blackWithAlphaColors2,
             ),
           ],
         ),

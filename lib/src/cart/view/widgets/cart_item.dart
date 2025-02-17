@@ -1,9 +1,9 @@
+import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../utils/color.dart';
-import '../../../common/widgets/text_widgets.dart';
 import '../../../home/model/home_models.dart';
 import 'counter_widget.dart';
 
@@ -70,7 +70,7 @@ class _CartItemState extends State<CartItem>
             Align(
               alignment: Alignment.topRight,
               child: InkWell(
-                overlayColor: WidgetStateProperty.all(Colors.transparent),
+                overlayColor: WidgetStateProperty.all(ButtonColor.transparent),
                 splashFactory: NoSplash.splashFactory,
                 onTap: () {
                   Navigator.pop(ctx);
@@ -81,7 +81,7 @@ class _CartItemState extends State<CartItem>
                     child: Text(
                       'Done',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: Colors.black,
+                            color: TextColor.black,
                             fontWeight: FontWeight.w700,
                           ),
                     )),
@@ -185,7 +185,7 @@ class _CartItemState extends State<CartItem>
                           Text(
                             'Zara',
                             style: textTheme.bodyMedium?.copyWith(
-                              color: Colors.black54,
+                              color: TextColor.black54,
                             ),
                           ),
                           if (widget.item.sizes != null &&
@@ -200,7 +200,7 @@ class _CartItemState extends State<CartItem>
                                 Text(
                                   'Size Guide',
                                   style: textTheme.labelSmall?.copyWith(
-                                    color: Colors.black54,
+                                    color: TextColor.black54,
                                   ),
                                 )
                               ],
@@ -219,7 +219,7 @@ class _CartItemState extends State<CartItem>
                                   Text(
                                     'Size:',
                                     style: textTheme.bodySmall?.copyWith(
-                                      color: Colors.black.withOpacity(0.7),
+                                      color: TextColor.black.withOpacity(0.7),
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -232,7 +232,7 @@ class _CartItemState extends State<CartItem>
                                           style: textTheme.bodyMedium?.copyWith(
                                             fontSize: 15,
                                             color:
-                                                Colors.black.withOpacity(0.7),
+                                                TextColor.black.withOpacity(0.7),
                                             fontWeight: FontWeight.w600,
                                           ),
                                         )),
@@ -272,7 +272,7 @@ class _CartItemState extends State<CartItem>
                                           ),
                                           context);
                                     },
-                                    highlightColor: Colors.transparent,
+                                    highlightColor: ButtonColor.transparent,
                                     icon: const Icon(
                                       Icons.keyboard_arrow_down,
                                       size: 18,
@@ -295,7 +295,7 @@ class _CartItemState extends State<CartItem>
                                 addTap: _increment),
                           ),
                           IconButton(
-                            highlightColor: Colors.transparent,
+                            highlightColor: ButtonColor.transparent,
                             icon: SvgPicture.asset(
                               'assets/icon/delete.svg',
                               height: 23,

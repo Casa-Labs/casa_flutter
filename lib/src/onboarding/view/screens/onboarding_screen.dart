@@ -51,7 +51,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
                 'CASA',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     // fontSize: 23,
-                    fontFamily: Font.montaga // Custom font
+                    // fontFamily: Font.montaga // Custom font
                     ),
               )
             ],

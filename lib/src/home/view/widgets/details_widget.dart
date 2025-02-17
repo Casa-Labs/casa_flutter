@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../utils/color_constant.dart';
 import '../../../../utils/font.dart';
 import '../../../common/widgets/text_widgets.dart';
 import '../../model/home_models.dart';
@@ -178,7 +179,7 @@ class ProductDetails extends StatelessWidget {
                       style: textTheme.bodySmall?.copyWith(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
-                        color: Colors.grey, // Dynamic color
+                        color: TextColor.grey, // Dynamic color
                       ),
                     )
                   : ListView.builder(
@@ -200,21 +201,21 @@ class ProductDetails extends StatelessWidget {
                               padding: const EdgeInsets.all(8),
                               width: 42, // Fixed width for uniformity
                               decoration: BoxDecoration(
-                                color: Colors.grey[300],
+                                color: ButtonColor.grey200  ,
                                 shape: BoxShape.circle,
                                 border: /*isSelected
                                 ? Border.all(
                                 color: Colors.black,
                                 width: 1.5)
                                 : */
-                                    Border.all(color: Colors.grey),
+                                    Border.all(color: ButtonColor.grey),
                               ),
                               child: Center(
                                 child: Text(
                                   product.size![index],                                  
                                   style: textTheme.bodySmall?.copyWith(
                                     fontWeight: FontWeight.w400,
-                                    color: Colors.grey, // Dynamic color
+                                    color: TextColor.grey, // Dynamic color
                                   ),
                                 ),
                               ),
@@ -388,12 +389,12 @@ class ProductDetails extends StatelessWidget {
                               '',
                               style: textTheme.bodyLarge?.copyWith(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: TextColor.white,
                                 shadows: const [
                                   Shadow(
                                     offset: Offset(1, 1),
                                     blurRadius: 2,
-                                    color: Colors.black,
+                                    color: TextColor.black,
                                   ),
                                 ],
                               ),
@@ -427,15 +428,15 @@ class ProductDetails extends StatelessWidget {
                           'RETURN POLICY',
                           style: TextStyle(
                               fontSize: 13,
-                              color: Colors.black,
+                              color: TextColor.black,
                               fontWeight: FontWeight.w700,
                               fontFamily: Font.gilroy),
                         ),
                         logic.isShowReturn
                             ? const Icon(Icons.keyboard_arrow_up_rounded,
-                                size: 15, color: Colors.black54)
+                                size: 15, color: IconColor.black54)
                             : const Icon(Icons.keyboard_arrow_down_rounded,
-                                size: 15, color: Colors.black54),
+                                size: 15, color: IconColor.black54),
                       ],
                     ),
                   ),
@@ -445,14 +446,13 @@ class ProductDetails extends StatelessWidget {
                         'This product have no any return policy',
                         style: TextStyle(
                             fontSize: 12.5,
-                            color: Colors.black54,
+                            color: TextColor.black54,
                             fontWeight: FontWeight.w500,
                             fontFamily: Font.gilroy),
                       )
                     : const SizedBox(),
               ],
             ),
-            const Divider(thickness: 1, color: Colors.black26),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -472,15 +472,15 @@ class ProductDetails extends StatelessWidget {
                           'SHIPPING POLICY',
                           style: TextStyle(
                               fontSize: 13,
-                              color: Colors.black,
+                              color: TextColor.black,
                               fontWeight: FontWeight.w700,
                               fontFamily: Font.gilroy),
                         ),
                         logic.isShowShipping
                             ? const Icon(Icons.keyboard_arrow_up_rounded,
-                                size: 15, color: Colors.black54)
+                                size: 15, color: TextColor.black54)
                             : const Icon(Icons.keyboard_arrow_down_rounded,
-                                size: 15, color: Colors.black54),
+                                size: 15, color: TextColor.black54),
                       ],
                     ),
                   ),
@@ -490,14 +490,14 @@ class ProductDetails extends StatelessWidget {
                         'For order values below \$50, product charges a \$8 shipping fee.',
                         style: TextStyle(
                             fontSize: 12.5,
-                            color: Colors.black54,
+                            color: TextColor.black54,
                             fontWeight: FontWeight.w500,
                             fontFamily: Font.gilroy),
                       )
                     : const SizedBox(),
               ],
             ),
-            const Divider(thickness: 1, color: Colors.black26),
+            const Divider(thickness: 1, color: DividerColor.grey),
             const SizedBox(
               height: 10,
             ),
@@ -506,7 +506,7 @@ class ProductDetails extends StatelessWidget {
               style: textTheme.bodyMedium?.copyWith(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: TextColor.black,
               ),
             ),
             Row(
@@ -518,7 +518,7 @@ class ProductDetails extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(1),
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
+                          border: Border.all(color: ButtonColor.black),
                           borderRadius: BorderRadius.circular(50)),
                       child: CircleAvatar(
                         maxRadius: 28,
@@ -526,7 +526,7 @@ class ProductDetails extends StatelessWidget {
                         child: Text(
                           "ZARA".substring(0, 4).toUpperCase(),
                           style: const TextStyle(
-                              color: Colors.white, fontSize: 14),
+                              color: TextColor.white, fontSize: 14),
                         ),
                       ),
                     ),
@@ -544,7 +544,7 @@ class ProductDetails extends StatelessWidget {
                           'Steve_vora_04',
                           style: textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.w600,
-                            color: Colors.black,
+                            color: TextColor.black,
                           ),
                         ),
                         const SizedBox(
@@ -563,7 +563,7 @@ class ProductDetails extends StatelessWidget {
                               style: textTheme.bodyMedium?.copyWith(
                                 // fontSize: 15,
                                 fontWeight: FontWeight.w600,
-                                color: Colors.black,
+                                color: TextColor.black,
                               ),
                             )
                           ],
@@ -582,7 +582,7 @@ class ProductDetails extends StatelessWidget {
                       style: textTheme.bodyMedium?.copyWith(
                         // fontSize: 15,
                         fontWeight: FontWeight.w600,
-                        color: Colors.black,
+                        color: TextColor.black,
                       ),
                     ),
                   ],

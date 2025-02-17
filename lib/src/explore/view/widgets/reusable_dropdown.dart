@@ -2,6 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../utils/color_constant.dart';
 import '../../../common/widgets/text_widgets.dart';
 
 enum DropdownMode { single, multiple }
@@ -54,7 +55,7 @@ class _ReusableDropdownState extends State<ReusableDropdown> {
                       style: textTheme.bodyLarge?.copyWith(
                         fontSize: widget.fontSize,
                         fontWeight: FontWeight.normal,
-                        color: Colors.black, // Dynamic color
+                        color: TextColor.black, // Dynamic color
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -73,7 +74,7 @@ class _ReusableDropdownState extends State<ReusableDropdown> {
                             style: textTheme.bodyMedium?.copyWith(
                               fontSize: widget.menufontSize,
                               fontWeight: FontWeight.w500,
-                              color: Colors.white, // Menu item text color
+                              color: TextColor.white, // Menu item text color
                             ),
                             overflow: TextOverflow.ellipsis,
                           )),
@@ -97,7 +98,7 @@ class _ReusableDropdownState extends State<ReusableDropdown> {
                             style: textTheme.bodyLarge?.copyWith(
                               fontSize: widget.fontSize,
                               fontWeight: FontWeight.normal,
-                              color: Colors.black, // Dynamic color
+                              color: TextColor.black, // Dynamic color
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -115,7 +116,7 @@ class _ReusableDropdownState extends State<ReusableDropdown> {
                   ? null
                   : const EdgeInsets.only(left: 14, right: 14),
               decoration: const BoxDecoration(
-                color: Colors.transparent,
+                color: ButtonColor.transparent,
               ),
             ),
             iconStyleData: const IconStyleData(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../utils/color_constant.dart';
+
 class FAQSearchField extends StatelessWidget {
   const FAQSearchField(
       {super.key,
@@ -37,7 +39,7 @@ class FAQSearchField extends StatelessWidget {
         //     color: CColor.black,
         //     fontSize: 12),
         filled: true,
-        fillColor: Colors.white,
+        fillColor: TextFieldColor.white,
         contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         hintText: hintText,
         isDense: true,
@@ -47,11 +49,11 @@ class FAQSearchField extends StatelessWidget {
         //     fontSize: 13,
         //     fontWeight: FontWeight.w500),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black, width: 1),
+          borderSide: BorderSide(color: TextFieldColor.black, width: 1),
           borderRadius: const BorderRadius.all(Radius.circular(20)),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black, width: 1),
+          borderSide: BorderSide(color: TextFieldColor.black, width: 1),
           borderRadius: const BorderRadius.all(Radius.circular(20)),
         ),
       ),

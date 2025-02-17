@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../routes/app_routes.dart';
+import '../../../../utils/color_constant.dart';
 import '../../../common/widgets/app_bar.dart';
 import '../../../common/widgets/text_widgets.dart';
 import '../widgets/order_card.dart';
@@ -21,7 +22,7 @@ class CurrentOrdersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     late Future<List<GetOrders>> orderFuture = ordersController.fetchProducts();
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: BackgroundColor.white,
       appBar: CommonAppBar(
         isBodyText: true,
         title: 'Current Orders',
