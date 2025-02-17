@@ -14,6 +14,7 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: CommonAppBar(
         title: 'Profile',
+        showBackButton: false,
       ),
       body: Column(
         children: [

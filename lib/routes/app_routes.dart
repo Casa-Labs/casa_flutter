@@ -111,7 +111,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.signIn,
       name: RouteNames.signIn,
-      builder: (context, state) => const SignInScreen(),
+      builder: (context, state) => SignInScreen(),
     ),
     GoRoute(
       path: _AppPaths.signUp,
@@ -136,7 +136,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.home,
       name: RouteNames.home,
-      builder: (context, state) =>  HomeScreen(),
+      builder: (context, state) => HomeScreen(),
     ),
     GoRoute(
       path: _AppPaths.notifications,

@@ -1,3 +1,5 @@
+import 'package:casa_flutter/src/common/widgets/show_toast.dart'
+    show scaffoldMessengerKey;
 import 'package:casa_flutter/theme/light_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,10 +20,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp.router(
       debugShowCheckedModeBanner: false,
+      scaffoldMessengerKey: scaffoldMessengerKey,
       routeInformationParser: router.routeInformationParser,
       routerDelegate: router.routerDelegate,
       routeInformationProvider: router.routeInformationProvider,
-      title: 'Casa Flutter',
+      title: 'CASA',
       theme: lightMode,
       // home: const SplashScreen(),
       // theme: lightMode,

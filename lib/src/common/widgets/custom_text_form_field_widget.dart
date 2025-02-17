@@ -16,6 +16,7 @@ class CustomTextFormField extends StatelessWidget {
   final Color? fillColor;
   final void Function(String)? onChanged;
   final Widget? prefixIcon;
+  final Widget? suffixIcon;
 
   const CustomTextFormField({
     super.key,
@@ -31,7 +32,9 @@ class CustomTextFormField extends StatelessWidget {
     this.textInputAction = TextInputAction.unspecified,
     this.obscureText = false,
     this.onChanged,
-    this.prefixIcon,  this.fillColor,
+    this.prefixIcon,
+    this.fillColor,
+    this.suffixIcon,
   });
 
   @override
@@ -54,9 +57,10 @@ class CustomTextFormField extends StatelessWidget {
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: hintStyle,
-          prefixIcon: prefixIcon,
           fillColor: fillColor,
-          filled: true
+          filled: true,
+          prefixIcon: prefixIcon,
+          suffixIcon: suffixIcon,
         ),
         textInputAction: textInputAction,
         obscureText: obscureText,

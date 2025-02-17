@@ -1,51 +1,40 @@
-import 'package:get/get.dart';
-
-import '../../../../network/graphql_client.dart';
-import '../../../../utils/preference_manager.dart';
-import '../../../../utils/utils.dart';
-import '../../../common/widgets/response_dialog.dart';
-import '../../controller/auth_controller.dart';
-import '../auth_models.dart';
+import 'package:casa_flutter/network/graph_ql_manager.dart';
+import 'package:casa_flutter/src/auth/model/auth_models.dart';
 
 class AuthService {
-  final authCtrl = Get.find<AuthController>();
+  final GraphQLManager _graphQLManager = GraphQLManager();
 
-  Future<void> loginUser(LoginRequestModel loginVariables) async {
-    const String loginMutation = '''
-      mutation Login(\$username: String!, \$password: String!) {
-        login(username: \$username, password: \$password) {
-          refCode
-          token
-        }
-      }
-    ''';
+  Future<LoginResponseModel?> loginUser({
+    required LoginRequestModel loginRequestModel,
+  }) async {
+    final LoginResponseModel loginResponse;
 
-    final variables = {
-      "username": loginVariables.username,
-      "password": loginVariables.password,
-    };
+    final response = await _graphQLManager.loginUser(
+      loginRequestModel.username,
+      loginRequestModel.password,
+    );
 
-    final response = await GraphQLClientService()
-        .performMutation(document: loginMutation, variables: variables);
+    loginResponse = LoginResponseModel.fromJson(
+      response.data,
+    );
 
-    if (response.hasException) {
-      logg.e(response.exception.toString());
-      Get.dialog(
-        ResponseDialog(
-          text:
-              'Login Failed: ${response.exception?.graphqlErrors.first.message ?? "Unknown error"}',
-          onPressed: () => Get.back(),
-          isErrorDialog: true,
-        ),
-        barrierDismissible: false,
-      );
-      authCtrl.allowLogin = false;
-    } else {
-      final loginResponse = response.data?['login'];
+    return loginResponse;
+  }
 
-      await PreferenceManager.setData(
-          PreferenceManager.token, loginResponse['token']);
-      authCtrl.allowLogin = true;
-    }
+  Future<RegisterUserResponseModel?> registerUser({
+    required LoginRequestModel loginRequestModel,
+  }) async {
+    final RegisterUserResponseModel registerUserResponse;
+
+    final response = await _graphQLManager.registerUser(
+      loginRequestModel.username,
+      loginRequestModel.password,
+    );
+
+    registerUserResponse = RegisterUserResponseModel.fromJson(
+      response.data,
+    );
+
+    return registerUserResponse;
   }
 }

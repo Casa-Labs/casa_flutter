@@ -4,7 +4,6 @@ import 'package:casa_flutter/src/order/model/order_models.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../routes/app_routes.dart';
 import '../../../../utils/color_constant.dart';
 import '../../../common/widgets/app_bar.dart';
