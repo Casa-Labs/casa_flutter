@@ -6,8 +6,6 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../routes/app_routes.dart';
-import '../../../common/widgets/app_bar.dart';
-import '../../../common/widgets/text_widgets.dart';
 import '../widgets/order_card.dart';
 import '../widgets/order_tracker.dart';
 import '../widgets/view_button.dart';
