@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../utils/color_constant.dart';
 import '../../../../utils/string_constant.dart';
 import '../../controller/explore_controller.dart';
 
@@ -28,8 +29,8 @@ class ExploreScreen extends StatelessWidget {
                   dividerHeight: 0,
                   splashFactory: NoSplash.splashFactory,
                   indicator: BoxDecoration(
-                      color: Colors.transparent,
-                      border: Border.all(color: Colors.transparent)),
+                      color: TabBarColor.transparent,
+                      border: Border.all(color: TabBarColor.transparent)),
                   labelPadding: const EdgeInsets.symmetric(horizontal: 2),
                   tabs: [
                     Tab(
@@ -42,12 +43,12 @@ class ExploreScreen extends StatelessWidget {
                             ),
                             backgroundColor:
                                 exploreCtrl.selectedIndex.value == 0
-                                    ? Colors.black
-                                    : Colors.white,
+                                    ? TabBarColor.black
+                                    : TabBarColor.white,
                             foregroundColor:
                                 exploreCtrl.selectedIndex.value == 0
-                                    ? Colors.white
-                                    : Colors.black,
+                                    ? TabBarColor.white
+                                    : TabBarColor.black,
                           ),
                           child: Text('Brands'),
                           onPressed: () {
@@ -66,12 +67,12 @@ class ExploreScreen extends StatelessWidget {
                             ),
                             backgroundColor:
                                 exploreCtrl.selectedIndex.value == 1
-                                    ? Colors.black
-                                    : Colors.white,
+                                    ? TabBarColor.black
+                                    : TabBarColor.white,
                             foregroundColor:
                                 exploreCtrl.selectedIndex.value == 1
-                                    ? Colors.white
-                                    : Colors.black,
+                                    ? TabBarColor.white
+                                    : TabBarColor.black,
                           ),
                           child: Text('Thrifts'),
                           onPressed: () {
@@ -349,7 +350,7 @@ class ExploreSearchBar extends StatelessWidget {
                 hintText: 'Search',
                 hintStyle: Theme.of(context).textTheme.bodySmall!.copyWith(),
                 prefixIcon: Icon(Icons.search),
-                fillColor: Color(0xffEFEFEF),
+                fillColor: TextFieldColor.offWhite,
                 filled: true,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(100),

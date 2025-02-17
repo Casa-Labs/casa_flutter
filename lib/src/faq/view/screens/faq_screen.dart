@@ -19,7 +19,7 @@ class _FAQScreenState extends State<FAQScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: BackgroundColor.white,
       appBar: CommonAppBar(
         title: 'FAQ',
       ),
@@ -44,7 +44,7 @@ class _FAQScreenState extends State<FAQScreen> {
                     height: 20,
                   ),
                   Divider(
-                    color: Colors.grey,
+                    color: DividerColor.grey,
                   ),
                 ],
               ),
@@ -110,7 +110,7 @@ class _FAQScreenState extends State<FAQScreen> {
               },
               separatorBuilder: (context, index) {
                 return Divider(
-                  color: Colors.grey,
+                  color: DividerColor.grey,
                   thickness: 1,
                 );
               },

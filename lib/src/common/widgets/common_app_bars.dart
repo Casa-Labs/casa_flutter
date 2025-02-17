@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../utils/color_constant.dart';
+
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final List<Widget>? actions;
@@ -22,7 +24,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: BackgroundColor.white,
       elevation: 0,
       centerTitle: true,
       leading: showBackButton

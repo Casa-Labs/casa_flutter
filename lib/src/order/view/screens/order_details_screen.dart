@@ -1,4 +1,5 @@
 import 'package:casa_flutter/utils/color.dart';
+import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,7 +16,7 @@ class OrderDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: BackgroundColor.white,
       appBar: CustomAppbar(
         title: 'Order details',
         isLeadingBack: true,
@@ -56,18 +57,18 @@ class OrderDetails extends StatelessWidget {
                         text: 'delivery date : ',
                         style: TextStyle(
                           fontSize: 14,
-                          fontFamily: Font.gilroy,
+                          // fontFamily: Font.gilroy,
                           fontWeight: FontWeight.w500,
-                          color: Colors.black,
+                          color: TextColor.black,
                         ),
                       ),
                       TextSpan(
                         text: 'Saturday, 21st July 2024',
                         style: TextStyle(
                           fontSize: 14,
-                          fontFamily: Font.gilroy,
+                          // fontFamily: Font.gilroy,
                           fontWeight: FontWeight.w500,
-                          color: Colors.green,
+                          color: TextColor.green,
                         ),
                       ),
                     ],

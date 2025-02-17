@@ -1,3 +1,4 @@
+import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
 import '../../../common/widgets/app_bar.dart';
@@ -13,7 +14,7 @@ class TrackShipment extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: BackgroundColor.white,
       appBar: CustomAppbar(
         title: 'Track shipment',
         isLeadingBack: true,
@@ -45,7 +46,7 @@ class TrackShipment extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color: Colors.black,
+                          color: TextColor.black,
                         ),
                       ),
                       TextSpan(
@@ -53,7 +54,7 @@ class TrackShipment extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color: Colors.green,
+                          color: TextColor.green,
                         ),
                       ),
                     ],

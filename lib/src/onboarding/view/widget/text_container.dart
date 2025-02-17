@@ -1,3 +1,4 @@
+import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
 import '../../../common/widgets/text_widgets.dart';
@@ -14,7 +15,7 @@ Widget textContainer(String text, BuildContext context) {
         style: Theme.of(context).textTheme.titleLarge?.copyWith(
               // fontSize: 22,
               fontWeight: FontWeight.w600,
-              color: Colors.white,
+              color: TextColor.white,
             ),
       ));
 }

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
 class NotificationTile extends StatelessWidget {
@@ -21,7 +22,7 @@ class NotificationTile extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 21,
-            backgroundColor: Colors.grey[200],
+            backgroundColor: ImageDecorationColor.grey200,
             child: CachedNetworkImage(
               imageUrl: circleImageUrl,
               imageBuilder: (context, imageProvider) => CircleAvatar(
@@ -33,7 +34,7 @@ class NotificationTile extends StatelessWidget {
                 // Adjust to match the CircleAvatar radius, double the radius
                 height: 42,
                 child: const CircularProgressIndicator(
-                  color: Colors.grey,
+                  color: ProgressIndicatorColor.grey,
                 ),
               ),
               errorWidget: (context, url, error) => CircleAvatar(

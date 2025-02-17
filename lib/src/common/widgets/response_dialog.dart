@@ -63,7 +63,7 @@ class _ResponseDialogState extends State<ResponseDialog> {
                       padding: const EdgeInsets.all(5),
                       child: Icon(
                         Icons.close,
-                        color: Colors.black,
+                        color: IconColor.black,
                         size: 24,
                       ),
                     ),

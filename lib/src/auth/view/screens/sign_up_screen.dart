@@ -60,7 +60,6 @@ class SignUpScreen extends StatelessWidget {
                 children: [
                   SizedBox(width: 5),
                   Container(
-                    color: Colors.transparent,
                     height: 20,
                     width: 20,
                     child: Checkbox(
