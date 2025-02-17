@@ -245,19 +245,19 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                         border: Border.all(color: Colors.black, width: 1.5),
                         borderRadius: BorderRadius.circular(40)),
                     child: CircleAvatar(
-                      maxRadius: 18,
+                      maxRadius: 16,
                       backgroundColor: const Color(0xFF002957),
                       child: Text(
                         "ZARA".substring(0, 4).toUpperCase(),
                         style:
-                            const TextStyle(color: Colors.white, fontSize: 12),
+                            const TextStyle(color: Colors.white, fontSize: 10),
                       ),
                     ),
                   ),
                   Text(
                     widget.children![index],
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 24,
+                          fontSize: 20,
                         ),
                   )
                 ],
