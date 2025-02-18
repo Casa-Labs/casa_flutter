@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../../utils/color_constant.dart';
-import '../../../../utils/font.dart';
 
 class OrderCard extends StatelessWidget {
   const OrderCard({super.key});
@@ -59,19 +57,6 @@ class OrderCard extends StatelessWidget {
                         fontSize: 16,
                         color: TextColor.black54,
                       ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SvgPicture.asset('assets/icons/ruler.svg'),
-                    const SizedBox(width: 10),
-                    Text(
-                      'Size Guide',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: TextColor.black54,
-                          ),
-                    )
-                  ],
                 ),
                 const SizedBox(height: 3),
                 Container(

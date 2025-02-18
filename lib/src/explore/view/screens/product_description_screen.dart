@@ -4,6 +4,7 @@ import 'package:casa_flutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+
 // import 'package:share_plus/share_plus.dart';
 
 import '../../../../routes/app_routes.dart';
@@ -111,9 +112,10 @@ class ProductDescriptionScreen extends StatelessWidget {
             const SizedBox(height: 10),
             Text(
               'Viscose Long Coat',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(fontWeight: FontWeight.w600, fontSize: 20),
             ),
             const SizedBox(height: 10),
             Text(

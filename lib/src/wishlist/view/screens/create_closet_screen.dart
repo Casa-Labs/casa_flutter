@@ -107,16 +107,6 @@ class CreateClosetScreen extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      Text(
-                        'Cover Image:',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              // fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                            ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
                       Row(
                         children: [
                           Expanded(
