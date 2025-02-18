@@ -6,10 +6,10 @@ import 'package:casa_flutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+
 // import 'package:share_plus/share_plus.dart';
 
 import '../../../../utils/color_constant.dart';
-import '../../../common/widgets/text_widgets.dart';
 import '../../model/home_models.dart';
 
 class Cards extends StatelessWidget {
@@ -136,7 +136,6 @@ class Cards extends StatelessWidget {
                                       fontWeight: FontWeight.w600,
                                       color: TextColor.white,
                                     ),
-
                           ),
                           // ),
                           const SizedBox(height: 10),
@@ -146,11 +145,13 @@ class Cards extends StatelessWidget {
                           //   child:
                           Text(
                             '₹ ${AppStrings.productPrice}',
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      color: TextColor.white,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: TextColor.white,
+                                    fontSize: 20),
                           )
 
                           // ),
