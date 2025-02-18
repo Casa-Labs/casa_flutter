@@ -22,13 +22,26 @@ class NavPageState extends State<NavPage> {
   int _selectedIndex = 0; // Track the selected index of the BottomNavigationBar
   int tutorialScreenIndex = 0;
 
-  final List<Widget> _pages = [
-    HomeScreen(),
-    ExploreScreen(),
-    CartScreen(),
-    WishlistScreen(),
-    ProfileScreen(),
-  ];
+  // IMP : Flutter will create the widgets in list eagerly resulting in controller
+  // initialization without navigation when bottom navbar is created,
+  // to avoid use a conditional widget building ( switch case ) and getters
+
+  Widget _getScreen(int index) {
+    switch (index) {
+      case 0:
+        return HomeScreen();
+      case 1:
+        return ExploreScreen();
+      case 2:
+        return CartScreen();
+      case 3:
+        return WishlistScreen();
+      case 4:
+        return ProfileScreen();
+      default:
+        return Container();
+    }
+  }
 
   @override
   void initState() {
@@ -56,7 +69,7 @@ class NavPageState extends State<NavPage> {
       backgroundColor: BackgroundColor.white,
       body: Stack(
         children: [
-          _pages[_selectedIndex], // Display the selected page
+          _getScreen(_selectedIndex), // Display the selected page
           if (tutorialScreenIndex < 14 && !_isFirstLaunch)
             Positioned.fill(
               child: TutorialScreen(
