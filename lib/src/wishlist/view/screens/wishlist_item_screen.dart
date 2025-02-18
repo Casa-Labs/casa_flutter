@@ -1,10 +1,10 @@
 import 'package:casa_flutter/routes/app_routes.dart';
+import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../common/widgets/filter_row.dart';
-import '../../../common/widgets/text_widgets.dart';
 import '../../controller/wishlist_controller.dart';
 import '../widgets/icons_widget.dart';
 
@@ -16,7 +16,7 @@ class WishlistItemScreen extends StatelessWidget {
     final wishlistController = Get.find<WishlistController>();
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: BackgroundColor.white,
       body: SafeArea(
         child: Obx(() {
           return Column(
@@ -24,7 +24,7 @@ class WishlistItemScreen extends StatelessWidget {
               Container(
                 height: screenHeight * .3,
                 decoration: BoxDecoration(
-                  color: Colors.grey[200],
+                  color: ImageDecorationColor.grey,
                   borderRadius: BorderRadius.circular(12),
                   image: DecorationImage(
                     image: NetworkImage(
@@ -52,8 +52,8 @@ class WishlistItemScreen extends StatelessWidget {
                                 context.pop();
                               },
                               icon: Icons.arrow_back_ios_new,
-                              backColor: Colors.white,
-                              iconColor: Colors.black,
+                              backColor: IconColor.white,
+                              iconColor: IconColor.black,
                             ),
                             Padding(
                               padding: const EdgeInsets.all(13.0),
@@ -63,7 +63,7 @@ class WishlistItemScreen extends StatelessWidget {
                                         wishlistController.itemIndex.value]
                                     .name,
                                 style: const TextStyle(
-                                  color: Colors.white,
+                                  color: TextColor.white,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -74,8 +74,8 @@ class WishlistItemScreen extends StatelessWidget {
                                 wishlistController.wishItemDeletedOrNot();
                               },
                               icon: Icons.edit,
-                              backColor: Colors.black,
-                              iconColor: Colors.white,
+                              backColor: IconColor.black,
+                              iconColor: IconColor.white,
                             ),
                           ],
                         ),
@@ -85,18 +85,20 @@ class WishlistItemScreen extends StatelessWidget {
                               wishlistController.wishRemoveItem();
                             },
                             icon: Icons.delete,
-                            backColor: Colors.red,
-                            iconColor: Colors.white,
+                            backColor: IconColor.red,
+                            iconColor: IconColor.white,
                           ),
                       ],
                     ),
                   ),
                 ),
               ),
-               Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 5),
                 child: FilterRow(
-                  brandList: wishlistController.brandFilter,colorList: wishlistController.colorFilter,productList: wishlistController.productFilter,
+                  brandList: wishlistController.brandFilter,
+                  colorList: wishlistController.colorFilter,
+                  productList: wishlistController.productFilter,
                 ),
               ),
               Obx(() {
@@ -126,7 +128,7 @@ class WishlistItemScreen extends StatelessWidget {
                                   SizedBox(
                                     child: Card(
                                       elevation: 1,
-                                      color: Colors.white,
+                                      color: ImageDecorationColor.white,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(15),
                                       ),
@@ -173,30 +175,44 @@ class WishlistItemScreen extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          BodyText(
-                                            text: "ZARA",
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 13,
+                                          Text(
+                                            "ZARA",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 13,
+                                                ),
                                           ),
-                                          GestureDetector(
-                                              onTap: () {
-                                                wishlistController
-                                                    .wishRemoveItem();
-                                              },
-                                              child:
-                                                  Icon(Icons.bookmark_rounded))
                                         ],
                                       ),
-                                      BodyText(
-                                        text: itemData.title!,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 13,
+                                      GestureDetector(
+                                        onTap: () {
+                                          wishlistController.wishRemoveItem();
+                                        },
+                                        child: Icon(Icons.bookmark_rounded),
                                       ),
-                                      BodyText(
-                                        text: itemData.price!,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 13,
+                                      Text(
+                                        itemData.title!,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 13,
+                                            ),
+                                      ),
+                                      Text(
+                                        itemData.price!,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                              color: TextColor.black,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 13,
+                                            ),
                                       ),
                                     ],
                                   ),

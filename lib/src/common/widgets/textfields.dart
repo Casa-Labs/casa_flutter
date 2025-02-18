@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../utils/color.dart';
+import '../../../utils/color_constant.dart';
 import '../../../utils/font.dart';
 import 'text_widgets.dart';
 
@@ -34,11 +35,13 @@ class CustomTextField extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        BodyText(
-          text: text,
-          fontSize: fontSize,
-          fontWeight: fontWeight,
-          color: color,
+        Text(
+          text,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                fontSize: fontSize,
+                fontWeight: fontWeight,
+                color: color,
+              ),
           textAlign: textAlign,
         ),
         SizedBox(
@@ -47,12 +50,12 @@ class CustomTextField extends StatelessWidget {
           child: TextField(
             controller: controller,
             focusNode: focusNode, // Assign focusNode if provided
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 12,
-              color: Colors.black,
+              color: TextFieldColor.black,
             ),
-            cursorColor: Colors.black,
-            cursorErrorColor: Colors.red,
+            cursorColor: TextFieldColor.black,
+            cursorErrorColor: TextFieldColor.red,
 
             decoration: InputDecoration(
               contentPadding:
@@ -60,14 +63,14 @@ class CustomTextField extends StatelessWidget {
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(6.0),
                 borderSide: const BorderSide(
-                  color: Colors.black,
+                  color: TextFieldColor.black,
                   width: 1.2,
                 ),
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(6.0),
                 borderSide: const BorderSide(
-                  color: Colors.black,
+                  color: TextFieldColor.black,
                   width: 1.0,
                 ),
               ),
@@ -106,28 +109,28 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
         controller: widget.controller, // Use widget.controller here
         style: const TextStyle(
           fontSize: 12,
-          color: Colors.black,
+          color: TextFieldColor.black,
         ),
-        cursorColor: Colors.black,
+        cursorColor: TextFieldColor.black,
         decoration: InputDecoration(
           contentPadding:
               const EdgeInsets.symmetric(vertical: 4, horizontal: 14),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(6.0),
             borderSide: const BorderSide(
-              color: Colors.black,
+              color: TextFieldColor.black,
               width: 1.2,
             ),
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(6.0),
             borderSide: const BorderSide(
-              color: Colors.black,
+              color: TextFieldColor.black,
               width: 1.0,
             ),
           ),
           suffixIcon: IconButton(
-            highlightColor: Colors.transparent,
+            highlightColor: TextFieldColor.transparent,
             icon: Icon(
               _isObscured ? Icons.visibility_off : Icons.visibility,
               size: 15,
@@ -169,11 +172,11 @@ class CustomSearchBar extends StatelessWidget {
       keyboardType: TextInputType.text,
       textCapitalization: TextCapitalization.sentences,
       textInputAction: TextInputAction.next,
-      cursorColor: CColor.black,
+      cursorColor: TextFieldColor.black,
       controller: controller,
       style: TextStyle(
         fontFamily: Font.gilroy,
-        color: CColor.black,
+        color: TextFieldColor.black,
         fontWeight: FontWeight.w500,
         fontSize: 12,
       ),
@@ -185,24 +188,24 @@ class CustomSearchBar extends StatelessWidget {
         counterStyle: TextStyle(
             fontFamily: Font.gilroy,
             fontWeight: FontWeight.w500,
-            color: CColor.black,
+            color: TextFieldColor.black,
             fontSize: 12),
         filled: true,
-        fillColor: CColor.white,
+        fillColor: TextFieldColor.white,
         contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         hintText: hintText,
         isDense: true,
         hintStyle: TextStyle(
-            color: CColor.gray,
+            color: TextFieldColor.grey,
             fontFamily: Font.gilroy,
             fontSize: 13,
             fontWeight: FontWeight.w500),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black, width: 1),
+          borderSide: BorderSide(color: TextFieldColor.black, width: 1),
           borderRadius: const BorderRadius.all(Radius.circular(20)),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black, width: 1),
+          borderSide: BorderSide(color: TextFieldColor.black, width: 1),
           borderRadius: const BorderRadius.all(Radius.circular(20)),
         ),
       ),

@@ -1,9 +1,9 @@
+import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../utils/color.dart';
-import '../../../common/widgets/text_widgets.dart';
 import '../../../home/model/home_models.dart';
 import 'counter_widget.dart';
 
@@ -70,20 +70,21 @@ class _CartItemState extends State<CartItem>
             Align(
               alignment: Alignment.topRight,
               child: InkWell(
-                overlayColor: WidgetStateProperty.all(Colors.transparent),
+                overlayColor: WidgetStateProperty.all(ButtonColor.transparent),
                 splashFactory: NoSplash.splashFactory,
                 onTap: () {
                   Navigator.pop(ctx);
                   widget.item.selectedSizePosition = selectedSizeIndex;
                 },
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: BodyText(
-                      text: 'Done',
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700),
-                ),
+                child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      'Done',
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: TextColor.black,
+                            fontWeight: FontWeight.w700,
+                          ),
+                    )),
               ),
             ),
             Expanded(child: child),
@@ -128,6 +129,7 @@ class _CartItemState extends State<CartItem>
     if (_isRemoved) {
       return const SizedBox.shrink(); // Return an empty widget once removed
     }
+    final textTheme = Theme.of(context).textTheme;
 
     return SlideTransition(
       position: _offsetAnimation,
@@ -165,25 +167,26 @@ class _CartItemState extends State<CartItem>
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Expanded(
-                                child: BodyText(
-                                  text: widget.item.title!,
-                                  fontSize: 18,
+                                  child: Text(
+                                widget.item.title!,
+                                style: textTheme.bodyLarge?.copyWith(
                                   fontWeight: FontWeight.w600,
                                 ),
-                              ),
-                              BodyText(
-                                text:
-                                    "₹${widget.item.price!.replaceAll('Rs.', '').replaceAll(' ', '')}",
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700,
-                              ),
+                              )),
+                              Text(
+                                "₹${widget.item.price!.replaceAll('Rs.', '').replaceAll(' ', '')}",
+                                style: textTheme.bodyLarge?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              )
                             ],
                           ),
                           const SizedBox(height: 4),
-                          const BodyText(
-                            text: 'Zara',
-                            fontSize: 16,
-                            color: Colors.black54,
+                          Text(
+                            'Zara',
+                            style: textTheme.bodyMedium?.copyWith(
+                              color: TextColor.black54,
+                            ),
                           ),
                           if (widget.item.sizes != null &&
                               widget.item.sizes!.isNotEmpty)
@@ -194,10 +197,11 @@ class _CartItemState extends State<CartItem>
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                const BodyText(
-                                  text: 'Size Guide',
-                                  color: Colors.black54,
-                                  fontSize: 10,
+                                Text(
+                                  'Size Guide',
+                                  style: textTheme.labelSmall?.copyWith(
+                                    color: TextColor.black54,
+                                  ),
                                 )
                               ],
                             ),
@@ -212,25 +216,26 @@ class _CartItemState extends State<CartItem>
                                   color: CColor.languageBorderColor),
                               child: Row(
                                 children: [
-                                  BodyText(
-                                    text: 'Size:',
-                                    fontSize: 12,
-                                    // fontFamily: Font.gilroy,
-                                    color: Colors.black.withValues(alpha: 0.7),
-                                    fontWeight: FontWeight.w500,
+                                  Text(
+                                    'Size:',
+                                    style: textTheme.bodySmall?.copyWith(
+                                      color: TextColor.black.withOpacity(0.7),
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                   Expanded(
                                     child: Container(
-                                      alignment: Alignment.center,
-                                      child: BodyText(
-                                        text: selectedSize(
-                                            widget.item.selectedSizePosition!),
-                                        fontSize: 15,
-                                        color: Colors.black.withValues(alpha:0.7),
-                                        // fontFamily: Font.gilroy,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          selectedSize(widget
+                                              .item.selectedSizePosition!),
+                                          style: textTheme.bodyMedium?.copyWith(
+                                            fontSize: 15,
+                                            color:
+                                                TextColor.black.withOpacity(0.7),
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        )),
                                   ),
                                   IconButton(
                                     onPressed: () {
@@ -258,16 +263,16 @@ class _CartItemState extends State<CartItem>
                                                 widget.item.sizes!.length,
                                                 (int index) {
                                               return Center(
-                                                child: BodyText(
-                                                    text: widget
-                                                        .item.sizes![index],
-                                                    fontSize: 25),
-                                              );
+                                                  child: Text(
+                                                widget.item.sizes![index],
+                                                style: textTheme.titleLarge
+                                                    ?.copyWith(fontSize: 25),
+                                              ));
                                             }),
                                           ),
                                           context);
                                     },
-                                    highlightColor: Colors.transparent,
+                                    highlightColor: ButtonColor.transparent,
                                     icon: const Icon(
                                       Icons.keyboard_arrow_down,
                                       size: 18,
@@ -290,7 +295,7 @@ class _CartItemState extends State<CartItem>
                                 addTap: _increment),
                           ),
                           IconButton(
-                            highlightColor: Colors.transparent,
+                            highlightColor: ButtonColor.transparent,
                             icon: SvgPicture.asset(
                               'assets/icon/delete.svg',
                               height: 23,

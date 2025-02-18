@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../common/widgets/text_widgets.dart';
+import '../../../../utils/color_constant.dart';
+
 
 class OrderTracker extends StatelessWidget {
   const OrderTracker({super.key, required this.statuses});
@@ -51,11 +52,12 @@ class OrderTracker extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: statuses.map((status) {
-              return BodyText(
-                text: status.status,
-                fontSize: 12,
-                color: Colors.black,
-                textAlign: TextAlign.center, // Center-align text
+              return Text(
+                status.status,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: TextColor.black,
+                      // Center-align text
+                    ),
                 softWrap: true, // Allow wrapping
               );
             }).toList(),

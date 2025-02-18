@@ -1,12 +1,19 @@
+import 'package:casa_flutter/src/auth/controller/auth_controller.dart';
 import 'package:casa_flutter/src/auth/view/widgets/auth_button.dart';
 import 'package:casa_flutter/src/common/widgets/custom_text_form_field_widget.dart';
+import 'package:casa_flutter/src/common/widgets/show_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../routes/app_routes.dart';
 
 class SignInScreen extends StatelessWidget {
-  const SignInScreen({super.key});
+  SignInScreen({super.key});
+
+  final authController = Get.put(
+    AuthController(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -33,16 +40,44 @@ class SignInScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Email Address'),
-                CustomTextFormField(),
+                CustomTextFormField(
+                  controller: authController.email,
+                ),
                 SizedBox(height: 20),
                 Text('Password'),
-                CustomTextFormField(),
+                Obx(
+                  () => CustomTextFormField(
+                    controller: authController.password,
+                    obscureText: authController.isPasswordObscured(),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        authController.showPassword();
+                      },
+                      icon: Icon(
+                        authController.isPasswordObscured()
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        color:
+                            Theme.of(context).colorScheme.onSecondaryContainer,
+                      ),
+                    ),
+                  ),
+                ),
                 SizedBox(height: 20),
                 AuthButton(
-                    type: AuthButtonType.signIn,
-                    onPressed: () {
-                      context.pushNamed(RouteNames.navigation);
-                    }),
+                  type: AuthButtonType.signIn,
+                  onPressed: () async {
+                    await authController.loginUserCall();
+                    if (authController.message().isNotEmpty) {
+                      showToast(
+                        message: authController.message(),
+                      );
+                      if (authController.isLoggedIn()) {
+                        router.goNamed(RouteNames.navigation);
+                      }
+                    }
+                  },
+                ),
                 SizedBox(height: 10),
                 Center(
                   child: TextButton(

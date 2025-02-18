@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../../../../utils/color_constant.dart';
+
 class IconsWidget extends StatelessWidget {
   const IconsWidget({
     super.key,
     required this.onTap,
     required this.icon,
-    this.backColor = Colors.black,
-    this.iconColor = Colors.white,
+    this.backColor = IconColor.black,
+    this.iconColor = IconColor.white,
     this.size = 25,
     this.padding = 5,
   });

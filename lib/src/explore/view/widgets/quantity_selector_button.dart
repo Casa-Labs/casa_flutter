@@ -40,7 +40,7 @@ class _QuantitySelectorButtonState extends State<QuantitySelectorButton> {
           highlightColor: ButtonColor.yellow,
           onPressed: _decreaseCount,
           icon: const Icon(Icons.remove),
-          color: Colors.black,
+          color: IconColor.black,
         ),
         Container(
           width: 150,
@@ -63,7 +63,7 @@ class _QuantitySelectorButtonState extends State<QuantitySelectorButton> {
           highlightColor: ButtonColor.yellow,
           onPressed: _increaseCount,
           icon: const Icon(Icons.add),
-          color: Colors.black,
+          color: IconColor.black,
         ),
       ],
     );

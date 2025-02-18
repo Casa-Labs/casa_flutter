@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../utils/color_constant.dart';
+
 class ProductCard extends StatelessWidget {
   final String name;
   final String description;
@@ -29,11 +31,11 @@ class ProductCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(12), // ✅ Makes the tap effect rounded
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white, // ✅ Ensures a proper background
+          color: ButtonColor.white, // ✅ Ensures a proper background
           borderRadius: BorderRadius.circular(12), // ✅ Rounded corners
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1), // ✅ Soft shadow
+              color: ButtonColor.black.withValues(alpha: 0.1), // ✅ Soft shadow
               blurRadius: 6,
               spreadRadius: 2,
               offset: const Offset(0, 3),

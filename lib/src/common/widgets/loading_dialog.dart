@@ -1,3 +1,4 @@
+import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,9 +11,9 @@ class LoadingDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      child: const Center(
+      child: Center(
         child: CircularProgressIndicator(
-          color: Colors.black,
+          color: ProgressIndicatorColor.black,
         ),
       ),
     );

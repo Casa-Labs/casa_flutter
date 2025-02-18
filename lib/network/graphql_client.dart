@@ -428,6 +428,7 @@
 //     return false;
 //   }
 // }
+import 'package:casa_flutter/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
@@ -443,12 +444,16 @@ class GraphQLClientService {
         'Bearer ${PreferenceManager.getString(PreferenceManager.token)}',
   );
 
-  static final Link _link = _authLink.concat(_httpLink);
+  static final Link _link = (router.state.name == RouteNames.signIn ||
+          router.state.name == RouteNames.signUp)
+      ? _httpLink
+      : _authLink.concat(_httpLink);
 
   static final GraphQLClient _client = GraphQLClient(
     link: _link,
-    cache:
-        GraphQLCache(store: InMemoryStore()), // Caching for better performance
+    cache: GraphQLCache(
+      store: InMemoryStore(),
+    ), // Caching for better performance
   );
 
   /// **Perform a GraphQL Query**

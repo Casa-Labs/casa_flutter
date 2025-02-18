@@ -1,11 +1,11 @@
 import 'package:casa_flutter/utils/color.dart';
+import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../routes/app_routes.dart';
 import '../../../../utils/font.dart';
 import '../../../common/widgets/app_bar.dart';
-import '../../../common/widgets/text_widgets.dart';
 import '../widgets/order_card.dart';
 import '../widgets/view_button.dart';
 
@@ -14,8 +14,9 @@ class OrderDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: BackgroundColor.white,
       appBar: CustomAppbar(
         title: 'Order details',
         isLeadingBack: true,
@@ -30,23 +31,24 @@ class OrderDetails extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const BodyText(
-                  text: "Shipment details",
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
+                Text(
+                  "Shipment details",
+                  style: textTheme.bodyMedium
+                      ?.copyWith(fontWeight: FontWeight.w600),
                 ),
-                const BodyText(
-                  text: "Tracking Id :182736223993",
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
+                Text(
+                  "Tracking Id :182736223993",
+                  style: textTheme.bodyMedium
+                      ?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 SizedBox(height: 10),
                 OrderCard(),
                 SizedBox(height: 10),
-                const BodyText(
-                  text: "Order packed",
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
+                Text(
+                  "Order packed",
+                  style: textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 RichText(
                   text: TextSpan(
@@ -55,32 +57,34 @@ class OrderDetails extends StatelessWidget {
                         text: 'delivery date : ',
                         style: TextStyle(
                           fontSize: 14,
-                          fontFamily: Font.gilroy,
+                          // fontFamily: Font.gilroy,
                           fontWeight: FontWeight.w500,
-                          color: Colors.black,
+                          color: TextColor.black,
                         ),
                       ),
                       TextSpan(
                         text: 'Saturday, 21st July 2024',
                         style: TextStyle(
                           fontSize: 14,
-                          fontFamily: Font.gilroy,
+                          // fontFamily: Font.gilroy,
                           fontWeight: FontWeight.w500,
-                          color: Colors.green,
+                          color: TextColor.green,
                         ),
                       ),
                     ],
                   ),
                 ),
-                const BodyText(
-                  text: "vendor : Zara Mumbai",
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
+                Text(
+                  "vendor : Zara Mumbai",
+                  style: textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                const BodyText(
-                  text: "Qty : 1",
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
+                Text(
+                  "Qty : 1",
+                  style: textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 SizedBox(height: 15),
                 InkWell(
@@ -98,10 +102,11 @@ class OrderDetails extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        BodyText(
-                          text: 'Track shipment',
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                        Text(
+                          'Track shipment',
+                          style: textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                         Icon(
                           Icons.arrow_forward_ios_rounded,
@@ -112,13 +117,15 @@ class OrderDetails extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12),
-                const BodyText(
-                  text: "Order Details",
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
+                Text(
+                  "Order Details",
+                  style: textTheme.bodyMedium?.copyWith(
+                    // fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
                 const SizedBox(height: 8),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -127,21 +134,27 @@ class OrderDetails extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          BodyText(
-                            text: 'Order Date',
-                            fontWeight: FontWeight.w600,
+                          Text(
+                            'Order Date',
+                            style: textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                           SizedBox(height: 3),
-                          BodyText(
-                            text: 'Order #',
+                          Text(
+                            'Order #',
                             textAlign: TextAlign.start,
-                            fontWeight: FontWeight.w600,
+                            style: textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                           SizedBox(height: 3),
-                          BodyText(
-                            text: 'Order total',
+                          Text(
+                            'Order total',
                             textAlign: TextAlign.start,
-                            fontWeight: FontWeight.w600,
+                            style: textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ],
                       ),
@@ -150,17 +163,20 @@ class OrderDetails extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        BodyText(
-                          text: '21-07-2024 ',
+                        Text(
+                          '21-07-2024 ',
+                          style: textTheme.bodyMedium,
                         ),
                         SizedBox(height: 3),
-                        BodyText(
-                          text: '201-2293837-209',
+                        Text(
+                          '201-2293837-209',
                           textAlign: TextAlign.start,
+                          style: textTheme.bodyMedium,
                         ),
                         SizedBox(height: 3),
-                        BodyText(
-                          text: 'Rs.2014(i item)',
+                        Text(
+                          'Rs.2014 (1 item)',
+                          style: textTheme.bodyMedium,
                         ),
                       ],
                     )
@@ -174,10 +190,10 @@ class OrderDetails extends StatelessWidget {
                   text: 'Download invoice',
                 ),
                 Divider(),
-                const BodyText(
-                  text: "Payment Information",
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
+                Text(
+                  "Payment Information",
+                  style: textTheme.bodyLarge
+                      ?.copyWith(fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 10),
                 Container(
@@ -185,7 +201,7 @@ class OrderDetails extends StatelessWidget {
                   decoration: BoxDecoration(
                       border: Border.all(color: CColor.borderColor, width: 2),
                       borderRadius: BorderRadius.circular(10)),
-                  child: const Row(
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -193,15 +209,16 @@ class OrderDetails extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          BodyText(
-                            fontSize: 14,
-                            text: 'Payment Method',
-                            fontWeight: FontWeight.bold,
+                          Text(
+                            'Payment Method',
+                            style: textTheme.bodyMedium
+                                ?.copyWith(fontWeight: FontWeight.bold),
                           ),
-                          BodyText(
-                              fontSize: 14,
-                              text: 'Visa ending in 7834',
-                              fontWeight: FontWeight.w600)
+                          Text(
+                            'Visa ending in 7834',
+                            style: textTheme.bodyMedium
+                                ?.copyWith(fontWeight: FontWeight.w600),
+                          ),
                         ],
                       ),
                       Icon(Icons.chevron_right)
@@ -210,113 +227,135 @@ class OrderDetails extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 const Divider(),
-                const BodyText(
-                  text: "Shipping Address",
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                Text(
+                  "Shipping Address",
+                  style: textTheme.bodyLarge
+                      ?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 8),
-                const BodyText(
-                  text: "Steve",
+                Text(
+                  "Steve",
+                  style: textTheme.bodyMedium,
                 ),
-                const BodyText(
-                  text: "A1 - 502 Akal Society",
+                Text(
+                  "A1 - 502 Akal Society",
+                  style: textTheme.bodyMedium,
                 ),
-                const BodyText(
-                  text: "J.B. Nagar Andheri East",
+                Text(
+                  "J.B. Nagar Andheri East",
+                  style: textTheme.bodyMedium,
                 ),
-                const BodyText(
-                  text: "Mumbai, Maharashtra - 400099 India",
+                Text(
+                  "Mumbai, Maharashtra - 400099 India",
+                  style: textTheme.bodyMedium,
                 ),
                 const SizedBox(height: 12),
                 const Divider(),
-                const BodyText(
-                  text: "Order Summary",
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                Text(
+                  "Order Summary",
+                  style: textTheme.bodyLarge
+                      ?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 8),
-                _orderSummary()
+                _orderSummary(context)
               ],
             ),
           )),
     );
   }
 
-  _orderSummary() {
+  _orderSummary(BuildContext context) {
     return Column(
       children: [
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            BodyText(
-              text: "Items:",
+            Text(
+              "Items:",
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
-            BodyText(
-              text: "\$767.00",
+            Text(
+              "\$767.00",
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
         ),
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            BodyText(
-              text: "Postage and Packing:",
+            Text(
+              "Postage and Packing:",
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
-            BodyText(
-              text: "\$20.00",
+            Text(
+              "\$20.00",
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
         ),
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            BodyText(
-              text: "Total Before Tax:",
+            Text(
+              "Total Before Tax:",
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
-            BodyText(
-              text: "\$760.00",
+            Text(
+              "\$760.00",
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
         ),
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            BodyText(
-              text: "Tax:",
+            Text(
+              "Tax:",
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
-            BodyText(
-              text: "\$7.00",
+            Text(
+              "\$7.00",
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
         ),
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            BodyText(
-              text: "Total:",
-              fontWeight: FontWeight.w600,
+            Text(
+              "Total:",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(fontWeight: FontWeight.w600),
             ),
-            BodyText(
-              text: "\$768.00",
-              fontWeight: FontWeight.w600,
+            Text(
+              "\$768.00",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(fontWeight: FontWeight.w600),
             ),
           ],
         ),
         const SizedBox(height: 8),
         const Divider(),
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            BodyText(
-              text: "Order Total:",
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
+            Text(
+              "Order Total:",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(/* fontSize: 14 */ fontWeight: FontWeight.w600),
             ),
-            BodyText(
-              text: "\$784.00",
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
+            Text(
+              "\$784.00",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(/* fontSize: 14, */ fontWeight: FontWeight.w600),
             ),
           ],
         ),

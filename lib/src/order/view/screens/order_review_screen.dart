@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../utils/color_constant.dart';
 import '../../../common/widgets/app_bar.dart';
-import '../../../common/widgets/text_widgets.dart';
 import '../widgets/expandable_card.dart';
 
 class OrderReviewScreen extends StatelessWidget {
@@ -16,8 +16,9 @@ class OrderReviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: BackgroundColor.white,
       appBar: CustomAppbar(
           title: 'Order review',
           isLeadingBack: true,
@@ -36,15 +37,17 @@ class OrderReviewScreen extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(1),
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
+                          border: Border.all(color: TextColor.black),
                           borderRadius: BorderRadius.circular(50)),
                       child: CircleAvatar(
                         maxRadius: 24,
                         backgroundColor: const Color(0xFF002957),
-                        child: BodyText(
-                          text: "ZARA".substring(0, 3).toUpperCase(),
-                          color: Colors.white,
-                          fontSize: 14,
+                        child: Text(
+                          "ZARA".substring(0, 3).toUpperCase(),
+                          style: textTheme.bodyMedium?.copyWith(
+                            color: TextColor.white,
+                            // fontSize: 14,
+                          ),
                         ),
                       ),
                     ),
@@ -63,9 +66,9 @@ class OrderReviewScreen extends StatelessWidget {
                           return Container(
                               padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: TextColor.white,
                                 border:
-                                    Border.all(color: Colors.black, width: 0.7),
+                                    Border.all(color: TextColor.black, width: 0.7),
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               child: Column(
@@ -78,7 +81,7 @@ class OrderReviewScreen extends StatelessWidget {
                                     children: [
                                       Card(
                                         elevation: 2,
-                                        color: Colors.white,
+                                        color: ButtonColor.white,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(15),
@@ -108,26 +111,35 @@ class OrderReviewScreen extends StatelessWidget {
                                                         .spaceBetween,
                                                 children: [
                                                   Expanded(
-                                                    child: BodyText(
-                                                      text: product.title!,
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.w600,
+                                                    child: Text(
+                                                      product.title!,
+                                                      style: textTheme.bodyLarge
+                                                          ?.copyWith(
+                                                        // fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
                                                     ),
                                                   ),
-                                                  BodyText(
-                                                    text:
-                                                        "₹${product.price!.replaceAll('Rs.', '').replaceAll(' ', '')}",
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.w700,
+                                                  Text(
+                                                    "₹${product.price!.replaceAll('Rs.', '').replaceAll(' ', '')}",
+                                                    style: textTheme.bodyLarge
+                                                        ?.copyWith(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
                                                   ),
                                                 ],
                                               ),
                                               const SizedBox(height: 4),
-                                              const BodyText(
-                                                text: 'Zara',
-                                                fontSize: 16,
-                                                color: Colors.black54,
+                                              Text(
+                                                'Zara',
+                                                style: textTheme.bodyMedium
+                                                    ?.copyWith(
+                                                  // fontSize: 16,
+                                                  color: TextColor.black54,
+                                                ),
                                               ),
                                               Row(
                                                 mainAxisAlignment:
@@ -140,29 +152,39 @@ class OrderReviewScreen extends StatelessWidget {
                                                   const SizedBox(
                                                     width: 10,
                                                   ),
-                                                  const BodyText(
-                                                    text: 'Size Guide',
-                                                    color: Colors.black54,
-                                                    fontSize: 10,
-                                                  )
+                                                  Text(
+                                                    'Size Guide',
+                                                    style: textTheme.bodySmall
+                                                        ?.copyWith(
+                                                      color: TextColor.black54,
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                               const SizedBox(
                                                 height: 10,
                                               ),
-                                              const Row(
+                                              Row(
                                                 children: [
-                                                  BodyText(
-                                                    text: 'Size:',
-                                                    fontSize: 14,
-                                                    color: Colors.black54,
-                                                    fontWeight: FontWeight.w300,
+                                                  Text(
+                                                    'Size:',
+                                                    style: textTheme.bodyMedium
+                                                        ?.copyWith(
+                                                      // fontSize: 14,
+                                                      color: TextColor.black54,
+                                                      fontWeight:
+                                                          FontWeight.w300,
+                                                    ),
                                                   ),
-                                                  Spacer(),
-                                                  BodyText(
-                                                    text: 'M',
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w300,
+                                                  const Spacer(),
+                                                  Text(
+                                                    'M',
+                                                    style: textTheme.bodyMedium
+                                                        ?.copyWith(
+                                                      // fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w300,
+                                                    ),
                                                   ),
                                                   SizedBox(
                                                     width: 25,
@@ -174,11 +196,15 @@ class OrderReviewScreen extends StatelessWidget {
                                               ),
                                               Row(
                                                 children: [
-                                                  const BodyText(
-                                                    text: 'Quantity:',
-                                                    fontSize: 14,
-                                                    color: Colors.black54,
-                                                    fontWeight: FontWeight.w300,
+                                                  Text(
+                                                    'Quantity:',
+                                                    style: textTheme.bodyMedium
+                                                        ?.copyWith(
+                                                      // fontSize: 14,
+                                                      color: TextColor.black54,
+                                                      fontWeight:
+                                                          FontWeight.w300,
+                                                    ),
                                                   ),
                                                   const Spacer(),
                                                   Container(
@@ -193,12 +219,16 @@ class OrderReviewScreen extends StatelessWidget {
                                                         color: const Color
                                                             .fromARGB(106, 217,
                                                             217, 217)),
-                                                    child: BodyText(
-                                                      text: product.quantity
+                                                    child: Text(
+                                                      product.quantity
                                                           .toString(),
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w300,
+                                                      style: textTheme
+                                                          .bodyMedium
+                                                          ?.copyWith(
+                                                        // fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                      ),
                                                     ),
                                                   ),
                                                   const SizedBox(
@@ -208,7 +238,7 @@ class OrderReviewScreen extends StatelessWidget {
                                               ),
                                               IconButton(
                                                 highlightColor:
-                                                    Colors.transparent,
+                                                    IconColor.transparent,
                                                 icon: Icon(Icons.delete),
                                                 // icon: SvgPicture.asset(
                                                 //   'assets/icon/delete.svg',
@@ -241,8 +271,8 @@ class OrderReviewScreen extends StatelessWidget {
                     ),
                     Material(
                       elevation: 4,
-                      surfaceTintColor: Colors.white,
-                      color: Colors.white,
+                      surfaceTintColor: ButtonColor.white,
+                      color: ButtonColor.white,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                           side: const BorderSide(
@@ -261,7 +291,7 @@ class OrderReviewScreen extends StatelessWidget {
                               children: [
                                 InkWell(
                                   overlayColor: WidgetStateProperty.all(
-                                      Colors.transparent),
+                                      ButtonColor.transparent),
                                   splashFactory: NoSplash.splashFactory,
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(
@@ -269,17 +299,19 @@ class OrderReviewScreen extends StatelessWidget {
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
-                                        color: Colors.black),
-                                    child: const BodyText(
-                                      text: "Delivery type",
-                                      fontSize: 14,
-                                      color: Colors.white,
+                                        color: ButtonColor.black),
+                                    child: Text(
+                                      "Delivery type",
+                                      style: textTheme.bodyMedium?.copyWith(
+                                        fontSize: 14,
+                                        color: TextColor.white,
+                                      ),
                                     ),
                                   ),
                                 ),
                                 InkWell(
                                   overlayColor: WidgetStateProperty.all(
-                                      Colors.transparent),
+                                      ButtonColor.transparent),
                                   splashFactory: NoSplash.splashFactory,
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(
@@ -287,11 +319,13 @@ class OrderReviewScreen extends StatelessWidget {
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
-                                        color: Colors.black),
-                                    child: const BodyText(
-                                      text: "Instructions",
-                                      fontSize: 14,
-                                      color: Colors.white,
+                                        color: ButtonColor.black),
+                                    child: Text(
+                                      "Instructions",
+                                      style: textTheme.bodyMedium?.copyWith(
+                                        // fontSize: 14,
+                                        color: TextColor.white,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -322,12 +356,14 @@ class OrderReviewScreen extends StatelessWidget {
                                     const SizedBox(
                                       width: 10,
                                     ),
-                                    const BodyText(
-                                      text: "Standard",
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700,
-                                      color: Color(0xFF4220FF),
-                                    )
+                                    Text(
+                                      "Standard",
+                                      style: textTheme.bodyMedium?.copyWith(
+                                        // fontSize: 14,
+                                        fontWeight: FontWeight.w700,
+                                        color: Color(0xFF4220FF),
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 // Image.asset(
@@ -360,12 +396,12 @@ class OrderReviewScreen extends StatelessWidget {
             ),
           ),
           Container(
-            color: Colors.white,
+            color: ButtonColor.white,
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Column(
+                Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -374,21 +410,25 @@ class OrderReviewScreen extends StatelessWidget {
                         SizedBox(
                           width: 4,
                         ),
-                        BodyText(
-                          text: "PAY USING",
-                          fontSize: 14,
-                          color: Colors.black,
+                        Text(
+                          "PAY USING",
+                          style: textTheme.bodyMedium?.copyWith(
+                            // fontSize: 14,
+                            color: TextColor.black,
+                          ),
                         ),
                         Icon(
                           Icons.arrow_drop_up,
                         )
                       ],
                     ),
-                    BodyText(
-                      text: "Phone Pay",
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
+                    Text(
+                      "Phone Pay",
+                      style: textTheme.bodyMedium?.copyWith(
+                        // fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: TextColor.black,
+                      ),
                     ),
                   ],
                 ),
@@ -401,10 +441,12 @@ class OrderReviewScreen extends StatelessWidget {
                     onPressed: () {
                       context.pushNamed(RouteNames.paymentOptions);
                     },
-                    child: BodyText(
-                      text: "Pay ₹${orderReviewController.total}",
-                      fontSize: 14,
-                      color: Colors.white,
+                    child: Text(
+                      "Pay ₹${orderReviewController.total}",
+                      style: textTheme.bodyMedium?.copyWith(
+                        // fontSize: 14,
+                        color: TextColor.white,
+                      ),
                     ),
                   );
                 }),

@@ -61,7 +61,7 @@ class PositionTutorial extends StatelessWidget {
                             ),
                       ],
                     ),
-                  textContainer(text),
+                  textContainer(text,context),
                   if (!isAbove)
                     Column(
                       crossAxisAlignment: crossAxisAlignmentSecond,

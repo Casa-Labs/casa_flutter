@@ -1,4 +1,5 @@
 import 'package:casa_flutter/src/order/controller/order_review_controller.dart';
+import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,8 +14,8 @@ class ExpandableCard extends StatelessWidget {
     return Obx(() {
       return Material(
         elevation: 4,
-        surfaceTintColor: Colors.white,
-        color: Colors.white,
+        surfaceTintColor: ButtonColor.white,
+        color: ButtonColor.white,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
             side: const BorderSide(color: Color(0xFFCBCBCB), width: 0.5)),
@@ -27,7 +28,7 @@ class ExpandableCard extends StatelessWidget {
             // width: 300,
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: ButtonColor.white,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
@@ -50,11 +51,16 @@ class ExpandableCard extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            BodyText(
-                              text: 'To pay ₹${orderController.total}',
-                              fontSize: 14,
-                              fontWeight: FontWeight.normal,
-                            ),
+                            Text(
+                              'To pay ₹${orderController.total}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                    // fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            )
                             // BodyText(
                             //   text: '\$58 saved on the total order.',
                             //   fontSize: 14,
@@ -73,24 +79,15 @@ class ExpandableCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 10),
-                      BodyText(
-                        text: 'Item Total: ₹${orderController.itemtotal}',
-                        fontSize: 14,
-                      ),
-                      BodyText(
-                        text:
-                            'Delivery Fee: ₹${orderController.deliveryCharge}',
-                        fontSize: 14,
-                      ),
-                      BodyText(
-                        text: 'Platform Fee: ₹${orderController.platFormFee}',
-                        fontSize: 14,
-                      ),
-                      BodyText(
-                        text:
-                            'GST and Restaurant Charges: ₹${orderController.gst}',
-                        fontSize: 14,
-                      ),
+                      Text('Item Total: ₹${orderController.itemtotal}',
+                          style: Theme.of(context).textTheme.bodyMedium),
+                      Text('Delivery Fee: ₹${orderController.deliveryCharge}',
+                          style: Theme.of(context).textTheme.bodyMedium),
+                      Text('Platform Fee: ₹${orderController.platFormFee}',
+                          style: Theme.of(context).textTheme.bodyMedium),
+                      Text(
+                          'GST and Restaurant Charges: ₹${orderController.gst}',
+                          style: Theme.of(context).textTheme.bodyMedium),
                       SizedBox(height: 10),
                     ],
                   ),

@@ -1,4 +1,5 @@
 import 'package:casa_flutter/utils/color.dart';
+import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
 class SwipeAnimation extends StatelessWidget {
@@ -25,7 +26,7 @@ class SwipeAnimation extends StatelessWidget {
             CircleAvatar(
               radius: 35,
               key: ValueKey(swipeIcon),
-              backgroundColor: swipeIcon == null ?CColor.transparent:swipeIcon == Icons.check_rounded ? Colors.black : CColor.closeTick,
+              backgroundColor: swipeIcon == null ?CColor.transparent:swipeIcon == Icons.check_rounded ? IconColor.black : CColor.closeTick,
               child: Icon(
                 swipeIcon,
                 color: swipeIcon == Icons.check_rounded ? CColor.closeTick : CColor.black,

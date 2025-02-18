@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../common/widgets/text_widgets.dart';
+import '../../../../utils/color_constant.dart';
 
 class SmallButton extends StatelessWidget {
   final Function() onPressed;
@@ -12,27 +12,27 @@ class SmallButton extends StatelessWidget {
     return Align(
       alignment: Alignment.centerRight,
       child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          splashFactory: NoSplash.splashFactory,
-          foregroundColor: Colors.transparent,
-          backgroundColor: Colors.white,
-          elevation: 0.1,
-          minimumSize: Size.zero,
-          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-          alignment: Alignment.center,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(7),
-            side: const BorderSide(color: Colors.black38, width: 1),
+          onPressed: onPressed,
+          style: ElevatedButton.styleFrom(
+            splashFactory: NoSplash.splashFactory,
+            foregroundColor: ButtonColor.transparent,
+            backgroundColor: ButtonColor.white,
+            elevation: 0.1,
+            minimumSize: Size.zero,
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+            alignment: Alignment.center,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(7),
+              side: const BorderSide(color: ButtonColor.black, width: 1),
+            ),
           ),
-        ),
-        child: BodyText(
-          text: text,
-          fontSize: 13,
-          color: Colors.black,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
+          child: Text(
+            text,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: TextColor.black,
+                  fontWeight: FontWeight.w500,
+                ),
+          )),
     );
   }
 }

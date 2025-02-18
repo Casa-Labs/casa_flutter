@@ -1,4 +1,5 @@
 import 'package:casa_flutter/src/home/controller/home_controller.dart';
+import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../utils/color.dart';
@@ -9,27 +10,27 @@ class FilterRow extends StatelessWidget {
   final List? brandList;
   final List? productList;
   final List? colorList;
-    FilterRow({super.key,this.brandList, this.productList, this.colorList});
+  FilterRow({super.key, this.brandList, this.productList, this.colorList});
 
   final homeCtrl = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 45,
-        child:  SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 18,
-                backgroundColor: CColor.filterColor,
-                child:  Icon(Icons.tune_rounded,size: 20,color: CColor.black),
-              ),
-         _filterItem('Brand', brandList!, context),
-         _filterItem('Product', productList!, context),
-         _filterItem('Color', colorList!, context),
-         _filterItem('Price', [], context),
-         _filterItem('Size', [], context),
+      height: 45,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 18,
+              backgroundColor: CColor.filterColor,
+              child: Icon(Icons.tune_rounded, size: 20, color: CColor.black),
+            ),
+            _filterItem('Brand', brandList!, context),
+            _filterItem('Product', productList!, context),
+            _filterItem('Color', colorList!, context),
+            _filterItem('Price', [], context),
+            _filterItem('Size', [], context),
             /*  ListView.builder(
                   itemCount: 5,
                   shrinkWrap: true,
@@ -85,13 +86,13 @@ class FilterRow extends StatelessWidget {
                     );
                   },
                 ),*/
-            ],
-          ),
+          ],
         ),
-      );
+      ),
+    );
   }
 
-  void _showTextInputDialog(BuildContext context, List children ) async {
+  void _showTextInputDialog(BuildContext context, List children) async {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -102,8 +103,8 @@ class FilterRow extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15)),
               contentPadding: EdgeInsets.all(0),
               insetPadding: EdgeInsets.all(20),
-              backgroundColor: Colors.white54,
-              content: CommonFilterDialog(children:children),
+              backgroundColor: DialogColor.white54,
+              content: CommonFilterDialog(children: children),
             );
           },
         );
@@ -111,12 +112,12 @@ class FilterRow extends StatelessWidget {
     );
   }
 
-  _filterItem(String filterName, List children,BuildContext context){
-    return  InkWell(
+  _filterItem(String filterName, List children, BuildContext context) {
+    return InkWell(
       splashColor: CColor.transparent,
       highlightColor: CColor.transparent,
       onTap: () {
-        _showTextInputDialog(context,children);
+        _showTextInputDialog(context, children);
       },
       child: Container(
         margin: const EdgeInsets.all(5),
@@ -133,18 +134,16 @@ class FilterRow extends StatelessWidget {
               filterName,
               style: TextStyle(
                 fontSize: 13,
-                color: CColor.black,
+                color: TextColor.black,
                 fontWeight: FontWeight.w500,
-                fontFamily: Font.gilroy,
+                // fontFamily: Font.gilroy,
               ),
             ),
             const SizedBox(width: 2),
-            Icon(Icons.arrow_drop_down,color: CColor.black)
+            Icon(Icons.arrow_drop_down, color: IconColor.black)
           ],
         ),
       ),
     );
   }
 }
-
-

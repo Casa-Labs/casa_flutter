@@ -29,7 +29,7 @@ class SwipeTutorial extends StatelessWidget {
                 image,
               ),
             ),
-            textContainer(text),
+            textContainer(text,context),
           ],
         ),
       ),
