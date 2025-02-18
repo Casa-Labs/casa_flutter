@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 
 import '../../../utils/color_constant.dart';
 
-class CustomDropDownMenu extends StatelessWidget {
-  final List<String?> items;
-  final void Function(String)? onSelected;
+class CustomDropDownMenu<T> extends StatelessWidget {
+  final List<T> items;
+  final String Function(T item) itemLabel; // Extracts display value
+  final void Function(T)? onSelected;
   final double? width;
   final String hintText;
-  final String? Function(String?)? validator;
-  final String? initialValue;
+  final FormFieldValidator<T>? validator;
+  final T? initialValue;
   final bool? check;
 
   const CustomDropDownMenu({
     super.key,
     required this.items,
+    required this.itemLabel,
     this.onSelected,
     this.width,
     this.hintText = '',
@@ -25,28 +27,19 @@ class CustomDropDownMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      // height: 48.h,
       width: width,
-      child: DropdownButtonFormField<String?>(
+      child: DropdownButtonFormField<T>(
         isExpanded: true,
         isDense: true,
         value: initialValue,
-        alignment: AlignmentDirectional.topCenter,
         validator: validator,
-        icon: Icon(Icons.keyboard_arrow_down, color: Colors.grey),
+        icon: Icon(Icons.keyboard_arrow_down, color: IconColor.grey),
         dropdownColor: Theme.of(context).colorScheme.surface,
-        hint: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(hintText,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: TextColor.grey,
-                      ) // original : display large
-
-                  ),
-            ],
-          ),
+        hint: Text(
+          hintText,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: TextColor.grey,
+              ),
         ),
         decoration: InputDecoration(
           fillColor: check == true ? BackgroundColor.white : Colors.transparent,
@@ -68,16 +61,16 @@ class CustomDropDownMenu extends StatelessWidget {
           ),
         ),
         items: items.map((item) {
-          return (DropdownMenuItem<String?>(
+          return DropdownMenuItem<T>(
             value: item,
             child: Text(
-              item.toString(),
+              itemLabel(item), // Extracts display text dynamically
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
-          ));
+          );
         }).toList(),
-        onChanged: (String? value) {
+        onChanged: (T? value) {
           if (value != null && onSelected != null) {
             onSelected!(value);
           }
