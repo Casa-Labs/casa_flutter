@@ -1,6 +1,8 @@
 import 'package:casa_flutter/utils/color.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../utils/color_constant.dart';
+
 
 class ButtonWidget extends StatelessWidget {
   final Function() onPressed;
@@ -14,8 +16,8 @@ class ButtonWidget extends StatelessWidget {
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
             splashFactory: NoSplash.splashFactory,
-            foregroundColor: Colors.transparent,
-            backgroundColor: Colors.white,
+            foregroundColor: ButtonColor.transparent,
+            backgroundColor: ButtonColor.white,
             elevation: 0,
             fixedSize: const Size.fromHeight(50),
             minimumSize: Size.zero,
@@ -31,7 +33,7 @@ class ButtonWidget extends StatelessWidget {
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   // fontSize: 12,
                   fontWeight: FontWeight.w500,
-                  color: Colors.black,
+                  color: TextColor.black,
                 ),
           )),
     );

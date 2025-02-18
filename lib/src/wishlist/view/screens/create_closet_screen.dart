@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -18,7 +19,7 @@ class CreateClosetScreen extends StatelessWidget {
     return Scaffold(
       body: Obx(() {
         return Container(
-          color: Colors.white,
+          color: BackgroundColor.white,
           height: isBottomSheet ? screenHeight * 1 : null,
           child: SingleChildScrollView(
             child: Column(
@@ -39,7 +40,7 @@ class CreateClosetScreen extends StatelessWidget {
                         ),
                         InkWell(
                           overlayColor:
-                              WidgetStateProperty.all(Colors.transparent),
+                              WidgetStateProperty.all(ButtonColor.transparent),
                           splashFactory: NoSplash.splashFactory,
                           onTap: () => context.pop(),
                           child: Container(
@@ -79,39 +80,32 @@ class CreateClosetScreen extends StatelessWidget {
                         ),
                         child: TextField(
                           controller: wishlistController.closetController,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
-                            color: Colors.black,
+                            color: TextFieldColor.black,
                           ),
-                          cursorColor: Colors.black,
+                          cursorColor: TextFieldColor.black,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 14),
                             hintText: 'e.g., jeans, hoodies',
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide(color: Colors.black)),
+                                borderSide:
+                                    BorderSide(color: TextFieldColor.black)),
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide(color: Colors.black)),
+                                borderSide:
+                                    BorderSide(color: TextFieldColor.black)),
                             focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide(color: Colors.black)),
+                                borderSide:
+                                    BorderSide(color: TextFieldColor.black)),
                           ),
                         ),
                       ),
                       const SizedBox(
                         height: 20,
-                      ),
-                      Text(
-                        'Cover Image:',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              // fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                            ),
-                      ),
-                      const SizedBox(
-                        height: 10,
                       ),
                       Row(
                         children: [
@@ -135,7 +129,7 @@ class CreateClosetScreen extends StatelessWidget {
                                   child: Text(
                                     wishlistController.closetController.text,
                                     style: const TextStyle(
-                                      color: Colors.white,
+                                      color: TextColor.white,
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -172,7 +166,7 @@ class CreateClosetScreen extends StatelessWidget {
                                       width: 50,
                                       height: 50,
                                       decoration: BoxDecoration(
-                                        color: Colors.grey[200],
+                                        color: ImageDecorationColor.grey200,
                                         shape: BoxShape.circle,
                                       ),
                                       child: CachedNetworkImage(
@@ -180,7 +174,7 @@ class CreateClosetScreen extends StatelessWidget {
                                             .imageLinks[index],
                                         placeholder: (context, url) =>
                                             Container(
-                                          color: Colors.grey[300]!,
+                                          color: ImageDecorationColor.grey300,
                                         ),
                                         //     Shimmer.fromColors(
                                         //   baseColor: Colors.grey[300]!,
@@ -205,7 +199,7 @@ class CreateClosetScreen extends StatelessWidget {
                                     Icons.check,
                                     weight: 4,
                                     size: 25,
-                                    color: Colors.white,
+                                    color: IconColor.white,
                                   ),
                                 )
                             ],

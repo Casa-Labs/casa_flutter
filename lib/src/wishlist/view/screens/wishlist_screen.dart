@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../routes/app_routes.dart';
+import '../../../../utils/color_constant.dart';
 import '../../../common/widgets/text_widgets.dart';
 import '../../../common/widgets/textfields.dart';
 import '../../controller/wishlist_controller.dart';
@@ -16,13 +17,12 @@ class WishlistScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: BackgroundColor.white,
       appBar: CommonAppBar(
         title: 'My Closet',
         showBackButton: false,
         isBodyText: true,
       ),
-
       body: SingleChildScrollView(
         child: Obx(() {
           return Column(
@@ -41,7 +41,7 @@ class WishlistScreen extends StatelessWidget {
                               margin: EdgeInsets.symmetric(horizontal: 7),
                               height: 40,
                               decoration: BoxDecoration(
-                                color: Colors.grey[200],
+                                color: TextFieldColor.grey200,
                                 borderRadius: BorderRadius.circular(30),
                               ),
                               child: CustomSearchBar(
@@ -92,7 +92,7 @@ class WishlistScreen extends StatelessWidget {
                               Positioned.fill(
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.grey[200],
+                                    color: ImageDecorationColor.grey,
                                     borderRadius: BorderRadius.circular(15),
                                     image: DecorationImage(
                                       image: NetworkImage(
@@ -108,7 +108,7 @@ class WishlistScreen extends StatelessWidget {
                                       child: Text(
                                         wishData.name,
                                         style: const TextStyle(
-                                          color: Colors.white,
+                                          color: TextColor.white,
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -130,7 +130,7 @@ class WishlistScreen extends StatelessWidget {
                                         icon: Icons.remove,
                                         size: 23,
                                         padding: 0,
-                                        backColor: Colors.red,
+                                        backColor: IconColor.red,
                                       ),
                                     ),
                                   ),

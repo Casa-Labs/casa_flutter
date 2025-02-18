@@ -4,6 +4,7 @@ import 'package:casa_flutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+
 // import 'package:share_plus/share_plus.dart';
 
 import '../../../../routes/app_routes.dart';
@@ -111,9 +112,10 @@ class ProductDescriptionScreen extends StatelessWidget {
             const SizedBox(height: 10),
             Text(
               'Viscose Long Coat',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(fontWeight: FontWeight.w600, fontSize: 20),
             ),
             const SizedBox(height: 10),
             Text(
@@ -158,7 +160,7 @@ class BuyNowButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.white,
+        backgroundColor: ButtonColor.white,
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
       ),
       onPressed: onPressed,
@@ -166,13 +168,13 @@ class BuyNowButton extends StatelessWidget {
         'Buy now',
         style: TextStyle(
           fontWeight: FontWeight.w600,
-          color: Colors.black,
+          color: TextColor.black,
           fontSize: 13,
           shadows: [
             Shadow(
               offset: const Offset(1.0, 1.0),
               blurRadius: 6.0,
-              color: Colors.black.withValues(alpha: 0.2),
+              color: TextColor.blackWithAlphaColors2,
             ),
           ],
         ),

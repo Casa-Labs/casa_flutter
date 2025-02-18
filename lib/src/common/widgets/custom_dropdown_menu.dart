@@ -88,6 +88,7 @@ class CustomDropDownIcon extends StatelessWidget {
   final String? Function(String?)? validator;
   final String? initialValue;
   final bool? check;
+
   const CustomDropDownIcon(
       {super.key,
       required this.items,
@@ -109,7 +110,7 @@ class CustomDropDownIcon extends StatelessWidget {
         value: initialValue,
         alignment: AlignmentDirectional.topCenter,
         validator: validator,
-        icon: Icon(Icons.keyboard_arrow_down, color: Colors.grey),
+        icon: Icon(Icons.keyboard_arrow_down, color: IconColor.grey),
         dropdownColor: Theme.of(context).colorScheme.surface,
         hint: Center(
           child: Row(
@@ -130,6 +131,7 @@ class CustomDropDownIcon extends StatelessWidget {
           contentPadding: EdgeInsets.fromLTRB(15, 10, 15, 10),
           enabledBorder: InputBorder.none,
           focusedBorder: InputBorder.none,
+
         ),
         items: items.map((item) {
           return (DropdownMenuItem<String?>(
@@ -150,3 +152,13 @@ class CustomDropDownIcon extends StatelessWidget {
     );
   }
 }
+
+/*
+ Color.fromARGB(228, 25, 25, 25),
+                Color.fromARGB(230, 53, 53, 53),
+                Color.fromARGB(226, 68, 67, 67),
+                Color.fromARGB(207, 80, 80, 80),
+                Color.fromARGB(208, 108, 108, 108),
+                Color.fromARGB(205, 135, 135, 135),
+                Color.fromARGB(209, 148, 148, 148),
+                Color.fromARGB(207, 193, 193, 193),*/

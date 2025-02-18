@@ -1,6 +1,7 @@
 import 'package:casa_flutter/src/common/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
 
+import '../../../utils/color_constant.dart';
 import '../../../utils/font.dart';
 
 class FilterButton extends StatelessWidget {
@@ -33,8 +34,8 @@ class FilterButton extends StatelessWidget {
                   label,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontSize: 12,
-                        color: Colors.black,
-                        fontFamily: Font.gilroy, // Custom font
+                        color: TextColor.black,
+                        // fontFamily: Font.gilroy, // Custom font
                         fontWeight: FontWeight.w600,
                       ),
                 ),

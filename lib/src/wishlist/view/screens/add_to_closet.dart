@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../utils/color_constant.dart';
 import '../../../../utils/utils.dart';
 import '../../../common/widgets/textfields.dart';
 import '../../controller/wishlist_controller.dart';
@@ -18,7 +19,7 @@ class AddToCloset extends StatelessWidget {
     final WishlistController wishController = Get.find<WishlistController>();
     double screenHeight = MediaQuery.of(context).size.height;
     return Container(
-      color: Colors.white,
+      color: BackgroundColor.white,
       height: screenHeight * 0.95,
       child: Column(
         children: [
@@ -59,7 +60,7 @@ class AddToCloset extends StatelessWidget {
                         margin: EdgeInsets.symmetric(horizontal: 7),
                         height: 40,
                         decoration: BoxDecoration(
-                          color: Colors.grey[200],
+                          color: TextFieldColor.grey200,
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: CustomSearchBar(
@@ -124,8 +125,8 @@ class AddToCloset extends StatelessWidget {
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(50),
                                       ),
-                                      checkColor: Colors.white,
-                                      activeColor: Colors.black,
+                                      checkColor: IconColor.white,
+                                      activeColor: IconColor.black,
                                     );
                                   }),
                                 ],
@@ -154,7 +155,7 @@ class AddToCloset extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.all(1),
-                      backgroundColor: Colors.black,
+                      backgroundColor: ButtonColor.black,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -169,7 +170,7 @@ class AddToCloset extends StatelessWidget {
                                   .textTheme
                                   .titleMedium
                                   ?.copyWith(
-                                    color: Colors.white,
+                                    color: TextColor.white,
                                     fontWeight: FontWeight.bold,
                                   ),
                             )),
@@ -179,11 +180,11 @@ class AddToCloset extends StatelessWidget {
                             width: 33,
                             height: 33,
                             decoration: const BoxDecoration(
-                              color: Colors.white,
+                              color: IconColor.white,
                               shape: BoxShape.circle,
                             ),
                             child: const Icon(Icons.add,
-                                size: 24, color: Colors.black),
+                                size: 24, color: IconColor.black),
                           ),
                         ),
                       ],
@@ -199,7 +200,7 @@ class AddToCloset extends StatelessWidget {
                       context.pop();
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
+                      backgroundColor: ButtonColor.black,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),

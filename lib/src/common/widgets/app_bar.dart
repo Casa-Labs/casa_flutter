@@ -2,6 +2,7 @@ import 'package:casa_flutter/routes/app_routes.dart';
 import 'package:casa_flutter/src/common/widgets/dropdown.dart';
 import 'package:casa_flutter/src/common/widgets/text_widgets.dart';
 import 'package:casa_flutter/src/common/widgets/textfields.dart';
+import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:casa_flutter/utils/font.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,7 +30,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: BackgroundColor.white,
       scrolledUnderElevation: 0,
       automaticallyImplyLeading: false,
       titleSpacing: 2,
@@ -71,8 +72,8 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                                   .titleLarge
                                   ?.copyWith(
                                     fontSize: 23,
-                                    fontFamily:
-                                        Font.montaga, // Custom font, if needed
+                                    // fontFamily:
+                                    //     Font.montaga, // Custom font, if needed
                                   ),
                             ),
                             Icon(Icons.keyboard_arrow_down_rounded,
@@ -111,7 +112,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
           : Container(
               height: 40,
               decoration: BoxDecoration(
-                color: Colors.grey[200],
+                color: TextFieldColor.grey200,
                 borderRadius: BorderRadius.circular(30),
               ),
               child: CustomSearchBar(),

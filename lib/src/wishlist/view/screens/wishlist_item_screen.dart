@@ -1,4 +1,5 @@
 import 'package:casa_flutter/routes/app_routes.dart';
+import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -15,7 +16,7 @@ class WishlistItemScreen extends StatelessWidget {
     final wishlistController = Get.find<WishlistController>();
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: BackgroundColor.white,
       body: SafeArea(
         child: Obx(() {
           return Column(
@@ -23,7 +24,7 @@ class WishlistItemScreen extends StatelessWidget {
               Container(
                 height: screenHeight * .3,
                 decoration: BoxDecoration(
-                  color: Colors.grey[200],
+                  color: ImageDecorationColor.grey,
                   borderRadius: BorderRadius.circular(12),
                   image: DecorationImage(
                     image: NetworkImage(
@@ -51,8 +52,8 @@ class WishlistItemScreen extends StatelessWidget {
                                 context.pop();
                               },
                               icon: Icons.arrow_back_ios_new,
-                              backColor: Colors.white,
-                              iconColor: Colors.black,
+                              backColor: IconColor.white,
+                              iconColor: IconColor.black,
                             ),
                             Padding(
                               padding: const EdgeInsets.all(13.0),
@@ -62,7 +63,7 @@ class WishlistItemScreen extends StatelessWidget {
                                         wishlistController.itemIndex.value]
                                     .name,
                                 style: const TextStyle(
-                                  color: Colors.white,
+                                  color: TextColor.white,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -73,8 +74,8 @@ class WishlistItemScreen extends StatelessWidget {
                                 wishlistController.wishItemDeletedOrNot();
                               },
                               icon: Icons.edit,
-                              backColor: Colors.black,
-                              iconColor: Colors.white,
+                              backColor: IconColor.black,
+                              iconColor: IconColor.white,
                             ),
                           ],
                         ),
@@ -84,8 +85,8 @@ class WishlistItemScreen extends StatelessWidget {
                               wishlistController.wishRemoveItem();
                             },
                             icon: Icons.delete,
-                            backColor: Colors.red,
-                            iconColor: Colors.white,
+                            backColor: IconColor.red,
+                            iconColor: IconColor.white,
                           ),
                       ],
                     ),
@@ -127,7 +128,7 @@ class WishlistItemScreen extends StatelessWidget {
                                   SizedBox(
                                     child: Card(
                                       elevation: 1,
-                                      color: Colors.white,
+                                      color: ImageDecorationColor.white,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(15),
                                       ),
@@ -208,7 +209,7 @@ class WishlistItemScreen extends StatelessWidget {
                                             .textTheme
                                             .bodyMedium
                                             ?.copyWith(
-                                              color: Colors.black,
+                                              color: TextColor.black,
                                               fontWeight: FontWeight.w500,
                                               fontSize: 13,
                                             ),

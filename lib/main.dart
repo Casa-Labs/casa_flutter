@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       routeInformationParser: router.routeInformationParser,
       routerDelegate: router.routerDelegate,
       routeInformationProvider: router.routeInformationProvider,
-      title: 'Casa Flutter',
+      title: 'CASA',
       theme: lightMode,
       // home: const SplashScreen(),
       // theme: lightMode,

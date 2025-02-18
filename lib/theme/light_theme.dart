@@ -120,21 +120,21 @@ ThemeData lightMode = ThemeData(
     fillColor: BackgroundColor.white,
     contentPadding: EdgeInsets.all(10),
     enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(6),
+      borderRadius: BorderRadius.circular(20),
       borderSide: const BorderSide(
         color: BorderColor.black,
         width: 0.5,
       ),
     ),
     disabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(6),
+      borderRadius: BorderRadius.circular(20),
       borderSide: const BorderSide(
         color: BorderColor.black,
         width: 0.5,
       ),
     ),
     focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(6),
+      borderRadius: BorderRadius.circular(20),
       borderSide: const BorderSide(
         color: BorderColor.black,
       ),
@@ -143,13 +143,13 @@ ThemeData lightMode = ThemeData(
       borderSide: const BorderSide(
         color: ErrorColor.red,
       ),
-      borderRadius: BorderRadius.circular(6),
+      borderRadius: BorderRadius.circular(20),
     ),
     focusedErrorBorder: OutlineInputBorder(
       borderSide: const BorderSide(
         color: ErrorColor.red,
       ),
-      borderRadius: BorderRadius.circular(6),
+      borderRadius: BorderRadius.circular(20),
     ),
   ),
   chipTheme: ChipThemeData(

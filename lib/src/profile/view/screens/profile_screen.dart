@@ -1,5 +1,6 @@
 import 'package:casa_flutter/routes/app_routes.dart';
 import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
+import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:casa_flutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -35,7 +36,7 @@ class ProfileScreen extends StatelessWidget {
                     decoration: const BoxDecoration(
                       border: Border(
                         bottom: BorderSide(
-                            color: Colors.grey,
+                            color: ButtonColor.grey,
                             width: 0.5), // Bottom border only
                       ),
                     ),
@@ -60,8 +61,8 @@ class ProfileScreen extends StatelessWidget {
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.black,
-              foregroundColor: Colors.white,
+              backgroundColor: ButtonColor.black,
+              foregroundColor: ButtonColor.white,
             ),
             onPressed: () {
               context.goNamed(RouteNames.welcomeAuth);

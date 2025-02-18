@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../utils/color_constant.dart';
 import '../../../common/widgets/custom_button.dart';
 import '../../controller/cart_controller.dart';
 import '../widgets/cart_item.dart';
@@ -17,12 +18,12 @@ class CartScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: BackgroundColor.white,
       appBar: AppBar(
         scrolledUnderElevation: 0,
         leading: cartController.cartList.isNotEmpty
             ? InkWell(
-                overlayColor: WidgetStateProperty.all(Colors.transparent),
+                overlayColor: WidgetStateProperty.all(ButtonColor.transparent),
                 splashFactory: NoSplash.splashFactory,
                 onTap: () {},
                 child: Container(
@@ -38,10 +39,10 @@ class CartScreen extends StatelessWidget {
               )
             : const SizedBox(),
         leadingWidth: 60,
-        backgroundColor: Colors.white,
+        backgroundColor: BackgroundColor.white,
         actions: [
           InkWell(
-            overlayColor: WidgetStateProperty.all(Colors.transparent),
+            overlayColor: WidgetStateProperty.all(ButtonColor.transparent),
             splashFactory: NoSplash.splashFactory,
             onTap: () {
               context.pushNamed(RouteNames.faq);
@@ -95,7 +96,11 @@ class CartScreen extends StatelessWidget {
                     separatorBuilder: (BuildContext context, int index) {
                       return Column(
                         children: [
-                          Divider(height: 0.5, color: Colors.grey.shade200),
+                          Divider(
+                            height: 0.5,
+                            // color: Colors.grey.shade200
+                            color: DividerColor.grey,
+                          ),
                           const SizedBox(height: 25),
                         ],
                       );
@@ -105,7 +110,7 @@ class CartScreen extends StatelessWidget {
             if (cartController.cartList.isNotEmpty)
               Column(
                 children: [
-                  Divider(height: 0.5, color: Colors.grey.shade200),
+                  Divider(height: 0.5, color: DividerColor.grey),
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,

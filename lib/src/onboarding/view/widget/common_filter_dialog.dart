@@ -1,3 +1,4 @@
+import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
 import '../../../common/widgets/custom_text_form_field_widget.dart';
@@ -33,13 +34,14 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                 dividerHeight: 0,
                 splashFactory: NoSplash.splashFactory,
                 indicator: BoxDecoration(
-                    color: Colors.transparent,
-                    border: Border.all(color: Colors.transparent)),
+                    color: TabBarColor.transparent,
+                    border: Border.all(color: TabBarColor.transparent)),
                 labelPadding: const EdgeInsets.symmetric(horizontal: 2),
                 tabs: [
                   Tab(
                     child: InkWell(
-                      overlayColor: WidgetStateProperty.all(Colors.transparent),
+                      overlayColor:
+                          WidgetStateProperty.all(TabBarColor.transparent),
                       splashFactory: NoSplash.splashFactory,
                       onTap: () {
                         setState(() {
@@ -53,16 +55,19 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                           horizontal: 15,
                         ),
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
+                            border: Border.all(color: TabBarColor.black),
                             borderRadius: BorderRadius.circular(30),
-                            color: index == 0 ? Colors.black : Colors.white),
+                            color: index == 0
+                                ? TabBarColor.black
+                                : TabBarColor.white),
                         child: Center(
                             child: Text(
                           "MEN",
                           style: textTheme.bodyMedium?.copyWith(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color: index == 0 ? Colors.white : Colors.black,
+                            color:
+                                index == 0 ? TextColor.white : TextColor.black,
                           ),
                         )),
                       ),
@@ -82,16 +87,19 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                         width: MediaQuery.of(context).size.width,
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
+                            border: Border.all(color: TabBarColor.black),
                             borderRadius: BorderRadius.circular(30),
-                            color: index == 1 ? Colors.black : Colors.white),
+                            color: index == 1
+                                ? TabBarColor.black
+                                : TabBarColor.white),
                         child: Center(
                             child: Text(
                           "WOMEN",
                           style: textTheme.bodyMedium?.copyWith(
                             // fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color: index == 1 ? Colors.white : Colors.black,
+                            color:
+                                index == 1 ? TextColor.white : TextColor.black,
                           ),
                         )),
                       ),
@@ -137,32 +145,32 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                         width: 80,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: TextFieldColor.white,
                           borderRadius: BorderRadius.circular(8),
                           // border: Border.all(color: Colors.black)
                         ),
                         child: CustomTextFormField(
                           hintText: '\$0',
-                          fillColor: Colors.white,
+                          fillColor: TextFieldColor.white,
                         ),
                       ),
                       Container(
                         height: 2,
                         width: 30,
-                        color: Colors.black,
+                        color: ButtonColor.black,
                       ),
                       Container(
                         height: 48,
                         width: 80,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: ButtonColor.white,
                           borderRadius: BorderRadius.circular(8),
                           // border: Border.all(color: Colors.black)
                         ),
                         child: CustomTextFormField(
                           hintText: '\$100',
-                          fillColor: Colors.white,
+                          fillColor: TextFieldColor.white,
                         ),
                       )
                     ],
@@ -185,7 +193,7 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                           EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.white),
+                          color: ButtonColor.white),
                       child: Text(
                         "Clear",
                         style: textTheme.bodyMedium?.copyWith(
@@ -205,13 +213,13 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                           EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.black),
+                          color: ButtonColor.black),
                       child: Text(
                         "Done",
                         style: textTheme.bodyMedium?.copyWith(
                           // fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          color: Colors.white,
+                          color: TextColor.white,
                         ),
                       )),
                 )
@@ -233,8 +241,8 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
           child: Material(
             elevation: 4,
             borderRadius: BorderRadius.circular(10),
-            surfaceTintColor: Colors.white,
-            color: Colors.white,
+            surfaceTintColor: TabBarColor.white,
+            color: TabBarColor.white,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
               child: Row(
@@ -242,22 +250,22 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 1.5),
+                        border: Border.all(color: TabBarColor.black, width: 1.5),
                         borderRadius: BorderRadius.circular(40)),
                     child: CircleAvatar(
-                      maxRadius: 18,
+                      maxRadius: 16,
                       backgroundColor: const Color(0xFF002957),
                       child: Text(
                         "ZARA".substring(0, 4).toUpperCase(),
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 12),
+                        style: const TextStyle(color: TextColor.white, fontSize: 12),
+
                       ),
                     ),
                   ),
                   Text(
                     widget.children![index],
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 24,
+                          fontSize: 20,
                         ),
                   )
                 ],

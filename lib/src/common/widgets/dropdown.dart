@@ -3,6 +3,8 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../utils/color_constant.dart';
+
 enum DropdownMode { single, multiple }
 
 class CustomDropDown extends StatefulWidget {
@@ -51,7 +53,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontSize: widget.fontSize,
                         fontWeight: FontWeight.normal,
-                        color: Colors.black, // Dynamic color
+                        color: TextColor.black, // Dynamic color
                       ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -70,7 +72,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               fontSize: widget.menufontSize,
                               fontWeight: FontWeight.w500,
-                              color: Colors.white, // Menu item text color
+                              color: TextColor.white, // Menu item text color
                             ),
                         overflow: TextOverflow.ellipsis,
                       )),
@@ -94,7 +96,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontSize: widget.fontSize,
                               fontWeight: FontWeight.normal,
-                              color: Colors.black, // Dynamic color
+                              color: TextColor.black, // Dynamic color
                             ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -112,7 +114,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
               ? null
               : const EdgeInsets.only(left: 14, right: 14),
           decoration: const BoxDecoration(
-            color: Colors.transparent,
+            color: ButtonColor.transparent,
           ),
         ),
         iconStyleData: const IconStyleData(
@@ -131,14 +133,17 @@ class _CustomDropDownState extends State<CustomDropDown> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Color.fromARGB(228, 25, 25, 25),
-                Color.fromARGB(230, 53, 53, 53),
-                Color.fromARGB(226, 68, 67, 67),
-                Color.fromARGB(207, 80, 80, 80),
-                Color.fromARGB(208, 108, 108, 108),
-                Color.fromARGB(205, 135, 135, 135),
-                Color.fromARGB(209, 148, 148, 148),
                 Color.fromARGB(207, 193, 193, 193),
+                Color.fromARGB(207, 193, 193, 193),
+                Color.fromARGB(209, 148, 148, 148),
+                Color.fromARGB(205, 135, 135, 135),
+                Color.fromARGB(205, 135, 135, 135),
+                Color.fromARGB(208, 108, 108, 108),
+                Color.fromARGB(207, 80, 80, 80),
+                Color.fromARGB(226, 68, 67, 67),
+                Color.fromARGB(230, 53, 53, 53),
+                //Color.fromARGB(228, 25, 25, 25),
+
               ],
             ),
           ),

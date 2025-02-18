@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
-import '../../../../utils/font.dart';
+import '../../../../utils/color_constant.dart';
 
 class OrderCard extends StatelessWidget {
   const OrderCard({super.key});
@@ -56,21 +55,8 @@ class OrderCard extends StatelessWidget {
                   'Zara',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontSize: 16,
-                        color: Colors.black54,
+                        color: TextColor.black54,
                       ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SvgPicture.asset('assets/icons/ruler.svg'),
-                    const SizedBox(width: 10),
-                    Text(
-                      'Size Guide',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Colors.black54,
-                          ),
-                    )
-                  ],
                 ),
                 const SizedBox(height: 3),
                 Container(
@@ -86,7 +72,7 @@ class OrderCard extends StatelessWidget {
                       Text(
                         'Size:',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              fontFamily: Font.gilroy,
+                              // fontFamily: Font.gilroy,
                               fontWeight: FontWeight.w300,
                             ),
                       ),
@@ -99,8 +85,8 @@ class OrderCard extends StatelessWidget {
                                   .textTheme
                                   .bodyMedium
                                   ?.copyWith(
-                                    color: Colors.black.withOpacity(0.7),
-                                    fontFamily: Font.gilroy,
+                                    color: TextColor.black.withOpacity(0.7),
+                                    // fontFamily: Font.gilroy,
                                     fontWeight: FontWeight.w600,
                                   ),
                             )),
