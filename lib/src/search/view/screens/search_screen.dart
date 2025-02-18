@@ -3,7 +3,6 @@ import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../common/widgets/text_widgets.dart';
 import '../widgets/address_display_box.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -62,8 +61,9 @@ class _SearchScreenState extends State<SearchScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  _text(
+                  Text(
                     'Would you like to shop for?',
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   const SizedBox(height: 5),
                   _optionSection(shopFor, () {
@@ -96,7 +96,10 @@ class _SearchScreenState extends State<SearchScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  _text('Where would you like to buy from?'),
+                  Text(
+                    'Where would you like to buy from?',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
                   const SizedBox(height: 5),
                   _optionSection(buyFrom, () {
                     showModalBottomSheet(
@@ -121,7 +124,10 @@ class _SearchScreenState extends State<SearchScreen> {
                   const SizedBox(
                     height: 5,
                   ),
-                  _text('Categories'),
+                  Text(
+                    'Categories',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
                   const SizedBox(height: 5),
                   _optionSection(categories, () {
                     showModalBottomSheet(
@@ -146,7 +152,10 @@ class _SearchScreenState extends State<SearchScreen> {
                   const SizedBox(
                     height: 5,
                   ),
-                  _text('Style preferences'),
+                  Text(
+                    'Style preferences',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
                   const SizedBox(height: 5),
                   _optionSection(style, () {
                     showModalBottomSheet(
@@ -195,7 +204,10 @@ class _SearchScreenState extends State<SearchScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _text('Payment Method?'),
+                    Text(
+                      'Payment Method?',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
                     const Icon(
                       Icons.arrow_forward,
                       color: Colors.black54,
@@ -226,7 +238,10 @@ class _SearchScreenState extends State<SearchScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _text(text),
+                  Text(
+                    text,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
                 ],
               ),
             ),
@@ -237,13 +252,6 @@ class _SearchScreenState extends State<SearchScreen> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _text(String text, {double? fontSize}) {
-    return BodyText(
-      text: text,
-      fontSize: 16,
     );
   }
 
@@ -296,10 +304,9 @@ class _FilterGenderState extends State<FilterGender> {
                   },
                 ),
                 const SizedBox(width: 60),
-                const BodyText(
-                  text: 'Would like to shop for?',
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                Text(
+                  'Would like to shop for?',
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
             ),
@@ -314,7 +321,10 @@ class _FilterGenderState extends State<FilterGender> {
                 });
                 Get.back();
               },
-              title: const BodyText(text: 'Male'),
+              title: Text(
+                'Male',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
             ),
             RadioListTile<String>(
               value: 'Female',
@@ -325,7 +335,10 @@ class _FilterGenderState extends State<FilterGender> {
                 });
                 Get.back();
               },
-              title: const BodyText(text: 'Female'),
+              title: Text(
+                'Female',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
             ),
             RadioListTile<String>(
               value: 'Others',
@@ -336,7 +349,10 @@ class _FilterGenderState extends State<FilterGender> {
                 });
                 Get.back();
               },
-              title: const BodyText(text: 'Both'),
+              title: Text(
+                'Both',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
             ),
           ],
         ),
@@ -391,9 +407,9 @@ class _BrandSelectionState extends State<BrandSelection> {
                 ),
                 Align(
                   alignment: Alignment.topCenter,
-                  child: BodyText(
-                    text: widget.titel,
-                    fontSize: 18,
+                  child: Text(
+                    widget.titel,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
               ],
@@ -452,7 +468,10 @@ class _BrandSelectionState extends State<BrandSelection> {
                               const SizedBox(
                                 width: 20,
                               ),
-                              BodyText(text: listData.name, fontSize: 18),
+                              Text(
+                                listData.name,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
                             ],
                           ),
                         ),
@@ -496,12 +515,17 @@ class _BrandSelectionState extends State<BrandSelection> {
                                     ? Colors.black
                                     : Colors.white,
                                 borderRadius: BorderRadius.circular(5)),
-                            child: BodyText(
-                              text: listData.name,
-                              color: listData.isSelected
-                                  ? Colors.white
-                                  : Colors.black,
-                              fontSize: 11,
+                            child: Text(
+                              listData.name,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                    color: listData.isSelected
+                                        ? Colors.white
+                                        : Colors.black,
+                                    fontSize: 11,
+                                  ),
                             ),
                           ),
                         );
