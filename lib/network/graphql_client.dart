@@ -429,20 +429,24 @@
 //   }
 // }
 import 'package:casa_flutter/routes/app_routes.dart';
-import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../utils/preference_manager.dart';
+import '../utils/utils.dart';
 
 class GraphQLClientService {
   static final HttpLink _httpLink = HttpLink(
     'https://server.casashop.in/graphql', // Replace with your GraphQL endpoint
   );
 
-  static final AuthLink _authLink = AuthLink(
-    getToken: () async =>
-        'Bearer ${PreferenceManager.getString(PreferenceManager.token)}',
-  );
+  static final AuthLink _authLink = AuthLink(getToken: () async {
+    final token = PreferenceManager.getString(PreferenceManager.token);
+    if (token == null || token.isEmpty) {
+      logg.e('No token found in PreferenceManager!');
+    }
+    logg.d('Bearer $token');
+    return 'Bearer $token';
+  });
 
   static final Link _link = (router.state.name == RouteNames.signIn ||
           router.state.name == RouteNames.signUp)
@@ -465,6 +469,12 @@ class GraphQLClientService {
       fetchPolicy: FetchPolicy.networkOnly, // Always fetch fresh data
     );
 
+    // Log the Client
+    logg.i('GraphQL Client link: ${_client.link.toString()}');
+
+    // Log the query
+    logg.i('GraphQL Query: $document');
+
     final result = await _client.query(options);
 
     _handleErrors(result);
@@ -479,6 +489,12 @@ class GraphQLClientService {
       variables: variables ?? {},
     );
 
+    // Log the Client
+    logg.i('GraphQL Client link: ${_client.link.toString()}');
+
+    // Log the mutation
+    logg.i('GraphQL mutation: $document');
+
     final result = await _client.mutate(options);
 
     _handleErrors(result);
@@ -488,7 +504,15 @@ class GraphQLClientService {
   /// **Handle GraphQL Errors**
   void _handleErrors(QueryResult result) {
     if (result.hasException) {
-      debugPrint('GraphQL Error: ${result.exception.toString()}');
+      final responseContext = result.context.entry<HttpLinkResponseContext>();
+
+      if (responseContext != null) {
+        logg.e('HTTP Headers Sent: ${responseContext.headers}');
+      } else {
+        logg.e('No headers found in response context');
+      }
+
+      logg.e('GraphQL Error: ${result.exception.toString()}');
       throw Exception(result.exception.toString());
     }
   }

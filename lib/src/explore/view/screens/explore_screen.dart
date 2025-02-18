@@ -74,8 +74,9 @@ class ExploreScreen extends StatelessWidget {
                                     : Colors.black,
                           ),
                           child: Text('Thrifts'),
-                          onPressed: () {
+                          onPressed: () async {
                             exploreCtrl.selectedIndex.value = 1;
+                            await exploreCtrl.getTrendingNowProductsCall();
                           },
                         ),
                       ),
@@ -105,6 +106,8 @@ class TabBarSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final exploreCtrl = Get.find<ExploreController>();
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
