@@ -3,6 +3,7 @@ import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../widgets/address_display_box.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -47,7 +48,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BackgroundColor.white,
+      backgroundColor: Colors.white,
       appBar: CommonAppBar(
         title: 'Narrow your search',
       ),
@@ -60,8 +61,9 @@ class _SearchScreenState extends State<SearchScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  _text(
+                  Text(
                     'Would you like to shop for?',
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   const SizedBox(height: 5),
                   _optionSection(shopFor, () {
@@ -94,7 +96,10 @@ class _SearchScreenState extends State<SearchScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  _text('Where would you like to buy from?'),
+                  Text(
+                    'Where would you like to buy from?',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
                   const SizedBox(height: 5),
                   _optionSection(buyFrom, () {
                     showModalBottomSheet(
@@ -119,7 +124,10 @@ class _SearchScreenState extends State<SearchScreen> {
                   const SizedBox(
                     height: 5,
                   ),
-                  _text('Categories'),
+                  Text(
+                    'Categories',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
                   const SizedBox(height: 5),
                   _optionSection(categories, () {
                     showModalBottomSheet(
@@ -144,7 +152,10 @@ class _SearchScreenState extends State<SearchScreen> {
                   const SizedBox(
                     height: 5,
                   ),
-                  _text('Style preferences'),
+                  Text(
+                    'Style preferences',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
                   const SizedBox(height: 5),
                   _optionSection(style, () {
                     showModalBottomSheet(
@@ -175,83 +186,37 @@ class _SearchScreenState extends State<SearchScreen> {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 20,
+            const SizedBox(height: 20),
+            Divider(color: DividerColor.grey),
+            const SizedBox(height: 20),
+            AddressDisplayBox(
+              addresses: [
+                Address(
+                    label: 'Home',
+                    address:
+                        'A1-504 Akal Society, JB Nagar, Andheri East 4000049'),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: _text('Location and payment methods'),
-            ),
-            const SizedBox(height: 8),
-            _materialWidget(
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Get.to(() => const SetLocationPage());
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _text('Add new location'),
-                        const SizedBox(height: 5),
-                        const Icon(
-                          Icons.arrow_forward,
-                          color: IconColor.black54,
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  // const Row(
-                  //   children: [
-                  //     Icon(Icons.location_on),
-                  //     BodyText(
-                  //       text: 'Location',
-                  //       fontSize: 18,
-                  //       fontWeight: FontWeight.w600,
-                  //     )
-                  //   ],
-                  // ),
-                  Row(
-                    children: [
-                      Icon(Icons.location_on),
-                      SizedBox(width: 5),
-                      Expanded(
-                        child: _text(
-                          'A1-504 akal society jb nagar andheri east 4000049',
-                          fontSize: 15,
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             GestureDetector(
               onTap: () {},
               child: _materialWidget(
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _text('Payment Method?'),
+                    Text(
+                      'Payment Method?',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
                     const Icon(
                       Icons.arrow_forward,
-                      color: IconColor.black54,
+                      color: Colors.black54,
                     )
                   ],
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -273,13 +238,16 @@ class _SearchScreenState extends State<SearchScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _text(text),
+                  Text(
+                    text,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
                 ],
               ),
             ),
             const Icon(
               Icons.arrow_forward,
-              color: IconColor.black54,
+              color: Colors.black54,
             )
           ],
         ),
@@ -287,19 +255,10 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  Widget _text(String text, {double? fontSize}) {
-    return Text(
-      text,
-      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            fontSize: 16,
-          ),
-    );
-  }
-
   Widget _materialWidget(Widget data) {
     return Material(
       elevation: 0,
-      color: ButtonColor.white,
+      color: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
@@ -329,7 +288,7 @@ class _FilterGenderState extends State<FilterGender> {
     return Container(
       height: 300,
       decoration: const BoxDecoration(
-          color: ButtonColor.white,
+          color: Colors.white,
           borderRadius: BorderRadius.only(topRight: Radius.circular(20))),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -347,11 +306,8 @@ class _FilterGenderState extends State<FilterGender> {
                 const SizedBox(width: 60),
                 Text(
                   'Would like to shop for?',
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        // fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                )
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
               ],
             ),
             const Divider(),
@@ -367,9 +323,7 @@ class _FilterGenderState extends State<FilterGender> {
               },
               title: Text(
                 'Male',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w500,
-                    ),
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
             RadioListTile<String>(
@@ -383,26 +337,23 @@ class _FilterGenderState extends State<FilterGender> {
               },
               title: Text(
                 'Female',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w500,
-                    ),
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
             RadioListTile<String>(
-                value: 'Others',
-                groupValue: selectedGender,
-                onChanged: (value) {
-                  setState(() {
-                    selectedGender = value;
-                  });
-                  Get.back();
-                },
-                title: Text(
-                  'Both',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w500,
-                      ),
-                )),
+              value: 'Others',
+              groupValue: selectedGender,
+              onChanged: (value) {
+                setState(() {
+                  selectedGender = value;
+                });
+                Get.back();
+              },
+              title: Text(
+                'Both',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ),
           ],
         ),
       ),
@@ -434,7 +385,7 @@ class _BrandSelectionState extends State<BrandSelection> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: BackgroundColor.white, borderRadius: BorderRadius.circular(20)),
+          color: Colors.white, borderRadius: BorderRadius.circular(20)),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -455,9 +406,12 @@ class _BrandSelectionState extends State<BrandSelection> {
                           size: 20)),
                 ),
                 Align(
-                    alignment: Alignment.topCenter,
-                    child: Text(widget.titel,
-                        style: Theme.of(context).textTheme.bodyLarge)),
+                  alignment: Alignment.topCenter,
+                  child: Text(
+                    widget.titel,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
               ],
             ),
           ),
@@ -493,9 +447,9 @@ class _BrandSelectionState extends State<BrandSelection> {
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(8),
-                                          color: ButtonColor.black,
+                                          color: Colors.black,
                                           border: Border.all(
-                                              color: ButtonColor.black, width: 2)),
+                                              color: Colors.black, width: 2)),
                                       child: Icon(
                                         Icons.check,
                                       ),
@@ -506,16 +460,18 @@ class _BrandSelectionState extends State<BrandSelection> {
                                       height: 23,
                                       clipBehavior: Clip.antiAlias,
                                       decoration: BoxDecoration(
-                                        color: ButtonColor.white,
+                                        color: Colors.white,
                                         border: Border.all(
-                                            color: ButtonColor.black, width: 2),
+                                            color: Colors.black, width: 2),
                                         borderRadius: BorderRadius.circular(8),
                                       )),
                               const SizedBox(
                                 width: 20,
                               ),
-                              Text(listData.name,
-                                  style: Theme.of(context).textTheme.bodyLarge)
+                              Text(
+                                listData.name,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
                             ],
                           ),
                         ),
@@ -552,24 +508,26 @@ class _BrandSelectionState extends State<BrandSelection> {
                             setState(() {});
                           },
                           child: Container(
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: ButtonColor.black),
-                                  color: listData.isSelected
-                                      ? ButtonColor.black
-                                      : ButtonColor.white,
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: Text(
-                                listData.name,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(
-                                      color: listData.isSelected
-                                          ? TextColor.white
-                                          : TextColor.black,
-                                    ),
-                              )),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                color: listData.isSelected
+                                    ? Colors.black
+                                    : Colors.white,
+                                borderRadius: BorderRadius.circular(5)),
+                            child: Text(
+                              listData.name,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                    color: listData.isSelected
+                                        ? Colors.white
+                                        : Colors.black,
+                                    fontSize: 11,
+                                  ),
+                            ),
+                          ),
                         );
                       } else {
                         return Center(
@@ -579,9 +537,9 @@ class _BrandSelectionState extends State<BrandSelection> {
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                   border:
-                                      Border.all(color: ButtonColor.grey, width: 2),
+                                      Border.all(color: Colors.grey, width: 2),
                                   borderRadius: BorderRadius.circular(50)),
-                              child: const Icon(Icons.add, color: IconColor.grey)),
+                              child: const Icon(Icons.add, color: Colors.grey)),
                         );
                       }
                     },
@@ -603,203 +561,4 @@ class BottomRadio {
 
   BottomRadio(
       {required this.name, this.isSelected = false, required this.slug});
-}
-
-class SetLocationPage extends StatefulWidget {
-  const SetLocationPage({super.key});
-
-  @override
-  State<SetLocationPage> createState() => _SetLocationPageState();
-}
-
-class _SetLocationPageState extends State<SetLocationPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: BackgroundColor.white,
-      appBar: AppBar(
-          scrolledUnderElevation: 0,
-          leading: InkWell(
-            overlayColor: WidgetStateProperty.all(Colors.transparent),
-            splashFactory: NoSplash.splashFactory,
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: const Icon(
-              Icons.arrow_back_ios_new_rounded,
-              size: 20,
-            ),
-          ),
-          backgroundColor: BackgroundColor.white,
-          title: Text(
-            'Your Location',
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
-          )
-          // centerTitle: true,
-          ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            Container(
-              height: 60,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                color: ButtonColor.white,
-                border: Border.all(color: Colors.grey.shade300),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Center(
-                child: Row(
-                  children: [
-                    Icon(Icons.search, color: Colors.grey.shade600),
-                    Expanded(
-                      child: TextField(
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: TextColor.black,
-                        ),
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 14),
-                          hintText: 'Search a new address',
-                          hintStyle: TextStyle(
-                              fontSize: 16, color: Colors.grey.shade500),
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 30),
-                    InkWell(
-                      overlayColor: WidgetStateProperty.all(Colors.transparent),
-                      splashFactory: NoSplash.splashFactory,
-                      onTap: () async {
-                        // Constant.currentPosition =
-                        //     await LocationHandler.getCurrentPosition();
-                        // Constant.currentAddress =
-                        //     await LocationHandler.getAddressFromLatLng(
-                        //         Constant.currentPosition!);
-                        Get.back();
-                        setState(() {});
-                      },
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Icon(
-                            Icons.my_location_rounded,
-                            color: IconColor.pinkAccent,
-                            size: 30,
-                          ),
-                          const SizedBox(width: 10),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Current Location',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineMedium
-                                    ?.copyWith(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: IconColor.pinkAccent,
-                                    ),
-                              ),
-                              Text(
-                                'Using GPS',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(
-                                      color: IconColor.pinkAccent.withOpacity(0.5),
-                                      fontSize: 18,
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    Text(
-                      'Saved Location',
-                      style:
-                          Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                    ),
-                    const SizedBox(height: 20),
-                    ListView.separated(
-                      shrinkWrap: true,
-                      itemCount: 3,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return Row(
-                          children: [
-                            Icon(
-                              Icons.location_on_rounded,
-                              color: IconColor.deepPurple,
-                            ),
-                            SizedBox(width: 15),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Home',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineMedium
-                                        ?.copyWith(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                  Text(
-                                    'A1-504 akal society jb nagar andheri east 4000049',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.copyWith(
-                                          color: TextColor.grey,
-                                          fontSize: 16,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return Container(
-                          margin: const EdgeInsets.only(
-                              left: 40, top: 15, bottom: 15),
-                          height: 0.5,
-                          color: Colors.grey.shade400,
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
