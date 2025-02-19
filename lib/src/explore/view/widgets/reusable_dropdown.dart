@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../utils/color_constant.dart';
-import '../../../common/widgets/text_widgets.dart';
 
 enum DropdownMode { single, multiple }
 

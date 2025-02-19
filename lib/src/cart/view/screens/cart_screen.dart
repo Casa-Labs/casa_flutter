@@ -64,85 +64,87 @@ class CartScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            cartController.cartList.isEmpty
-                ? Center(
-                    child: Column(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              cartController.cartList.isEmpty
+                  ? Center(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 200),
+                          Text(
+                            'Your cart is empty!',
+                            style: textTheme.bodyLarge,
+                          ),
+                        ],
+                      ),
+                    )
+                  : ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.all(16),
+                      itemCount: cartController.cartList.length,
+                      itemBuilder: (context, index) {
+                        final item = cartController.cartList[index];
+                        return CartItem(
+                          item: item,
+                          totalChange: () {},
+                          onDelete: () {},
+                          index: index,
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return Column(
+                          children: [
+                            Divider(
+                              height: 0.5,
+                              // color: Colors.grey.shade200
+                              color: DividerColor.grey,
+                            ),
+                            const SizedBox(height: 25),
+                          ],
+                        );
+                      },
+                    ),
+              const SizedBox(height: 10),
+              if (cartController.cartList.isNotEmpty)
+                Column(
+                  children: [
+                    Divider(height: 0.5, color: DividerColor.grey),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        const SizedBox(height: 200),
                         Text(
-                          'Your cart is empty!',
-                          style: textTheme.bodyLarge,
+                          'Total:',
+                          style: textTheme.bodyMedium,
                         ),
+                        Text(
+                          ' ₹20',
+                          style: textTheme.bodyLarge
+                              ?.copyWith(fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(width: 30),
                       ],
                     ),
-                  )
-                : ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: const EdgeInsets.all(16),
-                    itemCount: cartController.cartList.length,
-                    itemBuilder: (context, index) {
-                      final item = cartController.cartList[index];
-                      return CartItem(
-                        item: item,
-                        totalChange: () {},
-                        onDelete: () {},
-                        index: index,
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return Column(
-                        children: [
-                          Divider(
-                            height: 0.5,
-                            // color: Colors.grey.shade200
-                            color: DividerColor.grey,
-                          ),
-                          const SizedBox(height: 25),
-                        ],
-                      );
-                    },
-                  ),
-            const SizedBox(height: 10),
-            if (cartController.cartList.isNotEmpty)
-              Column(
-                children: [
-                  Divider(height: 0.5, color: DividerColor.grey),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        'Total:',
-                        style: textTheme.bodyMedium,
+                  ],
+                ),
+              const SizedBox(height: 50),
+              cartController.cartList.isEmpty
+                  ? const SizedBox.shrink()
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 16),
+                      child: CustomPrimaryButton(
+                        button: PrimaryButtons.blueBG,
+                        text: "Checkout",
+                        onPressed: () {},
                       ),
-                      Text(
-                        ' ₹20',
-                        style: textTheme.bodyLarge
-                            ?.copyWith(fontWeight: FontWeight.w600),
-                      ),
-                      const SizedBox(width: 30),
-                    ],
-                  ),
-                ],
-              ),
-            const SizedBox(height: 50),
-            cartController.cartList.isEmpty
-                ? const SizedBox.shrink()
-                : Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 16),
-                    child: CustomPrimaryButton(
-                      button: PrimaryButtons.blueBG,
-                      text: "Checkout",
-                      onPressed: () {},
                     ),
-                  ),
-            const SizedBox(height: 120),
-          ],
+              const SizedBox(height: 120),
+            ],
+          ),
         ),
       ),
     );

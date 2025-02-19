@@ -16,91 +16,93 @@ class SignUpScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Obx(
-          () => Column(
-            children: [
-              Spacer(flex: 2),
-              Column(
-                children: [
-                  Text(
-                    'CASA',
-                    style: Theme.of(context).textTheme.displayLarge,
-                  ),
-                  Text(
-                    'Where your style journey begins',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
-              ),
-              Spacer(flex: 2),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Email Address'),
-                  CustomTextFormField(
-                    controller: authCtrl.registeredEmail,
-                  ),
-                  SizedBox(height: 20),
-                  Text('Password'),
-                  CustomTextFormField(
-                    controller: authCtrl.registeredPassword,
-                  ),
-                  SizedBox(height: 20),
-                  Text('Re-enter Password'),
-                  CustomTextFormField(
-                    controller: authCtrl.registeredRenterPassword,
-                  ),
-                ],
-              ),
-              Spacer(),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(width: 5),
-                  Container(
-                    height: 20,
-                    width: 20,
-                    child: Checkbox(
-                      value: authCtrl.checkboxValue.value,
-                      onChanged: (value) {
-                        authCtrl.checkboxValue.value =
-                            !authCtrl.checkboxValue.value;
-                      },
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Obx(
+            () => Column(
+              children: [
+                Spacer(flex: 2),
+                Column(
+                  children: [
+                    Text(
+                      'CASA',
+                      style: Theme.of(context).textTheme.displayLarge,
                     ),
-                  ),
-                  SizedBox(width: 20),
-                  Spacer(),
-                  SizedBox(
-                    width: 300,
-                    child: Text(
-                      'I hereby declare that I accept all the terms and conditions.',
-                      style: Theme.of(context).textTheme.bodyMedium,
+                    Text(
+                      'Where your style journey begins',
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
-                  ),
-                  Spacer(),
-                ],
-              ),
-              SizedBox(height: 20),
-              AuthButton(
-                type: AuthButtonType.signUp,
-                onPressed: authCtrl.checkboxValue.value
-                    ? () async {
-                        await authCtrl.registerUserCall();
-                        if (authCtrl.message().isNotEmpty && context.mounted) {
-                          showToast(
-                            message: authCtrl.message(),
-                          );
-                          if (authCtrl.isLoggedIn()) {
-                            router.pushNamed(RouteNames.signUpDetails);
+                  ],
+                ),
+                Spacer(flex: 2),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Email Address'),
+                    CustomTextFormField(
+                      controller: authCtrl.registeredEmail,
+                    ),
+                    SizedBox(height: 20),
+                    Text('Password'),
+                    CustomTextFormField(
+                      controller: authCtrl.registeredPassword,
+                    ),
+                    SizedBox(height: 20),
+                    Text('Re-enter Password'),
+                    CustomTextFormField(
+                      controller: authCtrl.registeredRenterPassword,
+                    ),
+                  ],
+                ),
+                Spacer(),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(width: 5),
+                    SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: Checkbox(
+                        value: authCtrl.checkboxValue.value,
+                        onChanged: (value) {
+                          authCtrl.checkboxValue.value =
+                              !authCtrl.checkboxValue.value;
+                        },
+                      ),
+                    ),
+                    SizedBox(width: 20),
+                    Spacer(),
+                    SizedBox(
+                      width: 300,
+                      child: Text(
+                        'I hereby declare that I accept all the terms and conditions.',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                    Spacer(),
+                  ],
+                ),
+                SizedBox(height: 20),
+                AuthButton(
+                  type: AuthButtonType.signUp,
+                  onPressed: authCtrl.checkboxValue.value
+                      ? () async {
+                          await authCtrl.registerUserCall();
+                          if (authCtrl.message().isNotEmpty && context.mounted) {
+                            showToast(
+                              message: authCtrl.message(),
+                            );
+                            if (authCtrl.isLoggedIn()) {
+                              router.pushNamed(RouteNames.signUpDetails);
+                            }
                           }
                         }
-                      }
-                    : null,
-              ),
-              Spacer(),
-            ],
+                      : null,
+                ),
+                Spacer(),
+              ],
+            ),
           ),
         ),
       ),

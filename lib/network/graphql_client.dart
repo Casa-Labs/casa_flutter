@@ -441,7 +441,8 @@ class GraphQLClientService {
 
   static final AuthLink _authLink = AuthLink(
     getToken: () async =>
-        'Bearer ${PreferenceManager.getString(PreferenceManager.token)}',
+        // 'Bearer ${PreferenceManager.getString(PreferenceManager.token)}',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkMTdlZGZmNS1jYWFiLTRlNzAtODQ1OC0wOGEyZjZlMzIwODEiLCJyb2xlIjoiQ1VTVE9NRVIiLCJwcm92aWRlciI6IkVNQUlMIiwiaWF0IjoxNzM5ODA3NjMwLCJleHAiOjE3NDIzOTk2MzB9.hU-OUJiIu8f5C117wS0Tdy_0AumIakknAFsuNw3wvhM',
   );
 
   static final Link _link = (router.state.name == RouteNames.signIn ||
