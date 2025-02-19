@@ -17,7 +17,7 @@ class GraphQLManager {
   }
 
   Future<QueryResult> loginUser(String email, String password) async {
-    return await _clientService.performMutation(
+    return await _clientService.performMutationWithoutToken(
       document: GraphQLMutations.loginMutation,
       variables: GraphQLVariables.loginVariables(email, password),
     );
