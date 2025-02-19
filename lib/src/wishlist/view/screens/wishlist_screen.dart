@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../routes/app_routes.dart';
 import '../../../../utils/color_constant.dart';
+import '../../../../utils/padding_size.dart';
 import '../../../common/widgets/text_widgets.dart';
 import '../../../common/widgets/textfields.dart';
 import '../../controller/wishlist_controller.dart';
@@ -28,7 +29,7 @@ class WishlistScreen extends StatelessWidget {
           return Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

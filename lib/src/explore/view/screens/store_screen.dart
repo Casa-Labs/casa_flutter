@@ -1,5 +1,8 @@
 import 'package:casa_flutter/routes/app_routes.dart';
 import 'package:casa_flutter/src/explore/controller/explore_controller.dart';
+import 'package:casa_flutter/src/wishlist/view/widgets/icons_widget.dart';
+import 'package:casa_flutter/utils/color_constant.dart';
+import 'package:casa_flutter/utils/padding_size.dart';
 import 'package:casa_flutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,7 +24,7 @@ class StoreScreen extends StatelessWidget {
             BannerImage(),
             Flexible(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding),
                 child: Column(
                   children: [
                     FilterRow(
@@ -69,12 +72,25 @@ class BannerImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.maxFinite,
-      child: Image.asset(
-        ImageConstants.zaraBanner,
-        fit: BoxFit.cover,
-      ),
+    return Stack(
+      children: [
+        SizedBox(
+          width: double.maxFinite,
+          child: Image.asset(
+            ImageConstants.zaraBanner,
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        IconsWidget(
+          onTap: () {
+            context.pop();
+          },
+          icon: Icons.arrow_back_ios_new,
+          backColor: IconColor.white,
+          iconColor: IconColor.black,
+        ).paddingAll(10),
+      ],
     );
   }
 }

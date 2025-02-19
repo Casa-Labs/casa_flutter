@@ -1,10 +1,12 @@
 import 'package:casa_flutter/routes/app_routes.dart';
+import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
 import 'package:casa_flutter/src/order/controller/order_review_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../utils/color_constant.dart';
+import '../../../../utils/padding_size.dart';
 import '../../../common/widgets/app_bar.dart';
 import '../widgets/expandable_card.dart';
 
@@ -19,17 +21,32 @@ class OrderReviewScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: BackgroundColor.white,
-      appBar: CustomAppbar(
-          title: 'Order review',
-          isLeadingBack: true,
-          isLeading: false,
-          isNotification: false,
-          isFilter: false),
+      appBar: CommonAppBar(
+        title: 'Order review',
+        actions: [
+          InkWell(
+            overlayColor: WidgetStateProperty.all(ButtonColor.transparent),
+            splashFactory: NoSplash.splashFactory,
+            onTap: () {},
+            child: Container(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  'Clear',
+                  style: textTheme.bodyMedium,
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+
       body: Column(
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(PaddingSize.commonPadding),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

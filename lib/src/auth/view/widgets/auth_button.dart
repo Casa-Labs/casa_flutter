@@ -12,7 +12,9 @@ enum AuthButtonType {
   send,
   verify,
   save,
-  start
+  start,
+  cancel,
+  createCloset,
 }
 
 class AuthButton extends StatelessWidget {
@@ -25,6 +27,7 @@ class AuthButton extends StatelessWidget {
   Widget build(BuildContext context) {
     Color backgroundColor = ButtonColor.black;
     Color textColor = TextColor.white;
+    Color borderColor = BorderColor.black;
     String text = '';
     bool showIcon = false;
     IconData icon = Icons.apple;
@@ -53,6 +56,15 @@ class AuthButton extends StatelessWidget {
       case AuthButtonType.signIn:
         text = 'SIGN IN';
         break;
+      case AuthButtonType.cancel:
+        backgroundColor = ButtonColor.grey200;
+        textColor = Colors.black54;
+        text = 'Cancel';
+        borderColor = ButtonColor.grey200;
+        break;
+      case AuthButtonType.createCloset:
+        text = 'Create Closet';
+        break;
       case AuthButtonType.signUp:
         text = 'SIGN UP';
         break;
@@ -80,7 +92,7 @@ class AuthButton extends StatelessWidget {
           // minimumSize: size,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
-              side: const BorderSide(color: BorderColor.black, width: 1)),
+              side:  BorderSide(color:borderColor , width: 1)),
           disabledForegroundColor: ButtonColor.grey,
           disabledBackgroundColor: ButtonColor.lightGrey,
           foregroundColor: textColor,

@@ -1,6 +1,8 @@
+import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
 import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../utils/padding_size.dart';
 import '../../../../utils/utils.dart';
 import '../../../common/widgets/secondary_button.dart';
 
@@ -17,12 +19,11 @@ class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Payment'),
-        centerTitle: true,
+      appBar: CommonAppBar(
+        title: 'Payment',
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding),
         child: Column(
           spacing: 20,
           crossAxisAlignment: CrossAxisAlignment.start,
