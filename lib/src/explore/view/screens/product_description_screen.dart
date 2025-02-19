@@ -1,4 +1,5 @@
 import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
+import 'package:casa_flutter/src/common/widgets/custom_image_view.dart';
 import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:casa_flutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:go_router/go_router.dart';
 // import 'package:share_plus/share_plus.dart';
 
 import '../../../../routes/app_routes.dart';
+import '../../../../utils/padding_size.dart';
 import '../../../common/widgets/add_to_cart_button.dart';
 import '../../../common/widgets/select_size_button.dart';
 import '../widgets/care_composition_tile.dart';
@@ -20,10 +22,10 @@ class ProductDescriptionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar(
-        title: 'Explore',
+        title: '',
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(PaddingSize.commonPadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -93,14 +95,16 @@ class ProductDescriptionScreen extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    // Share.share(
-                    //     'Check out this amazing product at CASA app now !');
                   },
-                  icon: Icon(Icons.send_outlined),
+                  icon:CustomImageView(image: ImageConstants.send,
+                  height: 24,
+                  ) ,
                 ),
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.mode_comment_outlined),
+                  icon:CustomImageView(image: ImageConstants.chat,
+                    height: 24,
+                  )
                 ),
                 Spacer(),
                 InkWell(

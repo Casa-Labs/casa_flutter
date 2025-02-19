@@ -1,5 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:casa_flutter/src/auth/view/widgets/auth_button.dart';
+import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
 import 'package:casa_flutter/utils/color_constant.dart';
+import 'package:casa_flutter/utils/padding_size.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -54,15 +57,12 @@ class CreateClosetScreen extends StatelessWidget {
                     ),
                   )
                 else
-                  CustomAppbar(
-                      title: 'Create a Closet',
-                      isLeadingBack: true,
-                      isLeading: false,
-                      isNotification: false,
-                      isFilter: false),
+                   CommonAppBar(
+                    title: 'Create a Closet',
+                  ),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: 28.0, vertical: isBottomSheet ? 5 : 10),
+                      horizontal:PaddingSize.commonPadding, vertical: isBottomSheet ? 5 : 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -72,6 +72,9 @@ class CreateClosetScreen extends StatelessWidget {
                               // fontSize: 15,
                               fontWeight: FontWeight.w600,
                             ),
+                      ),
+                      const SizedBox(
+                        height: 5,
                       ),
                       Container(
                         height: 40,
@@ -207,23 +210,22 @@ class CreateClosetScreen extends StatelessWidget {
                         },
                       ),
                       const SizedBox(height: 20),
-                      CustomPrimaryButton(
-                        text: "Cancel",
-                        button: PrimaryButtons.blueBG,
-                        onPressed: () {
+                      AuthButton(
+                        type: AuthButtonType.cancel,
+                        onPressed: () async {
                           wishlistController.closetInit();
                           context.pop();
-                        },
+                        }
                       ),
                       const SizedBox(height: 10),
-                      CustomPrimaryButton(
-                        button: PrimaryButtons.blueBG,
-                        text: "Create Closet",
-                        onPressed: () {
-                          wishlistController.addCloset();
-                          context.pop();
-                        },
+                      AuthButton(
+                          type: AuthButtonType.createCloset,
+                          onPressed: () async {
+                            wishlistController.addCloset();
+                            context.pop();
+                          }
                       ),
+
                     ],
                   ),
                 ),

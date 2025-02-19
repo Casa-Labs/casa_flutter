@@ -1,5 +1,6 @@
 import 'package:casa_flutter/routes/app_routes.dart';
 import 'package:casa_flutter/utils/color_constant.dart';
+import 'package:casa_flutter/utils/padding_size.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -94,7 +95,7 @@ class WishlistItemScreen extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 5),
+                padding: EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding, vertical: 5),
                 child: FilterRow(
                   brandList: wishlistController.brandFilter,
                   colorList: wishlistController.colorFilter,
@@ -104,7 +105,7 @@ class WishlistItemScreen extends StatelessWidget {
               Obx(() {
                 return Expanded(
                   child: GridView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                      padding: const EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding),
                       shrinkWrap: true,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(

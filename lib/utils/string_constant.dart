@@ -9,6 +9,8 @@ class ImageConstants {
   static String placeholderProduct = 'assets/images/placeholder.png';
   static String development = 'assets/images/development.jpg';
   static String newPassword = 'assets/images/new_password.png';
+  static String send = 'assets/images/send.png';
+  static String chat = 'assets/images/chat.png';
 }
 
 class AppStrings {

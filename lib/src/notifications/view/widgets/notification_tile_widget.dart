@@ -15,7 +15,7 @@ class NotificationTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 55,
+      width: double.infinity,
       margin: EdgeInsets.symmetric(vertical: 15),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,7 +46,12 @@ class NotificationTile extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 7.0),
-              child: Text(text),
+
+              child: Text(
+                text,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ),
           Container(

@@ -1,6 +1,7 @@
 import 'package:casa_flutter/routes/app_routes.dart';
 import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
 import 'package:casa_flutter/utils/color_constant.dart';
+import 'package:casa_flutter/utils/padding_size.dart';
 import 'package:casa_flutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -27,7 +28,7 @@ class ProfileScreen extends StatelessWidget {
           const SizedBox(height: 20),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding),
               child: ListView.builder(
                 itemCount: profileList.length,
                 itemBuilder: (context, index) {

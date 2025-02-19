@@ -1,6 +1,7 @@
 import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../utils/padding_size.dart';
 import '../../../common/widgets/app_bar.dart';
 import '../widgets/button_widget.dart';
 import '../widgets/order_card.dart';
@@ -24,7 +25,8 @@ class TrackShipment extends StatelessWidget {
         isSupport: true,
       ),
       body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const EdgeInsets.symmetric(
+              horizontal: PaddingSize.commonPadding, vertical: 10),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
