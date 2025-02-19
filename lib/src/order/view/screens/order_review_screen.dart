@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../utils/color_constant.dart';
+import '../../../../utils/padding_size.dart';
 import '../../../common/widgets/app_bar.dart';
 import '../widgets/expandable_card.dart';
 
@@ -29,7 +30,7 @@ class OrderReviewScreen extends StatelessWidget {
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(PaddingSize.commonPadding),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

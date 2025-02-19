@@ -37,7 +37,12 @@ class CartScreen extends StatelessWidget {
                   ),
                 ),
               )
-            : const SizedBox(),
+            :  IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(Icons.arrow_back_ios),
+        ),
         leadingWidth: 60,
         backgroundColor: BackgroundColor.white,
         actions: [
@@ -60,7 +65,9 @@ class CartScreen extends StatelessWidget {
         ],
         title: Text(
           'My Cart',
-          style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
         ),
         centerTitle: true,
       ),

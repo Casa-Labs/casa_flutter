@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../routes/app_routes.dart';
 import '../../../../utils/font.dart';
+import '../../../../utils/padding_size.dart';
 import '../../../common/widgets/app_bar.dart';
 import '../widgets/order_card.dart';
 import '../widgets/view_button.dart';
@@ -26,7 +27,7 @@ class OrderDetails extends StatelessWidget {
         isSupport: true,
       ),
       body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding, vertical: 10),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,6 +1,7 @@
 import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
 import 'package:casa_flutter/src/order/controller/current_orders_controller.dart';
 import 'package:casa_flutter/src/order/model/order_models.dart';
+import 'package:casa_flutter/utils/padding_size.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -41,7 +42,7 @@ class CurrentOrdersScreen extends StatelessWidget {
               builder: (logic) {
                 return Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
+                        horizontal: PaddingSize.commonPadding, vertical: 10),
                     child: ListView.builder(
                       itemCount: orderItem!.length,
                       shrinkWrap: true,
