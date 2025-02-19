@@ -228,3 +228,13 @@ class Product {
     return data;
   }
 }
+
+
+class ProductModelFilter {
+  String? title;
+  String? leading;
+  bool isSelected = false;
+  bool isTabView = false;
+
+  ProductModelFilter({this.leading,this.title});
+}

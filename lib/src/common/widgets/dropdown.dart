@@ -1,4 +1,3 @@
-import 'package:casa_flutter/src/common/widgets/text_widgets.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -26,83 +26,85 @@ class NotificationsScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding),
-        child: Column(
-          children: [
-            Obx(() => Expanded(
-              child: ListView(
-                children: [
-                  if (controller.newNotifications.isNotEmpty) ...[
-                    Text(
-                      'New',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: controller.newNotifications.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Dismissible(
-                          key: Key(controller.newNotifications[index]),
-                          direction: DismissDirection.endToStart,
-                          background: Container(
-                            alignment: Alignment.centerRight,
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            color: Colors.red,
-                            child: Icon(Icons.delete, color: Colors.white),
-                          ),
-                          onDismissed: (direction) {
-                            controller.removeNotification(index, true);
-                          },
-                          child: NotificationTile(
-                            circleImageUrl:
-                            'https://wallpapers.com/images/hd/zara-artistic-logo-na3l857kygopljrs.jpg',
-                            squareImageUrl:
-                            'https://m.media-amazon.com/images/I/A1rAl7nAdxL._AC_UY1100_.jpg',
-                            text: controller.newNotifications[index],
-                          ),
-                        );
-                      },
-                    ),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding),
+          child: Column(
+            children: [
+              Obx(() => Expanded(
+                child: ListView(
+                  children: [
+                    if (controller.newNotifications.isNotEmpty) ...[
+                      Text(
+                        'New',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: controller.newNotifications.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return Dismissible(
+                            key: Key(controller.newNotifications[index]),
+                            direction: DismissDirection.endToStart,
+                            background: Container(
+                              alignment: Alignment.centerRight,
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              color: Colors.red,
+                              child: Icon(Icons.delete, color: Colors.white),
+                            ),
+                            onDismissed: (direction) {
+                              controller.removeNotification(index, true);
+                            },
+                            child: NotificationTile(
+                              circleImageUrl:
+                              'https://wallpapers.com/images/hd/zara-artistic-logo-na3l857kygopljrs.jpg',
+                              squareImageUrl:
+                              'https://m.media-amazon.com/images/I/A1rAl7nAdxL._AC_UY1100_.jpg',
+                              text: controller.newNotifications[index],
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                    if (controller.lastWeekNotifications.isNotEmpty) ...[
+                      Text(
+                        'Last Week',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: controller.lastWeekNotifications.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return Dismissible(
+                            key: Key(controller.lastWeekNotifications[index]),
+                            direction: DismissDirection.endToStart,
+                            background: Container(
+                              alignment: Alignment.centerRight,
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              color: Colors.red,
+                              child: Icon(Icons.delete, color: Colors.white),
+                            ),
+                            onDismissed: (direction) {
+                              controller.removeNotification(index, false);
+                            },
+                            child: NotificationTile(
+                              circleImageUrl:
+                              'https://wallpapers.com/images/hd/zara-artistic-logo-na3l857kygopljrs.jpg',
+                              squareImageUrl:
+                              'https://m.media-amazon.com/images/I/A1rAl7nAdxL._AC_UY1100_.jpg',
+                              text: controller.lastWeekNotifications[index],
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ],
-                  if (controller.lastWeekNotifications.isNotEmpty) ...[
-                    Text(
-                      'Last Week',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: controller.lastWeekNotifications.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Dismissible(
-                          key: Key(controller.lastWeekNotifications[index]),
-                          direction: DismissDirection.endToStart,
-                          background: Container(
-                            alignment: Alignment.centerRight,
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            color: Colors.red,
-                            child: Icon(Icons.delete, color: Colors.white),
-                          ),
-                          onDismissed: (direction) {
-                            controller.removeNotification(index, false);
-                          },
-                          child: NotificationTile(
-                            circleImageUrl:
-                            'https://wallpapers.com/images/hd/zara-artistic-logo-na3l857kygopljrs.jpg',
-                            squareImageUrl:
-                            'https://m.media-amazon.com/images/I/A1rAl7nAdxL._AC_UY1100_.jpg',
-                            text: controller.lastWeekNotifications[index],
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ],
-              ),
-            )),
-          ],
+                ),
+              )),
+            ],
+          ),
         ),
       ),
     );

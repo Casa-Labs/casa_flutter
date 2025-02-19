@@ -1,13 +1,10 @@
 import 'dart:math';
-
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../network/graph_ql_manager.dart';
 import '../model/home_models.dart';
-import '../model/service/home_service.dart';
 
 class HomeController extends GetxController{
 
@@ -25,6 +22,7 @@ class HomeController extends GetxController{
   RxList<Product> reactiveProducts = <Product>[].obs;
   bool isShowReturn = false;
   bool isShowShipping = false;
+  bool isShowFilter = true;
   var price = ''.obs;
   var title = ''.obs;
   var id = ''.obs;
@@ -34,9 +32,36 @@ class HomeController extends GetxController{
   int currentIndex = 0;
   final ValueNotifier<int> counter = ValueNotifier<int>(1);
   IconData? swipeIcon;
-  final List<String> brandFilter  = ['Zara','H&M','Gap', 'CASA', 'Tommy hilfiger'];
-  final List<String> productFilter  = ['Topwear', 'Shirt', 'Sweatshirt', 'T- shirt','Hoodie'];
-  final List<String> colorFilter  = ['Black', 'Brown', 'Green', 'Denim','Zebra print'];
+  final List<ProductModelFilter> brandFilter = [
+    ProductModelFilter(leading: 'Z', title: 'Zara'),
+    ProductModelFilter(leading: 'H', title: 'H&M'),
+    ProductModelFilter(leading: 'G', title: 'Gap'),
+    ProductModelFilter(leading: 'C', title: 'CASA'),
+    ProductModelFilter(leading: 'T', title: 'Tommy hilfiger')
+  ];
+  final List<ProductModelFilter> productFilter = [
+    ProductModelFilter(leading: '', title: 'Topwear'),
+    ProductModelFilter(leading: '', title: 'Shirt'),
+    ProductModelFilter(leading: '', title: 'Sweatshirt'),
+    ProductModelFilter(leading: '', title: 'T- shirt'),
+    ProductModelFilter(leading: '', title: 'Hoodie')
+  ];
+  final List<ProductModelFilter> colorFilter = [
+    ProductModelFilter(leading: '', title:'Black'),
+    ProductModelFilter(leading: '', title:'Brown'),
+    ProductModelFilter(leading: '', title:'Green'),
+    ProductModelFilter(leading: '', title:'Denim'),
+    ProductModelFilter(leading: '', title:'Zebra print')
+  ];
+  final List<ProductModelFilter> sizedFilter = [
+    ProductModelFilter(leading: '', title: 'XXS'),
+    ProductModelFilter(leading: '', title: 'XS'),
+    ProductModelFilter(leading: '', title: 'S'),
+    ProductModelFilter(leading: '', title: 'M'),
+    ProductModelFilter(leading: '', title: 'L'),
+    ProductModelFilter(leading: '', title: 'XL'),
+    ProductModelFilter(leading: '', title: 'XXL')
+  ];
   final manager = GraphQLManager();
 
   // ========== STATES ========== //
@@ -99,6 +124,11 @@ class HomeController extends GetxController{
     update();
   }
 
+  showFilter(){
+    isShowFilter = !isShowFilter;
+    update();
+  }
+
   changeShippingPolicy(){
     isShowShipping = !isShowShipping;
     update();
@@ -111,10 +141,10 @@ class HomeController extends GetxController{
 
 // ========== APIs FUNCTIONS ========== //
 
-  Future<List<Product>> fetchProducts() async {
+  Future<List<Product>> fetchProducts(Map<String, dynamic> map) async {
     try {
       List<Product> products = [];
-      var response = await manager.getProducts({});
+      var response = await manager.getProducts(map);
       products = GetProducts.fromJson(response.data!['getProducts']).data!;
       // Attempt to convert the document data to a ProductModel
 

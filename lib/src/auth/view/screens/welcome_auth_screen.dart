@@ -16,76 +16,78 @@ class WelcomeAuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(ImageConstants.authBackground),
-            fit: BoxFit.cover,
+      body: SafeArea(
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(ImageConstants.authBackground),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: Column(
-          children: [
-            Spacer(flex: 13),
-            // Main Text
-            Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Become a member of our casa'.toUpperCase(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .copyWith(
-                                color: TextColor.white,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: 1.5,
-                              ),
-                        ),
-                        Text(
-                          'Enjoy exclusive rewards through our membership program while you shop',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(
+          child: Column(
+            children: [
+              Spacer(flex: 13),
+              // Main Text
+              Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Become a member of our casa'.toUpperCase(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium!
+                                .copyWith(
                                   color: TextColor.white,
-                                  fontWeight: FontWeight.w500),
-                        ),
-                      ],
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 1.5,
+                                ),
+                          ),
+                          Text(
+                            'Enjoy exclusive rewards through our membership program while you shop',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                    color: TextColor.white,
+                                    fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Column(
-                spacing: 15,
-                children: [
-                  AuthButton(
-                      type: AuthButtonType.google,
-                      onPressed: () {
-                        context.pushNamed(RouteNames.signIn);
-                      }),
-                  AuthButton(
-                      type: AuthButtonType.apple,
-                      onPressed: () {
-                        context.pushNamed(RouteNames.signIn);
-                      }),
-                  AuthButton(
-                      type: AuthButtonType.email,
-                      onPressed: () {
-                        context.pushNamed(RouteNames.signIn);
-                      }),
                 ],
               ),
-            ),
-            Spacer(flex: 1),
-          ],
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  spacing: 15,
+                  children: [
+                    AuthButton(
+                        type: AuthButtonType.google,
+                        onPressed: () {
+                          context.pushNamed(RouteNames.signIn);
+                        }),
+                    AuthButton(
+                        type: AuthButtonType.apple,
+                        onPressed: () {
+                          context.pushNamed(RouteNames.signIn);
+                        }),
+                    AuthButton(
+                        type: AuthButtonType.email,
+                        onPressed: () {
+                          context.pushNamed(RouteNames.signIn);
+                        }),
+                  ],
+                ),
+              ),
+              Spacer(flex: 1),
+            ],
+          ),
         ),
       ),
     );

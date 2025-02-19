@@ -12,111 +12,113 @@ class SignUpDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 40),
-              Column(
-                children: [
-                  Text(
-                    'CASA',
-                    style: Theme.of(context).textTheme.displayLarge,
-                  ),
-                  Text(
-                    'Where your style journey begins',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 40),
-              Text(
-                'Personal Details',
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('First Name'),
-                  CustomTextFormField(),
-                  SizedBox(height: 20),
-                  Text('Last Name'),
-                  CustomTextFormField(),
-                  SizedBox(height: 20),
-                  Text('Phone Number'),
-                  CustomTextFormField(),
-                  SizedBox(height: 30),
-                ],
-              ),
-              ChipList(
-                heading: 'Style Preferences',
-                items: [
-                  'Casual',
-                  'Formal',
-                  'Boho',
-                  'Chic',
-                  'Preppy',
-                  'Sporty',
-                  'Retro',
-                  'Western',
-                ],
-              ),
-              ChipList(
-                heading: 'Body Type',
-                items: [
-                  'Hourglass',
-                  'Pear',
-                  'Apple',
-                  'Athletic',
-                  'Tall',
-                  'Oval',
-                  'Petite',
-                ],
-              ),
-              ChipList(
-                heading: 'Fit Preferences',
-                items: [
-                  'Slim',
-                  'Regular',
-                  'Relaxed',
-                  'Over sized',
-                ],
-              ),
-              Divider(color: DividerColor.grey),
-              const SizedBox(height: 30),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Text(
-                      'Delivery Address',
-                      style: Theme.of(context).textTheme.bodyLarge,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 40),
+                Column(
+                  children: [
+                    Text(
+                      'CASA',
+                      style: Theme.of(context).textTheme.displayLarge,
                     ),
-                  ),
-                  const SizedBox(height: 30),
-                  Text('Street Address'),
-                  CustomTextFormField(),
-                  SizedBox(height: 20),
-                  Text('City'),
-                  CustomTextFormField(),
-                  SizedBox(height: 20),
-                  Text('State'),
-                  CustomTextFormField(),
-                  SizedBox(height: 20),
-                  Text('ZIP Code'),
-                  CustomTextFormField(),
-                  SizedBox(height: 30),
-                ],
-              ),
-              const SizedBox(height: 30),
-              AuthButton(
-                  type: AuthButtonType.start,
-                  onPressed: () {
-                    context.pushNamed(RouteNames.navigation);
-                  }),
-              const SizedBox(height: 30),
-            ],
+                    Text(
+                      'Where your style journey begins',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 40),
+                Text(
+                  'Personal Details',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('First Name'),
+                    CustomTextFormField(),
+                    SizedBox(height: 20),
+                    Text('Last Name'),
+                    CustomTextFormField(),
+                    SizedBox(height: 20),
+                    Text('Phone Number'),
+                    CustomTextFormField(),
+                    SizedBox(height: 30),
+                  ],
+                ),
+                ChipList(
+                  heading: 'Style Preferences',
+                  items: [
+                    'Casual',
+                    'Formal',
+                    'Boho',
+                    'Chic',
+                    'Preppy',
+                    'Sporty',
+                    'Retro',
+                    'Western',
+                  ],
+                ),
+                ChipList(
+                  heading: 'Body Type',
+                  items: [
+                    'Hourglass',
+                    'Pear',
+                    'Apple',
+                    'Athletic',
+                    'Tall',
+                    'Oval',
+                    'Petite',
+                  ],
+                ),
+                ChipList(
+                  heading: 'Fit Preferences',
+                  items: [
+                    'Slim',
+                    'Regular',
+                    'Relaxed',
+                    'Over sized',
+                  ],
+                ),
+                Divider(color: DividerColor.grey),
+                const SizedBox(height: 30),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Text(
+                        'Delivery Address',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Text('Street Address'),
+                    CustomTextFormField(),
+                    SizedBox(height: 20),
+                    Text('City'),
+                    CustomTextFormField(),
+                    SizedBox(height: 20),
+                    Text('State'),
+                    CustomTextFormField(),
+                    SizedBox(height: 20),
+                    Text('ZIP Code'),
+                    CustomTextFormField(),
+                    SizedBox(height: 30),
+                  ],
+                ),
+                const SizedBox(height: 30),
+                AuthButton(
+                    type: AuthButtonType.start,
+                    onPressed: () {
+                      context.pushNamed(RouteNames.navigation);
+                    }),
+                const SizedBox(height: 30),
+              ],
+            ),
           ),
         ),
       ),

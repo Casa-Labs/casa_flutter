@@ -219,7 +219,7 @@ class _CartItemState extends State<CartItem>
                                   Text(
                                     'Size:',
                                     style: textTheme.bodySmall?.copyWith(
-                                      color: TextColor.black.withOpacity(0.7),
+                                      color: TextColor.black.withValues(alpha: 0.7),
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -232,7 +232,7 @@ class _CartItemState extends State<CartItem>
                                           style: textTheme.bodyMedium?.copyWith(
                                             fontSize: 15,
                                             color:
-                                                TextColor.black.withOpacity(0.7),
+                                                TextColor.black.withValues(alpha: 0.7),
                                             fontWeight: FontWeight.w600,
                                           ),
                                         )),
