@@ -24,65 +24,68 @@ class ExploreScreen extends StatelessWidget {
               children: [
                 ExploreSearchBar(),
                 const Divider(),
-                TabBar(
-                  indicatorWeight: 1,
-                  dividerHeight: 0,
-                  splashFactory: NoSplash.splashFactory,
-                  indicator: BoxDecoration(
-                      color: TabBarColor.transparent,
-                      border: Border.all(color: TabBarColor.transparent)),
-                  labelPadding: const EdgeInsets.symmetric(horizontal: 2),
-                  tabs: [
-                    Tab(
-                      child: SizedBox(
-                        width: double.maxFinite,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: TabBar(
+                    indicatorWeight: 1,
+                    dividerHeight: 0,
+                    splashFactory: NoSplash.splashFactory,
+                    indicator: BoxDecoration(
+                        color: TabBarColor.transparent,
+                        border: Border.all(color: TabBarColor.transparent)),
+                    labelPadding: const EdgeInsets.symmetric(horizontal: 2),
+                    tabs: [
+                      Tab(
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              backgroundColor:
+                                  exploreCtrl.selectedIndex.value == 0
+                                      ? TabBarColor.black
+                                      : TabBarColor.white,
+                              foregroundColor:
+                                  exploreCtrl.selectedIndex.value == 0
+                                      ? TabBarColor.white
+                                      : TabBarColor.black,
                             ),
-                            backgroundColor:
-                                exploreCtrl.selectedIndex.value == 0
-                                    ? TabBarColor.black
-                                    : TabBarColor.white,
-                            foregroundColor:
-                                exploreCtrl.selectedIndex.value == 0
-                                    ? TabBarColor.white
-                                    : TabBarColor.black,
+                            child: Text('Brands'),
+                            onPressed: () {
+                              exploreCtrl.selectedIndex.value = 0;
+                            },
                           ),
-                          child: Text('Brands'),
-                          onPressed: () {
-                            exploreCtrl.selectedIndex.value = 0;
-                          },
                         ),
                       ),
-                    ),
-                    Tab(
-                      child: SizedBox(
-                        width: double.maxFinite,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
+                      Tab(
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              backgroundColor:
+                                  exploreCtrl.selectedIndex.value == 1
+                                      ? TabBarColor.black
+                                      : TabBarColor.white,
+                              foregroundColor:
+                                  exploreCtrl.selectedIndex.value == 1
+                                      ? TabBarColor.white
+                                      : TabBarColor.black,
                             ),
-                            backgroundColor:
-                                exploreCtrl.selectedIndex.value == 1
-                                    ? TabBarColor.black
-                                    : TabBarColor.white,
-                            foregroundColor:
-                                exploreCtrl.selectedIndex.value == 1
-                                    ? TabBarColor.white
-                                    : TabBarColor.black,
+                            child: Text('Thrifts'),
+                            onPressed: () async {
+                              exploreCtrl.selectedIndex.value = 1;
+                              await exploreCtrl.getTrendingNowProductsCall();
+                            },
                           ),
-                          child: Text('Thrifts'),
-                          onPressed: () async {
-                            exploreCtrl.selectedIndex.value = 1;
-                            await exploreCtrl.getTrendingNowProductsCall();
-                          },
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 Expanded(
                   child: TabBarView(

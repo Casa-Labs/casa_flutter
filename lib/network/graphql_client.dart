@@ -428,7 +428,6 @@
 //     return false;
 //   }
 // }
-import 'package:casa_flutter/routes/app_routes.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../utils/preference_manager.dart';
@@ -448,10 +447,7 @@ class GraphQLClientService {
     return 'Bearer $token';
   });
 
-  static final Link _link = (router.state.name == RouteNames.signIn ||
-          router.state.name == RouteNames.signUp)
-      ? _httpLink
-      : _authLink.concat(_httpLink);
+  static final Link _link = _authLink.concat(_httpLink);
 
   static final GraphQLClient _client = GraphQLClient(
     link: _link,
@@ -496,6 +492,60 @@ class GraphQLClientService {
     logg.i('GraphQL mutation: $document');
 
     final result = await _client.mutate(options);
+
+    _handleErrors(result);
+    return result;
+  }
+
+  /// **Perform a GraphQL Mutation without Token**
+  Future<QueryResult> performMutationWithoutToken(
+      {required String document, Map<String, dynamic>? variables}) async {
+    final MutationOptions options = MutationOptions(
+      document: gql(document),
+      variables: variables ?? {},
+    );
+
+    // Log the Client
+    logg.i('GraphQL Client link: ${_client.link.toString()}');
+
+    // Log the mutation
+    logg.i('GraphQL mutation: $document');
+
+    final tokenLessClient = GraphQLClient(
+      link: _httpLink,
+      cache: GraphQLCache(
+        store: InMemoryStore(),
+      ), // Caching for better performance
+    );
+
+    final result = await tokenLessClient.mutate(options);
+
+    _handleErrors(result);
+    return result;
+  }
+
+  /// **Perform a GraphQL Query without Token**
+  Future<QueryResult> performQueryWithoutToken(
+      {required String document, Map<String, dynamic>? variables}) async {
+    final QueryOptions options = QueryOptions(
+      document: gql(document),
+      variables: variables ?? {},
+      fetchPolicy: FetchPolicy.networkOnly, // Always fetch fresh data
+    );
+
+    // Log the Client
+    logg.i('GraphQL Client link: ${_client.link.toString()}');
+
+    // Log the query
+    logg.i('GraphQL Query: $document');
+
+    final tokenLessClient = GraphQLClient(
+      link: _httpLink,
+      cache: GraphQLCache(
+        store: InMemoryStore(),
+      ), // Caching for better performance
+    );
+    final result = await tokenLessClient.query(options);
 
     _handleErrors(result);
     return result;
