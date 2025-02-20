@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../routes/app_routes.dart';
-import '../../../../utils/font.dart';
-import '../../../../utils/padding_size.dart';
 import '../../../common/widgets/app_bar.dart';
 import '../widgets/order_card.dart';
 import '../widgets/view_button.dart';
