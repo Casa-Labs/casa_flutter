@@ -21,18 +21,31 @@ class OrderReviewScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: BackgroundColor.white,
-      appBar: CustomAppbar(
+      appBar: CommonAppBar(
           title: 'Order review',
-          isLeadingBack: true,
-          isLeading: false,
-          isNotification: false,
-          isFilter: false),
+        actions: [
+          InkWell(
+            overlayColor: WidgetStateProperty.all(ButtonColor.transparent),
+            splashFactory: NoSplash.splashFactory,
+            onTap: () {},
+            child: Container(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  'Clear',
+                  style: textTheme.bodyMedium,
+                ),
+              ),
+            ),
+          )
+        ],),
       body: SafeArea(
         child: Column(
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(PaddingSize.commonPadding),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

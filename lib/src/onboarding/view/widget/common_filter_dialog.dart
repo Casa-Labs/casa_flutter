@@ -45,14 +45,14 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                     dividerHeight: 0,
                     splashFactory: NoSplash.splashFactory,
                     indicator: BoxDecoration(
-                        color: Colors.transparent,
-                        border: Border.all(color: Colors.transparent)),
+                        color: TabBarColor.transparent,
+                        border: Border.all(color: TabBarColor.transparent)),
                     labelPadding: const EdgeInsets.symmetric(horizontal: 2),
                     tabs: [
                       Tab(
                         child: InkWell(
                           overlayColor:
-                              WidgetStateProperty.all(Colors.transparent),
+                              WidgetStateProperty.all(TabBarColor.transparent),
                           splashFactory: NoSplash.splashFactory,
                           onTap: () {
                             setState(() {
@@ -66,17 +66,17 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                               horizontal: 15,
                             ),
                             decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black),
+                                border: Border.all(color: TabBarColor.black),
                                 borderRadius: BorderRadius.circular(30),
                                 color:
-                                    index == 0 ? Colors.black : Colors.white),
+                                    index == 0 ? TabBarColor.black : TabBarColor.white),
                             child: Center(
                                 child: Text(
                               "MEN",
                               style: textTheme.bodyMedium?.copyWith(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
-                                color: index == 0 ? Colors.white : Colors.black,
+                                color: index == 0 ? TextColor.white : TextColor.black,
                               ),
                             )),
                           ),
@@ -97,17 +97,17 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                             width: MediaQuery.of(context).size.width,
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black),
+                                border: Border.all(color: TabBarColor.black),
                                 borderRadius: BorderRadius.circular(30),
                                 color:
-                                    index == 1 ? Colors.black : Colors.white),
+                                    index == 1 ? TabBarColor.black : TabBarColor.white),
                             child: Center(
                                 child: Text(
                               "WOMEN",
                               style: textTheme.bodyMedium?.copyWith(
                                 // fontSize: 16,
                                 fontWeight: FontWeight.w500,
-                                color: index == 1 ? Colors.white : Colors.black,
+                                color: index == 1 ? TextColor.white : TextColor.black,
                               ),
                             )),
                           ),
@@ -202,7 +202,7 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  overlayColor: WidgetStateProperty.all(Colors.transparent),
+                  overlayColor: WidgetStateProperty.all(ButtonColor.transparent),
                   splashFactory: NoSplash.splashFactory,
                   onTap: () {
                     var selectedItem = widget.children!
@@ -219,7 +219,7 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                           EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.white),
+                          color: ButtonColor.white),
                       child: Text(
                         "Clear",
                         style: textTheme.bodyMedium?.copyWith(
@@ -229,7 +229,7 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                       )),
                 ),
                 InkWell(
-                  overlayColor: WidgetStateProperty.all(Colors.transparent),
+                  overlayColor: WidgetStateProperty.all(ButtonColor.transparent),
                   splashFactory: NoSplash.splashFactory,
                   onTap: () {
                     homeCtrl.fetchProducts({});
@@ -240,13 +240,13 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                           EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.black),
+                          color: ButtonColor.black),
                       child: Text(
                         "Done",
                         style: textTheme.bodyMedium?.copyWith(
                           // fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          color: Colors.white,
+                          color: TextColor.white,
                         ),
                       )),
                 )
@@ -286,7 +286,7 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black, width: 1.5),
+                          border: Border.all(color: TabBarColor.black, width: 1.5),
                           borderRadius: BorderRadius.circular(40)),
                       child: CircleAvatar(
                         maxRadius: 18,
@@ -295,8 +295,8 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                           widget.children![index].leading ?? "",
                           style: TextStyle(
                               color: widget.children![index].isSelected
-                                  ? Colors.black
-                                  : Colors.white,
+                                  ? TextColor.black
+                                  : TextColor.white,
                               fontSize: 12),
                         ),
                       ),
@@ -306,8 +306,8 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           fontSize: 19,
                           color: widget.children![index].isSelected
-                              ? Colors.white
-                              : Colors.black),
+                              ? TextColor.white
+                              : TextColor.black),
                     )
                   ],
                 ),

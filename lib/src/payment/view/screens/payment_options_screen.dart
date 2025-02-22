@@ -24,7 +24,7 @@ class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding),
           child: Column(
             spacing: 20,
             crossAxisAlignment: CrossAxisAlignment.start,

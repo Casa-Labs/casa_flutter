@@ -41,7 +41,7 @@ class CurrentOrdersScreen extends StatelessWidget {
                 builder: (logic) {
                   return Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
+                          horizontal: PaddingSize.commonPadding, vertical: 10),
                       child: ListView.builder(
                         itemCount: orderItem!.length,
                         shrinkWrap: true,

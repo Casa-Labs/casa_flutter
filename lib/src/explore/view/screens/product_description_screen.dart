@@ -26,7 +26,7 @@ class ProductDescriptionScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(PaddingSize.commonPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
