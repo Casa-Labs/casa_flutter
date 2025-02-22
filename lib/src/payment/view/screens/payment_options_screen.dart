@@ -22,58 +22,60 @@ class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
       appBar: CommonAppBar(
         title: 'Payment',
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding),
-        child: Column(
-          spacing: 20,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('Please select your preferred payment gateway'),
-            ListView.builder(
-                shrinkWrap: true,
-                itemCount: paymentGatewayOptions.length,
-                itemBuilder: (context, index) {
-                  final paymentOp = paymentGatewayOptions[index];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0),
-                    child: ListTile(
-                      onTap: () {
-                        setState(() {
-                          selectedOption = paymentOp.value;
-                        });
-                        // paymentOp.function();
-                      },
-                      leading: const Icon(Icons.credit_card),
-                      title: Text(paymentOp.label),
-                      trailing: Radio(
-                          fillColor:
-                              WidgetStatePropertyAll<Color>(ButtonColor.black),
-                          value: paymentOp.value,
-                          groupValue: selectedOption,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedOption = value ?? 1;
-                            });
-                          }),
-                      shape: BeveledRectangleBorder(
-                        side: BorderSide(
-                          color: BorderColor.black,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding),
+          child: Column(
+            spacing: 20,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Please select your preferred payment gateway'),
+              ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: paymentGatewayOptions.length,
+                  itemBuilder: (context, index) {
+                    final paymentOp = paymentGatewayOptions[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            selectedOption = paymentOp.value;
+                          });
+                          // paymentOp.function();
+                        },
+                        leading: const Icon(Icons.credit_card),
+                        title: Text(paymentOp.label),
+                        trailing: Radio(
+                            fillColor:
+                                WidgetStatePropertyAll<Color>(ButtonColor.black),
+                            value: paymentOp.value,
+                            groupValue: selectedOption,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedOption = value ?? 1;
+                              });
+                            }),
+                        shape: BeveledRectangleBorder(
+                          side: BorderSide(
+                            color: BorderColor.black,
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                }),
-            const Spacer(flex: 5),
-            SecondaryButton(
-                text: 'Continue to payment',
-                onPressed: () {
-                  // since selectedOption is greater by 1 than the index of paymentGatewayOptions list
-                  // and we want the index of paymentGatewayOptions list
-                  // index = selectedOption - 1
-                  paymentGatewayOptions[selectedOption - 1].function();
-                }),
-            const Spacer()
-          ],
+                    );
+                  }),
+              const Spacer(flex: 5),
+              SecondaryButton(
+                  text: 'Continue to payment',
+                  onPressed: () {
+                    // since selectedOption is greater by 1 than the index of paymentGatewayOptions list
+                    // and we want the index of paymentGatewayOptions list
+                    // index = selectedOption - 1
+                    paymentGatewayOptions[selectedOption - 1].function();
+                  }),
+              const Spacer()
+            ],
+          ),
         ),
       ),
     );

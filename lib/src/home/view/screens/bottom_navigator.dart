@@ -67,17 +67,19 @@ class NavPageState extends State<NavPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BackgroundColor.white,
-      body: Stack(
-        children: [
-          _getScreen(_selectedIndex), // Display the selected page
-          if (tutorialScreenIndex < 14 && !_isFirstLaunch)
-            Positioned.fill(
-              child: TutorialScreen(
-                index: tutorialScreenIndex,
-                onTap: changeIndexTutorial,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            _getScreen(_selectedIndex), // Display the selected page
+            if (tutorialScreenIndex < 14 && !_isFirstLaunch)
+              Positioned.fill(
+                child: TutorialScreen(
+                  index: tutorialScreenIndex,
+                  onTap: changeIndexTutorial,
+                ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,

@@ -1,13 +1,17 @@
 import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
-
-import '../../../common/widgets/custom_text_form_field_widget.dart';
-import '../../../common/widgets/text_widgets.dart';
+import 'package:get/get.dart';
+import 'package:logger/logger.dart';
+import '../../../common/widgets/price_slider.dart';
 import '../../../common/widgets/textfields.dart';
+import '../../../home/controller/home_controller.dart';
+import '../../../home/model/home_models.dart';
 
 class CommonFilterDialog extends StatefulWidget {
-  final List? children;
-  const CommonFilterDialog({super.key, this.children});
+  final List<ProductModelFilter>? children;
+  final String? filterName;
+
+  const CommonFilterDialog({super.key, this.children, this.filterName});
 
   @override
   State<CommonFilterDialog> createState() => _CommonFilterDialogState();
@@ -15,6 +19,9 @@ class CommonFilterDialog extends StatefulWidget {
 
 class _CommonFilterDialogState extends State<CommonFilterDialog> {
   int index = 0;
+  final homeCtrl = Get.find<HomeController>();
+  Logger logg = Logger();
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -23,107 +30,111 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
       initialIndex: index,
       child: Container(
         padding: EdgeInsets.all(15),
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * .63,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             if (widget.children!.isNotEmpty) ...[
               SizedBox(height: 40, child: CustomSearchBar()),
-              TabBar(
-                indicatorWeight: 1,
-                dividerHeight: 0,
-                splashFactory: NoSplash.splashFactory,
-                indicator: BoxDecoration(
-                    color: TabBarColor.transparent,
-                    border: Border.all(color: TabBarColor.transparent)),
-                labelPadding: const EdgeInsets.symmetric(horizontal: 2),
-                tabs: [
-                  Tab(
-                    child: InkWell(
-                      overlayColor:
-                          WidgetStateProperty.all(TabBarColor.transparent),
-                      splashFactory: NoSplash.splashFactory,
-                      onTap: () {
-                        setState(() {
-                          index = 0;
-                        });
-                      },
-                      child: Container(
-                        height: 36,
-                        width: MediaQuery.of(context).size.width,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 15,
+              if (widget.filterName == "Brand" ||
+                  widget.filterName == "Product") ...[
+                SizedBox(height: 10),
+                SizedBox(
+                  height: 50,
+                  child: TabBar(
+                    indicatorWeight: 1,
+                    dividerHeight: 0,
+                    splashFactory: NoSplash.splashFactory,
+                    indicator: BoxDecoration(
+                        color: TabBarColor.transparent,
+                        border: Border.all(color: TabBarColor.transparent)),
+                    labelPadding: const EdgeInsets.symmetric(horizontal: 2),
+                    tabs: [
+                      Tab(
+                        child: InkWell(
+                          overlayColor:
+                              WidgetStateProperty.all(TabBarColor.transparent),
+                          splashFactory: NoSplash.splashFactory,
+                          onTap: () {
+                            setState(() {
+                              index = 0;
+                            });
+                          },
+                          child: Container(
+                            height: 36,
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 15,
+                            ),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: TabBarColor.black),
+                                borderRadius: BorderRadius.circular(30),
+                                color:
+                                    index == 0 ? TabBarColor.black : TabBarColor.white),
+                            child: Center(
+                                child: Text(
+                              "MEN",
+                              style: textTheme.bodyMedium?.copyWith(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: index == 0 ? TextColor.white : TextColor.black,
+                              ),
+                            )),
+                          ),
                         ),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: TabBarColor.black),
-                            borderRadius: BorderRadius.circular(30),
-                            color: index == 0
-                                ? TabBarColor.black
-                                : TabBarColor.white),
-                        child: Center(
-                            child: Text(
-                          "MEN",
-                          style: textTheme.bodyMedium?.copyWith(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color:
-                                index == 0 ? TextColor.white : TextColor.black,
-                          ),
-                        )),
                       ),
-                    ),
-                  ),
-                  Tab(
-                    child: InkWell(
-                      overlayColor: WidgetStateProperty.all(Colors.transparent),
-                      splashFactory: NoSplash.splashFactory,
-                      onTap: () {
-                        setState(() {
-                          index = 1;
-                        });
-                      },
-                      child: Container(
-                        height: 36,
-                        width: MediaQuery.of(context).size.width,
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: TabBarColor.black),
-                            borderRadius: BorderRadius.circular(30),
-                            color: index == 1
-                                ? TabBarColor.black
-                                : TabBarColor.white),
-                        child: Center(
-                            child: Text(
-                          "WOMEN",
-                          style: textTheme.bodyMedium?.copyWith(
-                            // fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color:
-                                index == 1 ? TextColor.white : TextColor.black,
+                      Tab(
+                        child: InkWell(
+                          overlayColor:
+                              WidgetStateProperty.all(Colors.transparent),
+                          splashFactory: NoSplash.splashFactory,
+                          onTap: () {
+                            setState(() {
+                              index = 1;
+                            });
+                          },
+                          child: Container(
+                            height: 36,
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: TabBarColor.black),
+                                borderRadius: BorderRadius.circular(30),
+                                color:
+                                    index == 1 ? TabBarColor.black : TabBarColor.white),
+                            child: Center(
+                                child: Text(
+                              "WOMEN",
+                              style: textTheme.bodyMedium?.copyWith(
+                                // fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: index == 1 ? TextColor.white : TextColor.black,
+                              ),
+                            )),
                           ),
-                        )),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Expanded(
-                child: TabBarView(
-                  physics: NeverScrollableScrollPhysics(),
-                  children: [
-                    _tabBarList(),
-                    _tabBarList(),
-                  ],
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.4,
+                  child: TabBarView(
+                    physics: NeverScrollableScrollPhysics(),
+                    children: [
+                      _tabBarList(),
+                      _tabBarList(),
+                    ],
+                  ),
+                ),
+              ] else ...[
+                SizedBox(height: 20),
+                SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.4,
+                    child: _tabBarList())
+              ],
+              SizedBox(height: 10),
             ] else ...[
-              Column(
+/*              Column(
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -145,37 +156,45 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                         width: 80,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: TextFieldColor.white,
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(8),
                           // border: Border.all(color: Colors.black)
                         ),
                         child: CustomTextFormField(
                           hintText: '\$0',
-                          fillColor: TextFieldColor.white,
+                          fillColor: Colors.white,
                         ),
                       ),
                       Container(
                         height: 2,
                         width: 30,
-                        color: ButtonColor.black,
+                        color: Colors.black,
                       ),
                       Container(
                         height: 48,
                         width: 80,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: ButtonColor.white,
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(8),
                           // border: Border.all(color: Colors.black)
                         ),
                         child: CustomTextFormField(
                           hintText: '\$100',
-                          fillColor: TextFieldColor.white,
+                          fillColor: Colors.white,
                         ),
                       )
                     ],
                   )
                 ],
+              ),*/
+              PriceRangeSlider(
+                min: 950.00,
+                max: 4950.00,
+                onChanged: (double minValue, double maxValue) {
+                  // Handle the price range changes here
+                  logg.i('Min: $minValue, Max: $maxValue');
+                },
               ),
               SizedBox(height: 20),
             ],
@@ -183,10 +202,17 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  overlayColor: WidgetStateProperty.all(Colors.transparent),
+                  overlayColor: WidgetStateProperty.all(ButtonColor.transparent),
                   splashFactory: NoSplash.splashFactory,
                   onTap: () {
-                    Navigator.of(context).pop();
+                    var selectedItem = widget.children!
+                        .where((element) => element.isSelected)
+                        .toList();
+                    for (var item in selectedItem) {
+                      item.isSelected = false;
+                    }
+                    setState(() {});
+                    // Navigator.of(context).pop();
                   },
                   child: Container(
                       padding:
@@ -203,9 +229,10 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                       )),
                 ),
                 InkWell(
-                  overlayColor: WidgetStateProperty.all(Colors.transparent),
+                  overlayColor: WidgetStateProperty.all(ButtonColor.transparent),
                   splashFactory: NoSplash.splashFactory,
                   onTap: () {
+                    homeCtrl.fetchProducts({});
                     Navigator.of(context).pop();
                   },
                   child: Container(
@@ -236,39 +263,54 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
       itemCount: 5,
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 6),
-          child: Material(
-            elevation: 4,
-            borderRadius: BorderRadius.circular(10),
-            surfaceTintColor: TabBarColor.white,
-            color: TabBarColor.white,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
-              child: Row(
-                spacing: 15,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(color: TabBarColor.black, width: 1.5),
-                        borderRadius: BorderRadius.circular(40)),
-                    child: CircleAvatar(
-                      maxRadius: 16,
-                      backgroundColor: const Color(0xFF002957),
-                      child: Text(
-                        "ZARA".substring(0, 4).toUpperCase(),
-                        style: const TextStyle(color: TextColor.white, fontSize: 12),
-
+        return GestureDetector(
+          onTap: () {
+            widget.children![index].isSelected =
+                !widget.children![index].isSelected;
+            setState(() {});
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 6),
+            child: Material(
+              elevation: 4,
+              borderRadius: BorderRadius.circular(10),
+              surfaceTintColor: TabBarColor.white,
+              color: widget.children![index].isSelected
+                  ? TabBarColor.black
+                  : TabBarColor.white,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
+                child: Row(
+                  spacing: 15,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: TabBarColor.black, width: 1.5),
+                          borderRadius: BorderRadius.circular(40)),
+                      child: CircleAvatar(
+                        maxRadius: 18,
+                        backgroundColor: const Color(0xFF002957),
+                        child: Text(
+                          widget.children![index].leading ?? "",
+                          style: TextStyle(
+                              color: widget.children![index].isSelected
+                                  ? TextColor.black
+                                  : TextColor.white,
+                              fontSize: 12),
+                        ),
                       ),
                     ),
-                  ),
-                  Text(
-                    widget.children![index],
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 20,
-                        ),
-                  )
-                ],
+                    Text(
+                      widget.children![index].title ?? "",
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontSize: 19,
+                          color: widget.children![index].isSelected
+                              ? TextColor.white
+                              : TextColor.black),
+                    )
+                  ],
+                ),
               ),
             ),
           ),

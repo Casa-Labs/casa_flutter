@@ -18,203 +18,205 @@ class AddToCloset extends StatelessWidget {
   Widget build(BuildContext context) {
     final WishlistController wishController = Get.find<WishlistController>();
     double screenHeight = MediaQuery.of(context).size.height;
-    return Container(
-      color: BackgroundColor.white,
-      height: screenHeight * 0.95,
-      child: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(28.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Add to Closet',
-                          style:
-                              Theme.of(context).textTheme.titleLarge?.copyWith(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                        ),
-                        InkWell(
-                          overlayColor:
-                              WidgetStateProperty.all(Colors.transparent),
-                          splashFactory: NoSplash.splashFactory,
-                          onTap: () => context.pop(),
-                          child: Container(
-                              padding: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                  color: Colors.grey.shade300,
-                                  borderRadius: BorderRadius.circular(40)),
-                              child: const Icon(Icons.close)),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Container(
-                        margin: EdgeInsets.symmetric(horizontal: 7),
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: TextFieldColor.grey200,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: CustomSearchBar(
-                          controller: wishController.searchController,
-                          hintText: "Search for a wishlist...",
-                        )),
-                    // Search TextField here
-                    Obx(() {
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: wishController.filteredWishlist.length,
-                        itemBuilder: (context, index) {
-                          var categoryMap =
-                              wishController.filteredWishlist[index];
-
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8.0, vertical: 12),
-                            child: GestureDetector(
-                              onTap: () {
-                                final currentValue =
-                                    selectedClosets.contains(categoryMap.name);
-                                if (currentValue) {
-                                  selectedClosets.remove(categoryMap.name);
-                                } else {
-                                  selectedClosets.add(categoryMap.name);
-                                }
-                              },
-                              child: Row(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: Image.network(
-                                      categoryMap.imageUrl,
-                                      width: 80,
-                                      height: 50,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 20),
-                                  Text(
-                                    categoryMap.name,
-                                    style: const TextStyle(
-                                      fontSize: 20,
+    return SafeArea(
+      child: Container(
+        color: BackgroundColor.white,
+        height: screenHeight * 0.95,
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(28.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Add to Closet',
+                            style:
+                                Theme.of(context).textTheme.titleLarge?.copyWith(
+                                      fontSize: 24,
                                       fontWeight: FontWeight.bold,
                                     ),
-                                  ),
-                                  const Spacer(),
-                                  Obx(() {
-                                    return Checkbox(
-                                      value: selectedClosets
-                                          .contains(categoryMap.name),
-                                      onChanged: (bool? value) {
-                                        if (value == true) {
-                                          selectedClosets.add(categoryMap.name);
-                                        } else {
-                                          selectedClosets
-                                              .remove(categoryMap.name);
-                                        }
-                                      },
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(50),
+                          ),
+                          InkWell(
+                            overlayColor:
+                                WidgetStateProperty.all(Colors.transparent),
+                            splashFactory: NoSplash.splashFactory,
+                            onTap: () => context.pop(),
+                            child: Container(
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                    color: Colors.grey.shade300,
+                                    borderRadius: BorderRadius.circular(40)),
+                                child: const Icon(Icons.close)),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      Container(
+                          margin: EdgeInsets.symmetric(horizontal: 7),
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: TextFieldColor.grey200,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: CustomSearchBar(
+                            controller: wishController.searchController,
+                            hintText: "Search for a wishlist...",
+                          )),
+                      // Search TextField here
+                      Obx(() {
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: wishController.filteredWishlist.length,
+                          itemBuilder: (context, index) {
+                            var categoryMap =
+                                wishController.filteredWishlist[index];
+
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8.0, vertical: 12),
+                              child: GestureDetector(
+                                onTap: () {
+                                  final currentValue =
+                                      selectedClosets.contains(categoryMap.name);
+                                  if (currentValue) {
+                                    selectedClosets.remove(categoryMap.name);
+                                  } else {
+                                    selectedClosets.add(categoryMap.name);
+                                  }
+                                },
+                                child: Row(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image.network(
+                                        categoryMap.imageUrl,
+                                        width: 80,
+                                        height: 50,
+                                        fit: BoxFit.cover,
                                       ),
-                                      checkColor: IconColor.white,
-                                      activeColor: IconColor.black,
-                                    );
-                                  }),
-                                ],
+                                    ),
+                                    const SizedBox(width: 20),
+                                    Text(
+                                      categoryMap.name,
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    Obx(() {
+                                      return Checkbox(
+                                        value: selectedClosets
+                                            .contains(categoryMap.name),
+                                        onChanged: (bool? value) {
+                                          if (value == true) {
+                                            selectedClosets.add(categoryMap.name);
+                                          } else {
+                                            selectedClosets
+                                                .remove(categoryMap.name);
+                                          }
+                                        },
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(50),
+                                        ),
+                                        checkColor: IconColor.white,
+                                        activeColor: IconColor.black,
+                                      );
+                                    }),
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                      );
-                    }),
-                  ],
+                            );
+                          },
+                        );
+                      }),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(28.0),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 40,
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      showClosetBottomSheet(
-                          context, CreateClosetScreen(isBottomSheet: true));
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.all(1),
-                      backgroundColor: ButtonColor.black,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    child: Stack(
-                      children: [
-                        Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              'New closet',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(
-                                    color: TextColor.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            )),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Container(
-                            width: 33,
-                            height: 33,
-                            decoration: const BoxDecoration(
-                              color: IconColor.white,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(Icons.add,
-                                size: 24, color: IconColor.black),
-                          ),
+            Padding(
+              padding: const EdgeInsets.all(28.0),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 40,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        showClosetBottomSheet(
+                            context, CreateClosetScreen(isBottomSheet: true));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.all(1),
+                        backgroundColor: ButtonColor.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  height: 40,
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      context.pop();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: ButtonColor.black,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Stack(
+                        children: [
+                          Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'New closet',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.copyWith(
+                                      color: TextColor.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              )),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                              width: 33,
+                              height: 33,
+                              decoration: const BoxDecoration(
+                                color: IconColor.white,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(Icons.add,
+                                  size: 24, color: IconColor.black),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    child: const Text(
-                      'Done',
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    height: 40,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        context.pop();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: ButtonColor.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: const Text(
+                        'Done',
+                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

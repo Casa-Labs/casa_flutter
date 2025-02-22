@@ -9,7 +9,7 @@ class SplashController extends GetxController {
   void onInit() {
     super.onInit();
     Future.delayed(const Duration(seconds: 3), () {
-      navigatorKey.currentContext?.goNamed(RouteNames.welcomeAuth);
+      navigatorKey.currentContext?.goNamed(RouteNames.signIn);
     });
   }
 }

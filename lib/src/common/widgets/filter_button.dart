@@ -1,8 +1,6 @@
-import 'package:casa_flutter/src/common/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/color_constant.dart';
-import '../../../utils/font.dart';
 
 class FilterButton extends StatelessWidget {
   final String label;
