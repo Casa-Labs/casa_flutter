@@ -10,7 +10,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/font.dart';
-import '../../../common/widgets/text_widgets.dart';
 import '../../model/home_models.dart';
 
 class ProductDetails extends StatelessWidget {

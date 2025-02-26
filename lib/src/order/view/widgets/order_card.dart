@@ -85,7 +85,7 @@ class OrderCard extends StatelessWidget {
                                   .textTheme
                                   .bodyMedium
                                   ?.copyWith(
-                                    color: TextColor.black.withOpacity(0.7),
+                                    color: TextColor.black.withValues(alpha: 0.7),
                                     // fontFamily: Font.gilroy,
                                     fontWeight: FontWeight.w600,
                                   ),

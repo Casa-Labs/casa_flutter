@@ -5,6 +5,7 @@ class TextColor {
   static const Color white = Color(0xffFFFFFF);
   static const Color black = Color(0xff000000);
   static const Color grey = Color(0xff9E9E9E);
+  static const Color greyFAQ = Color(0xff5B5B5B);
   static const Color black54 = Colors.black54;
   static const Color green = Color(0xFF4CAF50);
   static Color blackWithAlphaColors2 = Colors.black.withValues(alpha: 0.2);

@@ -1,7 +1,6 @@
 import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
-import '../../../common/widgets/text_widgets.dart';
 
 Widget textContainer(String text, BuildContext context) {
   return Container(

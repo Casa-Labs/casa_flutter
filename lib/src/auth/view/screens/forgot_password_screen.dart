@@ -12,70 +12,72 @@ class ForgotPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 50, left: 20),
-                child: IconButton(
-                    onPressed: () {
-                      context.pop();
-                    },
-                    icon: Icon(Icons.arrow_back_ios)),
-              )),
-          Align(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  Spacer(flex: 2),
-                  Column(
-                    children: [
-                      Text(
-                        'Forgot Password',
-                        style:
-                            Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                ),
-                      ),
-                      SizedBox(height: 50),
-                      Image.asset(ImageConstants.forgotPasswordLogo),
-                    ],
-                  ),
-                  Spacer(flex: 1),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Please enter your email address to receive a verification code.',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                      SizedBox(height: 25),
-                      Text('Email Address'),
-                      CustomTextFormField(),
-                    ],
-                  ),
-                  Spacer(flex: 1),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Try another way',
-                    ),
-                  ),
-                  Spacer(flex: 1),
-                  AuthButton(
-                      type: AuthButtonType.send,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 50, left: 20),
+                  child: IconButton(
                       onPressed: () {
-                        context.pushNamed(RouteNames.changePassword);
-                      }),
-                  Spacer(flex: 2),
-                ],
+                        context.pop();
+                      },
+                      icon: Icon(Icons.arrow_back_ios)),
+                )),
+            Align(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    Spacer(flex: 2),
+                    Column(
+                      children: [
+                        Text(
+                          'Forgot Password',
+                          style:
+                              Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                        ),
+                        SizedBox(height: 50),
+                        Image.asset(ImageConstants.forgotPasswordLogo),
+                      ],
+                    ),
+                    Spacer(flex: 1),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Please enter your email address to receive a verification code.',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                        SizedBox(height: 25),
+                        Text('Email Address'),
+                        CustomTextFormField(),
+                      ],
+                    ),
+                    Spacer(flex: 1),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'Try another way',
+                      ),
+                    ),
+                    Spacer(flex: 1),
+                    AuthButton(
+                        type: AuthButtonType.send,
+                        onPressed: () {
+                          context.pushNamed(RouteNames.changePassword);
+                        }),
+                    Spacer(flex: 2),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

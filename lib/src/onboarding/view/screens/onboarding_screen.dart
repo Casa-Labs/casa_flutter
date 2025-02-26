@@ -1,11 +1,8 @@
 import 'package:casa_flutter/src/onboarding/controller/onboarding_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-import '../../../../utils/font.dart';
 import '../../../common/widgets/filter_row.dart';
-import '../../../common/widgets/text_widgets.dart';
 import '../widget/position_tutorial.dart';
 import '../widget/swipe_tutorial.dart';
 

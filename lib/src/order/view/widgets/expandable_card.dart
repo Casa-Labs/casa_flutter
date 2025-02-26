@@ -3,7 +3,6 @@ import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../common/widgets/text_widgets.dart';
 
 class ExpandableCard extends StatelessWidget {
   final OrderReviewController orderController;

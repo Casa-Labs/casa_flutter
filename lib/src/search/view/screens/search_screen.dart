@@ -52,172 +52,174 @@ class _SearchScreenState extends State<SearchScreen> {
       appBar: CommonAppBar(
         title: 'Narrow your search',
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _materialWidget(
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    'Would you like to shop for?',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  const SizedBox(height: 5),
-                  _optionSection(shopFor, () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return BrandSelection(
-                          titel: "Would you like to shop for?",
-                          onTap: (p0, p1) {
-                            for (var listData in shopForList) {
-                              listData.isSelected = false;
-                            }
-                            shopForList[p1].isSelected = true;
-                            shopFor = shopForList[p1].name;
-                            setState(() {});
-                          },
-                          radioList: shopForList,
-                          brandSelection: shopFor,
-                        );
-                      },
-                    );
-                  }),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            _materialWidget(
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    'Where would you like to buy from?',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  const SizedBox(height: 5),
-                  _optionSection(buyFrom, () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return BrandSelection(
-                          titel: "Where would you like to buy from?",
-                          onTap: (p0, p1) {
-                            for (var listData in buyFromList) {
-                              listData.isSelected = false;
-                            }
-                            buyFromList[p1].isSelected = true;
-                            buyFrom = buyFromList[p1].name;
-                            setState(() {});
-                          },
-                          radioList: buyFromList,
-                          brandSelection: buyFrom,
-                        );
-                      },
-                    );
-                  }),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    'Categories',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  const SizedBox(height: 5),
-                  _optionSection(categories, () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return BrandSelection(
-                          titel: "Select Categories",
-                          onTap: (p0, p1) {
-                            for (var listData in categoriesList) {
-                              listData.isSelected = false;
-                            }
-                            categoriesList[p1].isSelected = true;
-                            categories = categoriesList[p1].name;
-                            setState(() {});
-                          },
-                          radioList: categoriesList,
-                          brandSelection: categories,
-                        );
-                      },
-                    );
-                  }),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    'Style preferences',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  const SizedBox(height: 5),
-                  _optionSection(style, () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return BrandSelection(
-                          titel: "Style preferences",
-                          onTap: (p0, p1) {
-                            styleList[p1].isSelected =
-                                !styleList[p1].isSelected;
-                            List<String> list = [];
-                            for (var data in styleList) {
-                              if (data.isSelected) {
-                                list.add(data.name);
-                              }
-                            }
-                            String name = list.join(", ");
-                            style = name;
-                            setState(() {});
-                          },
-                          radioList: styleList,
-                          brandSelection: style,
-                          isGrid: true,
-                        );
-                      },
-                    );
-                  }),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            Divider(color: DividerColor.grey),
-            const SizedBox(height: 20),
-            AddressDisplayBox(
-              addresses: [
-                Address(
-                    label: 'Home',
-                    address:
-                        'A1-504 Akal Society, JB Nagar, Andheri East 4000049'),
-              ],
-            ),
-            const SizedBox(height: 20),
-            GestureDetector(
-              onTap: () {},
-              child: _materialWidget(
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _materialWidget(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      'Payment Method?',
+                      'Would you like to shop for?',
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
-                    const Icon(
-                      Icons.arrow_forward,
-                      color: Colors.black54,
-                    )
+                    const SizedBox(height: 5),
+                    _optionSection(shopFor, () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return BrandSelection(
+                            titel: "Would you like to shop for?",
+                            onTap: (p0, p1) {
+                              for (var listData in shopForList) {
+                                listData.isSelected = false;
+                              }
+                              shopForList[p1].isSelected = true;
+                              shopFor = shopForList[p1].name;
+                              setState(() {});
+                            },
+                            radioList: shopForList,
+                            brandSelection: shopFor,
+                          );
+                        },
+                      );
+                    }),
                   ],
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-          ],
+              const SizedBox(
+                height: 20,
+              ),
+              _materialWidget(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Where would you like to buy from?',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    const SizedBox(height: 5),
+                    _optionSection(buyFrom, () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return BrandSelection(
+                            titel: "Where would you like to buy from?",
+                            onTap: (p0, p1) {
+                              for (var listData in buyFromList) {
+                                listData.isSelected = false;
+                              }
+                              buyFromList[p1].isSelected = true;
+                              buyFrom = buyFromList[p1].name;
+                              setState(() {});
+                            },
+                            radioList: buyFromList,
+                            brandSelection: buyFrom,
+                          );
+                        },
+                      );
+                    }),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      'Categories',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    const SizedBox(height: 5),
+                    _optionSection(categories, () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return BrandSelection(
+                            titel: "Select Categories",
+                            onTap: (p0, p1) {
+                              for (var listData in categoriesList) {
+                                listData.isSelected = false;
+                              }
+                              categoriesList[p1].isSelected = true;
+                              categories = categoriesList[p1].name;
+                              setState(() {});
+                            },
+                            radioList: categoriesList,
+                            brandSelection: categories,
+                          );
+                        },
+                      );
+                    }),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      'Style preferences',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    const SizedBox(height: 5),
+                    _optionSection(style, () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return BrandSelection(
+                            titel: "Style preferences",
+                            onTap: (p0, p1) {
+                              styleList[p1].isSelected =
+                                  !styleList[p1].isSelected;
+                              List<String> list = [];
+                              for (var data in styleList) {
+                                if (data.isSelected) {
+                                  list.add(data.name);
+                                }
+                              }
+                              String name = list.join(", ");
+                              style = name;
+                              setState(() {});
+                            },
+                            radioList: styleList,
+                            brandSelection: style,
+                            isGrid: true,
+                          );
+                        },
+                      );
+                    }),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              Divider(color: DividerColor.grey),
+              const SizedBox(height: 20),
+              AddressDisplayBox(
+                addresses: [
+                  Address(
+                      label: 'Home',
+                      address:
+                          'A1-504 Akal Society, JB Nagar, Andheri East 4000049'),
+                ],
+              ),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: () {},
+                child: _materialWidget(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Payment Method?',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const Icon(
+                        Icons.arrow_forward,
+                        color: Colors.black54,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );
