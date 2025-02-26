@@ -94,18 +94,18 @@ class ProductDescriptionScreen extends StatelessWidget {
             Row(
               children: [
                 IconButton(
-                  onPressed: () {
-                  },
-                  icon:CustomImageView(image: ImageConstants.send,
-                  height: 24,
-                  ) ,
+                  onPressed: () {},
+                  icon: CustomImageView(
+                    image: ImageConstants.send,
+                    height: 24,
+                  ),
                 ),
                 IconButton(
-                  onPressed: () {},
-                  icon:CustomImageView(image: ImageConstants.chat,
-                    height: 24,
-                  )
-                ),
+                    onPressed: () {},
+                    icon: CustomImageView(
+                      image: ImageConstants.chat,
+                      height: 24,
+                    )),
                 Spacer(),
                 InkWell(
                   child: Icon(Icons.bookmark_border),
@@ -136,7 +136,9 @@ class ProductDescriptionScreen extends StatelessWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 20),
-            SelectSizeButton(),
+            SelectSizeButton(
+              size: [],
+            ),
             const SizedBox(height: 20),
             Center(child: QuantitySelectorButton()),
             const SizedBox(height: 20),

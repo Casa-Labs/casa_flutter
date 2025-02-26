@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../utils/color_constant.dart';
 
 class SelectSizeButton extends StatefulWidget {
-  const SelectSizeButton({super.key});
+  const SelectSizeButton({super.key, required this.size});
+  final List<String> size;
 
   @override
   State<SelectSizeButton> createState() => _SelectSizeButtonState();
@@ -23,14 +24,25 @@ class _SelectSizeButtonState extends State<SelectSizeButton> {
         return ElevatedButton(
           style: ElevatedButton.styleFrom(
             elevation: 0,
-            backgroundColor:
-                isSelected ? ButtonColor.yellow : ButtonColor.white,
-            foregroundColor: isSelected ? ButtonColor.black : ButtonColor.black,
+            backgroundColor: widget.size.contains(sizes[index])
+                ? isSelected
+                    ? ButtonColor.grey
+                    : ButtonColor.white
+                : ButtonColor.lightGrey,
+            foregroundColor: widget.size.contains(sizes[index])
+                ? isSelected
+                    ? ButtonColor.black
+                    : ButtonColor.black
+                : ButtonColor.grey,
             minimumSize: Size.zero,
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(35),
-              side: const BorderSide(color: BorderColor.black, width: 0.5),
+              side: BorderSide(
+                  color: widget.size.contains(sizes[index])
+                      ? BorderColor.black
+                      : ButtonColor.grey,
+                  width: 0.5),
             ),
           ),
           onPressed: () {

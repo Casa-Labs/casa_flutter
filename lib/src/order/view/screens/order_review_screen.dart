@@ -7,7 +7,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/padding_size.dart';
-import '../../../common/widgets/app_bar.dart';
 import '../widgets/expandable_card.dart';
 
 class OrderReviewScreen extends StatelessWidget {
@@ -41,7 +40,6 @@ class OrderReviewScreen extends StatelessWidget {
           )
         ],
       ),
-
       body: Column(
         children: [
           Expanded(
@@ -84,8 +82,8 @@ class OrderReviewScreen extends StatelessWidget {
                               padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
                               decoration: BoxDecoration(
                                 color: TextColor.white,
-                                border:
-                                    Border.all(color: TextColor.black, width: 0.7),
+                                border: Border.all(
+                                    color: TextColor.black, width: 0.7),
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               child: Column(
@@ -418,37 +416,6 @@ class OrderReviewScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Text(
-                          "PAY USING",
-                          style: textTheme.bodyMedium?.copyWith(
-                            // fontSize: 14,
-                            color: TextColor.black,
-                          ),
-                        ),
-                        Icon(
-                          Icons.arrow_drop_up,
-                        )
-                      ],
-                    ),
-                    Text(
-                      "Phone Pay",
-                      style: textTheme.bodyMedium?.copyWith(
-                        // fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: TextColor.black,
-                      ),
-                    ),
-                  ],
-                ),
                 Obx(() {
                   return FilledButton(
                     style: FilledButton.styleFrom(
