@@ -137,7 +137,7 @@ class ProductDescriptionScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 20),
-              SelectSizeButton(),
+              SelectSizeButton(size: [],),
               const SizedBox(height: 20),
               Center(child: QuantitySelectorButton()),
               const SizedBox(height: 20),
