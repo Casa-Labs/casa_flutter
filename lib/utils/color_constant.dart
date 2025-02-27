@@ -27,7 +27,7 @@ class ButtonColor {
   static const Color white = Color(0xffFFFFFF);
   static const Color black = Color(0xff000000);
   static const Color lightGrey = Color(0xffEEEEEE);
-  static const Color grey = Color(0xff9E9E9E);
+  static const Color grey = Color(0xffD3D3D3);
   static const Color yellow = Color(0xffFBE14B);
   static const Color grey200 = Color(0xFFE0E0E0);
   static const Color transparent = Colors.transparent;

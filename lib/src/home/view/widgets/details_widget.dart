@@ -35,7 +35,6 @@ class ProductDetails extends StatelessWidget {
                   (product.name ?? "").toUpperCase(),
                   style: textTheme.bodyLarge?.copyWith(
                     fontFamily: Font.gilroy, // Custom font
-
                   ),
                 )),
                 const SizedBox(
@@ -170,62 +169,63 @@ class ProductDetails extends StatelessWidget {
             const SizedBox(height: 8),
 
             // ListView for size selection
-            SizedBox(
-              height: 50, // Adjust height based on your design
-              child: product.size!.isEmpty
-                  ? Text(
-                      'all sizes available',
-                      style: textTheme.bodySmall?.copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: TextColor.grey, // Dynamic color
-                      ),
-                    )
-                  : ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount:
-                          product.size!.length, // Use the sizes list length
-                      itemBuilder: (context, index) {
-                        // final size = products[currentIndex]
-                        //     .sizes[
-                        // index]; // Get the size at the index
-                        // final isSelected =
-                        //     selectedSizeIndex == index;
+            // SizedBox(
+            //   height: 50, // Adjust height based on your design
+            //   child: product.size!.isEmpty
+            //       ? Text(
+            //           'all sizes available',
+            //           style: textTheme.bodySmall?.copyWith(
+            //             fontSize: 12,
+            //             fontWeight: FontWeight.w500,
+            //             color: TextColor.grey, // Dynamic color
+            //           ),
+            //         )
+            //       : ListView.builder(
+            //           scrollDirection: Axis.horizontal,
+            //           itemCount:
+            //               product.size!.length, // Use the sizes list length
+            //           itemBuilder: (context, index) {
+            //             // final size = products[currentIndex]
+            //             //     .sizes[
+            //             // index]; // Get the size at the index
+            //             // final isSelected =
+            //             //     selectedSizeIndex == index;
 
-                        return GestureDetector(
-                          onTap: () {},
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
-                            child: Container(
-                              padding: const EdgeInsets.all(8),
-                              width: 42, // Fixed width for uniformity
-                              decoration: BoxDecoration(
-                                color: ButtonColor.grey200  ,
-                                shape: BoxShape.circle,
-                                border: /*isSelected
-                                ? Border.all(
-                                color: Colors.black,
-                                width: 1.5)
-                                : */
-                                    Border.all(color: ButtonColor.grey),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  product.size![index],                                  
-                                  style: textTheme.bodySmall?.copyWith(
-                                    fontWeight: FontWeight.w400,
-                                    color: TextColor.grey, // Dynamic color
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+            //             return GestureDetector(
+            //               onTap: () {},
+            //               child: Padding(
+            //                 padding: const EdgeInsets.symmetric(horizontal: 12),
+            //                 child: Container(
+            //                   padding: const EdgeInsets.all(8),
+            //                   width: 42, // Fixed width for uniformity
+            //                   decoration: BoxDecoration(
+            //                     color: ButtonColor.grey200,
+            //                     shape: BoxShape.circle,
+            //                     border: /*isSelected
+            //                     ? Border.all(
+            //                     color: Colors.black,
+            //                     width: 1.5)
+            //                     : */
+            //                         Border.all(color: ButtonColor.grey),
+            //                   ),
+            //                   child: Center(
+            //                     child: Text(
+            //                       product.size![index],
+            //                       style: textTheme.bodySmall?.copyWith(
+            //                         fontWeight: FontWeight.w400,
+            //                         color: TextColor.grey, // Dynamic color
+            //                       ),
+            //                     ),
+            //                   ),
+            //                 ),
+            //               ),
+            //             );
+            //           },
+            //         ),
+            // ),
+            SelectSizeButton(
+              size: product.size ?? [],
             ),
-
-            SelectSizeButton(),
             const SizedBox(height: 20),
             Center(child: QuantitySelectorButton()),
             // Row(

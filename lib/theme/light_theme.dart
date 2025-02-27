@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../utils/color_constant.dart';
+import '../utils/font.dart';
 
 const ColorScheme lightColorScheme = ColorScheme.light(
   surface: BackgroundColor.white, // lightest // done
@@ -36,65 +37,65 @@ ThemeData lightMode = ThemeData(
         //https://api.flutter.dev/flutter/material/TextTheme-class.html
         displayLarge: TextStyle(
           //size 57
-          fontFamily: GoogleFonts.publicSans().fontFamily,
+          fontFamily: Font.shafarik,
         ),
         displayMedium: TextStyle(
           //size 45
-          fontFamily: GoogleFonts.publicSans().fontFamily,
+          fontFamily: Font.shafarik,
         ),
         displaySmall: TextStyle(
           //size 36
-          fontFamily: GoogleFonts.publicSans().fontFamily,
+          fontFamily: Font.shafarik,
         ),
         headlineLarge: TextStyle(
           // size 32
-          fontFamily: GoogleFonts.publicSans().fontFamily,
+          fontFamily: Font.shafarik,
         ),
         headlineMedium: TextStyle(
           // size 28
-          fontFamily: GoogleFonts.publicSans().fontFamily,
+          fontFamily: Font.shafarik,
         ),
         headlineSmall: TextStyle(
           // size 24
-          fontFamily: GoogleFonts.publicSans().fontFamily,
+          fontFamily: Font.shafarik,
         ),
         titleLarge: TextStyle(
           // size 22
-          fontFamily: GoogleFonts.publicSans().fontFamily,
+          fontFamily: Font.shafarik,
         ),
         titleMedium: TextStyle(
           // size 16
           // fontSize: 36.fSize, //done // don't change
-          fontFamily: GoogleFonts.publicSans().fontFamily,
+          fontFamily: Font.shafarik,
         ),
         titleSmall: TextStyle(
           // size 14
-          fontFamily: GoogleFonts.publicSans().fontFamily,
+          fontFamily: Font.shafarik,
         ),
         bodyLarge: TextStyle(
           // size 16
           // fontSize: 18.fSize, // done // don't change
-          fontFamily: GoogleFonts.publicSans().fontFamily,
+          fontFamily: Font.shafarik,
         ),
         bodyMedium: TextStyle(
           // size 14
-          fontFamily: GoogleFonts.publicSans().fontFamily,
+          fontFamily: Font.shafarik,
         ),
         bodySmall: TextStyle(
           // size 12
-          fontFamily: GoogleFonts.publicSans().fontFamily,
+          fontFamily: Font.shafarik,
         ),
         labelLarge: TextStyle(
           // size 14
-          fontFamily: GoogleFonts.publicSans().fontFamily,
+          fontFamily: Font.shafarik,
         ),
         labelMedium: TextStyle(
           // size 12
-          fontFamily: GoogleFonts.publicSans().fontFamily,
+          fontFamily: Font.shafarik,
         ),
         labelSmall: TextStyle(
           // size 11
-          fontFamily: GoogleFonts.publicSans().fontFamily,
+          fontFamily: Font.shafarik,
         ),
       ),
   appBarTheme: AppBarTheme(

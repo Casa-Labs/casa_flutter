@@ -6,6 +6,7 @@ import 'package:casa_flutter/src/home/view/widgets/swipe_animation.dart';
 import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../cart/controller/cart_controller.dart';
 import '../../../common/widgets/filter_row.dart';
 import '../../model/home_models.dart';
 
@@ -13,6 +14,7 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
   final homeCtrl = Get.put(HomeController());
+  final cartController = Get.put(CartController());
 
   @override
   Widget build(BuildContext context) {

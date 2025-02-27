@@ -7,7 +7,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/padding_size.dart';
-import '../../../common/widgets/app_bar.dart';
 import '../widgets/expandable_card.dart';
 
 class OrderReviewScreen extends StatelessWidget {
