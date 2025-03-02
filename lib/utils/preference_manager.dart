@@ -2,7 +2,7 @@ import 'package:get_storage/get_storage.dart';
 
 class PreferenceManager {
   static const String token = "token";
-  static const String userId = "userId";
+  static const String userDetails = "userDetails";
   static const String keyIsDarkMode = 'isPrefDarkMode';
 
   static setData(String key, dynamic value) async {
@@ -10,7 +10,12 @@ class PreferenceManager {
   }
 
   static String? getString(String key) {
-    return "${getStorage().read(key)}";
+    final value = getStorage().read(key);
+    if (value != null) {
+      return "${getStorage().read(key)}";
+    } else {
+      return null;
+    }
   }
 
   static GetStorage getStorage() {

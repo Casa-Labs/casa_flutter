@@ -8,6 +8,16 @@ class LoginRequestModel {
   });
 }
 
+class ChangePasswordRequestModel {
+  String oldPassword;
+  String newPassword;
+
+  ChangePasswordRequestModel({
+    required this.oldPassword,
+    required this.newPassword,
+  });
+}
+
 class LoginResponseModel {
   Login? login;
 
@@ -69,13 +79,13 @@ class User {
     this.updatedAt,
   });
 
-  User.fromJson(Map<String, dynamic> json) {
-    authProvider = json['authProvider'];
-    createdAt = json['createdAt'];
-    email = json['email'];
-    id = json['id'];
-    role = json['role'];
-    updatedAt = json['updatedAt'];
+  User.fromJson(Map<String, dynamic>? json) {
+    authProvider = json?['authProvider'];
+    createdAt = json?['createdAt'];
+    email = json?['email'];
+    id = json?['id'];
+    role = json?['role'];
+    updatedAt = json?['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {

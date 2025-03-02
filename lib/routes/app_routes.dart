@@ -1,5 +1,9 @@
-import 'package:casa_flutter/src/auth/view/screens/sign_up_details_screen.dart';
+import 'package:casa_flutter/src/auth/view/screens/body_type_preferences_screen.dart';
+import 'package:casa_flutter/src/auth/view/screens/delivery_address_screen.dart';
+import 'package:casa_flutter/src/auth/view/screens/fit_preferences_screen.dart';
+import 'package:casa_flutter/src/auth/view/screens/personal_details_screen.dart';
 import 'package:casa_flutter/src/auth/view/screens/sign_up_screen.dart';
+import 'package:casa_flutter/src/auth/view/screens/style_preferences_screen.dart';
 import 'package:casa_flutter/src/cart/view/screens/cart_screen.dart';
 import 'package:casa_flutter/src/common/widgets/development_screen.dart';
 import 'package:casa_flutter/src/explore/view/screens/products_list_screen.dart';
@@ -8,6 +12,8 @@ import 'package:casa_flutter/src/order/view/screens/current_orders_screen.dart';
 import 'package:casa_flutter/src/order/view/screens/order_review_screen.dart';
 import 'package:casa_flutter/src/payment/view/screens/payment_options_screen.dart';
 import 'package:casa_flutter/src/profile/view/screens/profile_screen.dart';
+import 'package:casa_flutter/utils/preference_manager.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../src/auth/view/screens/change_password_screen.dart';
@@ -36,7 +42,11 @@ class _AppPaths {
   static const String welcomeAuth = '/welcomeAuth';
   static const String signIn = '/signIn';
   static const String signUp = '/signUp';
-  static const String signUpDetails = '/signUpDetails';
+  static const String personalDetails = '/personalDetails';
+  static const String stylePreferences = '/stylePreferences';
+  static const String bodyTypePreferences = '/bodyTypePreferences';
+  static const String fitPreferences = '/fitPreferences';
+  static const String deliveryAddress = '/deliveryAddress';
   static const String forgotPassword = '/forgotPassword';
   static const String changePassword = '/changePassword';
   static const String home = '/home';
@@ -68,7 +78,12 @@ class RouteNames {
   static const String welcomeAuth = 'welcomeAuth';
   static const String signIn = 'signIn';
   static const String forgotPassword = 'forgotPassword';
-  static const String changePassword = '/changePassword';
+  static const String changePassword = 'changePassword';
+  static const String personalDetails = 'personalDetails';
+  static const String stylePreferences = 'stylePreferences';
+  static const String bodyTypePreferences = 'bodyTypePreferences';
+  static const String fitPreferences = 'fitPreferences';
+  static const String deliveryAddress = 'deliveryAddress';
   static const String home = 'home';
   static const String notifications = 'notifications';
   static const String location = 'location';
@@ -85,7 +100,6 @@ class RouteNames {
   static const String development = 'development';
   static const String myOrders = 'myOrders';
   static const String signUp = 'signUp';
-  static const String signUpDetails = 'signUpDetails';
   static const String store = 'store';
   static const String productList = 'productList';
   static const String productDescription = 'productDescription';
@@ -97,6 +111,30 @@ class RouteNames {
 // Central GoRouter instance
 final GoRouter router = GoRouter(
   navigatorKey: navigatorKey,
+  redirect: (context, state) {
+    bool isLoggedIn = false;
+    final token = PreferenceManager.getString(PreferenceManager.token);
+    if (token != null && token.isNotEmpty) {
+      isLoggedIn = true;
+    }
+    final isLoggingIn = state.fullPath == _AppPaths.signIn;
+
+    if (isLoggedIn && isLoggingIn) {
+      return _AppPaths.navigation;
+    }
+
+    return null;
+  },
+  debugLogDiagnostics: true,
+  initialLocation: _AppPaths.signIn,
+  errorBuilder: (context, state) {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        context.goNamed(_AppPaths.navigation);
+      },
+    );
+    return const Scaffold();
+  },
   routes: [
     GoRoute(
       path: _AppPaths.splash,
@@ -116,12 +154,32 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.signUp,
       name: RouteNames.signUp,
-      builder: (context, state) => const SignUpScreen(),
+      builder: (context, state) => SignUpScreen(),
     ),
     GoRoute(
-      path: _AppPaths.signUpDetails,
-      name: RouteNames.signUpDetails,
-      builder: (context, state) => const SignUpDetailsScreen(),
+      path: _AppPaths.personalDetails,
+      name: RouteNames.personalDetails,
+      builder: (context, state) => PersonalDetailsScreen(),
+    ),
+    GoRoute(
+      path: _AppPaths.stylePreferences,
+      name: RouteNames.stylePreferences,
+      builder: (context, state) => StylePreferencesScreen(),
+    ),
+    GoRoute(
+      path: _AppPaths.bodyTypePreferences,
+      name: RouteNames.bodyTypePreferences,
+      builder: (context, state) => BodyTypePreferencesScreen(),
+    ),
+    GoRoute(
+      path: _AppPaths.fitPreferences,
+      name: RouteNames.fitPreferences,
+      builder: (context, state) => FitPreferencesScreen(),
+    ),
+    GoRoute(
+      path: _AppPaths.deliveryAddress,
+      name: RouteNames.deliveryAddress,
+      builder: (context, state) => DeliveryAddressScreen(),
     ),
     GoRoute(
       path: _AppPaths.forgotPassword,
@@ -131,7 +189,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.changePassword,
       name: RouteNames.changePassword,
-      builder: (context, state) => const ChangePasswordScreen(),
+      builder: (context, state) => ChangePasswordScreen(),
     ),
     GoRoute(
       path: _AppPaths.home,

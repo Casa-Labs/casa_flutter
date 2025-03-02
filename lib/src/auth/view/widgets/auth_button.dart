@@ -15,13 +15,23 @@ enum AuthButtonType {
   start,
   cancel,
   createCloset,
+  savePersonalDetails,
+  saveStylePreferences,
+  saveBodyTypePreferences,
+  saveFitPreferences,
 }
 
 class AuthButton extends StatelessWidget {
   final AuthButtonType type;
   final VoidCallback? onPressed;
+  final bool isLoading;
 
-  const AuthButton({super.key, required this.type, required this.onPressed});
+  const AuthButton({
+    super.key,
+    required this.type,
+    required this.onPressed,
+    this.isLoading = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +90,18 @@ class AuthButton extends StatelessWidget {
       case AuthButtonType.start:
         text = 'START SHOPPING';
         break;
+      case AuthButtonType.savePersonalDetails:
+        text = 'SAVE PERSONAL DETAILS';
+        break;
+      case AuthButtonType.saveStylePreferences:
+        text = 'SAVE STYLE PREFERENCES';
+        break;
+      case AuthButtonType.saveBodyTypePreferences:
+        text = 'SAVE BODY TYPE PREFERENCES';
+        break;
+      case AuthButtonType.saveFitPreferences:
+        text = 'SAVE FIT PREFERENCES';
+        break;
     }
 
     return SizedBox(
@@ -92,7 +114,7 @@ class AuthButton extends StatelessWidget {
           // minimumSize: size,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
-              side:  BorderSide(color:borderColor , width: 1)),
+              side: BorderSide(color: borderColor, width: 1)),
           disabledForegroundColor: ButtonColor.grey,
           disabledBackgroundColor: ButtonColor.lightGrey,
           foregroundColor: textColor,
@@ -103,14 +125,22 @@ class AuthButton extends StatelessWidget {
           iconSize: 25,
           iconColor: IconColor.black,
         ),
-        child: Row(
-          children: [
-            showIcon ? Icon(icon) : SizedBox.shrink(),
-            Spacer(),
-            Text(text),
-            Spacer(),
-          ],
-        ),
+        child: isLoading
+            ? SizedBox(
+                height: 20.0,
+                width: 20.0,
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+              )
+            : Row(
+                children: [
+                  showIcon ? Icon(icon) : SizedBox.shrink(),
+                  Spacer(),
+                  Text(text),
+                  Spacer(),
+                ],
+              ),
       ),
     );
   }

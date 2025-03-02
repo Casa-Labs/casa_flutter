@@ -438,14 +438,16 @@ class GraphQLClientService {
     'https://server.casashop.in/graphql', // Replace with your GraphQL endpoint
   );
 
-  static final AuthLink _authLink = AuthLink(getToken: () async {
-    final token = PreferenceManager.getString(PreferenceManager.token);
-    if (token == null || token.isEmpty) {
-      logg.e('No token found in PreferenceManager!');
-    }
-    logg.d('Bearer $token');
-    return 'Bearer $token';
-  });
+  static final AuthLink _authLink = AuthLink(
+    getToken: () async {
+      final token = PreferenceManager.getString(PreferenceManager.token);
+      if (token == null || token.isEmpty) {
+        logg.e('No token found in PreferenceManager!');
+      }
+      logg.d('Bearer $token');
+      return 'Bearer $token';
+    },
+  );
 
   static final Link _link = _authLink.concat(_httpLink);
 

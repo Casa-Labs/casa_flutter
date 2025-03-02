@@ -14,6 +14,16 @@ class GraphQLVariables {
     };
   }
 
+  static Map<String, dynamic> changePasswordVariables({
+    required String oldPassword,
+    required String newPassword,
+  }) {
+    return {
+      "oldPassword": oldPassword,
+      "newPassword": newPassword,
+    };
+  }
+
   static Map<String, dynamic> singleSignOnVariables(
       String email, String provider, String providerId) {
     return {

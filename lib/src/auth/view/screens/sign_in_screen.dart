@@ -58,8 +58,9 @@ class SignInScreen extends StatelessWidget {
                           authController.isPasswordObscured()
                               ? Icons.visibility_off
                               : Icons.visibility,
-                          color:
-                              Theme.of(context).colorScheme.onSecondaryContainer,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSecondaryContainer,
                         ),
                       ),
                     ),
@@ -82,10 +83,13 @@ class SignInScreen extends StatelessWidget {
                   SizedBox(height: 10),
                   Center(
                     child: TextButton(
-                        onPressed: () {
-                          context.pushNamed(RouteNames.forgotPassword);
-                        },
-                        child: Text('Forgot password?')),
+                      onPressed: () {
+                        context.pushNamed(RouteNames.forgotPassword);
+                      },
+                      child: Text(
+                        'Forgot password?',
+                      ),
+                    ),
                   )
                 ],
               ),
@@ -93,24 +97,27 @@ class SignInScreen extends StatelessWidget {
               Text('OR'),
               Spacer(),
               AuthButton(
-                  type: AuthButtonType.google,
-                  onPressed: () {
-                    context.pushNamed(RouteNames.navigation);
-                  }),
+                type: AuthButtonType.google,
+                onPressed: () {
+                  context.pushNamed(RouteNames.navigation);
+                },
+              ),
               AuthButton(
-                  type: AuthButtonType.apple,
-                  onPressed: () {
-                    context.pushNamed(RouteNames.navigation);
-                  }),
+                type: AuthButtonType.apple,
+                onPressed: () {
+                  context.pushNamed(RouteNames.navigation);
+                },
+              ),
               Spacer(),
               TextButton(
-                  onPressed: () {
-                    context.pushNamed(RouteNames.signUp);
-                  },
-                  child: Text(
-                    'New to CASA? \n Register',
-                    textAlign: TextAlign.center,
-                  )),
+                onPressed: () {
+                  context.pushNamed(RouteNames.signUp);
+                },
+                child: Text(
+                  'New to CASA? \n Register',
+                  textAlign: TextAlign.center,
+                ),
+              ),
               Spacer(),
             ],
           ),
