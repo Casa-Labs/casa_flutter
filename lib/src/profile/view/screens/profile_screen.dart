@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import '../widgets/share_dialog.dart';
 
 class ProfileScreen extends StatelessWidget {
-   ProfileScreen({super.key});
+  ProfileScreen({super.key});
 
   final homeCtrl = Get.put(ProfileController());
 
@@ -33,7 +33,8 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Expanded(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding),
+                padding:
+                    EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding),
                 child: ListView.builder(
                   itemCount: profileList.length,
                   itemBuilder: (context, index) {
@@ -104,22 +105,31 @@ List<ProfileListModel> profileList = [
         builder: (context) => ShareAppDialog(
           appName: 'CASA',
           iosAppLink: 'https://apps.apple.com/app',
-          androidAppLink: 'https://play.google.com/store/apps/details?id=in.casashop.casa_flutter',
+          androidAppLink:
+              'https://play.google.com/store/apps/details?id=in.casashop.casa_flutter',
           shareMessage: 'Check out this amazing app!', // Optional
         ),
       );
     },
   ),
   ProfileListModel(
-      title: 'Report an Error',
-      onTap: (context) => context.pushNamed(RouteNames.development)),
+    title: 'Report an Error',
+    onTap: (context) => context.pushNamed(RouteNames.development),
+  ),
   ProfileListModel(
-      title: 'Talk to a Founder',
-      onTap: (context) => context.pushNamed(RouteNames.development)),
+    title: 'Talk to a Founder',
+    onTap: (context) => context.pushNamed(RouteNames.development),
+  ),
   ProfileListModel(
-      title: 'Chat with an Associate',
-      onTap: (context) => context.pushNamed(RouteNames.development)),
+    title: 'Chat with an Associate',
+    onTap: (context) => context.pushNamed(RouteNames.development),
+  ),
   ProfileListModel(
-      title: 'Logout',
-      onTap: (context) => context.goNamed(RouteNames.signIn)),
+    title: 'Change Password',
+    onTap: (context) => context.pushNamed(RouteNames.changePassword),
+  ),
+  ProfileListModel(
+    title: 'Logout',
+    onTap: (context) => context.goNamed(RouteNames.signIn),
+  ),
 ];

@@ -1,28 +1,39 @@
+import 'package:casa_flutter/src/auth/controller/sign_up_controller.dart';
 import 'package:casa_flutter/src/common/widgets/show_toast.dart' show showToast;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../routes/app_routes.dart';
 import '../../../common/widgets/custom_text_form_field_widget.dart';
-import '../../controller/auth_controller.dart';
 import '../widgets/auth_button.dart';
 
 class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({super.key});
+  SignUpScreen({super.key});
+
+  final signUpController = Get.put(
+    SignUpController(),
+  );
 
   @override
   Widget build(BuildContext context) {
-    final authCtrl = Get.find<AuthController>();
-
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            signUpController.clearAllControllers();
+            Navigator.of(context).maybePop();
+          },
+          icon: Icon(
+            Icons.arrow_back_ios_outlined,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Obx(
             () => Column(
               children: [
-                Spacer(flex: 2),
                 Column(
                   children: [
                     Text(
@@ -35,23 +46,58 @@ class SignUpScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                Spacer(flex: 2),
+                Spacer(),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Email Address'),
                     CustomTextFormField(
-                      controller: authCtrl.registeredEmail,
+                      controller: signUpController.registeredEmail,
                     ),
                     SizedBox(height: 20),
                     Text('Password'),
-                    CustomTextFormField(
-                      controller: authCtrl.registeredPassword,
+                    Obx(
+                      () => CustomTextFormField(
+                        controller: signUpController.registeredPassword,
+                        obscureText:
+                            signUpController.isRegisteredPasswordObscured(),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            signUpController.showRegisteredPassword();
+                          },
+                          icon: Icon(
+                            signUpController.isRegisteredPasswordObscured()
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSecondaryContainer,
+                          ),
+                        ),
+                      ),
                     ),
                     SizedBox(height: 20),
                     Text('Re-enter Password'),
-                    CustomTextFormField(
-                      controller: authCtrl.registeredRenterPassword,
+                    Obx(
+                      () => CustomTextFormField(
+                        controller: signUpController.registeredRenterPassword,
+                        obscureText: signUpController
+                            .isRegisteredRenterPasswordObscured(),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            signUpController.showRegisteredRenterPassword();
+                          },
+                          icon: Icon(
+                            signUpController
+                                    .isRegisteredRenterPasswordObscured()
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSecondaryContainer,
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -64,10 +110,10 @@ class SignUpScreen extends StatelessWidget {
                       height: 20,
                       width: 20,
                       child: Checkbox(
-                        value: authCtrl.checkboxValue.value,
+                        value: signUpController.checkboxValue.value,
                         onChanged: (value) {
-                          authCtrl.checkboxValue.value =
-                              !authCtrl.checkboxValue.value;
+                          signUpController.checkboxValue.value =
+                              !signUpController.checkboxValue.value;
                         },
                       ),
                     ),
@@ -86,15 +132,15 @@ class SignUpScreen extends StatelessWidget {
                 SizedBox(height: 20),
                 AuthButton(
                   type: AuthButtonType.signUp,
-                  onPressed: authCtrl.checkboxValue.value
+                  onPressed: signUpController.checkboxValue()
                       ? () async {
-                          await authCtrl.registerUserCall();
-                          if (authCtrl.message().isNotEmpty && context.mounted) {
+                          await signUpController.registerUserCall();
+                          if (signUpController.message().isNotEmpty) {
                             showToast(
-                              message: authCtrl.message(),
+                              message: signUpController.message(),
                             );
-                            if (authCtrl.isLoggedIn()) {
-                              router.pushNamed(RouteNames.signUpDetails);
+                            if (signUpController.isUserRegistered()) {
+                              router.pushNamed(RouteNames.personalDetails);
                             }
                           }
                         }

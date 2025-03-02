@@ -23,6 +23,19 @@ class GraphQLManager {
     );
   }
 
+  Future<QueryResult> changePassword({
+    required String oldPassword,
+    required String newPassword,
+  }) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.changePasswordMutation,
+      variables: GraphQLVariables.changePasswordVariables(
+        oldPassword: oldPassword,
+        newPassword: newPassword,
+      ),
+    );
+  }
+
   Future<QueryResult> singleSignOn(
       String email, String provider, String providerId) async {
     return await _clientService.performMutation(

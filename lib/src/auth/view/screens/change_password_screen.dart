@@ -1,13 +1,18 @@
+import 'package:casa_flutter/src/auth/controller/auth_controller.dart';
+import 'package:casa_flutter/src/common/widgets/show_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../../routes/app_routes.dart';
 import '../../../../utils/string_constant.dart';
 import '../../../common/widgets/custom_text_form_field_widget.dart';
 import '../widgets/auth_button.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
-  const ChangePasswordScreen({super.key});
+  ChangePasswordScreen({super.key});
+
+  final authCtrl = Get.put(
+    AuthController(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +41,12 @@ class ChangePasswordScreen extends StatelessWidget {
                       children: [
                         Text(
                           'Create new password',
-                          style:
-                              Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(
+                                fontWeight: FontWeight.w500,
+                              ),
                         ),
                         SizedBox(height: 50),
                         Image.asset(ImageConstants.newPassword),
@@ -49,24 +56,88 @@ class ChangePasswordScreen extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Text('Old Password'),
+                        Obx(
+                          () => CustomTextFormField(
+                            controller: authCtrl.oldPassword,
+                            obscureText: authCtrl.isOldPasswordObscured(),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                authCtrl.showOldPassword();
+                              },
+                              icon: Icon(
+                                authCtrl.isOldPasswordObscured()
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSecondaryContainer,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 40),
                         Text(
                           'Your New Password Must Be Different From Previously Used Password.',
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                         SizedBox(height: 25),
                         Text('New Password'),
-                        CustomTextFormField(),
+                        Obx(
+                          () => CustomTextFormField(
+                            controller: authCtrl.newPassword,
+                            obscureText: authCtrl.isNewPasswordObscured(),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                authCtrl.showNewPassword();
+                              },
+                              icon: Icon(
+                                authCtrl.isNewPasswordObscured()
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSecondaryContainer,
+                              ),
+                            ),
+                          ),
+                        ),
                         SizedBox(height: 40),
                         Text('Confirm Password'),
-                        CustomTextFormField(),
+                        Obx(
+                          () => CustomTextFormField(
+                            controller: authCtrl.confirmPassword,
+                            obscureText: authCtrl.isConfirmPasswordObscured(),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                authCtrl.showConfirmPassword();
+                              },
+                              icon: Icon(
+                                authCtrl.isConfirmPasswordObscured()
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSecondaryContainer,
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                     Spacer(),
                     AuthButton(
-                        type: AuthButtonType.save,
-                        onPressed: () {
-                          context.goNamed(RouteNames.signIn);
-                        }),
+                      type: AuthButtonType.save,
+                      onPressed: () async {
+                        authCtrl.changePassword();
+                        if (authCtrl.message().isNotEmpty) {
+                          showToast(
+                            message: authCtrl.message(),
+                          );
+                          //context.goNamed(RouteNames.signIn);
+                        }
+                      },
+                    ),
                     Spacer(flex: 2),
                   ],
                 ),

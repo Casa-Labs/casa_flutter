@@ -37,4 +37,21 @@ class AuthService {
 
     return registerUserResponse;
   }
+
+  Future<User?> changePassword({
+    required ChangePasswordRequestModel changePasswordRequestModel,
+  }) async {
+    final User user;
+
+    final response = await _graphQLManager.changePassword(
+      oldPassword: changePasswordRequestModel.oldPassword,
+      newPassword: changePasswordRequestModel.newPassword,
+    );
+
+    user = User.fromJson(
+      response.data,
+    );
+
+    return user;
+  }
 }
