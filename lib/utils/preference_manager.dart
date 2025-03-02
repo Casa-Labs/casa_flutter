@@ -3,6 +3,7 @@ import 'package:get_storage/get_storage.dart';
 class PreferenceManager {
   static const String token = "token";
   static const String userDetails = "userDetails";
+  static const String userId = "userId";
   static const String keyIsDarkMode = 'isPrefDarkMode';
 
   static setData(String key, dynamic value) async {
