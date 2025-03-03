@@ -183,6 +183,27 @@ class GraphQLManager {
     );
   }
 
+  Future<QueryResult> getBrands(
+      int? limit, int? page, String? search, String? storeType) async {
+    return await _clientService.performQuery(
+      document: GraphQLQueries.getBrand,
+      variables:
+          GraphQLVariables.getBrandVariables(storeType, page, limit, search),
+    );
+  }
+
+  Future<QueryResult> getCategory() async {
+    return await _clientService.performQuery(
+      document: GraphQLQueries.getCategory,
+    );
+  }
+
+  Future<QueryResult> getSizes() async {
+    return await _clientService.performQuery(
+      document: GraphQLQueries.getSizes,
+    );
+  }
+
   Future<QueryResult> getTrendingProducts(
       int page, int limit, String? search) async {
     return await _clientService.performQuery(

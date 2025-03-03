@@ -126,7 +126,7 @@ final GoRouter router = GoRouter(
     return null;
   },
   debugLogDiagnostics: true,
-  initialLocation: _AppPaths.signIn,
+  initialLocation: _AppPaths.splash,
   errorBuilder: (context, state) {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {

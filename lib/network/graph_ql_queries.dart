@@ -20,6 +20,44 @@ query GetNewArrivalProducts(\$page: Int!, \$limit: Int!, \$search: String) {
 }
 """;
 
+  static const String getCategory = """
+query GetProductCategories {
+  getProductCategories {
+    name
+    thumbnail
+    id
+  }
+}
+""";
+
+  static const String getSizes = """
+query GetProductSizes {
+  getProductSizes {
+    name
+    id
+  }
+}
+""";
+
+  static const String getBrand = """
+query GetBrands(\$storeType: StoreType!, \$page: Int, \$limit: Int, \$search: String) {
+  getBrands(storeType: \$storeType, page: \$page, limit: \$limit, search: \$search) {
+    data {
+      type
+      description
+      id
+      isDeleted
+      logo
+      name
+      createdAt
+    }
+    total
+    totalPages
+    currentPage
+  }
+}
+""";
+
   static const String getOrderReturns = """
 query GetOrderReturns(\$userId: String!, \$orderId: String!) {
   getOrderReturns(userId: \$userId, orderId: \$orderId) {

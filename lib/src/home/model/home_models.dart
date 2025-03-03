@@ -98,12 +98,12 @@ class Images {
 
 
 class GetProductResModel {
-  Data? data;
+  GetProductData? data;
 
   GetProductResModel({this.data});
 
   GetProductResModel.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? GetProductData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -115,12 +115,12 @@ class GetProductResModel {
   }
 }
 
-class Data {
+class GetProductData {
   GetProducts? getProducts;
 
-  Data({this.getProducts});
+  GetProductData({this.getProducts});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  GetProductData.fromJson(Map<String, dynamic> json) {
     getProducts = json['getProducts'] != null
         ? GetProducts.fromJson(json['getProducts'])
         : null;
