@@ -18,47 +18,33 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    late Future<List<Product>> productsFuture = homeCtrl.fetchProducts({});
-
     return Scaffold(
       backgroundColor: BackgroundColor.white,
       appBar: CustomAppbar(),
-      body: SafeArea(
-        child: FutureBuilder(
-          future: productsFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return const Center(child: Text("Error fetching products"));
-            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Center(child: Text("No products available"));
-            } else {
-              var products = snapshot.data;
-              return GetBuilder<HomeController>(
-                builder: (logic) {
-                  return SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        FilterRow(
-                            brandList: logic.brandFilter,
-                            colorList: logic.colorFilter,
-                            productList: logic.productFilter,
-                            sizedList: logic.sizedFilter,
-                        ),
-                        SizedBox(height: 5),
-                        _cardSwiper(logic, context, products)
-                      ],
-                    ),
-                  );
-                },
-              );
-            }
-          },
-        ),
-      ),
+      body: SafeArea(child: GetBuilder<HomeController>(
+        builder: (logic) {
+          return SingleChildScrollView(
+            child: logic.isLoading
+                ? Center(
+                    child: CircularProgressIndicator(color: BorderColor.black),
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      FilterRow(
+                        brandList: logic.brandFilter,
+                        colorList: logic.colorFilter,
+                        productList: logic.productFilter,
+                        sizedList: logic.sizedFilter,
+                      ),
+                      SizedBox(height: 5),
+                      _cardSwiper(logic, context, logic.products)
+                    ],
+                  ),
+          );
+        },
+      )),
     );
   }
 

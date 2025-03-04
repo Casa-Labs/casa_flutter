@@ -14,6 +14,19 @@ class GraphQLVariables {
     };
   }
 
+  static Map<String, dynamic> getBrandVariables(
+     String? storeType,
+     int? page,
+     int? limit,
+     String? search) {
+    return {
+      "storeType": storeType,
+      "page": page,
+      "limit": limit,
+      "search": search,
+    };
+  }
+
   static Map<String, dynamic> changePasswordVariables({
     required String oldPassword,
     required String newPassword,

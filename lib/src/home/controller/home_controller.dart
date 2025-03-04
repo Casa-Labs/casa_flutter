@@ -4,7 +4,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../network/graph_ql_manager.dart';
+import '../../../utils/utils.dart';
+import '../model/brand_response_model.dart';
+import '../model/cat_response_model.dart';
 import '../model/home_models.dart';
+import '../model/size_respose_model.dart';
 
 class HomeController extends GetxController{
 
@@ -17,8 +21,11 @@ class HomeController extends GetxController{
 
 
   bool isDisabled = false;
-  var products = <Product>[].obs;
-  var isLoading = false.obs;
+  List<Product> products = [];
+  List<GetProductSizes> size = [];
+  List<BrandData> brand = [];
+  List<GetProductCategories> category = [];
+  bool isLoading = false;
   RxList<Product> reactiveProducts = <Product>[].obs;
   bool isShowReturn = false;
   bool isShowShipping = false;
@@ -65,6 +72,15 @@ class HomeController extends GetxController{
   final manager = GraphQLManager();
 
   // ========== STATES ========== //
+
+  @override
+  void onInit() {
+    fetchProducts({});
+    getBrand();
+    getSize();
+    getCategory();
+    super.onInit();
+  }
 
   // ========== UI FUNCTIONS ========== //
 
@@ -141,18 +157,72 @@ class HomeController extends GetxController{
 
 // ========== APIs FUNCTIONS ========== //
 
-  Future<List<Product>> fetchProducts(Map<String, dynamic> map) async {
+  fetchProducts(Map<String, dynamic> map) async {
     try {
-      List<Product> products = [];
+      isLoading =  true;
+      update();
       var response = await manager.getProducts(map);
-      products = GetProducts.fromJson(response.data!['getProducts']).data!;
-      // Attempt to convert the document data to a ProductModel
-
+      var getProductList = GetProductData.fromJson(response.data!);
+      products = getProductList.getProducts!.data ?? [];
+      logg.d('hello i get products ------ >>>>> $getProductList');
       products.shuffle(Random());
-
-      return products;
+      isLoading =  false;
+      update();
     } catch (e) {
-      return [];
+      logg.e('get error to fetch product data $e');
+      isLoading =  false;
+      update();
+    }
+  }
+
+  getSize() async {
+    try {
+      isLoading =  true;
+      update();
+      var response = await manager.getSizes();
+      var getSizeData = GetSizeData.fromJson(response.data!);
+      size = getSizeData.getProductSizes ?? [];
+      logg.d('hello i get size data ------ >>>>> $getSizeData');
+      isLoading =  false;
+      update();
+    } catch (e) {
+      logg.e('get error to fetch product data $e');
+      isLoading =  false;
+      update();
+    }
+  }
+
+  getCategory() async {
+    try {
+      isLoading =  true;
+      update();
+      var response = await manager.getCategory();
+      var catList = GetCategories.fromJson(response.data!);
+      category = catList.getProductCategories ?? [];
+      logg.d('hello i get categories data ------ >>>>> $catList');
+      isLoading =  false;
+      update();
+    } catch (e) {
+      logg.e('get error to fetch product data $e');
+      isLoading =  false;
+      update();
+    }
+  }
+
+  getBrand() async {
+    try {
+      isLoading =  true;
+      update();
+      var response = await manager.getBrands(5,1,"","BRAND");
+      var brandList = GetBrandData.fromJson(response.data!);
+      brand = brandList.getBrands!.data ?? [];
+      logg.d('hello i get brand data ------ >>>>> $brandList');
+      isLoading =  false;
+      update();
+    } catch (e) {
+      logg.e('get error to fetch product data $e');
+      isLoading =  false;
+      update();
     }
   }
 }

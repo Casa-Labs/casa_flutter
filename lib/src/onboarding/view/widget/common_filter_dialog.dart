@@ -232,7 +232,6 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                   overlayColor: WidgetStateProperty.all(ButtonColor.transparent),
                   splashFactory: NoSplash.splashFactory,
                   onTap: () {
-                    homeCtrl.fetchProducts({});
                     Navigator.of(context).pop();
                   },
                   child: Container(
