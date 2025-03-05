@@ -1,4 +1,4 @@
-import 'package:casa_flutter/src/explore/model/explore_models.dart';
+import 'package:casa_flutter/src/explore/model/trending_products_model.dart';
 import 'package:get/get.dart';
 
 import '../../../../network/graph_ql_manager.dart';
@@ -15,8 +15,8 @@ class ExploreService {
     if (!response.hasException && response.data != null) {
       final trendingProductsResponse =
           TrendingProductsResponseModel.fromJson(response.data!);
-      logg.e(
-          'Get trending products : ${trendingProductsResponse.data!.getTrendingProducts!.totalCount}');
+      logg.i(
+          'Get trending products : ${trendingProductsResponse.getTrendingProducts?.totalCount ?? 'Total count is null'}');
     } else {
       logg.e('Get trending products Exception: ${response.exception}');
     }
