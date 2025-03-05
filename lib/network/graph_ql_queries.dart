@@ -128,24 +128,37 @@ query GetProducts(\$params: GetProduct!) {
 }
 """;
 
+//   static const String getTrendingProducts = """
+// query GetTrendingProducts(\$page: Int!, \$limit: Int!, \$search: String) {
+//   getTrendingProducts(page: \$page, limit: \$limit, search: \$search) {
+//     products {
+//       category
+//       createdAt
+//       description
+//       id
+//       isNewArrival
+//       isTrending
+//       name
+//       price
+//       size
+//       stock
+//       storeId
+//       updatedAt
+//     }
+//     totalCount
+//   }
+// }
+// """;
+
   static const String getTrendingProducts = """
-query GetTrendingProducts(\$page: Int!, \$limit: Int!, \$search: String) {
-  getTrendingProducts(page: \$page, limit: \$limit, search: \$search) {
+query GetTrendingProducts(\$page: Int!, \$limit: Int!) {
+  getTrendingProducts(page: \$page, limit: \$limit) {
+    totalCount
     products {
-      category
-      createdAt
-      description
-      id
-      isNewArrival
-      isTrending
       name
       price
-      size
-      stock
-      storeId
-      updatedAt
+      productImages
     }
-    totalCount
   }
 }
 """;
