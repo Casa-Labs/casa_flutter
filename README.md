@@ -8,7 +8,7 @@ Flutter app for CASA
 ### userid - user1@example.com and password - asdf@1234
 
 ### **Steps for Handling Conflicts in CASA Project and How to create MR**
-
+   
 1) **Push your branch to your own GitHub repo**
     - If you haven’t pushed your local branch yet, push it using:
       ```bash
