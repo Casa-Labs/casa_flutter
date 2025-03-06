@@ -15,6 +15,7 @@ class HomeController extends GetxController{
   // ========= CONTROLLERS ========= //
 
   final AppinioSwiperController controller = AppinioSwiperController();
+  TextEditingController? searchController = TextEditingController();
 
 
   // ========= VARIABLES ========= //
@@ -37,6 +38,8 @@ class HomeController extends GetxController{
   int selectedSizeIndex = -1;
   int cardIndex = 0;
   int currentIndex = 0;
+  int minValue = 0;
+  int maxValue = 0;
   final ValueNotifier<int> counter = ValueNotifier<int>(1);
   IconData? swipeIcon;
   final List<ProductModelFilter> brandFilter = [
@@ -104,9 +107,9 @@ class HomeController extends GetxController{
           print('Previous index: $previousIndex, Target index: $targetIndex');
         }
         // Add conditions for swipe directions
-          if (activity.direction == AxisDirection.left) {
+          if (activity.direction == AxisDirection.right) {
             swipeIcon = Icons.check_rounded; // ✅ Right Swipe
-          } else if (activity.direction == AxisDirection.right) {
+          } else if (activity.direction == AxisDirection.left) {
             swipeIcon = Icons.close_rounded; // ❌ Left Swipe
           }
 
@@ -157,7 +160,7 @@ class HomeController extends GetxController{
 
 // ========== APIs FUNCTIONS ========== //
 
-  fetchProducts(Map<String, dynamic> map) async {
+  Future<void> fetchProducts(Map<String, dynamic> map) async {
     try {
       isLoading =  true;
       update();
@@ -175,7 +178,7 @@ class HomeController extends GetxController{
     }
   }
 
-  getSize() async {
+  Future<void> getSize() async {
     try {
       isLoading =  true;
       update();
@@ -183,7 +186,7 @@ class HomeController extends GetxController{
       var getSizeData = GetSizeData.fromJson(response.data!);
       size = getSizeData.getProductSizes ?? [];
       logg.d('hello i get size data ------ >>>>> $getSizeData');
-      isLoading =  false;
+      // isLoading =  false;
       update();
     } catch (e) {
       logg.e('get error to fetch product data $e');
@@ -192,7 +195,7 @@ class HomeController extends GetxController{
     }
   }
 
-  getCategory() async {
+  Future<void> getCategory() async {
     try {
       isLoading =  true;
       update();
@@ -209,7 +212,7 @@ class HomeController extends GetxController{
     }
   }
 
-  getBrand() async {
+  Future<void> getBrand() async {
     try {
       isLoading =  true;
       update();
@@ -217,7 +220,7 @@ class HomeController extends GetxController{
       var brandList = GetBrandData.fromJson(response.data!);
       brand = brandList.getBrands!.data ?? [];
       logg.d('hello i get brand data ------ >>>>> $brandList');
-      isLoading =  false;
+      // isLoading =  false;
       update();
     } catch (e) {
       logg.e('get error to fetch product data $e');

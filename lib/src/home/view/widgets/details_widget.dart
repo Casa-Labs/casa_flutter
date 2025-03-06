@@ -361,10 +361,9 @@ class ProductDetails extends StatelessWidget {
             GridView.builder(
               // No horizontal spacing
               shrinkWrap: true,
-              itemCount: /*product.images!.length > 4
+              itemCount:  product.productImages!.length > 4
                     ? 4
-                    : product.images!.length*/
-                  0,
+                    : product.productImages!.length,
               // Makes GridView fit its content
               physics: const NeverScrollableScrollPhysics(),
               // Disables scrolling
@@ -372,32 +371,15 @@ class ProductDetails extends StatelessWidget {
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    print('------>>> hello ${product.productImages![index]}');
+                  },
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      // Image.network(
-                      //   product.![index].src.toString(),
-                      //   fit: BoxFit.cover,
-                      // ),
-                      Align(
-                        alignment: Alignment.bottomLeft,
-                        child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              '',
-                              style: textTheme.bodyLarge?.copyWith(
-                                fontSize: 16,
-                                color: TextColor.white,
-                                shadows: const [
-                                  Shadow(
-                                    offset: Offset(1, 1),
-                                    blurRadius: 2,
-                                    color: TextColor.black,
-                                  ),
-                                ],
-                              ),
-                            )),
+                      Image.network(
+                        product.productImages![index],
+                        fit: BoxFit.cover,
                       ),
                     ],
                   ),

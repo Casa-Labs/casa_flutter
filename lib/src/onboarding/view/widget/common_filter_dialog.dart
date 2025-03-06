@@ -189,11 +189,13 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                 ],
               ),*/
               PriceRangeSlider(
-                min: 950.00,
-                max: 4950.00,
+                min: 00,
+                max: 20000,
                 onChanged: (double minValue, double maxValue) {
                   // Handle the price range changes here
                   logg.i('Min: $minValue, Max: $maxValue');
+                  homeCtrl.minValue = minValue.toInt();
+                  homeCtrl.maxValue = maxValue.toInt();
                 },
               ),
               SizedBox(height: 20),
@@ -212,7 +214,7 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                       item.isSelected = false;
                     }
                     setState(() {});
-                    // Navigator.of(context).pop();
+                    Navigator.of(context).pop();
                   },
                   child: Container(
                       padding:
@@ -233,6 +235,13 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                   splashFactory: NoSplash.splashFactory,
                   onTap: () {
                     Navigator.of(context).pop();
+                    if (widget.children!.isEmpty) {
+                      homeCtrl
+                          .fetchProducts({
+                        "minPrice": homeCtrl.minValue,
+                        "maxPrice": homeCtrl.maxValue
+                      });
+                    }
                   },
                   child: Container(
                       padding:

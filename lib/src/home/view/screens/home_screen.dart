@@ -24,47 +24,47 @@ class HomeScreen extends StatelessWidget {
       appBar: CustomAppbar(),
       body: SafeArea(child: GetBuilder<HomeController>(
         builder: (logic) {
-          return SingleChildScrollView(
-            child: logic.isLoading
-                ? Center(
-                    child: CircularProgressIndicator(color: BorderColor.black),
-                  )
-                : Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      FilterRow(
-                        brandList: logic.brandFilter,
-                        colorList: logic.colorFilter,
-                        productList: logic.productFilter,
-                        sizedList: logic.sizedFilter,
-                      ),
-                      SizedBox(height: 5),
-                      _cardSwiper(logic, context, logic.products)
-                    ],
-                  ),
-          );
+          return logic.isLoading
+              ? Center(
+                  child: CircularProgressIndicator(color: BorderColor.black),
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    FilterRow(
+                      brandList: logic.brandFilter,
+                      colorList: logic.colorFilter,
+                      productList: logic.productFilter,
+                      sizedList: logic.sizedFilter,
+                    ),
+                    SizedBox(height: 5),
+                    _cardSwiper(logic, context, logic.products)
+                  ],
+                );
         },
       )),
     );
   }
 
   _cardSwiper(
-      HomeController logic, BuildContext context, List<Product>? products) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5),
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.76,
-            child: AppinioSwiper(
-              loop: true,
-              controller: logic.controller,
-              swipeOptions: const SwipeOptions.only(
-                left: true,
-                right: true,
-              ),
+      HomeController logic, BuildContext context, List<Product> products) {
+    return RefreshIndicator(
+      onRefresh: () => logic.fetchProducts({}),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.76,
+              child: AppinioSwiper(
+                loop: true,
+                controller: logic.controller,
+                swipeOptions: const SwipeOptions.only(
+                  left: true,
+                  right: true,
+                ),
               backgroundCardCount: 0,
               cardCount: 15,
               isDisabled: logic.isDisabled,
@@ -79,9 +79,9 @@ class HomeScreen extends StatelessWidget {
               },
             ),
           ),
-        ),
-        SwipeAnimation(swipeIcon: logic.swipeIcon)
-      ],
+          SwipeAnimation(swipeIcon: logic.swipeIcon)
+        ],
+      ),
     );
   }
 }

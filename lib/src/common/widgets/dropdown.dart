@@ -82,6 +82,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
           setState(() {
             dropdownValue = value;
           });
+          widget.onSelected.call([value!]);
         },
         selectedItemBuilder: (BuildContext context) {
           return widget.items.map((String item) {

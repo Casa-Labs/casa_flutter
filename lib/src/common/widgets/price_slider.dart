@@ -58,11 +58,11 @@ class _PriceRangeSliderState extends State<PriceRangeSlider> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '₹ ${_currentRangeValues.start.toStringAsFixed(2)}',
+              '₹ ${_currentRangeValues.start.toStringAsFixed(0)}',
               style: textTheme.bodyMedium,
             ),
             Text(
-              '₹ ${_currentRangeValues.end.toStringAsFixed(2)}',
+              '₹ ${_currentRangeValues.end.toStringAsFixed(0)}',
               style: textTheme.bodyMedium,
             ),
           ],

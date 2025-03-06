@@ -12,7 +12,9 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Container(
+        margin: EdgeInsets.all(60),
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(ImageConstants.splashBackground),
