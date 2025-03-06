@@ -1,27 +1,9 @@
 class TrendingProductsResponseModel {
-  Data? data;
-
-  TrendingProductsResponseModel({this.data});
-
-  TrendingProductsResponseModel.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    return data;
-  }
-}
-
-class Data {
   GetTrendingProducts? getTrendingProducts;
 
-  Data({this.getTrendingProducts});
+  TrendingProductsResponseModel({this.getTrendingProducts});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  TrendingProductsResponseModel.fromJson(Map<String, dynamic> json) {
     getTrendingProducts = json['getTrendingProducts'] != null
         ? GetTrendingProducts.fromJson(json['getTrendingProducts'])
         : null;
@@ -63,23 +45,23 @@ class GetTrendingProducts {
 }
 
 class Products {
-  String? id;
   String? name;
   int? price;
+  List<String>? productImages;
 
-  Products({this.id, this.name, this.price});
+  Products({this.name, this.price, this.productImages});
 
   Products.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
     name = json['name'];
     price = json['price'];
+    productImages = json['productImages'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
     data['name'] = name;
     data['price'] = price;
+    data['productImages'] = productImages;
     return data;
   }
 }

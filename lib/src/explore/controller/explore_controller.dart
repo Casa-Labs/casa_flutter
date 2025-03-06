@@ -22,26 +22,26 @@ class ExploreController extends GetxController {
     ProductModelFilter(leading: '', title: 'Hoodie')
   ];
   final List<ProductModelFilter> colorFilter = [
-    ProductModelFilter(leading: '', title:'Black'),
-    ProductModelFilter(leading: '', title:'Brown'),
-    ProductModelFilter(leading: '', title:'Green'),
-    ProductModelFilter(leading: '', title:'Denim'),
-    ProductModelFilter(leading: '', title:'Zebra print')
+    ProductModelFilter(leading: '', title: 'Black'),
+    ProductModelFilter(leading: '', title: 'Brown'),
+    ProductModelFilter(leading: '', title: 'Green'),
+    ProductModelFilter(leading: '', title: 'Denim'),
+    ProductModelFilter(leading: '', title: 'Zebra print')
   ];
 
   RxInt selectedIndex = 0.obs;
 
-  // Pagination
+  // Pagination - temporary calling 100 items
   RxInt page = 1.obs;
-  RxInt limit = 5.obs;
+  RxInt limit = 100.obs;
 
   // ========== STATES ========== //
 
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  //   getTrendingNowProductsCall();
-  // }
+  @override
+  void onReady() async {
+    super.onReady();
+    await getTrendingNowProductsCall();
+  }
 
   // ========== UI FUNCTIONS ========== //
 
