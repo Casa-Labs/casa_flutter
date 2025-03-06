@@ -3,9 +3,11 @@ import 'package:casa_flutter/src/common/widgets/dropdown.dart';
 import 'package:casa_flutter/src/common/widgets/textfields.dart';
 import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../utils/color.dart';
+import '../../home/controller/home_controller.dart';
 
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppbar(
@@ -26,6 +28,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final homeCtrl = Get.find<HomeController>();
     return AppBar(
       backgroundColor: BackgroundColor.white,
       scrolledUnderElevation: 0,
@@ -55,8 +58,8 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                 Expanded(
                   child: CustomDropDown(
                     items: const [
-                      'Brands',
-                      'Thrift',
+                      'BRAND',
+                      'THRIFT',
                     ],
                     hint: Padding(
                         padding: EdgeInsets.only(left: isLeadingBack ? 0 : 8),
@@ -82,7 +85,11 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                     fontSize: 15,
                     menufontSize: 20,
                     fullSize: false,
-                    onSelected: (selectedItems) {},
+                    onSelected: (selectedItems) {
+                      homeCtrl.fetchProducts({
+                        "storeType":selectedItems[0].toUpperCase()
+                      });
+                    },
                     label: '',
                   ),
                 ),
@@ -112,7 +119,12 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                 color: TextFieldColor.grey200,
                 borderRadius: BorderRadius.circular(30),
               ),
-              child: CustomSearchBar(),
+              child: CustomSearchBar(
+                controller: homeCtrl.searchController,
+                onFieldSubmitted: (value) {
+                  homeCtrl.fetchProducts({"search": value});
+                },
+              ),
             ),
       elevation: 0,
       actions: [

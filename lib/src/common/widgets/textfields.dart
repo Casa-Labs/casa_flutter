@@ -47,7 +47,8 @@ class CustomTextField extends StatelessWidget {
           width: double.infinity,
           child: TextField(
             controller: controller,
-            focusNode: focusNode, // Assign focusNode if provided
+            focusNode: focusNode,
+            // Assign focusNode if provided
             style: TextStyle(
               fontSize: 12,
               color: TextFieldColor.black,
@@ -104,7 +105,8 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
       height: 36,
       child: TextFormField(
         onChanged: widget.onChanged,
-        controller: widget.controller, // Use widget.controller here
+        controller: widget.controller,
+        // Use widget.controller here
         style: const TextStyle(
           fontSize: 12,
           color: TextFieldColor.black,
@@ -154,6 +156,7 @@ class CustomSearchBar extends StatelessWidget {
       this.onFieldSubmitted,
       this.hintText = "Search for something...",
       this.controller});
+
   final GestureTapCallback? onTap;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onFieldSubmitted;
@@ -179,9 +182,15 @@ class CustomSearchBar extends StatelessWidget {
         fontSize: 12,
       ),
       decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Icon(Icons.search_rounded, size: 22),
+        prefixIcon: InkWell(
+          borderRadius: BorderRadius.circular(30),
+          onTap: () {
+            onFieldSubmitted?.call(controller!.text);
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Icon(Icons.search_rounded, size: 22),
+          ),
         ),
         counterStyle: TextStyle(
             fontFamily: Font.gilroy,

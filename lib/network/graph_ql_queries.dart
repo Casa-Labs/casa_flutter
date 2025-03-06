@@ -107,22 +107,28 @@ query GetProductReviews(\$productId: String!) {
   static const String getProducts = """
 query GetProducts(\$params: GetProduct!) {
   getProducts(params: \$params) {
-    currentPage
-    data {
-      id
+       data {
+      productImages
       name
-      description
       price
-      category
-      size
-      stock
-      storeId
-      isNewArrival
-      isTrending
-      createdAt
-      updatedAt
+      sizes {
+        productId
+        sizeId
+        size {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+      }
+      description
+      customReturnPolicy
+      customShippingPolicy
+      categoryId
+      id
     }
     total
+    currentPage
     totalPages
   }
 }

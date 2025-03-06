@@ -97,24 +97,6 @@ class Images {
 }
 
 
-class GetProductResModel {
-  GetProductData? data;
-
-  GetProductResModel({this.data});
-
-  GetProductResModel.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? GetProductData.fromJson(json['data']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    return data;
-  }
-}
-
 class GetProductData {
   GetProducts? getProducts;
 
@@ -176,7 +158,9 @@ class Product {
   List<String>? size;
   int? stock;
   String? storeId;
+  String? mainImage;
   bool? isNewArrival;
+  List<String>? productImages;
   bool? isTrending;
   String? createdAt;
   String? updatedAt;
@@ -189,6 +173,8 @@ class Product {
         this.price,
         this.category,
         this.size,
+        this.productImages,
+        this.mainImage,
         this.stock,
         this.storeId,
         this.isNewArrival,
@@ -197,18 +183,20 @@ class Product {
         this.updatedAt});
 
   Product.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    description = json['description'];
-    price = json['price'];
-    category = json['category'];
-    size = json['size'].cast<String>();
-    stock = json['stock'];
-    storeId = json['storeId'];
-    isNewArrival = json['isNewArrival'];
-    isTrending = json['isTrending'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
+    id = json['id'] ?? "";
+    name = json['name'] ?? "";
+    description = json['description'] ?? "";
+    price = json['price'] ?? 0;
+    category = json['category'] ?? "";
+    mainImage = json['mainImage'] ?? "";
+    size = json['size'] ?? [];
+    productImages = json['productImages'].cast<String>() ?? [];
+    stock = json['stock'] ?? 0;
+    storeId = json['storeId'] ?? "";
+    isNewArrival = json['isNewArrival'] ?? false;
+    isTrending = json['isTrending'] ?? false;
+    createdAt = json['createdAt'] ?? "";
+    updatedAt = json['updatedAt'] ?? "";
   }
 
   Map<String, dynamic> toJson() {
@@ -218,6 +206,8 @@ class Product {
     data['description'] = description;
     data['price'] = price;
     data['category'] = category;
+    data['productImages'] = productImages;
+    data['mainImage'] = mainImage;
     data['size'] = size;
     data['stock'] = stock;
     data['storeId'] = storeId;
