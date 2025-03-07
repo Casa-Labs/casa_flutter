@@ -95,6 +95,11 @@ class AuthController extends GetxController {
           PreferenceManager.userDetails,
           loginResponse?.login?.user?.toJsonString(),
         );
+        // set only user id
+        await PreferenceManager.setData(
+          PreferenceManager.userId,
+          loginResponse?.login?.user?.id.toString(),
+        );
         message('User logged in successfully');
         isLoggedIn(true);
       }

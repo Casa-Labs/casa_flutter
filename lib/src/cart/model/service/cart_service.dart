@@ -15,9 +15,57 @@ class CartService {
     );
 
     addCartResponseModel = AddCartResponseModel.fromJson(
-      response.data,
+      response.data!,
     );
 
     return addCartResponseModel;
+  }
+
+  Future<GetCartResponseModel?> getCartItems({
+    required GetcartRequestModel getCartRequestModel,
+  }) async {
+    final GetCartResponseModel getCartResponseModel;
+
+    final response = await _graphQLManager.getCartItems(
+      getCartRequestModel.userId,
+    );
+
+    getCartResponseModel = GetCartResponseModel.fromJson(
+      response.data!,
+    );
+
+    return getCartResponseModel;
+  }
+
+  Future<GetCartResponseModel?> removeItemFromCart({
+    required RemoveCartRequestModel removeCartRequestModel,
+  }) async {
+    final GetCartResponseModel getCartResponseModel;
+
+    final response = await _graphQLManager.removeItemFromCart(
+        removeCartRequestModel.userId, removeCartRequestModel.productId);
+
+    getCartResponseModel = GetCartResponseModel.fromJson(
+      response.data!,
+    );
+
+    return getCartResponseModel;
+  }
+
+  Future<GetCartResponseModel?> updateCartItem({
+    required UpdateCartRequestModel updateCartRequestModel,
+  }) async {
+    final GetCartResponseModel getCartResponseModel;
+
+    final response = await _graphQLManager.updateCartItem(
+        updateCartRequestModel.userId,
+        updateCartRequestModel.productId,
+        updateCartRequestModel.quantity);
+
+    getCartResponseModel = GetCartResponseModel.fromJson(
+      response.data!,
+    );
+
+    return getCartResponseModel;
   }
 }

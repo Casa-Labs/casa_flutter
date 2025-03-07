@@ -15,10 +15,7 @@ class GraphQLVariables {
   }
 
   static Map<String, dynamic> getBrandVariables(
-     String? storeType,
-     int? page,
-     int? limit,
-     String? search) {
+      String? storeType, int? page, int? limit, String? search) {
     return {
       "storeType": storeType,
       "page": page,
@@ -47,7 +44,7 @@ class GraphQLVariables {
   }
 
   static Map<String, dynamic> addItemToCartVariables(
-      String userId, Map<String, dynamic> items) {
+      String userId, List<Map<String, dynamic>> items) {
     return {
       "userId": userId,
       "items": items,
@@ -216,6 +213,12 @@ class GraphQLVariables {
       "page": page,
       "limit": limit,
       "search": search,
+    };
+  }
+
+  static Map<String, dynamic> getCartItemsVariables(String userId) {
+    return {
+      "userId": userId,
     };
   }
 }

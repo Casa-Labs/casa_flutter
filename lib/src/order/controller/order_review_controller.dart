@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../../home/model/home_models.dart';
+import '../../cart/model/cart_models.dart';
 
 class OrderReviewController extends GetxController {
   List<String> savedAddresses = ['Navi Mumbai'];
-  RxList<ProductModel> productsList = <ProductModel>[].obs;
+  RxList<ProductForCart> productsList = <ProductForCart>[].obs;
   RxDouble total = 0.0.obs;
   RxDouble itemtotal = 0.0.obs;
   RxDouble gst = 0.0.obs;
@@ -23,12 +23,12 @@ class OrderReviewController extends GetxController {
     isExpaned.value = !isExpaned.value;
   }
 
-  void getListData(List<ProductModel> products) {
+  void getListData(List<ProductForCart> products) {
     productsList.value = products;
     getTotalPrice();
   }
 
-  void deleteItem(ProductModel product) {
+  void deleteItem(ProductForCart product) {
     productsList.remove(product);
     getTotalPrice();
   }
@@ -36,11 +36,7 @@ class OrderReviewController extends GetxController {
   void getTotalPrice() {
     double totalSum = 0.0;
     for (var product in productsList) {
-      String cleanedPrice = product.price!
-          .replaceAll('Rs.', '')
-          .replaceAll(',', '')
-          .replaceAll('₹', '')
-          .trim();
+      String cleanedPrice = product.price!.toString();
       double itemPrice = double.parse(cleanedPrice);
       totalSum += itemPrice * product.quantity!;
     }

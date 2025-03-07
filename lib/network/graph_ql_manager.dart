@@ -46,7 +46,7 @@ class GraphQLManager {
   }
 
   Future<QueryResult> addItemToCart(
-      String userId, Map<String, dynamic> items) async {
+      String userId, List<Map<String, dynamic>> items) async {
     return await _clientService.performMutation(
       document: GraphQLMutations.addItemToCart,
       variables: GraphQLVariables.addItemToCartVariables(userId, items),
@@ -224,6 +224,13 @@ class GraphQLManager {
     return await _clientService.performQuery(
       document: GraphQLQueries.getUsers,
       variables: GraphQLVariables.getUsersVariables(page, limit, search),
+    );
+  }
+
+  Future<QueryResult> getCartItems(String userId) async {
+    return await _clientService.performQuery(
+      document: GraphQLQueries.getCartItems,
+      variables: GraphQLVariables.getCartItemsVariables(userId),
     );
   }
 }

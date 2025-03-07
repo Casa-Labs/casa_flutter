@@ -86,6 +86,11 @@ class SignUpController extends GetxController {
           PreferenceManager.userDetails,
           loginResponse?.register?.user?.toJsonString(),
         );
+        // set only user id
+        await PreferenceManager.setData(
+          PreferenceManager.userId,
+          loginResponse?.register?.user?.id.toString(),
+        );
         message('User registered successfully');
         isUserRegistered(true);
       }

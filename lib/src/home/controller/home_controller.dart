@@ -40,6 +40,7 @@ class HomeController extends GetxController{
   int currentIndex = 0;
   int minValue = 0;
   int maxValue = 0;
+  RxInt quantity = 1.obs;
   final ValueNotifier<int> counter = ValueNotifier<int>(1);
   IconData? swipeIcon;
   final List<ProductModelFilter> brandFilter = [

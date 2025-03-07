@@ -189,7 +189,7 @@ class Product {
     price = json['price'] ?? 0;
     category = json['category'] ?? "";
     mainImage = json['mainImage'] ?? "";
-    size = json['size'] ?? [];
+    size = json['sizes'] ?? [];
     productImages = json['productImages'].cast<String>() ?? [];
     stock = json['stock'] ?? 0;
     storeId = json['storeId'] ?? "";
@@ -208,7 +208,7 @@ class Product {
     data['category'] = category;
     data['productImages'] = productImages;
     data['mainImage'] = mainImage;
-    data['size'] = size;
+    data['sizes'] = size;
     data['stock'] = stock;
     data['storeId'] = storeId;
     data['isNewArrival'] = isNewArrival;

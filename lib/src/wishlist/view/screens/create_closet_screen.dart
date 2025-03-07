@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:casa_flutter/src/auth/view/widgets/auth_button.dart';
-import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
 import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:casa_flutter/utils/padding_size.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../common/widgets/app_bar.dart';
-import '../../../common/widgets/custom_button.dart';
 import '../../controller/wishlist_controller.dart';
 
 class CreateClosetScreen extends StatelessWidget {

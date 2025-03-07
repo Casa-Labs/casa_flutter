@@ -5,13 +5,15 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../utils/color_constant.dart';
 import '../../../common/widgets/custom_button.dart';
+import '../../../order/controller/order_review_controller.dart';
 import '../../controller/cart_controller.dart';
 import '../widgets/cart_item.dart';
 
 class CartScreen extends StatelessWidget {
   CartScreen({super.key});
 
-  final CartController cartController = Get.put(CartController());
+  final cartController = Get.find<CartController>();
+  final orderReviewController = Get.find<OrderReviewController>();
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +39,12 @@ class CartScreen extends StatelessWidget {
                   ),
                 ),
               )
-            :  IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(Icons.arrow_back_ios),
-        ),
+            : IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: const Icon(Icons.arrow_back_ios),
+              ),
         leadingWidth: 60,
         backgroundColor: BackgroundColor.white,
         actions: [
@@ -66,8 +68,8 @@ class CartScreen extends StatelessWidget {
         title: Text(
           'My Cart',
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.w700,
-          ),
+                fontWeight: FontWeight.w700,
+              ),
         ),
         centerTitle: true,
       ),
@@ -94,12 +96,7 @@ class CartScreen extends StatelessWidget {
                       itemCount: cartController.cartList.length,
                       itemBuilder: (context, index) {
                         final item = cartController.cartList[index];
-                        return CartItem(
-                          item: item,
-                          totalChange: () {},
-                          onDelete: () {},
-                          index: index,
-                        );
+                        return CartItem(item: item);
                       },
                       separatorBuilder: (BuildContext context, int index) {
                         return Column(
@@ -118,8 +115,6 @@ class CartScreen extends StatelessWidget {
               if (cartController.cartList.isNotEmpty)
                 Column(
                   children: [
-                    Divider(height: 0.5, color: DividerColor.grey),
-                    const SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -146,7 +141,11 @@ class CartScreen extends StatelessWidget {
                       child: CustomPrimaryButton(
                         button: PrimaryButtons.blueBG,
                         text: "Checkout",
-                        onPressed: () {},
+                        onPressed: () {
+                          orderReviewController.productsList =
+                              cartController.cartList;
+                          context.pushNamed(RouteNames.orderReview);
+                        },
                       ),
                     ),
               const SizedBox(height: 120),
