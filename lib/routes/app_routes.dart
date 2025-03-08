@@ -4,6 +4,7 @@ import 'package:casa_flutter/src/auth/view/screens/fit_preferences_screen.dart';
 import 'package:casa_flutter/src/auth/view/screens/personal_details_screen.dart';
 import 'package:casa_flutter/src/auth/view/screens/sign_up_screen.dart';
 import 'package:casa_flutter/src/auth/view/screens/style_preferences_screen.dart';
+import 'package:casa_flutter/src/auth/view/screens/verify_your_email.dart';
 import 'package:casa_flutter/src/cart/view/screens/cart_screen.dart';
 import 'package:casa_flutter/src/common/widgets/development_screen.dart';
 import 'package:casa_flutter/src/explore/view/screens/products_list_screen.dart';
@@ -48,6 +49,7 @@ class _AppPaths {
   static const String fitPreferences = '/fitPreferences';
   static const String deliveryAddress = '/deliveryAddress';
   static const String forgotPassword = '/forgotPassword';
+  static const String verifyEmail = '/verifyEmail';
   static const String changePassword = '/changePassword';
   static const String home = '/home';
   static const String notifications = '/notifications';
@@ -78,6 +80,7 @@ class RouteNames {
   static const String welcomeAuth = 'welcomeAuth';
   static const String signIn = 'signIn';
   static const String forgotPassword = 'forgotPassword';
+  static const String verifyEmail = 'verifyEmail';
   static const String changePassword = 'changePassword';
   static const String personalDetails = 'personalDetails';
   static const String stylePreferences = 'stylePreferences';
@@ -184,7 +187,12 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.forgotPassword,
       name: RouteNames.forgotPassword,
-      builder: (context, state) => const ForgotPasswordScreen(),
+      builder: (context, state) => ForgotPasswordScreen(),
+    ),
+    GoRoute(
+      path: _AppPaths.verifyEmail,
+      name: RouteNames.verifyEmail,
+      builder: (context, state) => VerifyYourEmail(),
     ),
     GoRoute(
       path: _AppPaths.changePassword,

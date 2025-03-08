@@ -15,6 +15,10 @@ class SignUpController extends GetxController {
   final TextEditingController registeredPassword = TextEditingController();
   final TextEditingController registeredRenterPassword =
       TextEditingController();
+  final TextEditingController otp1 = TextEditingController();
+  final TextEditingController otp2 = TextEditingController();
+  final TextEditingController otp3 = TextEditingController();
+  final TextEditingController otp4 = TextEditingController();
 
   // ========= VARIABLES ========= //
   RxBool checkboxValue = false.obs;
@@ -22,6 +26,10 @@ class SignUpController extends GetxController {
   RxBool isRegisteredPasswordObscured = true.obs;
   RxBool isRegisteredRenterPasswordObscured = true.obs;
   RxString message = ''.obs;
+  RxBool isOtpSent = false.obs;
+  RxBool isOtpObscured = true.obs;
+  RxBool isOtpVerified = false.obs;
+  RxBool isEmailValid = false.obs;
 
 // ========== UI FUNCTIONS ========== //
 
@@ -29,11 +37,19 @@ class SignUpController extends GetxController {
     registeredEmail.clear();
     registeredPassword.clear();
     registeredRenterPassword.clear();
+    otp1.clear();
+    otp2.clear();
+    otp3.clear();
+    otp4.clear();
     message('');
     isRegisteredPasswordObscured(true);
     isRegisteredRenterPasswordObscured(true);
     isUserRegistered(false);
     checkboxValue(false);
+    isOtpSent(false);
+    isOtpObscured(true);
+    isOtpVerified(false);
+    isEmailValid(false);
   }
 
   @override
@@ -65,6 +81,9 @@ class SignUpController extends GetxController {
     } else if (registeredPassword.text != registeredRenterPassword.text) {
       message('Entered password and Re-entered password are not same');
       isUserRegistered(false);
+    } else if (!isOtpVerified()) {
+      message('Verify otp');
+      isUserRegistered(false);
     } else {
       LoginRequestModel loginRequestModel = LoginRequestModel(
         username: registeredEmail.text,
@@ -92,6 +111,15 @@ class SignUpController extends GetxController {
     }
   }
 
+  void checkEmailValidation() {
+    if (registeredEmail.text.isNotEmpty &&
+        Validators.isTouchedEmailValidator!(registeredEmail.text) != null) {
+      isEmailValid(false);
+    } else {
+      isEmailValid(true);
+    }
+  }
+
   void showRegisteredPassword() {
     if (isRegisteredPasswordObscured()) {
       isRegisteredPasswordObscured(false);
@@ -105,6 +133,29 @@ class SignUpController extends GetxController {
       isRegisteredRenterPasswordObscured(false);
     } else {
       isRegisteredRenterPasswordObscured(true);
+    }
+  }
+
+  void showOtp() {
+    if (isOtpObscured()) {
+      isOtpObscured(false);
+    } else {
+      isOtpObscured(true);
+    }
+  }
+
+  Future<void> sendOtp() async {
+    message('Otp sent to entered email id');
+    isOtpSent(true);
+  }
+
+  Future<void> verifyOtpCall() async {
+    if (otp1.text.isNotEmpty &&
+        otp2.text.isNotEmpty &&
+        otp3.text.isNotEmpty &&
+        otp4.text.isNotEmpty) {
+      message('Otp verified successfully');
+      isOtpVerified(true);
     }
   }
 }

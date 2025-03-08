@@ -61,8 +61,9 @@ class FitPreferencesScreen extends StatelessWidget {
                     () => AuthButton(
                       type: AuthButtonType.saveFitPreferences,
                       isLoading: fitPreferencesController.isLoading(),
-                      onPressed: () {
-                        fitPreferencesController.saveFitPreferencesDetails();
+                      onPressed: () async {
+                        await fitPreferencesController
+                            .saveFitPreferencesDetails();
                         if (fitPreferencesController.message().isNotEmpty) {
                           showToast(
                             message: fitPreferencesController.message(),

@@ -75,8 +75,8 @@ class PersonalDetailsScreen extends StatelessWidget {
                     () => AuthButton(
                       type: AuthButtonType.savePersonalDetails,
                       isLoading: personalDetailsController.isLoading(),
-                      onPressed: () {
-                        personalDetailsController.savePersonalDetails();
+                      onPressed: () async {
+                        await personalDetailsController.savePersonalDetails();
                         if (personalDetailsController.message().isNotEmpty) {
                           showToast(
                             message: personalDetailsController.message(),

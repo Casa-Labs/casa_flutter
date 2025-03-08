@@ -1,13 +1,20 @@
 import 'package:casa_flutter/routes/app_routes.dart';
+import 'package:casa_flutter/src/auth/controller/forgot_password_controller.dart';
 import 'package:casa_flutter/src/auth/view/widgets/auth_button.dart';
+import 'package:casa_flutter/src/common/widgets/show_toast.dart';
 import 'package:casa_flutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../common/widgets/custom_text_form_field_widget.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
-  const ForgotPasswordScreen({super.key});
+  ForgotPasswordScreen({super.key});
+
+  final forgotPasswordController = Get.put(
+    ForgotPasswordController(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -16,15 +23,17 @@ class ForgotPasswordScreen extends StatelessWidget {
         child: Stack(
           children: [
             Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 50, left: 20),
-                  child: IconButton(
-                      onPressed: () {
-                        context.pop();
-                      },
-                      icon: Icon(Icons.arrow_back_ios)),
-                )),
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 50, left: 20),
+                child: IconButton(
+                  onPressed: () {
+                    context.pop();
+                  },
+                  icon: Icon(Icons.arrow_back_ios),
+                ),
+              ),
+            ),
             Align(
               alignment: Alignment.center,
               child: Padding(
@@ -36,10 +45,12 @@ class ForgotPasswordScreen extends StatelessWidget {
                       children: [
                         Text(
                           'Forgot Password',
-                          style:
-                              Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(
+                                fontWeight: FontWeight.w500,
+                              ),
                         ),
                         SizedBox(height: 50),
                         Image.asset(ImageConstants.forgotPasswordLogo),
@@ -55,22 +66,26 @@ class ForgotPasswordScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 25),
                         Text('Email Address'),
-                        CustomTextFormField(),
+                        CustomTextFormField(
+                          controller: forgotPasswordController.email,
+                        ),
                       ],
                     ),
                     Spacer(flex: 1),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Try another way',
-                      ),
-                    ),
-                    Spacer(flex: 1),
                     AuthButton(
-                        type: AuthButtonType.send,
-                        onPressed: () {
-                          context.pushNamed(RouteNames.changePassword);
-                        }),
+                      type: AuthButtonType.send,
+                      onPressed: () {
+                        forgotPasswordController.sentOtpCall();
+                        if (forgotPasswordController.message().isNotEmpty) {
+                          showToast(
+                            message: forgotPasswordController.message(),
+                          );
+                          if (forgotPasswordController.isOtpSent()) {
+                            router.pushNamed(RouteNames.verifyEmail);
+                          }
+                        }
+                      },
+                    ),
                     Spacer(flex: 2),
                   ],
                 ),

@@ -1,7 +1,15 @@
+import 'dart:convert';
+
+import 'package:casa_flutter/src/auth/model/auth_models.dart';
+import 'package:casa_flutter/src/auth/model/service/auth_service.dart';
+import 'package:casa_flutter/utils/preference_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PersonalDetailsController extends GetxController {
+  // ========= OBJECTS ============= //
+  final AuthService _authService = AuthService();
+
   // ========= CONTROLLERS ========= //
   final TextEditingController firstName = TextEditingController();
   final TextEditingController lastName = TextEditingController();
@@ -37,9 +45,33 @@ class PersonalDetailsController extends GetxController {
       message('Enter phone number');
     } else {
       isLoading(true);
-      isPersonalDetailsSaved(true);
-      message('Personal details saved successfully');
-      isLoading(false);
+
+      // get user details
+      final userDetailsData = PreferenceManager.getString(
+        PreferenceManager.userDetails,
+      );
+      var userDetailsMap = <String, dynamic>{};
+      if (userDetailsData != null) {
+        userDetailsMap = json.decode(userDetailsData.trim());
+      }
+      final userDetails = User.fromJson(userDetailsMap);
+      if (userDetails.id != null) {
+        final userDetailsResponse = await _authService.updateUserDetails(
+          userId: userDetails.id ?? '',
+          name: '${firstName.text} ${lastName.text}',
+          email: userDetails.email ?? '',
+          phone: phoneNumber.text,
+        );
+        if (userDetailsResponse != null) {
+          isPersonalDetailsSaved(true);
+          message('Personal details saved successfully');
+          isLoading(false);
+        } else {
+          isLoading(false);
+        }
+      } else {
+        isLoading(false);
+      }
     }
   }
 }

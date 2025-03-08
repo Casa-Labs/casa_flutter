@@ -11,6 +11,8 @@ class ImageConstants {
   static String newPassword = 'assets/images/new_password.png';
   static String send = 'assets/images/send.png';
   static String chat = 'assets/images/chat.png';
+  static String email = 'assets/images/email.png';
+  static String verify = 'assets/images/verify.png';
 }
 
 class AppStrings {
