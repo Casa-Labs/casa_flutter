@@ -1,8 +1,14 @@
+import 'dart:convert';
+
+import 'package:casa_flutter/src/auth/model/auth_models.dart';
 import 'package:casa_flutter/src/auth/model/chip_list_model.dart';
+import 'package:casa_flutter/src/auth/model/service/auth_service.dart';
+import 'package:casa_flutter/utils/preference_manager.dart';
 import 'package:get/get.dart';
 
 class StylePreferencesController extends GetxController {
-  // ========= CONTROLLERS ========= //
+  // ========= OBJECTS ============= //
+  final AuthService _authService = AuthService();
 
   // ========= VARIABLES ========= //
   RxString message = ''.obs;
@@ -53,9 +59,37 @@ class StylePreferencesController extends GetxController {
   Future<void> saveStylePreferencesDetails() async {
     if (stylePreferencesList().any((element) => element.isSelected)) {
       isLoading(true);
-      message('Style preferences saved successfully');
-      isLoading(false);
-      isStylePreferencesSaved(true);
+
+      // get user details
+      final userDetailsData = PreferenceManager.getString(
+        PreferenceManager.userDetails,
+      );
+      var userDetailsMap = <String, dynamic>{};
+      if (userDetailsData != null) {
+        userDetailsMap = json.decode(userDetailsData.trim());
+      }
+      final userDetails = User.fromJson(userDetailsMap);
+      if (userDetails.id != null) {
+        final selectedStyles = [
+          ...stylePreferencesList
+              .where((e) => e.isSelected)
+              .toList()
+              .map((style) => style.name),
+        ];
+        final stylePreferencesResponse = await _authService.addStylePreferences(
+          userId: userDetails.id ?? '',
+          styles: selectedStyles,
+        );
+        if (stylePreferencesResponse != null) {
+          message('Style preferences saved successfully');
+          isLoading(false);
+          isStylePreferencesSaved(true);
+        } else {
+          isLoading(false);
+        }
+      } else {
+        isLoading(false);
+      }
     } else {
       message('Please select at-least one style');
       isStylePreferencesSaved(false);

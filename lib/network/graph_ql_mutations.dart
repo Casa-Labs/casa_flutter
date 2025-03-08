@@ -24,6 +24,8 @@ class GraphQLMutations {
       createdAt
       email
       id
+      name
+      phone
       role
       updatedAt
     }
@@ -31,15 +33,57 @@ class GraphQLMutations {
 }
 """;
 
-  static const String changePasswordMutation = """
-  mutation UpdatePassword(\$oldPassword: String!, \$newPassword: String!) {
-  updatePassword(oldPassword: \$oldPassword, newPassword: \$newPassword) {
-    authProvider
-    createdAt
-    email
+  static const String deleteUser = """
+  mutation DeleteUser(\$userId: ID!) {
+  deleteUser(userId: \$userId)
+}
+""";
+
+  static const String updateUserDetails = """
+  mutation UpdateUserDetails(\$userId: String!, \$name: String, \$email: String, \$phone: String) {
+  updateUserDetails(userId: \$userId, name: \$name, email: \$email, phone: \$phone) {
     id
-    role
-    updatedAt
+    profileImage
+    name
+    email
+    phone
+  }
+}
+""";
+
+  static const String addStylePreferences = """
+  mutation AddPreferences(\$userId: String!, \$styles: [String]) {
+  addPreferences(userId: \$userId, styles: \$styles) {
+    id
+    userId
+  }
+}
+""";
+
+  static const String addBodyTypePreferences = """
+  mutation AddPreferences(\$userId: String!, \$bodyTypes: [String]) {
+  addPreferences(userId: \$userId, bodyTypes: \$bodyTypes) {
+    id
+    userId
+  }
+}
+""";
+
+  static const String addFitPreferences = """
+  mutation AddPreferences(\$userId: String!, \$fitPrefrence: [String]) {
+  addPreferences(userId: \$userId, fitPrefrence: \$fitPrefrence) {
+    id
+    userId
+  }
+}
+""";
+
+  static const String addUserAddress = """
+  mutation AddUserAddress(\$userId: String!, \$address: String!, \$city: String!, \$state: String!, \$pincode: String!, \$country: String!) {
+  addUserAddress(userId: \$userId, address: \$address, city: \$city, state: \$state, pincode: \$pincode, country: \$country) {
+    id
+    userId
+    address
   }
 }
 """;

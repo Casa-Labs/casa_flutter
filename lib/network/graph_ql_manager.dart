@@ -23,15 +23,86 @@ class GraphQLManager {
     );
   }
 
-  Future<QueryResult> changePassword({
-    required String oldPassword,
-    required String newPassword,
+  Future<QueryResult> deleteUser({required String userId}) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.deleteUser,
+      variables: GraphQLVariables.deleteUserVariables(userId),
+    );
+  }
+
+  Future<QueryResult> updateUserDetails({
+    required String userId,
+    required String name,
+    required String email,
+    required String phone,
   }) async {
     return await _clientService.performMutation(
-      document: GraphQLMutations.changePasswordMutation,
-      variables: GraphQLVariables.changePasswordVariables(
-        oldPassword: oldPassword,
-        newPassword: newPassword,
+      document: GraphQLMutations.updateUserDetails,
+      variables: GraphQLVariables.updateUserDetailsVariables(
+        userId,
+        name,
+        email,
+        phone,
+      ),
+    );
+  }
+
+  Future<QueryResult> addStylePreferences({
+    required String userId,
+    required List<String> styles,
+  }) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.addStylePreferences,
+      variables: GraphQLVariables.addStylePreferencesVariables(
+        userId,
+        styles,
+      ),
+    );
+  }
+
+  Future<QueryResult> addBodyTypePreferences({
+    required String userId,
+    required List<String> bodyTypes,
+  }) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.addBodyTypePreferences,
+      variables: GraphQLVariables.addBodyTypePreferencesVariables(
+        userId,
+        bodyTypes,
+      ),
+    );
+  }
+
+  Future<QueryResult> addFitPreferences({
+    required String userId,
+    required List<String> fitPreferences,
+  }) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.addFitPreferences,
+      variables: GraphQLVariables.addFitPreferencesVariables(
+        userId,
+        fitPreferences,
+      ),
+    );
+  }
+
+  Future<QueryResult> addUserAddress({
+    required String userId,
+    required String address,
+    required String city,
+    required String state,
+    required String pinCode,
+    required String country,
+  }) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.addUserAddress,
+      variables: GraphQLVariables.addUserAddressVariables(
+        userId,
+        address,
+        city,
+        state,
+        pinCode,
+        country,
       ),
     );
   }

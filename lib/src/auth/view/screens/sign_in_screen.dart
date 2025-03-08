@@ -66,19 +66,22 @@ class SignInScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 20),
-                  AuthButton(
-                    type: AuthButtonType.signIn,
-                    onPressed: () async {
-                      await authController.loginUserCall();
-                      if (authController.message().isNotEmpty) {
-                        showToast(
-                          message: authController.message(),
-                        );
-                        if (authController.isLoggedIn()) {
-                          router.goNamed(RouteNames.navigation);
+                  Obx(
+                    () => AuthButton(
+                      type: AuthButtonType.signIn,
+                      isLoading: authController.isLoading(),
+                      onPressed: () async {
+                        await authController.loginUserCall();
+                        if (authController.message().isNotEmpty) {
+                          showToast(
+                            message: authController.message(),
+                          );
+                          if (authController.isLoggedIn()) {
+                            router.goNamed(RouteNames.navigation);
+                          }
                         }
-                      }
-                    },
+                      },
+                    ),
                   ),
                   SizedBox(height: 10),
                   Center(

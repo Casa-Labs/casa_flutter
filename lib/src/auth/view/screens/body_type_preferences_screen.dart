@@ -61,8 +61,8 @@ class BodyTypePreferencesScreen extends StatelessWidget {
                     () => AuthButton(
                       type: AuthButtonType.saveBodyTypePreferences,
                       isLoading: bodyTypeController.isLoading(),
-                      onPressed: () {
-                        bodyTypeController.saveBodyTypeDetails();
+                      onPressed: () async {
+                        await bodyTypeController.saveBodyTypeDetails();
                         if (bodyTypeController.message().isNotEmpty) {
                           showToast(
                             message: bodyTypeController.message(),

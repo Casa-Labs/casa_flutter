@@ -79,8 +79,9 @@ class DeliveryAddressScreen extends StatelessWidget {
                     () => AuthButton(
                       type: AuthButtonType.start,
                       isLoading: deliveryAddressController.isLoading(),
-                      onPressed: () {
-                        deliveryAddressController.saveDeliveryAddressDetails();
+                      onPressed: () async {
+                        await deliveryAddressController
+                            .saveDeliveryAddressDetails();
                         if (deliveryAddressController.message().isNotEmpty) {
                           showToast(
                             message: deliveryAddressController.message(),
