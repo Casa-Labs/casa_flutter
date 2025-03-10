@@ -30,6 +30,13 @@ class GraphQLVariables {
     };
   }
 
+  static Map<String, dynamic> getNotificationVariables(String userId) {
+    return {
+      "userId": userId,
+    };
+  }
+
+
   static Map<String, dynamic> updateUserDetailsVariables(
     String userId,
     String name,

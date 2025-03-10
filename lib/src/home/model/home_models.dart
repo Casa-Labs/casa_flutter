@@ -153,7 +153,7 @@ class Product {
   String? id;
   String? name;
   String? description;
-  int? price;
+  double? price;
   String? category;
   List<String>? size;
   int? stock;
@@ -186,7 +186,9 @@ class Product {
     id = json['id'] ?? "";
     name = json['name'] ?? "";
     description = json['description'] ?? "";
-    price = json['price'] ?? 0;
+    price = json['price'] is int
+        ? (json['price'] as int).toDouble()
+        : (json['price'] ?? 0).toDouble();
     category = json['category'] ?? "";
     mainImage = json['mainImage'] ?? "";
     size = json['size'] ?? [];

@@ -6,11 +6,12 @@ class NotificationTile extends StatelessWidget {
   final String circleImageUrl;
   final String squareImageUrl;
   final String text;
+  final String message;
   const NotificationTile(
       {super.key,
       required this.circleImageUrl,
       required this.squareImageUrl,
-      required this.text});
+      required this.text, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +47,21 @@ class NotificationTile extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 7.0),
-
-              child: Text(
-                text,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    text,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    message,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
               ),
             ),
           ),

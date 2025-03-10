@@ -8,7 +8,6 @@ import 'package:casa_flutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shimmer/shimmer.dart';
 
 // import 'package:share_plus/share_plus.dart';
 
@@ -36,48 +35,18 @@ class Cards extends StatelessWidget {
               children: [
                 Stack(
                   children: [
-                     Positioned.fill(
-                      child: ClipRRect(
-                        borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(18)),
-                        child: Material(
-                          elevation: 4,
-                          color: Colors.grey.shade300,
-                          child: Image.network(
-                            product.mainImage! ?? "",
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                            height: double.infinity,
-                            loadingBuilder: (context, child, loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              }
-                              return Shimmer.fromColors(
-                                baseColor: Colors.grey[300]!,
-                                highlightColor: Colors.grey[100]!,
-                                child: Container(
-                                  color: Colors.white,
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                ),
-                              );
-                            },
-                            errorBuilder: (context, error, stackTrace) {
-                              return Image.asset('assets/images/placeholder.png');
-                            },
-                          ),
-                          // Image.asset('assets/images/placeholder.png',
-                          //     fit: BoxFit.cover),
+                    Align(
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.758,
+                        child: ClipRRect(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(18)),
+                          child: Image.network(product.mainImage!,
+                              fit: BoxFit.fill),
                         ),
                       ),
                     ),
-                 /*   Align(
-                      alignment: Alignment.center,
-                      child: SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.75,
-                          child: Image.asset('assets/images/placeholder.png',
-                              fit: BoxFit.fill)),
-                    ),*/
                     ClipRRect(
                       borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(20),
