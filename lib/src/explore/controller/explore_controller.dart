@@ -1,4 +1,5 @@
 import 'package:casa_flutter/src/explore/model/service/explore_service.dart';
+import 'package:casa_flutter/src/explore/model/trending_products_model.dart';
 import 'package:get/get.dart';
 
 import '../../home/model/home_models.dart';
@@ -30,6 +31,7 @@ class ExploreController extends GetxController {
   ];
 
   RxInt selectedIndex = 0.obs;
+  RxList<Products> trendingProducts = <Products>[].obs;
 
   // Pagination - temporary calling 100 items
   RxInt page = 1.obs;

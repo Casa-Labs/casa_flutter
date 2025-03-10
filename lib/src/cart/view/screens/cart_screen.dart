@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../utils/color_constant.dart';
-import '../../../common/widgets/custom_button.dart';
+import '../../../common/widgets/buttons/custom_button.dart';
 import '../../controller/cart_controller.dart';
 import '../widgets/cart_item.dart';
 
@@ -37,12 +37,12 @@ class CartScreen extends StatelessWidget {
                   ),
                 ),
               )
-            :  IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(Icons.arrow_back_ios),
-        ),
+            : IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: const Icon(Icons.arrow_back_ios),
+              ),
         leadingWidth: 60,
         backgroundColor: BackgroundColor.white,
         actions: [
@@ -66,8 +66,8 @@ class CartScreen extends StatelessWidget {
         title: Text(
           'My Cart',
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.w700,
-          ),
+                fontWeight: FontWeight.w700,
+              ),
         ),
         centerTitle: true,
       ),
@@ -144,7 +144,7 @@ class CartScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16.0, vertical: 16),
                       child: CustomPrimaryButton(
-                        button: PrimaryButtons.blueBG,
+                        button: PrimaryButtons.blackBG,
                         text: "Checkout",
                         onPressed: () {},
                       ),

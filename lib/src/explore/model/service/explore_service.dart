@@ -15,8 +15,8 @@ class ExploreService {
     if (!response.hasException && response.data != null) {
       final trendingProductsResponse =
           TrendingProductsResponseModel.fromJson(response.data!);
-      logg.i(
-          'Get trending products : ${trendingProductsResponse.getTrendingProducts?.totalCount ?? 'Total count is null'}');
+      exploreCtrl.trendingProducts.assignAll(
+          trendingProductsResponse.getTrendingProducts?.products ?? []);
     } else {
       logg.e('Get trending products Exception: ${response.exception}');
     }

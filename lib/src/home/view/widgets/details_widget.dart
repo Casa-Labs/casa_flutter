@@ -1,6 +1,6 @@
 import 'package:casa_flutter/routes/app_routes.dart';
-import 'package:casa_flutter/src/common/widgets/add_to_cart_button.dart';
-import 'package:casa_flutter/src/common/widgets/select_size_button.dart';
+import 'package:casa_flutter/src/common/widgets/buttons/add_to_cart_button.dart';
+import 'package:casa_flutter/src/common/widgets/buttons/select_size_button.dart';
 import 'package:casa_flutter/src/explore/view/widgets/quantity_selector_button.dart';
 import 'package:casa_flutter/src/home/controller/home_controller.dart';
 import 'package:casa_flutter/utils/string_constant.dart';
@@ -361,9 +361,9 @@ class ProductDetails extends StatelessWidget {
             GridView.builder(
               // No horizontal spacing
               shrinkWrap: true,
-              itemCount:  product.productImages!.length > 4
-                    ? 4
-                    : product.productImages!.length,
+              itemCount: product.productImages!.length > 4
+                  ? 4
+                  : product.productImages!.length,
               // Makes GridView fit its content
               physics: const NeverScrollableScrollPhysics(),
               // Disables scrolling
