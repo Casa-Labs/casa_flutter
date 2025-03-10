@@ -30,6 +30,20 @@ query GetProductCategories {
 }
 """;
 
+  static const String getNotification = """
+query NotificationByUser(\$userId: String!) {
+  notificationByUser(userId: \$userId) {
+    id
+    title
+    message
+    firstImage
+    secondImage
+    isRead
+    createdAt
+  }
+}
+""";
+
   static const String getSizes = """
 query GetProductSizes {
   getProductSizes {
@@ -109,6 +123,7 @@ query GetProducts(\$params: GetProduct!) {
   getProducts(params: \$params) {
        data {
       productImages
+      mainImage
       name
       price
       sizes {

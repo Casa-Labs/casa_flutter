@@ -12,7 +12,7 @@ class NotificationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NotificationsController controller = Get.put(NotificationsController());
-
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: CommonAppBar(
         title: 'Notifications',
@@ -20,65 +20,27 @@ class NotificationsScreen extends StatelessWidget {
           IconButton(
             onPressed: () {
               /// To Clear all notifications
-              //controller.clearAllNotifications();
+              controller.clearAllNotifications();
             },
             icon: const Icon(Icons.delete, color: Colors.red),
           )
         ],
       ),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding),
-          child: Column(
-            children: [
-              Obx(() => Expanded(
-                child: ListView(
-                  children: [
-                    if (controller.newNotifications.isNotEmpty) ...[
-                      Text(
-                        'New',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      ListView.builder(
+        child: Obx(
+              () => Padding(
+            padding: EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding),
+            child: controller.isLoading()
+                ? Center(child: CircularProgressIndicator(color: Colors.black))
+                : (controller.notificationList.isNotEmpty)
+                    ? ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: controller.newNotifications.length,
+                        itemCount: controller.notificationList.length,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           return Dismissible(
-                            key: Key(controller.newNotifications[index]),
-                            direction: DismissDirection.endToStart,
-                            background: Container(
-                              alignment: Alignment.centerRight,
-                              padding: EdgeInsets.symmetric(horizontal: 20),
-                              color: Colors.red,
-                              child: Icon(Icons.delete, color: Colors.white),
-                            ),
-                            onDismissed: (direction) {
-                              controller.removeNotification(index, true);
-                            },
-                            child: NotificationTile(
-                              circleImageUrl:
-                              'https://wallpapers.com/images/hd/zara-artistic-logo-na3l857kygopljrs.jpg',
-                              squareImageUrl:
-                              'https://m.media-amazon.com/images/I/A1rAl7nAdxL._AC_UY1100_.jpg',
-                              text: controller.newNotifications[index],
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                    if (controller.lastWeekNotifications.isNotEmpty) ...[
-                      Text(
-                        'Last Week',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: controller.lastWeekNotifications.length,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return Dismissible(
-                            key: Key(controller.lastWeekNotifications[index]),
+                            key: Key(
+                                controller.notificationList[index].id.toString()),
                             direction: DismissDirection.endToStart,
                             background: Container(
                               alignment: Alignment.centerRight,
@@ -91,19 +53,24 @@ class NotificationsScreen extends StatelessWidget {
                             },
                             child: NotificationTile(
                               circleImageUrl:
-                              'https://wallpapers.com/images/hd/zara-artistic-logo-na3l857kygopljrs.jpg',
-                              squareImageUrl:
-                              'https://m.media-amazon.com/images/I/A1rAl7nAdxL._AC_UY1100_.jpg',
-                              text: controller.lastWeekNotifications[index],
+                                  controller.notificationList[index].firstImage ??
+                                      "",
+                              squareImageUrl: controller
+                                      .notificationList[index].secondImage ??
+                                  "",
+                              text:
+                                  controller.notificationList[index].title ?? "",
+                              message:
+                                  controller.notificationList[index].message ??
+                                      "",
                             ),
                           );
                         },
-                      ),
-                    ],
-                  ],
-                ),
-              )),
-            ],
+                      )
+                    : Align(
+                        alignment: Alignment.center,
+                        child: Text('No notification found',
+                            style: textTheme.bodyMedium)),
           ),
         ),
       ),
