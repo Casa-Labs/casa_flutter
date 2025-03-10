@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../utils/padding_size.dart';
 import '../../../../utils/utils.dart';
-import '../../../common/widgets/secondary_button.dart';
+import '../../../common/widgets/buttons/secondary_button.dart';
 
 class PaymentOptionsScreen extends StatefulWidget {
   const PaymentOptionsScreen({super.key});
@@ -24,7 +24,8 @@ class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding),
+          padding:
+              const EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding),
           child: Column(
             spacing: 20,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,8 +48,8 @@ class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
                         leading: const Icon(Icons.credit_card),
                         title: Text(paymentOp.label),
                         trailing: Radio(
-                            fillColor:
-                                WidgetStatePropertyAll<Color>(ButtonColor.black),
+                            fillColor: WidgetStatePropertyAll<Color>(
+                                ButtonColor.black),
                             value: paymentOp.value,
                             groupValue: selectedOption,
                             onChanged: (value) {

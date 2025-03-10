@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../utils/color_constant.dart';
+import '../../../../utils/color_constant.dart';
 
-enum PrimaryButtons { blueBG, whiteBG } // add extra button states here
+enum PrimaryButtons { blackBG, whiteBG } // add extra button states here
 
 class CustomPrimaryButton extends StatelessWidget {
   final PrimaryButtons button;
@@ -17,19 +17,20 @@ class CustomPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color textColor = ButtonColor.black;
-    Color backgroundColor = Theme.of(context).colorScheme.secondary;
+    Color textColor = ButtonColor.white;
+    Color backgroundColor = ButtonColor.black;
     Size size = Size(320, 40);
     Color borderColor = ButtonColor.grey;
     switch (button) {
-      case PrimaryButtons.blueBG:
-        textColor = ButtonColor.black;
+      case PrimaryButtons.blackBG:
+        textColor = ButtonColor.white;
+        backgroundColor = ButtonColor.black;
         size = Size(320, 48);
         borderColor = ButtonColor.transparent;
         break;
       case PrimaryButtons.whiteBG:
         textColor = ButtonColor.black;
-        backgroundColor = Theme.of(context).colorScheme.surface;
+        backgroundColor = ButtonColor.white;
         size = Size(320, 48);
         borderColor = ButtonColor.transparent;
         break;

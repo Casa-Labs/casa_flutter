@@ -28,19 +28,21 @@ class HomeScreen extends StatelessWidget {
               ? Center(
                   child: CircularProgressIndicator(color: BorderColor.black),
                 )
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    FilterRow(
-                      brandList: logic.brandFilter,
-                      colorList: logic.colorFilter,
-                      productList: logic.productFilter,
-                      sizedList: logic.sizedFilter,
-                    ),
-                    SizedBox(height: 5),
-                    _cardSwiper(logic, context, logic.products)
-                  ],
+              : SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      FilterRow(
+                        brandList: logic.brandFilter,
+                        colorList: logic.colorFilter,
+                        productList: logic.productFilter,
+                        sizedList: logic.sizedFilter,
+                      ),
+                      SizedBox(height: 5),
+                      _cardSwiper(logic, context, logic.products)
+                    ],
+                  ),
                 );
         },
       )),
