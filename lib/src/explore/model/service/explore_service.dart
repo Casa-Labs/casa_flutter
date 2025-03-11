@@ -1,3 +1,6 @@
+import 'package:casa_flutter/src/explore/model/brands_model.dart';
+import 'package:casa_flutter/src/explore/model/new_arrivals_model.dart';
+import 'package:casa_flutter/src/explore/model/product_categories_model.dart';
 import 'package:casa_flutter/src/explore/model/trending_products_model.dart';
 import 'package:get/get.dart';
 
@@ -19,6 +22,49 @@ class ExploreService {
           trendingProductsResponse.getTrendingProducts?.products ?? []);
     } else {
       logg.e('Get trending products Exception: ${response.exception}');
+    }
+  }
+
+  Future<void> getNewArrivalProducts({String? search}) async {
+    var response = await GraphQLManager().getNewArrivalProductsForExplore(
+        exploreCtrl.page(), exploreCtrl.limit(), search);
+
+    if (!response.hasException && response.data != null) {
+      final newArrivalsResponse =
+          NewArrivalsProductsResponseModel.fromJson(response.data!);
+      exploreCtrl.newArrivalProducts
+          .assignAll(newArrivalsResponse.getNewArrivalProducts?.products ?? []);
+    } else {
+      logg.e('Get New arrival products Exception: ${response.exception}');
+    }
+  }
+
+  Future<void> getBrands({String? search}) async {
+    var response = await GraphQLManager().getBrands(
+      page: exploreCtrl.page(),
+      limit: exploreCtrl.limit(),
+      search: search,
+      storeType: exploreCtrl.storeType(),
+    );
+
+    if (!response.hasException && response.data != null) {
+      final brandsResponse = GetBrandsResponseModel.fromJson(response.data!);
+      exploreCtrl.brands.assignAll(brandsResponse.getBrands?.data ?? []);
+    } else {
+      logg.e('Get brands Exception: ${response.exception}');
+    }
+  }
+
+  Future<void> getProductCategories({String? search}) async {
+    var response = await GraphQLManager().getCategory();
+
+    if (!response.hasException && response.data != null) {
+      final categoriesResponse =
+          GetCategoriesResponseModel.fromJson(response.data!);
+      exploreCtrl.categories
+          .assignAll(categoriesResponse.getProductCategories ?? []);
+    } else {
+      logg.e('Get brands Exception: ${response.exception}');
     }
   }
 }

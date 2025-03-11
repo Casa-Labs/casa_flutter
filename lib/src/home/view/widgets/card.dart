@@ -1,6 +1,6 @@
 import 'package:casa_flutter/routes/app_routes.dart';
 import 'package:casa_flutter/src/cart/controller/cart_controller.dart';
-import 'package:casa_flutter/src/explore/view/screens/product_description_screen.dart';
+import 'package:casa_flutter/src/common/widgets/buttons/buy_now_button.dart';
 import 'package:casa_flutter/src/home/controller/home_controller.dart';
 import 'package:casa_flutter/src/home/view/widgets/details_widget.dart';
 import 'package:casa_flutter/utils/font.dart';
@@ -40,14 +40,13 @@ class Cards extends StatelessWidget {
                       child: SizedBox(
                         height: MediaQuery.of(context).size.height * 0.758,
                         child: ClipRRect(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(18)),
+                          borderRadius: BorderRadius.all(Radius.circular(18)),
                           child: Image.network(product.mainImage!,
                               fit: BoxFit.fill),
                         ),
                       ),
                     ),
-                 /*   Align(
+                    /*   Align(
                       alignment: Alignment.center,
                       child: SizedBox(
                           height: MediaQuery.of(context).size.height * 0.75,

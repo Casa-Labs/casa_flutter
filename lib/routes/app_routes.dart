@@ -7,6 +7,7 @@ import 'package:casa_flutter/src/auth/view/screens/style_preferences_screen.dart
 import 'package:casa_flutter/src/auth/view/screens/verify_your_email.dart';
 import 'package:casa_flutter/src/cart/view/screens/cart_screen.dart';
 import 'package:casa_flutter/src/common/widgets/development_screen.dart';
+import 'package:casa_flutter/src/explore/model/new_arrivals_model.dart' as nam;
 import 'package:casa_flutter/src/explore/view/screens/products_list_screen.dart';
 import 'package:casa_flutter/src/explore/view/screens/store_screen.dart';
 import 'package:casa_flutter/src/order/model/order_models.dart';
@@ -301,7 +302,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.productDescription,
       name: RouteNames.productDescription,
-      builder: (context, state) => ProductDescriptionScreen(),
+      builder: (context, state) {
+        final product = state.extra as nam.Products; // ✅ Retrieve the object
+        return ProductDescriptionScreen(product: product);
+      },
     ),
     GoRoute(
       path: _AppPaths.paymentOptions,

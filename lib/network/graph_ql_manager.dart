@@ -235,6 +235,15 @@ class GraphQLManager {
     );
   }
 
+  Future<QueryResult> getNewArrivalProductsForExplore(
+      int page, int limit, String? search) async {
+    return await _clientService.performQuery(
+      document: GraphQLQueries.getNewArrivalProductsForExplore,
+      variables:
+          GraphQLVariables.getNewArrivalProductsVariables(page, limit, search),
+    );
+  }
+
   Future<QueryResult> getOrderReturns(String userId, String orderId) async {
     return await _clientService.performQuery(
       document: GraphQLQueries.getOrderReturns,
@@ -264,7 +273,7 @@ class GraphQLManager {
   }
 
   Future<QueryResult> getBrands(
-      int? limit, int? page, String? search, String? storeType) async {
+      {int? limit, int? page, String? search, String? storeType}) async {
     return await _clientService.performQuery(
       document: GraphQLQueries.getBrand,
       variables:
