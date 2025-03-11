@@ -96,6 +96,9 @@ class ProfileScreen extends StatelessWidget {
                           message: homeCtrl.message(),
                         );
                         if (homeCtrl.isUserDeleted()) {
+                          final authController = Get.put(AuthController());
+                          await authController.logOutUser();
+                          authController.clearAllControllers();
                           router.goNamed(RouteNames.signIn);
                         }
                       }
@@ -170,7 +173,7 @@ List<ProfileListModel> profileList = [
   ProfileListModel(
     title: 'Logout',
     onTap: (context) async {
-      final authController = Get.find<AuthController>();
+      final authController = Get.put(AuthController());
       await authController.logOutUser();
       authController.clearAllControllers();
       router.goNamed(RouteNames.signIn);

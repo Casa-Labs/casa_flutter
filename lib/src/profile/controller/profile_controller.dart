@@ -83,7 +83,7 @@ class ProfileController extends GetxController {
         userId: userDetails.id ?? '',
       );
       if (deleteUser == true) {
-        final authController = Get.find<AuthController>();
+        final authController = Get.put(AuthController());
         authController.logOutUser();
         isUserDeleteProgress(false);
         message('User deleted successfully');
