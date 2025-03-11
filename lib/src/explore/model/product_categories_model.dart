@@ -1,27 +1,9 @@
-class ProductCategoriesResponseModel {
-  Data? data;
-
-  ProductCategoriesResponseModel({this.data});
-
-  ProductCategoriesResponseModel.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    return data;
-  }
-}
-
-class Data {
+class GetCategoriesResponseModel {
   List<GetProductCategories>? getProductCategories;
 
-  Data({this.getProductCategories});
+  GetCategoriesResponseModel({this.getProductCategories});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  GetCategoriesResponseModel.fromJson(Map<String, dynamic> json) {
     if (json['getProductCategories'] != null) {
       getProductCategories = <GetProductCategories>[];
       json['getProductCategories'].forEach((v) {
@@ -32,26 +14,32 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    if (this.getProductCategories != null) {
+    if (getProductCategories != null) {
       data['getProductCategories'] =
-          this.getProductCategories!.map((v) => v.toJson()).toList();
+          getProductCategories!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class GetProductCategories {
+  String? id;
   String? name;
+  String? thumbnail;
 
-  GetProductCategories({this.name});
+  GetProductCategories({this.id, this.name, this.thumbnail});
 
   GetProductCategories.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     name = json['name'];
+    thumbnail = json['thumbnail'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['name'] = this.name;
+    data['id'] = id;
+    data['name'] = name;
+    data['thumbnail'] = thumbnail;
     return data;
   }
 }
