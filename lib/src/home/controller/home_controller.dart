@@ -168,7 +168,7 @@ class HomeController extends GetxController{
       var response = await manager.getProducts(map);
       var getProductList = GetProductData.fromJson(response.data!);
       products = getProductList.getProducts!.data ?? [];
-      logg.d('hello i get products ------ >>>>> $getProductList');
+      logg.d('get products ------ >>>>> $getProductList');
       products.shuffle(Random());
       isLoading =  false;
       update();
@@ -186,7 +186,7 @@ class HomeController extends GetxController{
       var response = await manager.getSizes();
       var getSizeData = GetSizeData.fromJson(response.data!);
       size = getSizeData.getProductSizes ?? [];
-      logg.d('hello i get size data ------ >>>>> $getSizeData');
+      logg.d('size data ------ >>>>> $getSizeData');
       // isLoading =  false;
       update();
     } catch (e) {
@@ -203,7 +203,7 @@ class HomeController extends GetxController{
       var response = await manager.getCategory();
       var catList = GetCategories.fromJson(response.data!);
       category = catList.getProductCategories ?? [];
-      logg.d('hello i get categories data ------ >>>>> $catList');
+      logg.d('categories data ------ >>>>> $catList');
       isLoading =  false;
       update();
     } catch (e) {
@@ -220,7 +220,7 @@ class HomeController extends GetxController{
       var response = await manager.getBrands(5,1,"","BRAND");
       var brandList = GetBrandData.fromJson(response.data!);
       brand = brandList.getBrands!.data ?? [];
-      logg.d('hello i get brand data ------ >>>>> $brandList');
+      logg.d('brand data ------ >>>>> $brandList');
       // isLoading =  false;
       update();
     } catch (e) {

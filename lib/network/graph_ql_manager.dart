@@ -23,6 +23,13 @@ class GraphQLManager {
     );
   }
 
+  Future<QueryResult> getNotification(String userID) async {
+    return await _clientService.performQuery(
+      document: GraphQLQueries.getNotification,
+      variables: GraphQLVariables.getNotificationVariables(userID),
+    );
+  }
+
   Future<QueryResult> deleteUser({required String userId}) async {
     return await _clientService.performMutation(
       document: GraphQLMutations.deleteUser,
