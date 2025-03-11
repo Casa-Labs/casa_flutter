@@ -1,9 +1,12 @@
+import 'package:casa_flutter/src/order/model/order_models.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/color_constant.dart';
 
 class OrderCard extends StatelessWidget {
-  const OrderCard({super.key});
+  final OrderedItems orderItem;
+
+  const OrderCard({super.key, required this.orderItem});
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +39,14 @@ class OrderCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Ruffle Dotted Dress',
+                      orderItem.itemName!,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
                           ),
                     ),
                     Text(
-                      '\$49',
+                      '\$${orderItem.price}',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
@@ -52,7 +55,7 @@ class OrderCard extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  'Zara',
+                  orderItem.brandName!,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontSize: 16,
                         color: TextColor.black54,
@@ -116,7 +119,7 @@ class OrderCard extends StatelessWidget {
                           color: const Color(0xFFD9D9D9)),
                       child: Center(
                           child: Text(
-                        '1',
+                            orderItem.quantity.toString(),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               fontWeight: FontWeight.w300,
                             ),

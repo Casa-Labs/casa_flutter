@@ -12,21 +12,23 @@ import '../widgets/order_tracker.dart';
 import '../widgets/view_button.dart';
 
 class CurrentOrdersScreen extends StatelessWidget {
-  CurrentOrdersScreen({super.key});
+  final bool isHistory;
+
+  CurrentOrdersScreen({super.key, required this.isHistory});
 
   final ordersController = Get.put(CurrentOrdersController());
 
   @override
   Widget build(BuildContext context) {
-    late Future<List<GetOrders>> orderFuture = ordersController.fetchProducts();
+    late Future<List<OrderModel>> orderFuture = ordersController.fetchProducts();
     return Scaffold(
       backgroundColor: BackgroundColor.white,
       appBar: CommonAppBar(
         isBodyText: true,
-        title: 'Current Orders',
+        title: isHistory?'My Orders':'Order History',
       ),
       body: SafeArea(
-        child: FutureBuilder(
+        child: isHistory?FutureBuilder(
           future: orderFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -43,13 +45,16 @@ class CurrentOrdersScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: PaddingSize.commonPadding, vertical: 10),
                       child: ListView.builder(
-                        itemCount: orderItem!.length,
+                        itemCount: orderItem![0].orderedItems!.length,
                         shrinkWrap: true,
                         itemBuilder: (BuildContext context, int index) {
+                          var item=orderItem[0].orderedItems![index];
+                          var orderStatus = orderItem[0].status; // Get order status from API
+                          //var trackingSteps = getOrderTrackingSteps(orderStatus!);
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              OrderCard(),
+                              OrderCard(orderItem: item),
                               SizedBox(height: 20),
                               Text(
                                 "Delivery by CASA",
@@ -72,29 +77,36 @@ class CurrentOrdersScreen extends StatelessWidget {
                                     ),
                               ),
                               OrderTracker(statuses: [
-                                OrderTrackerModel(
-                                    status: "Order\nAccepted", isCompleted: true),
+                                OrderTrackerModel(status: "Order\nAccepted", isCompleted: true),
                                 OrderTrackerModel(
                                     status: "Out for\ndelivery",
-                                    isCompleted: true),
-                                OrderTrackerModel(status: "Order\ndelivered"),
+                                    isCompleted: orderStatus == "SHIPPED" || orderStatus == "DELIVERED"),
+                                OrderTrackerModel(status: "Order\ndelivered", isCompleted: orderStatus == "DELIVERED"),
                               ]),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    "Order number #17727722262",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
-                                        ?.copyWith(
-                                          // fontSize: 13,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                  Expanded(
+                                    child: Text(
+                                      "Order number #${orderItem[0].orderNumber}",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                            // fontSize: 13,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                    ),
                                   ),
                                   SmallButton(
                                     onPressed: () {
-                                      context.pushNamed(RouteNames.orderDetails);
+                                      context.pushNamed(
+                                        RouteNames.orderDetails,
+                                        extra: {
+                                          "selectedItem": item,
+                                          "orderData": orderItem[0],
+                                        },
+                                      );
                                     },
                                     text: 'View Detail',
                                   )
@@ -109,9 +121,10 @@ class CurrentOrdersScreen extends StatelessWidget {
               );
             }
           },
-        ),
+        ):Center(child: Text("No Order available")),
       ),
 
     );
   }
+
 }

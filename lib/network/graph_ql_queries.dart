@@ -89,15 +89,37 @@ query GetOrderReturns(\$userId: String!, \$orderId: String!) {
 
   static const String getOrders = """
 query GetOrders(\$userId: String!) {
-  getOrders(userId: \$userId) {
-    createdAt
+  myOrders(userId: \$userId) {
     id
-    orderedProductDetails
-    productId
-    shippingInfo
-    total
-    updatedAt
-    userId
+    orderDate
+    status
+    orderNumber
+    orderTotal
+    invoiceUrl
+    shippingAddress {
+      city
+      name
+      pincode
+    }
+    orderedItems {
+      itemName
+      brandName
+      image
+      quantity
+      price
+    }
+    paymentInfo {
+      method
+      totalPaid
+      transactionId
+    }
+    orderSummary {
+      itemsPrice
+      postage
+      tax
+      totalBeforeTax
+      orderTotal
+    }
   }
 }
 """;

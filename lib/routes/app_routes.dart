@@ -9,6 +9,7 @@ import 'package:casa_flutter/src/cart/view/screens/cart_screen.dart';
 import 'package:casa_flutter/src/common/widgets/development_screen.dart';
 import 'package:casa_flutter/src/explore/view/screens/products_list_screen.dart';
 import 'package:casa_flutter/src/explore/view/screens/store_screen.dart';
+import 'package:casa_flutter/src/order/model/order_models.dart';
 import 'package:casa_flutter/src/order/view/screens/current_orders_screen.dart';
 import 'package:casa_flutter/src/order/view/screens/order_review_screen.dart';
 import 'package:casa_flutter/src/payment/view/screens/payment_options_screen.dart';
@@ -227,13 +228,23 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.orderDetails,
       name: RouteNames.orderDetails,
-      builder: (context, state) => OrderDetails(),
+      builder: (context, state) {
+        final Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+        final OrderedItems selectedItem = args["selectedItem"];
+        final OrderModel orderData = args["orderData"];
+
+        return OrderDetails(orderItem: selectedItem, orderData: orderData);
+      },
     ),
     GoRoute(
       path: _AppPaths.trackShipment,
       name: RouteNames.trackShipment,
-      builder: (context, state) => TrackShipment(),
+      builder: (context, state) {
+        final orderItem = state.extra as OrderedItems?;
+        return TrackShipment(orderItem: orderItem!);
+      },
     ),
+
     GoRoute(
       path: _AppPaths.wishlist,
       name: RouteNames.wishlist,
@@ -272,7 +283,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.myOrders,
       name: RouteNames.myOrders,
-      builder: (context, state) => CurrentOrdersScreen(),
+      builder: (context, state) {
+        final bool flag = state.extra as bool? ?? true;
+        return CurrentOrdersScreen(isHistory: flag);
+      },
     ),
     GoRoute(
       path: _AppPaths.store,

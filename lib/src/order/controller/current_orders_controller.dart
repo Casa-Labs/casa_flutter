@@ -2,16 +2,19 @@ import 'package:casa_flutter/network/graph_ql_manager.dart';
 import 'package:casa_flutter/src/order/model/order_models.dart';
 import 'package:get/get.dart';
 
+import '../../../utils/preference_manager.dart';
+
 class CurrentOrdersController extends GetxController {
   var isLoading = true.obs;
   final manager = GraphQLManager();
+  final userID = PreferenceManager.getString(PreferenceManager.userId);
 
-  Future<List<GetOrders>> fetchProducts() async {
+  Future<List<OrderModel>> fetchProducts() async {
     try {
-      List<GetOrders> orderList = [];
-      var response = await manager.getOrders('4ed11705-112e-4874-a646-0aaf496d5ce2');
-      List<dynamic> data = response.data?['getOrders'] ?? [];
-       orderList = data.map((json) => GetOrders.fromJson(json)).toList();
+      List<OrderModel> orderList = [];
+      var response = await manager.getOrders(userID!);
+      List<dynamic> data = response.data?['myOrders'] ?? [];
+       orderList = data.map((json) => OrderModel.fromJson(json)).toList();
       return orderList;
     } catch (e) {
       return [];
