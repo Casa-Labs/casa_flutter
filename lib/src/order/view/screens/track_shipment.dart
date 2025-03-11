@@ -1,3 +1,4 @@
+import 'package:casa_flutter/src/order/model/order_models.dart';
 import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,9 @@ import '../widgets/order_tracker.dart';
 import '../widgets/view_button.dart';
 
 class TrackShipment extends StatelessWidget {
-  const TrackShipment({super.key});
+  final OrderedItems orderItem;
+
+  const TrackShipment({super.key, required this.orderItem});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,7 @@ class TrackShipment extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  OrderCard(),
+                  OrderCard(orderItem: orderItem,),
                   SizedBox(height: 10),
                   Text(
                     "Order packed",
