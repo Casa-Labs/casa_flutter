@@ -20,6 +20,21 @@ query GetNewArrivalProducts(\$page: Int!, \$limit: Int!, \$search: String) {
 }
 """;
 
+  static const String getNewArrivalProductsForExplore = """
+query GetNewArrivalProducts(\$page: Int!, \$limit: Int!) {
+  getNewArrivalProducts(page: \$page, limit: \$limit) {
+      totalCount
+    products {
+      mainImage
+      id
+      name
+      price
+      description
+    }
+  }
+}
+""";
+
   static const String getCategory = """
 query GetProductCategories {
   getProductCategories {
