@@ -81,11 +81,16 @@ class GraphQLMutations {
 """;
 
   static const String addUserAddress = """
-  mutation AddUserAddress(\$userId: String!, \$address: String!, \$city: String!, \$state: String!, \$pincode: String!, \$country: String!) {
-  addUserAddress(userId: \$userId, address: \$address, city: \$city, state: \$state, pincode: \$pincode, country: \$country) {
+  mutation AddUserAddress(\$userId: String!, \$address: String!, \$city: String!, \$state: String!, \$pincode: String!,\$landmark: String, \$country: String!) {
+  addUserAddress(userId: \$userId, address: \$address, city: \$city, state: \$state, pincode: \$pincode,landmark: \$landmark, country: \$country) {
     id
     userId
     address
+    landmark
+    city
+    state
+    pincode
+    country
   }
 }
 """;

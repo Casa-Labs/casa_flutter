@@ -3,6 +3,7 @@ import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../utils/preference_manager.dart';
 import '../widgets/address_display_box.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -191,12 +192,7 @@ class _SearchScreenState extends State<SearchScreen> {
               Divider(color: DividerColor.grey),
               const SizedBox(height: 20),
               AddressDisplayBox(
-                addresses: [
-                  Address(
-                      label: 'Home',
-                      address:
-                          'A1-504 Akal Society, JB Nagar, Andheri East 4000049'),
-                ],
+                address: PreferenceManager.getString(PreferenceManager.keyAddress) ?? "",
               ),
               const SizedBox(height: 20),
               GestureDetector(

@@ -88,6 +88,7 @@ class GraphQLVariables {
     String state,
     String pinCode,
     String country,
+    String? landmark,
   ) {
     return {
       "userId": userId,
@@ -96,6 +97,7 @@ class GraphQLVariables {
       "state": state,
       "pincode": pinCode,
       "country": country,
+      "landmark": landmark,
     };
   }
 

@@ -12,11 +12,13 @@ class CustomPrimaryButton extends StatelessWidget {
   final PrimaryButtons button;
   final Function() onPressed;
   final String text;
+  final bool isLoading;
 
   const CustomPrimaryButton(
       {super.key,
       required this.button,
       required this.onPressed,
+        this.isLoading = false,
       required this.text});
 
   @override
@@ -57,18 +59,26 @@ class CustomPrimaryButton extends StatelessWidget {
         minimumSize: size,
         padding: padding,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(20),
           side: BorderSide(color: borderColor),
         ),
       ),
-      child: Text(
-        text,
-        style: Theme.of(context).textTheme.titleMedium!.copyWith(
-              fontWeight: FontWeight.w500,
-              fontSize: fontSize,
-              color: textColor,
+      child: isLoading
+          ? SizedBox(
+              height: 20.0,
+              width: 20.0,
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            )
+          : Text(
+              text,
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    fontWeight: FontWeight.w500,
+                    fontSize: fontSize,
+                    color: textColor,
+                  ),
             ),
-      ),
     );
   }
 }

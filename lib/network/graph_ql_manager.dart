@@ -100,6 +100,7 @@ class GraphQLManager {
     required String state,
     required String pinCode,
     required String country,
+    String? landmark,
   }) async {
     return await _clientService.performMutation(
       document: GraphQLMutations.addUserAddress,
@@ -110,6 +111,7 @@ class GraphQLManager {
         state,
         pinCode,
         country,
+        landmark,
       ),
     );
   }

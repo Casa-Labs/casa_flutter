@@ -71,6 +71,9 @@ class DeliveryAddressController extends GetxController {
         if (deliveryAddressResponse != null) {
           isDeliveryAddressSaved(true);
           message('Delivery address details saved successfully');
+          var userAddress = deliveryAddressResponse.addUserAddress;
+          String fullAddress = "${userAddress!.address}, ${userAddress.landmark}, ${userAddress.city}, ${userAddress.state}, ${userAddress.pincode}, ${userAddress.country}";
+          PreferenceManager.setData(PreferenceManager.keyAddress, fullAddress);
           isLoading(false);
         } else {
           isLoading(false);
