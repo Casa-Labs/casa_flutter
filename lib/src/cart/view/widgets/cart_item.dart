@@ -12,7 +12,7 @@ import 'counter_widget.dart';
 class CartItem extends StatelessWidget {
   final ProductForCart item;
   final Function() onCartItemDelete; // This for Deleting cart item
-  final Function() onBuyNow;  // This for buying cart only one item instantly
+  final Function() onBuyNow; // This for buying cart only one item instantly
   final cartController = Get.find<CartController>();
 
   CartItem(
@@ -39,12 +39,14 @@ class CartItem extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(4),
                 child: SizedBox(
-                  height: 166,
-                  child: Image.asset(
-                    'assets/images/placeholder.png',
-                    fit: BoxFit.fill,
-                  ),
-                ),
+                    height: MediaQuery.of(context).size.height * 0.2,
+                    width: MediaQuery.of(context).size.width * 0.25,
+                    child: Image.network(item.mainImage!, fit: BoxFit.fill)
+                    //  Image.asset(
+                    //   'assets/images/placeholder.png',
+                    //   fit: BoxFit.fill,
+                    // ),
+                    ),
               ),
             ),
             Expanded(

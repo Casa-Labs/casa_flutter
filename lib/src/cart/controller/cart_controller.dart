@@ -20,7 +20,7 @@ class CartController extends GetxController {
   final manager = GraphQLManager();
   RxString message = ''.obs;
   bool isLoading = true;
-  RxInt totalPrice = 0.obs;
+  RxDouble totalPrice = 0.0.obs;
 
   // ========== STATES ========== //
   @override
@@ -37,7 +37,7 @@ class CartController extends GetxController {
   }
 
   void totalPriceCount() {
-    int total = 0;
+    double total = 0;
     for (var i = 0; i < cartList.length; i++) {
       total += cartList[i].item!.price! * cartList[i].item!.quantity!;
     }

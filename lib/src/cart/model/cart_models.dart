@@ -93,19 +93,18 @@ class CartItem {
 }
 
 // This model shows items which add in the cart //
-
 class ProductForCart {
   String? id;
   String? name;
   String? description;
-  int? price;
+  double? price;
   String? category;
-  List<dynamic>? size;
+  // List<String>? size;
   int? stock;
   String? storeId;
   String? mainImage;
   bool? isNewArrival;
-  // List<String>? productImages;
+  List<String>? productImages;
   bool? isTrending;
   String? createdAt;
   String? updatedAt;
@@ -118,8 +117,8 @@ class ProductForCart {
       this.description,
       this.price,
       this.category,
-      this.size,
-      // this.productImages,
+      // this.size,
+      this.productImages,
       this.mainImage,
       this.stock,
       this.storeId,
@@ -133,16 +132,13 @@ class ProductForCart {
     id = json['id'] ?? "";
     name = json['name'] ?? "";
     description = json['description'] ?? "";
-    if (json['price'] is int) {
-      price = json['price'] ?? 0;
-    }
-    if (json['price'] is double) {
-      price = json['price'].round() ?? 0;
-    }
+    price = json['price'] is int
+        ? (json['price'] as int).toDouble()
+        : (json['price'] ?? 0).toDouble();
     category = json['category'] ?? "";
     mainImage = json['mainImage'] ?? "";
-    size = json['sizes'] ?? [];
-    // productImages = json['productImages'].cast<String>() ?? [];
+    // size = json['sizes'] ?? [];
+    productImages = json['productImages'].cast<String>() ?? [];
     stock = json['stock'] ?? 0;
     storeId = json['storeId'] ?? "";
     isNewArrival = json['isNewArrival'] ?? false;
@@ -159,9 +155,9 @@ class ProductForCart {
     data['description'] = description;
     data['price'] = price;
     data['category'] = category;
-    // data['productImages'] = productImages;
+    data['productImages'] = productImages;
     data['mainImage'] = mainImage;
-    data['sizes'] = size;
+    // data['sizes'] = size;
     data['stock'] = stock;
     data['storeId'] = storeId;
     data['isNewArrival'] = isNewArrival;

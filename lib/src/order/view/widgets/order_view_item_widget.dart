@@ -40,18 +40,14 @@ class OrderViewItemWidget extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: SizedBox(
-                      height: 166,
-                      child: Image.asset(
-                        'assets/images/placeholder.png',
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    //  Image.network(
-                    //   product.images![0].src.toString(),
-                    //   fit: BoxFit.cover,
-                    //   width: 109,
-                    //   height: 166,
-                    // ),
+                        height: MediaQuery.of(context).size.height * 0.2,
+                        width: MediaQuery.of(context).size.width * 0.25,
+                        child: Image.network(item.mainImage!, fit: BoxFit.fill)
+                        //  Image.asset(
+                        //   'assets/images/placeholder.png',
+                        //   fit: BoxFit.fill,
+                        // ),
+                        ),
                   ),
                 ),
                 Expanded(
