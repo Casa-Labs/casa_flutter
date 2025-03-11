@@ -205,7 +205,7 @@ query GetCartItems(\$userId: String!) {
   getCartItems(userId: \$userId) {
     createdAt
     id
-    items
+    item
     updatedAt
     userId
   }

@@ -10,8 +10,8 @@ class CartService {
     final AddCartResponseModel addCartResponseModel;
 
     final response = await _graphQLManager.addItemToCart(
-      addCartRequestModel.userId,
-      addCartRequestModel.items,
+      userId: addCartRequestModel.userId,
+      items: addCartRequestModel.item,
     );
 
     addCartResponseModel = AddCartResponseModel.fromJson(
@@ -43,7 +43,8 @@ class CartService {
     final GetCartResponseModel getCartResponseModel;
 
     final response = await _graphQLManager.removeItemFromCart(
-        removeCartRequestModel.userId, removeCartRequestModel.productId);
+        userId: removeCartRequestModel.userId,
+        removeItemFromCartId: removeCartRequestModel.productId);
 
     getCartResponseModel = GetCartResponseModel.fromJson(
       response.data!,

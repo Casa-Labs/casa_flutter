@@ -1,11 +1,11 @@
 // Add items to cart request model //
 class AddCartRequestModel {
   String userId;
-  List<Map<String, dynamic>> items;
+  Map<String, dynamic> item;
 
   AddCartRequestModel({
     required this.userId,
-    required this.items,
+    required this.item,
   });
 }
 
@@ -41,20 +41,24 @@ class GetcartRequestModel {
 
 // Get cart items response model //
 class GetCartResponseModel {
-  CartItem? getCartItems;
+  // CartItem? getCartItems;
+  List<CartItem>? getCartItems;
 
   GetCartResponseModel({this.getCartItems});
 
   GetCartResponseModel.fromJson(Map<String, dynamic> json) {
-    getCartItems = json['getCartItems'] != null
-        ? CartItem.fromJson(json['getCartItems'])
-        : null;
+    if (json['getCartItems'] != null) {
+      getCartItems = <CartItem>[];
+      json['getCartItems'].forEach((v) {
+        getCartItems!.add(CartItem.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (getCartItems != null) {
-      data['getCartItems'] = getCartItems!.toJson();
+      data['getCartItems'] = getCartItems!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -62,36 +66,28 @@ class GetCartResponseModel {
 
 // This model is used both get and add cart response model//
 class CartItem {
-  String? createdAt;
+  ProductForCart? item;
   String? id;
-  List<ProductForCart>? items;
+  String? createdAt;
   String? updatedAt;
-  String? userId;
 
-  CartItem({this.createdAt, this.id, this.items, this.updatedAt, this.userId});
+  CartItem({this.item, this.id, this.createdAt, this.updatedAt});
 
   CartItem.fromJson(Map<String, dynamic> json) {
-    createdAt = json['createdAt'];
+    item = json['item'] != null ? ProductForCart.fromJson(json['item']) : null;
     id = json['id'];
-    if (json['items'] != null) {
-      items = <ProductForCart>[];
-      json['items'].forEach((v) {
-        items!.add(ProductForCart.fromJson(v));
-      });
-    }
+    createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    userId = json['userId'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['createdAt'] = createdAt;
-    data['id'] = id;
-    if (items != null) {
-      data['items'] = items!.map((v) => v.toJson()).toList();
+    if (item != null) {
+      data['item'] = item!.toJson();
     }
+    data['id'] = id;
+    data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
-    data['userId'] = userId;
     return data;
   }
 }
@@ -137,7 +133,12 @@ class ProductForCart {
     id = json['id'] ?? "";
     name = json['name'] ?? "";
     description = json['description'] ?? "";
-    price = json['price'] ?? 0;
+    if (json['price'] is int) {
+      price = json['price'] ?? 0;
+    }
+    if (json['price'] is double) {
+      price = json['price'].round() ?? 0;
+    }
     category = json['category'] ?? "";
     mainImage = json['mainImage'] ?? "";
     size = json['sizes'] ?? [];

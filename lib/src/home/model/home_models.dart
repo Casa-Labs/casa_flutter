@@ -154,7 +154,7 @@ class Product {
   String? description;
   dynamic price;
   String? category;
-  List<String>? size;
+  // List<String>? size;
   int? stock;
   String? storeId;
   String? mainImage;
@@ -171,7 +171,7 @@ class Product {
       this.description,
       this.price,
       this.category,
-      this.size,
+      // this.size,
       this.productImages,
       this.mainImage,
       this.stock,
@@ -188,7 +188,7 @@ class Product {
     price = json['price'] ?? 0;
     category = json['category'] ?? "";
     mainImage = json['mainImage'] ?? "";
-    size = json['sizes'] ?? [];
+    // size = json['sizes'] ?? [];
     productImages = json['productImages'].cast<String>() ?? [];
     stock = json['stock'] ?? 0;
     storeId = json['storeId'] ?? "";
@@ -207,7 +207,7 @@ class Product {
     data['category'] = category;
     data['productImages'] = productImages;
     data['mainImage'] = mainImage;
-    data['sizes'] = size;
+    // data['sizes'] = size;
     data['stock'] = stock;
     data['storeId'] = storeId;
     data['isNewArrival'] = isNewArrival;

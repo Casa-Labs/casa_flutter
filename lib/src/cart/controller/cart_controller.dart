@@ -14,12 +14,13 @@ class CartController extends GetxController {
   // ========= CONTROLLERS ========= //
 
   // ========= VARIABLES ========= //
-  RxList<ProductForCart> cartList = <ProductForCart>[].obs;
+  RxList<CartItem> cartList = <CartItem>[].obs;
   final userID = PreferenceManager.getString(PreferenceManager.userId);
   GetCartResponseModel getCartResponseModel = GetCartResponseModel();
   final manager = GraphQLManager();
   RxString message = ''.obs;
   bool isLoading = true;
+  RxInt totalPrice = 0.obs;
 
   // ========== STATES ========== //
   @override
@@ -29,28 +30,43 @@ class CartController extends GetxController {
   }
 
   // ========== UI FUNCTIONS ========== //
+  void removeAllItemFromCart() {
+    for (var i = 0; i < cartList.length; i++) {
+      removeItemFromCart(cartList[i].id.toString());
+    }
+  }
+
+  void totalPriceCount() {
+    int total = 0;
+    for (var i = 0; i < cartList.length; i++) {
+      total += cartList[i].item!.price! * cartList[i].item!.quantity!;
+    }
+    totalPrice(total);
+    update();
+  }
 
   // ========== APIs FUNCTIONS ========== //
-  
+
   // Add data to cart //
   Future<void> addProductsToCart(Product product, int quantity) async {
-    List<Map<String, dynamic>> items = [
-      {
-        ...product.toJson(), // Convert product to JSON
-        "quantity": quantity, // Add quantity field
-      }
-    ];
+    Map<String, dynamic> item = {
+      ...product.toJson(), // Convert product to JSON
+      "quantity": quantity, // Add quantity field
+    };
 
-    logg.d(items);
+    logg.d(item);
 
     AddCartRequestModel addCartRequestModel = AddCartRequestModel(
       userId: userID!,
-      items: items,
+      item: item,
     );
 
     var response = await _cartService.addItemToCart(
         addCartRequestModel: addCartRequestModel);
-
+    if (response != null) {
+      getCartItems();
+    }
+    update();
     logg.d("add Data ====> $response");
   }
 
@@ -66,9 +82,10 @@ class CartController extends GetxController {
       var response = await _cartService.getCartItems(
           getCartRequestModel: getCartRequestModel);
       logg.d("get Data ====> $response");
-      if (response != null && response.getCartItems != null) {
+      if (response != null) {
         getCartResponseModel = response;
-        cartList(getCartResponseModel.getCartItems!.items ?? []);
+        cartList(getCartResponseModel.getCartItems ?? []);
+        totalPriceCount();
       }
       isLoading = false;
       update();
@@ -85,20 +102,16 @@ class CartController extends GetxController {
       productId: productId,
     );
     try {
-      isLoading = true;
       update();
       var response = await _cartService.removeItemFromCart(
           removeCartRequestModel: removeCartRequestModel);
       logg.d("remove Data ====> $response");
-      if (response != null && response.getCartItems != null) {
-        getCartResponseModel = response;
-        cartList(getCartResponseModel.getCartItems!.items ?? []);
+      if (response != null) {
+        getCartItems();
       }
-      isLoading = false;
       update();
     } catch (e) {
-      logg.e('get error to fetch cart data $e');
-      isLoading = false;
+      logg.e('get error to remove cart data $e');
       update();
     }
   }
@@ -110,20 +123,16 @@ class CartController extends GetxController {
       quantity: quantity,
     );
     try {
-      isLoading = true;
       update();
       var response = await _cartService.updateCartItem(
           updateCartRequestModel: updateCartRequestModel);
       logg.d("update Data ====> $response");
-      if (response != null && response.getCartItems != null) {
-        getCartResponseModel = response;
-        cartList(getCartResponseModel.getCartItems!.items ?? []);
+      if (response != null) {
+        getCartItems();
       }
-      isLoading = false;
       update();
     } catch (e) {
       logg.e('get error to fetch cart data $e');
-      isLoading = false;
       update();
     }
   }

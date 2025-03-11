@@ -4,15 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../../../common/widgets/buttons/custom_button.dart';
 import '../../controller/cart_controller.dart';
 import '../../model/cart_models.dart';
 import 'counter_widget.dart';
 
 class CartItem extends StatelessWidget {
   final ProductForCart item;
-  final cartController = Get.find<CartController>(); // GetX Controller
+  final Function() onCartItemDelete; // This for Deleting cart item
+  final Function() onBuyNow;  // This for buying cart only one item instantly
+  final cartController = Get.find<CartController>();
 
-  CartItem({super.key, required this.item});
+  CartItem(
+      {super.key,
+      required this.item,
+      required this.onCartItemDelete,
+      required this.onBuyNow});
 
   @override
   Widget build(BuildContext context) {
@@ -91,15 +98,25 @@ class CartItem extends StatelessWidget {
                     CounterWidget(
                       quantity: item.quantity ?? 1,
                       onQuantityChanged: (newQuantity) {
-                        cartController.updateCartItem(item.id!, newQuantity);
+                        item.quantity = newQuantity;
+                        cartController.totalPriceCount();
+                        // cartController.updateCartItem(item.id!, newQuantity);
                       },
                     ),
-                    IconButton(
-                      highlightColor: ButtonColor.yellow,
-                      icon: Icon(Icons.delete),
-                      onPressed: () {
-                        cartController.removeItemFromCart(item.id!);
-                      },
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          highlightColor: ButtonColor.yellow,
+                          icon: Icon(Icons.delete),
+                          onPressed: onCartItemDelete,
+                        ),
+                        CustomPrimaryButton(
+                          button: PrimaryButtons.smallWhiteBG,
+                          text: "Buy Now",
+                          onPressed: onBuyNow,
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -128,7 +145,7 @@ class CartItem extends StatelessWidget {
           Text(
             'Size:',
             style: textTheme.bodySmall?.copyWith(
-              color: TextColor.black.withOpacity(0.7),
+              color: TextColor.black,
               fontWeight: FontWeight.w500,
             ),
           ),

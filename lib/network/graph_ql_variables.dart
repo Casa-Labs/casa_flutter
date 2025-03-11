@@ -102,10 +102,10 @@ class GraphQLVariables {
   }
 
   static Map<String, dynamic> addItemToCartVariables(
-      String userId, List<Map<String, dynamic>> items) {
+      String userId, Map<String, dynamic> item) {
     return {
       "userId": userId,
-      "items": items,
+      "item": item,
     };
   }
 
@@ -172,10 +172,10 @@ class GraphQLVariables {
   }
 
   static Map<String, dynamic> removeItemFromCartVariables(
-      String userId, String productId) {
+      String userId, String removeItemFromCartId) {
     return {
       "userId": userId,
-      "productId": productId,
+      "removeItemFromCartId": removeItemFromCartId,
     };
   }
 
