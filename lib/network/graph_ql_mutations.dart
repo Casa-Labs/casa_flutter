@@ -8,6 +8,8 @@ class GraphQLMutations {
         createdAt
         email
         id
+        name
+        phone
         role
         updatedAt
       }

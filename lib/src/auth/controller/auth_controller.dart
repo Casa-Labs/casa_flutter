@@ -82,6 +82,8 @@ class AuthController extends GetxController {
         );
         message('User logged in successfully');
         isLoggedIn(true);
+      } else {
+        isLoading(false);
       }
     }
   }
