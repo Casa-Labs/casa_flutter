@@ -47,6 +47,13 @@ class Cards extends StatelessWidget {
                         ),
                       ),
                     ),
+                 /*   Align(
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.75,
+                          child: Image.asset('assets/images/placeholder.png',
+                              fit: BoxFit.fill)),
+                    ),*/
                     ClipRRect(
                       borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(20),
@@ -188,7 +195,8 @@ class Cards extends StatelessWidget {
                                     WidgetStateProperty.all(Colors.transparent),
                                 splashFactory: NoSplash.splashFactory,
                                 onTap: () {
-                                  cartLogin.addProductsToCart(product);
+                                  cartLogin.addProductsToCart(
+                                      product, logic.quantity.value);
                                 },
                                 child: Icon(Icons.add_shopping_cart_outlined,
                                     color: IconColor.white, size: 30),

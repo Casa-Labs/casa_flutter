@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../../../../utils/color_constant.dart';
 
-enum PrimaryButtons { blackBG, whiteBG } // add extra button states here
+enum PrimaryButtons {
+  blackBG,
+  whiteBG,
+  smallWhiteBG
+} // add extra button states here
 
 class CustomPrimaryButton extends StatelessWidget {
   final PrimaryButtons button;
@@ -20,7 +24,9 @@ class CustomPrimaryButton extends StatelessWidget {
     Color textColor = ButtonColor.white;
     Color backgroundColor = ButtonColor.black;
     Size size = Size(320, 40);
+    double fontSize = 18;
     Color borderColor = ButtonColor.grey;
+    EdgeInsetsGeometry? padding;
     switch (button) {
       case PrimaryButtons.blackBG:
         textColor = ButtonColor.white;
@@ -34,6 +40,14 @@ class CustomPrimaryButton extends StatelessWidget {
         size = Size(320, 48);
         borderColor = ButtonColor.transparent;
         break;
+      case PrimaryButtons.smallWhiteBG:
+        textColor = ButtonColor.black;
+        backgroundColor = ButtonColor.white;
+        size = Size(90, 25);
+        fontSize = 14;
+        borderColor = ButtonColor.black;
+        padding = EdgeInsets.zero;
+        break;
     }
     return ElevatedButton(
       onPressed: onPressed,
@@ -41,6 +55,7 @@ class CustomPrimaryButton extends StatelessWidget {
         elevation: 0,
         backgroundColor: backgroundColor,
         minimumSize: size,
+        padding: padding,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
           side: BorderSide(color: borderColor),
@@ -50,7 +65,7 @@ class CustomPrimaryButton extends StatelessWidget {
         text,
         style: Theme.of(context).textTheme.titleMedium!.copyWith(
               fontWeight: FontWeight.w500,
-              fontSize: 18,
+              fontSize: fontSize,
               color: textColor,
             ),
       ),

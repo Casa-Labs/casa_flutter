@@ -8,12 +8,13 @@ import 'package:go_router/go_router.dart';
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/padding_size.dart';
 import '../widgets/expandable_card.dart';
+import '../widgets/order_view_item_widget.dart';
 
 class OrderReviewScreen extends StatelessWidget {
   OrderReviewScreen({
     super.key,
   });
-  final orderReviewController = Get.put(OrderReviewController());
+  final orderRiviweCtrl = Get.find<OrderReviewController>();
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +22,14 @@ class OrderReviewScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: BackgroundColor.white,
       appBar: CommonAppBar(
-          title: 'Order review',
+        title: 'Order review',
         actions: [
           InkWell(
             overlayColor: WidgetStateProperty.all(ButtonColor.transparent),
             splashFactory: NoSplash.splashFactory,
-            onTap: () {},
+            onTap: () {
+              orderRiviweCtrl.deleteAllItem();
+            },
             child: Container(
               alignment: Alignment.center,
               child: Padding(
@@ -38,7 +41,8 @@ class OrderReviewScreen extends StatelessWidget {
               ),
             ),
           )
-        ],),
+        ],
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -74,205 +78,15 @@ class OrderReviewScreen extends StatelessWidget {
                           padding: const EdgeInsets.all(0),
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: orderReviewController.productsList.length,
+                          itemCount: orderRiviweCtrl.productsList.length,
                           itemBuilder: (context, index) {
-                            var product =
-                                orderReviewController.productsList[index];
-                            return Container(
-                                padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
-                                decoration: BoxDecoration(
-                                  color: TextColor.white,
-                                  border:
-                                      Border.all(color: TextColor.black, width: 0.7),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Card(
-                                          elevation: 2,
-                                          color: ButtonColor.white,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                          ),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: Image.network(
-                                              product.images![0].src.toString(),
-                                              fit: BoxFit.cover,
-                                              width: 109,
-                                              height: 166,
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10.0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Text(
-                                                        product.title!,
-                                                        style: textTheme.bodyLarge
-                                                            ?.copyWith(
-                                                          // fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      "₹${product.price!.replaceAll('Rs.', '').replaceAll(' ', '')}",
-                                                      style: textTheme.bodyLarge
-                                                          ?.copyWith(
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                const SizedBox(height: 4),
-                                                Text(
-                                                  'Zara',
-                                                  style: textTheme.bodyMedium
-                                                      ?.copyWith(
-                                                    // fontSize: 16,
-                                                    color: TextColor.black54,
-                                                  ),
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  children: [
-                                                    Icon(Icons
-                                                        .bike_scooter_outlined),
-                                                    // SvgPicture.asset(
-                                                    //     'assets/icon/ruler.svg'),
-                                                    const SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Text(
-                                                      'Size Guide',
-                                                      style: textTheme.bodySmall
-                                                          ?.copyWith(
-                                                        color: TextColor.black54,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      'Size:',
-                                                      style: textTheme.bodyMedium
-                                                          ?.copyWith(
-                                                        // fontSize: 14,
-                                                        color: TextColor.black54,
-                                                        fontWeight:
-                                                            FontWeight.w300,
-                                                      ),
-                                                    ),
-                                                    const Spacer(),
-                                                    Text(
-                                                      'M',
-                                                      style: textTheme.bodyMedium
-                                                          ?.copyWith(
-                                                        // fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.w300,
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 25,
-                                                    ),
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      'Quantity:',
-                                                      style: textTheme.bodyMedium
-                                                          ?.copyWith(
-                                                        // fontSize: 14,
-                                                        color: TextColor.black54,
-                                                        fontWeight:
-                                                            FontWeight.w300,
-                                                      ),
-                                                    ),
-                                                    const Spacer(),
-                                                    Container(
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          horizontal: 10,
-                                                          vertical: 2),
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
-                                                          color: const Color
-                                                              .fromARGB(106, 217,
-                                                              217, 217)),
-                                                      child: Text(
-                                                        product.quantity
-                                                            .toString(),
-                                                        style: textTheme
-                                                            .bodyMedium
-                                                            ?.copyWith(
-                                                          // fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.w300,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      width: 20,
-                                                    ),
-                                                  ],
-                                                ),
-                                                IconButton(
-                                                  highlightColor:
-                                                      IconColor.transparent,
-                                                  icon: Icon(Icons.delete),
-                                                  // icon: SvgPicture.asset(
-                                                  //   'assets/icon/delete.svg',
-                                                  //   height: 23,
-                                                  //   width: 23,
-                                                  // ),
-                                                  onPressed: () {
-                                                    orderReviewController
-                                                        .deleteItem(product);
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ));
+                            var product = orderRiviweCtrl.productsList[index];
+                            return OrderViewItemWidget(
+                              item: product.item!,
+                              onorderItemDelete: () {
+                                orderRiviweCtrl.deleteItem(product);
+                              },
+                            );
                           },
                           separatorBuilder: (BuildContext context, int index) {
                             return const SizedBox(
@@ -302,7 +116,8 @@ class OrderReviewScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   InkWell(
                                     overlayColor: WidgetStateProperty.all(
@@ -313,7 +128,8 @@ class OrderReviewScreen extends StatelessWidget {
                                           horizontal: 10),
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                           color: ButtonColor.black),
                                       child: Text(
                                         "Delivery type",
@@ -333,7 +149,8 @@ class OrderReviewScreen extends StatelessWidget {
                                           horizontal: 10),
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                           color: ButtonColor.black),
                                       child: Text(
                                         "Instructions",
@@ -351,7 +168,8 @@ class OrderReviewScreen extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -365,7 +183,8 @@ class OrderReviewScreen extends StatelessWidget {
                                           border: Border.all(
                                               color: const Color(0xFF4220FF),
                                               width: 4),
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                         ),
                                       ),
                                       const SizedBox(
@@ -400,7 +219,7 @@ class OrderReviewScreen extends StatelessWidget {
                         height: 10,
                       ),
                       ExpandableCard(
-                        orderController: orderReviewController,
+                        orderController: orderRiviweCtrl,
                       ),
                       const SizedBox(
                         height: 50,
@@ -412,7 +231,8 @@ class OrderReviewScreen extends StatelessWidget {
             ),
             Container(
               color: ButtonColor.white,
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -457,7 +277,7 @@ class OrderReviewScreen extends StatelessWidget {
                         context.pushNamed(RouteNames.paymentOptions);
                       },
                       child: Text(
-                        "Pay ₹${orderReviewController.total}",
+                        "Pay ₹${orderRiviweCtrl.total}",
                         style: textTheme.bodyMedium?.copyWith(
                           // fontSize: 14,
                           color: TextColor.white,

@@ -214,4 +214,16 @@ query GetUsers(\$page: Int!, \$limit: Int!, \$search: String) {
   }
 }
 """;
+
+  static const String getCartItems = """
+query GetCartItems(\$userId: String!) {
+  getCartItems(userId: \$userId) {
+    createdAt
+    id
+    item
+    updatedAt
+    userId
+  }
+}
+""";
 }

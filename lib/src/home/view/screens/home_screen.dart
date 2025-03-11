@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 
 import '../../../cart/controller/cart_controller.dart';
 import '../../../common/widgets/filter_row.dart';
+import '../../../order/controller/order_review_controller.dart';
 import '../../model/home_models.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -16,6 +17,7 @@ class HomeScreen extends StatelessWidget {
 
   final homeCtrl = Get.put(HomeController());
   final cartController = Get.put(CartController());
+  final qrderReviewController = Get.put(OrderReviewController());
 
   @override
   Widget build(BuildContext context) {

@@ -5,155 +5,171 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../utils/color_constant.dart';
 import '../../../common/widgets/buttons/custom_button.dart';
+import '../../../order/controller/order_review_controller.dart';
 import '../../controller/cart_controller.dart';
 import '../widgets/cart_item.dart';
 
 class CartScreen extends StatelessWidget {
   CartScreen({super.key});
 
-  final CartController cartController = Get.put(CartController());
+  final cartController = Get.find<CartController>();
+  final orderReviewController = Get.find<OrderReviewController>();
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Scaffold(
-      backgroundColor: BackgroundColor.white,
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-        leading: cartController.cartList.isNotEmpty
-            ? InkWell(
-                overlayColor: WidgetStateProperty.all(ButtonColor.transparent),
-                splashFactory: NoSplash.splashFactory,
-                onTap: () {},
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      'Clear',
-                      style: textTheme.bodyMedium,
+    return Obx(() {
+      return Scaffold(
+        backgroundColor: BackgroundColor.white,
+        appBar: AppBar(
+          scrolledUnderElevation: 0,
+          leading: cartController.cartList.isNotEmpty
+              ? InkWell(
+                  overlayColor:
+                      WidgetStateProperty.all(ButtonColor.transparent),
+                  splashFactory: NoSplash.splashFactory,
+                  onTap: () {
+                    cartController.removeAllItemFromCart();
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        'Clear',
+                        style: textTheme.bodyMedium,
+                      ),
                     ),
                   ),
+                )
+              : IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: const Icon(Icons.arrow_back_ios),
                 ),
-              )
-            : IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                icon: const Icon(Icons.arrow_back_ios),
-              ),
-        leadingWidth: 60,
-        backgroundColor: BackgroundColor.white,
-        actions: [
-          InkWell(
-            overlayColor: WidgetStateProperty.all(ButtonColor.transparent),
-            splashFactory: NoSplash.splashFactory,
-            onTap: () {
-              context.pushNamed(RouteNames.faq);
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-                'FAQ',
-                style: textTheme.bodyMedium
-                    ?.copyWith(decoration: TextDecoration.underline),
+          leadingWidth: 60,
+          backgroundColor: BackgroundColor.white,
+          actions: [
+            InkWell(
+              overlayColor: WidgetStateProperty.all(ButtonColor.transparent),
+              splashFactory: NoSplash.splashFactory,
+              onTap: () {
+                context.pushNamed(RouteNames.faq);
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  'FAQ',
+                  style: textTheme.bodyMedium
+                      ?.copyWith(decoration: TextDecoration.underline),
+                ),
               ),
             ),
+            const SizedBox(width: 5),
+          ],
+          title: Text(
+            'My Cart',
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
           ),
-          const SizedBox(width: 5),
-        ],
-        title: Text(
-          'My Cart',
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              cartController.cartList.isEmpty
-                  ? Center(
-                      child: Column(
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                cartController.cartList.isEmpty
+                    ? Center(
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 200),
+                            Text(
+                              'Your cart is empty!',
+                              style: textTheme.bodyLarge,
+                            ),
+                          ],
+                        ),
+                      )
+                    : ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: const EdgeInsets.all(16),
+                        itemCount: cartController.cartList.length,
+                        itemBuilder: (context, index) {
+                          final cartItem = cartController.cartList[index];
+                          return CartItem(
+                            item: cartItem.item!,
+                            // This for Deleting cart item
+                            onCartItemDelete: () {
+                              cartController.removeItemFromCart(cartItem.id!);
+                            },
+                            // This for buying cart only one item instantly
+                            onBuyNow: () {
+                              orderReviewController
+                                  .getAllProductItem([cartItem]);
+                              context.pushNamed(RouteNames.orderReview);
+                            },
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return Column(
+                            children: [
+                              // Divider(
+                              //   height: 0.5,
+                              //   // color: Colors.grey.shade200
+                              //   color: DividerColor.grey,
+                              // ),
+                              // const SizedBox(height: 25),
+                            ],
+                          );
+                        },
+                      ),
+                const SizedBox(height: 10),
+                if (cartController.cartList.isNotEmpty)
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          const SizedBox(height: 200),
                           Text(
-                            'Your cart is empty!',
-                            style: textTheme.bodyLarge,
+                            'Total:',
+                            style: textTheme.bodyMedium,
                           ),
+                          Text(
+                            ' ₹${cartController.totalPrice}',
+                            style: textTheme.bodyLarge
+                                ?.copyWith(fontWeight: FontWeight.w600),
+                          ),
+                          const SizedBox(width: 30),
                         ],
                       ),
-                    )
-                  : ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding: const EdgeInsets.all(16),
-                      itemCount: cartController.cartList.length,
-                      itemBuilder: (context, index) {
-                        final item = cartController.cartList[index];
-                        return CartItem(
-                          item: item,
-                          totalChange: () {},
-                          onDelete: () {},
-                          index: index,
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return Column(
-                          children: [
-                            Divider(
-                              height: 0.5,
-                              // color: Colors.grey.shade200
-                              color: DividerColor.grey,
-                            ),
-                            const SizedBox(height: 25),
-                          ],
-                        );
-                      },
-                    ),
-              const SizedBox(height: 10),
-              if (cartController.cartList.isNotEmpty)
-                Column(
-                  children: [
-                    Divider(height: 0.5, color: DividerColor.grey),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Total:',
-                          style: textTheme.bodyMedium,
+                    ],
+                  ),
+                const SizedBox(height: 50),
+                cartController.cartList.isEmpty
+                    ? const SizedBox.shrink()
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 16),
+                        child: CustomPrimaryButton(
+                          button: PrimaryButtons.blackBG,
+                          text: "Checkout",
+                          onPressed: () {
+                            orderReviewController
+                                .getAllProductItem(cartController.cartList());
+                            context.pushNamed(RouteNames.orderReview);
+                          },
                         ),
-                        Text(
-                          ' ₹20',
-                          style: textTheme.bodyLarge
-                              ?.copyWith(fontWeight: FontWeight.w600),
-                        ),
-                        const SizedBox(width: 30),
-                      ],
-                    ),
-                  ],
-                ),
-              const SizedBox(height: 50),
-              cartController.cartList.isEmpty
-                  ? const SizedBox.shrink()
-                  : Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 16),
-                      child: CustomPrimaryButton(
-                        button: PrimaryButtons.blackBG,
-                        text: "Checkout",
-                        onPressed: () {},
                       ),
-                    ),
-              const SizedBox(height: 120),
-            ],
+                const SizedBox(height: 120),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

@@ -96,7 +96,6 @@ class Images {
   }
 }
 
-
 class GetProductData {
   GetProducts? getProducts;
 
@@ -155,7 +154,7 @@ class Product {
   String? description;
   double? price;
   String? category;
-  List<String>? size;
+  // List<String>? size;
   int? stock;
   String? storeId;
   String? mainImage;
@@ -168,19 +167,19 @@ class Product {
 
   Product(
       {this.id,
-        this.name,
-        this.description,
-        this.price,
-        this.category,
-        this.size,
-        this.productImages,
-        this.mainImage,
-        this.stock,
-        this.storeId,
-        this.isNewArrival,
-        this.isTrending,
-        this.createdAt,
-        this.updatedAt});
+      this.name,
+      this.description,
+      this.price,
+      this.category,
+      // this.size,
+      this.productImages,
+      this.mainImage,
+      this.stock,
+      this.storeId,
+      this.isNewArrival,
+      this.isTrending,
+      this.createdAt,
+      this.updatedAt});
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'] ?? "";
@@ -191,7 +190,7 @@ class Product {
         : (json['price'] ?? 0).toDouble();
     category = json['category'] ?? "";
     mainImage = json['mainImage'] ?? "";
-    size = json['size'] ?? [];
+    // size = json['sizes'] ?? [];
     productImages = json['productImages'].cast<String>() ?? [];
     stock = json['stock'] ?? 0;
     storeId = json['storeId'] ?? "";
@@ -210,7 +209,7 @@ class Product {
     data['category'] = category;
     data['productImages'] = productImages;
     data['mainImage'] = mainImage;
-    data['size'] = size;
+    // data['sizes'] = size;
     data['stock'] = stock;
     data['storeId'] = storeId;
     data['isNewArrival'] = isNewArrival;
@@ -221,12 +220,11 @@ class Product {
   }
 }
 
-
 class ProductModelFilter {
   String? title;
   String? leading;
   bool isSelected = false;
   bool isTabView = false;
 
-  ProductModelFilter({this.leading,this.title});
+  ProductModelFilter({this.leading, this.title});
 }

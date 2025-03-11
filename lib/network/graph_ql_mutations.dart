@@ -105,13 +105,13 @@ class GraphQLMutations {
 """;
 
   static const String addItemToCart = '''
-mutation AddItemToCart(\$userId: String, \$items: JSON) {
-  addItemToCart(userId: \$userId, items: \$items) {
-    createdAt
+mutation AddItemToCart(\$item: JSON!, \$userId: String) {
+  addItemToCart(item: \$item, userId: \$userId) {
     id
-    items
-    updatedAt
     userId
+    item
+    createdAt
+    updatedAt
   }
 }
 ''';
@@ -198,13 +198,13 @@ mutation RegisterProductReview(\$productId: String!, \$userId: String, \$liked: 
 ''';
 
   static const String removeItemFromCart = '''
-mutation RemoveItemFromCart(\$userId: String!, \$productId: String!) {
-  removeItemFromCart(userId: \$userId, productId: \$productId) {
-    createdAt
+mutation RemoveItemFromCart(\$userId: String!, \$removeItemFromCartId: String!) {
+  removeItemFromCart(userId: \$userId, id: \$removeItemFromCartId) {
     id
-    items
-    updatedAt
     userId
+    item
+    createdAt
+    updatedAt
   }
 }
 ''';
@@ -214,7 +214,7 @@ mutation UpdateCartItem(\$userId: String, \$productId: String, \$quantity: Int) 
   updateCartItem(userId: \$userId, productId: \$productId, quantity: \$quantity) {
     createdAt
     id
-    items
+    item
     updatedAt
     userId
   }

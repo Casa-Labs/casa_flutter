@@ -124,7 +124,7 @@ class GraphQLManager {
   }
 
   Future<QueryResult> addItemToCart(
-      String userId, Map<String, dynamic> items) async {
+      {required String userId, required Map<String, dynamic> items}) async {
     return await _clientService.performMutation(
       document: GraphQLMutations.addItemToCart,
       variables: GraphQLVariables.addItemToCartVariables(userId, items),
@@ -185,11 +185,11 @@ class GraphQLManager {
   }
 
   Future<QueryResult> removeItemFromCart(
-      String userId, String productId) async {
+      {required String userId, required String removeItemFromCartId}) async {
     return await _clientService.performMutation(
       document: GraphQLMutations.removeItemFromCart,
-      variables:
-          GraphQLVariables.removeItemFromCartVariables(userId, productId),
+      variables: GraphQLVariables.removeItemFromCartVariables(
+          userId, removeItemFromCartId),
     );
   }
 
@@ -302,6 +302,13 @@ class GraphQLManager {
     return await _clientService.performQuery(
       document: GraphQLQueries.getUsers,
       variables: GraphQLVariables.getUsersVariables(page, limit, search),
+    );
+  }
+
+  Future<QueryResult> getCartItems(String userId) async {
+    return await _clientService.performQuery(
+      document: GraphQLQueries.getCartItems,
+      variables: GraphQLVariables.getCartItemsVariables(userId),
     );
   }
 }
