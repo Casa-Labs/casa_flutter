@@ -81,6 +81,17 @@ flutter:
     - assets/images/verify.png
 
 
+  fonts:
+    - family: Shafarik
+      fonts:
+        - asset: fonts/Shafarik-Regular.ttf
+
+    - family: times-new-roman
+      fonts:
+        - asset: fonts/times-new-roman.ttf
+
+
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
