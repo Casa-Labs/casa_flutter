@@ -1,8 +1,10 @@
 import 'dart:math';
+
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../../network/graph_ql_manager.dart';
 import '../../../utils/utils.dart';
 import '../model/brand_response_model.dart';
@@ -10,16 +12,13 @@ import '../model/cat_response_model.dart';
 import '../model/home_models.dart';
 import '../model/size_respose_model.dart';
 
-class HomeController extends GetxController{
-
+class HomeController extends GetxController {
   // ========= CONTROLLERS ========= //
 
   final AppinioSwiperController controller = AppinioSwiperController();
   TextEditingController? searchController = TextEditingController();
 
-
   // ========= VARIABLES ========= //
-
 
   bool isDisabled = false;
   List<Product> products = [];
@@ -58,11 +57,11 @@ class HomeController extends GetxController{
     ProductModelFilter(leading: '', title: 'Hoodie')
   ];
   final List<ProductModelFilter> colorFilter = [
-    ProductModelFilter(leading: '', title:'Black'),
-    ProductModelFilter(leading: '', title:'Brown'),
-    ProductModelFilter(leading: '', title:'Green'),
-    ProductModelFilter(leading: '', title:'Denim'),
-    ProductModelFilter(leading: '', title:'Zebra print')
+    ProductModelFilter(leading: '', title: 'Black'),
+    ProductModelFilter(leading: '', title: 'Brown'),
+    ProductModelFilter(leading: '', title: 'Green'),
+    ProductModelFilter(leading: '', title: 'Denim'),
+    ProductModelFilter(leading: '', title: 'Zebra print')
   ];
   final List<ProductModelFilter> sizedFilter = [
     ProductModelFilter(leading: '', title: 'XXS'),
@@ -78,11 +77,11 @@ class HomeController extends GetxController{
   // ========== STATES ========== //
 
   @override
-  void onInit() {
-    fetchProducts({});
-    getBrand();
-    getSize();
-    getCategory();
+  void onInit() async {
+    await fetchProducts({});
+    await getBrand();
+    await getSize();
+    await getCategory();
     super.onInit();
   }
 
@@ -108,18 +107,18 @@ class HomeController extends GetxController{
           print('Previous index: $previousIndex, Target index: $targetIndex');
         }
         // Add conditions for swipe directions
-          if (activity.direction == AxisDirection.right) {
-            swipeIcon = Icons.check_rounded; // ✅ Right Swipe
-          } else if (activity.direction == AxisDirection.left) {
-            swipeIcon = Icons.close_rounded; // ❌ Left Swipe
-          }
+        if (activity.direction == AxisDirection.right) {
+          swipeIcon = Icons.check_rounded; // ✅ Right Swipe
+        } else if (activity.direction == AxisDirection.left) {
+          swipeIcon = Icons.close_rounded; // ❌ Left Swipe
+        }
 
-          // Hide the icon after some time
-          Future.delayed(Duration(milliseconds: 500), () {
-                swipeIcon = null;
-                update();
-          });
+        // Hide the icon after some time
+        Future.delayed(Duration(milliseconds: 500), () {
+          swipeIcon = null;
           update();
+        });
+        update();
         break;
 
       case Unswipe():
@@ -144,17 +143,17 @@ class HomeController extends GetxController{
     update();
   }
 
-  showFilter(){
+  showFilter() {
     isShowFilter = !isShowFilter;
     update();
   }
 
-  changeShippingPolicy(){
+  changeShippingPolicy() {
     isShowShipping = !isShowShipping;
     update();
   }
 
-  changeReturnPolicy(){
+  changeReturnPolicy() {
     isShowReturn = !isShowReturn;
     update();
   }
@@ -163,25 +162,25 @@ class HomeController extends GetxController{
 
   Future<void> fetchProducts(Map<String, dynamic> map) async {
     try {
-      isLoading =  true;
+      isLoading = true;
       update();
       var response = await manager.getProducts(map);
       var getProductList = GetProductData.fromJson(response.data!);
       products = getProductList.getProducts!.data ?? [];
       logg.d('get products ------ >>>>> $getProductList');
       products.shuffle(Random());
-      isLoading =  false;
+      isLoading = false;
       update();
     } catch (e) {
       logg.e('get error to fetch product data $e');
-      isLoading =  false;
+      isLoading = false;
       update();
     }
   }
 
   Future<void> getSize() async {
     try {
-      isLoading =  true;
+      isLoading = true;
       update();
       var response = await manager.getSizes();
       var getSizeData = GetSizeData.fromJson(response.data!);
@@ -191,33 +190,34 @@ class HomeController extends GetxController{
       update();
     } catch (e) {
       logg.e('get error to fetch product data $e');
-      isLoading =  false;
+      isLoading = false;
       update();
     }
   }
 
   Future<void> getCategory() async {
     try {
-      isLoading =  true;
+      isLoading = true;
       update();
       var response = await manager.getCategory();
       var catList = GetCategories.fromJson(response.data!);
       category = catList.getProductCategories ?? [];
       logg.d('categories data ------ >>>>> $catList');
-      isLoading =  false;
+      isLoading = false;
       update();
     } catch (e) {
       logg.e('get error to fetch product data $e');
-      isLoading =  false;
+      isLoading = false;
       update();
     }
   }
 
   Future<void> getBrand() async {
     try {
-      isLoading =  true;
+      isLoading = true;
       update();
-      var response = await manager.getBrands(5,1,"","BRAND");
+      var response = await manager.getBrands(
+          limit: 5, page: 1, search: "", storeType: "BRAND");
       var brandList = GetBrandData.fromJson(response.data!);
       brand = brandList.getBrands!.data ?? [];
       logg.d('brand data ------ >>>>> $brandList');
@@ -225,7 +225,7 @@ class HomeController extends GetxController{
       update();
     } catch (e) {
       logg.e('get error to fetch product data $e');
-      isLoading =  false;
+      isLoading = false;
       update();
     }
   }
