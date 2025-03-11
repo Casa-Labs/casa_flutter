@@ -132,10 +132,10 @@ class ProfileListModel {
 List<ProfileListModel> profileList = [
   ProfileListModel(
       title: 'My Orders',
-      onTap: (context) => context.pushNamed(RouteNames.myOrders)),
+      onTap: (context) => context.pushNamed(RouteNames.myOrders,extra: true)),
   ProfileListModel(
       title: 'Order History',
-      onTap: (context) => context.pushNamed(RouteNames.myOrders)),
+      onTap: (context) => context.pushNamed(RouteNames.myOrders,extra:false)),
   ProfileListModel(
     title: 'Share with a Friend',
     onTap: (context) {

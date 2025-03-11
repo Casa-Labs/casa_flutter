@@ -12,7 +12,9 @@ import '../widgets/order_tracker.dart';
 import '../widgets/view_button.dart';
 
 class CurrentOrdersScreen extends StatelessWidget {
-  CurrentOrdersScreen({super.key});
+  final bool isHistory;
+
+  CurrentOrdersScreen({super.key, required this.isHistory});
 
   final ordersController = Get.put(CurrentOrdersController());
 
@@ -23,10 +25,10 @@ class CurrentOrdersScreen extends StatelessWidget {
       backgroundColor: BackgroundColor.white,
       appBar: CommonAppBar(
         isBodyText: true,
-        title: 'Current Orders',
+        title: isHistory?'My Orders':'Order History',
       ),
       body: SafeArea(
-        child: FutureBuilder(
+        child: isHistory?FutureBuilder(
           future: orderFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -119,7 +121,7 @@ class CurrentOrdersScreen extends StatelessWidget {
               );
             }
           },
-        ),
+        ):Center(child: Text("No Order available")),
       ),
 
     );

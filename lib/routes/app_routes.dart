@@ -283,7 +283,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.myOrders,
       name: RouteNames.myOrders,
-      builder: (context, state) => CurrentOrdersScreen(),
+      builder: (context, state) {
+        final bool flag = state.extra as bool? ?? true;
+        return CurrentOrdersScreen(isHistory: flag);
+      },
     ),
     GoRoute(
       path: _AppPaths.store,
