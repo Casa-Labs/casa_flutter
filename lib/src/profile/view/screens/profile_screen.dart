@@ -1,5 +1,7 @@
 import 'package:casa_flutter/routes/app_routes.dart';
+import 'package:casa_flutter/src/auth/controller/auth_controller.dart';
 import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
+import 'package:casa_flutter/src/common/widgets/show_toast.dart';
 import 'package:casa_flutter/src/profile/controller/profile_controller.dart';
 import 'package:casa_flutter/utils/color_constant.dart';
 import 'package:casa_flutter/utils/padding_size.dart';
@@ -22,62 +24,99 @@ class ProfileScreen extends StatelessWidget {
         showBackButton: false,
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            CircleAvatar(
-              backgroundImage: AssetImage(ImageConstants.avatarLogo),
-              radius: 35,
-            ),
-            Text('Steve', style: Theme.of(context).textTheme.bodyLarge),
-            const SizedBox(height: 20),
-            Expanded(
-              child: Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding),
-                child: ListView.builder(
-                  itemCount: profileList.length,
-                  itemBuilder: (context, index) {
-                    final item = profileList[index];
-                    return Container(
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                              color: ButtonColor.grey,
-                              width: 0.5), // Bottom border only
-                        ),
-                      ),
-                      child: ListTile(
-                        title: Text(item.title),
-                        titleTextStyle: Theme.of(context).textTheme.bodySmall,
-                        trailing: const Icon(
-                          Icons.arrow_forward_ios,
-                          size: 12,
-                        ),
-                        onTap: () => item.onTap(context),
-                        contentPadding: EdgeInsets.zero,
-                        minVerticalPadding: 0,
-                        dense: true,
-                        // visualDensity:
-                        //     VisualDensity.compact, // Else theme will be use
-                      ),
-                    );
-                  },
+        child: GetX(
+          initState: (final _) {
+            homeCtrl.getLoggedInUserName();
+          },
+          builder: (final ProfileController homeCtrl) {
+            return Column(
+              children: [
+                const SizedBox(height: 20),
+                CircleAvatar(
+                  backgroundImage: AssetImage(
+                    ImageConstants.avatarLogo,
+                  ),
+                  radius: 35,
                 ),
-              ),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: ButtonColor.black,
-                foregroundColor: ButtonColor.white,
-              ),
-              onPressed: () {
-                context.goNamed(RouteNames.signIn);
-              },
-              child: Text('Delete Account'),
-            ),
-            const SizedBox(height: 50),
-          ],
+                Text(
+                  homeCtrl.loggedInUser(),
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                const SizedBox(height: 20),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: PaddingSize.commonPadding),
+                    child: ListView.builder(
+                      itemCount: profileList.length,
+                      itemBuilder: (context, index) {
+                        final item = profileList[index];
+                        return Container(
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                  color: ButtonColor.grey,
+                                  width: 0.5), // Bottom border only
+                            ),
+                          ),
+                          child: ListTile(
+                            title: Text(item.title),
+                            titleTextStyle:
+                                Theme.of(context).textTheme.bodySmall,
+                            trailing: const Icon(
+                              Icons.arrow_forward_ios,
+                              size: 12,
+                            ),
+                            onTap: () => item.onTap(context),
+                            contentPadding: EdgeInsets.zero,
+                            minVerticalPadding: 0,
+                            dense: true,
+                            // visualDensity:
+                            //     VisualDensity.compact, // Else theme will be use
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                Obx(
+                  () => ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: ButtonColor.black,
+                      foregroundColor: ButtonColor.white,
+                      fixedSize: Size(
+                        MediaQuery.of(context).size.width * .9,
+                        36.0,
+                      ),
+                    ),
+                    onPressed: () async {
+                      await homeCtrl.deleteUserCall();
+                      if (homeCtrl.message.isNotEmpty) {
+                        showToast(
+                          message: homeCtrl.message(),
+                        );
+                        if (homeCtrl.isUserDeleted()) {
+                          router.goNamed(RouteNames.signIn);
+                        }
+                      }
+                    },
+                    child: homeCtrl.isUserDeleteProgress()
+                        ? SizedBox(
+                            height: 20.0,
+                            width: 20.0,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          )
+                        : Text(
+                            'Delete Account',
+                          ),
+                  ),
+                ),
+                const SizedBox(height: 50),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -130,6 +169,11 @@ List<ProfileListModel> profileList = [
   ),
   ProfileListModel(
     title: 'Logout',
-    onTap: (context) => context.goNamed(RouteNames.signIn),
+    onTap: (context) async {
+      final authController = Get.find<AuthController>();
+      await authController.logOutUser();
+      authController.clearAllControllers();
+      router.goNamed(RouteNames.signIn);
+    },
   ),
 ];

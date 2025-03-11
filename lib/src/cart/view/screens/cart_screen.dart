@@ -139,7 +139,7 @@ class CartScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16.0, vertical: 16),
                       child: CustomPrimaryButton(
-                        button: PrimaryButtons.blueBG,
+                        button: PrimaryButtons.blackBG,
                         text: "Checkout",
                         onPressed: () {
                           orderReviewController.productsList =

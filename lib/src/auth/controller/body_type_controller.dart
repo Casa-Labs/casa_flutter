@@ -1,8 +1,14 @@
+import 'dart:convert';
+
+import 'package:casa_flutter/src/auth/model/auth_models.dart';
 import 'package:casa_flutter/src/auth/model/chip_list_model.dart';
+import 'package:casa_flutter/src/auth/model/service/auth_service.dart';
+import 'package:casa_flutter/utils/preference_manager.dart';
 import 'package:get/get.dart';
 
 class BodyTypeController extends GetxController {
-  // ========= CONTROLLERS ========= //
+  // ========= OBJECTS ============= //
+  final AuthService _authService = AuthService();
 
   // ========= VARIABLES ========= //
   RxString message = ''.obs;
@@ -52,9 +58,38 @@ class BodyTypeController extends GetxController {
   Future<void> saveBodyTypeDetails() async {
     if (bodyTypeList().any((element) => element.isSelected)) {
       isLoading(true);
-      message('Body type preferences saved successfully');
-      isLoading(false);
-      isBodyTypeSaved(true);
+
+      // get user details
+      final userDetailsData = PreferenceManager.getString(
+        PreferenceManager.userDetails,
+      );
+      var userDetailsMap = <String, dynamic>{};
+      if (userDetailsData != null) {
+        userDetailsMap = json.decode(userDetailsData.trim());
+      }
+      final userDetails = User.fromJson(userDetailsMap);
+      if (userDetails.id != null) {
+        final selectedBodyTypes = [
+          ...bodyTypeList
+              .where((e) => e.isSelected)
+              .toList()
+              .map((bodyType) => bodyType.name),
+        ];
+        final bodyTypePreferencesResponse =
+            await _authService.addBodyTypePreferences(
+          userId: userDetails.id ?? '',
+          bodyTypes: selectedBodyTypes,
+        );
+        if (bodyTypePreferencesResponse != null) {
+          message('Body type preferences saved successfully');
+          isLoading(false);
+          isBodyTypeSaved(true);
+        } else {
+          isLoading(false);
+        }
+      } else {
+        isLoading(false);
+      }
     } else {
       message('Please select at-least one body type');
       isBodyTypeSaved(false);

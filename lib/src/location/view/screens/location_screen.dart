@@ -1,3 +1,4 @@
+import 'package:casa_flutter/src/common/widgets/buttons/custom_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../../common/widgets/common_app_bars.dart';
@@ -68,6 +69,11 @@ class LocationScreen extends StatelessWidget {
                 CustomTextFormField(
                   hintText: 'Telephone',
                 ),
+                SizedBox(height: 30),
+                CustomPrimaryButton(
+                    button: PrimaryButtons.blackBG,
+                    onPressed: () {},
+                    text: 'Save')
               ],
             ),
           ),

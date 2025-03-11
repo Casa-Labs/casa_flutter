@@ -10,8 +10,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../routes/app_routes.dart';
 import '../../../../utils/padding_size.dart';
-import '../../../common/widgets/add_to_cart_button.dart';
-import '../../../common/widgets/select_size_button.dart';
+import '../../../common/widgets/buttons/add_to_cart_button.dart';
+import '../../../common/widgets/buttons/select_size_button.dart';
 import '../widgets/care_composition_tile.dart';
 import '../widgets/quantity_selector_button.dart';
 
@@ -74,7 +74,8 @@ class ProductDescriptionScreen extends StatelessWidget {
                               onPressed: () {
                                 context.pushNamed(RouteNames.cart);
                               },
-                              icon: const Icon(Icons.add_shopping_cart_outlined),
+                              icon:
+                                  const Icon(Icons.add_shopping_cart_outlined),
                               color: IconColor.white,
                               padding: EdgeInsets.zero,
                               constraints: BoxConstraints(),
@@ -95,18 +96,18 @@ class ProductDescriptionScreen extends StatelessWidget {
               Row(
                 children: [
                   IconButton(
-                    onPressed: () {
-                    },
-                    icon:CustomImageView(image: ImageConstants.send,
+                    onPressed: () {},
+                    icon: CustomImageView(
+                      image: ImageConstants.send,
                       height: 24,
-                    ) ,
+                    ),
                   ),
                   IconButton(
                       onPressed: () {},
-                      icon:CustomImageView(image: ImageConstants.chat,
+                      icon: CustomImageView(
+                        image: ImageConstants.chat,
                         height: 24,
-                      )
-                  ),
+                      )),
                   Spacer(),
                   InkWell(
                     child: Icon(Icons.bookmark_border),
@@ -137,7 +138,9 @@ class ProductDescriptionScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 20),
-              SelectSizeButton(size: [],),
+              SelectSizeButton(
+                size: [],
+              ),
               const SizedBox(height: 20),
               Center(child: QuantitySelectorButton()),
               const SizedBox(height: 20),

@@ -7,8 +7,9 @@ import '../utils/utils.dart';
 
 class GraphQLClientService {
   static final HttpLink _httpLink = HttpLink(
-    'https://server.casashop.in/graphql', // Replace with your GraphQL endpoint
-  );
+      // 'https://server.casashop.in/graphql', // PROD
+      'https://staging.casashop.in/graphql' // STAGING - DEV
+      );
 
   static final AuthLink _authLink = AuthLink(
     getToken: () async {

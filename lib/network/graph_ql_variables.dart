@@ -24,13 +24,71 @@ class GraphQLVariables {
     };
   }
 
-  static Map<String, dynamic> changePasswordVariables({
-    required String oldPassword,
-    required String newPassword,
-  }) {
+  static Map<String, dynamic> deleteUserVariables(String userId) {
     return {
-      "oldPassword": oldPassword,
-      "newPassword": newPassword,
+      "userId": userId,
+    };
+  }
+
+  static Map<String, dynamic> updateUserDetailsVariables(
+    String userId,
+    String name,
+    String email,
+    String phone,
+  ) {
+    return {
+      "userId": userId,
+      "name": name,
+      "email": email,
+      "phone": phone,
+    };
+  }
+
+  static Map<String, dynamic> addStylePreferencesVariables(
+    String userId,
+    List<String> styles,
+  ) {
+    return {
+      "userId": userId,
+      "styles": styles,
+    };
+  }
+
+  static Map<String, dynamic> addBodyTypePreferencesVariables(
+    String userId,
+    List<String> bodyTypes,
+  ) {
+    return {
+      "userId": userId,
+      "bodyTypes": bodyTypes,
+    };
+  }
+
+  static Map<String, dynamic> addFitPreferencesVariables(
+    String userId,
+    List<String> fitPreferences,
+  ) {
+    return {
+      "userId": userId,
+      "fitPrefrence": fitPreferences,
+    };
+  }
+
+  static Map<String, dynamic> addUserAddressVariables(
+    String userId,
+    String address,
+    String city,
+    String state,
+    String pinCode,
+    String country,
+  ) {
+    return {
+      "userId": userId,
+      "address": address,
+      "city": city,
+      "state": state,
+      "pincode": pinCode,
+      "country": country,
     };
   }
 

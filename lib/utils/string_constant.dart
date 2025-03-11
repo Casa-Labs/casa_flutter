@@ -12,6 +12,8 @@ class ImageConstants {
   static String send = 'assets/images/send.png';
   static String chat = 'assets/images/chat.png';
   static String ruler = 'assets/icons/ruler.svg';
+  static String email = 'assets/images/email.png';
+  static String verify = 'assets/images/verify.png';
 }
 
 class AppStrings {

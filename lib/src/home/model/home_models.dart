@@ -96,7 +96,6 @@ class Images {
   }
 }
 
-
 class GetProductData {
   GetProducts? getProducts;
 
@@ -153,7 +152,7 @@ class Product {
   String? id;
   String? name;
   String? description;
-  int? price;
+  dynamic price;
   String? category;
   List<String>? size;
   int? stock;
@@ -168,19 +167,19 @@ class Product {
 
   Product(
       {this.id,
-        this.name,
-        this.description,
-        this.price,
-        this.category,
-        this.size,
-        this.productImages,
-        this.mainImage,
-        this.stock,
-        this.storeId,
-        this.isNewArrival,
-        this.isTrending,
-        this.createdAt,
-        this.updatedAt});
+      this.name,
+      this.description,
+      this.price,
+      this.category,
+      this.size,
+      this.productImages,
+      this.mainImage,
+      this.stock,
+      this.storeId,
+      this.isNewArrival,
+      this.isTrending,
+      this.createdAt,
+      this.updatedAt});
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'] ?? "";
@@ -219,12 +218,11 @@ class Product {
   }
 }
 
-
 class ProductModelFilter {
   String? title;
   String? leading;
   bool isSelected = false;
   bool isTabView = false;
 
-  ProductModelFilter({this.leading,this.title});
+  ProductModelFilter({this.leading, this.title});
 }

@@ -1,4 +1,5 @@
-import 'package:casa_flutter/src/auth/controller/auth_controller.dart';
+import 'package:casa_flutter/routes/app_routes.dart';
+import 'package:casa_flutter/src/auth/controller/change_password_controller.dart';
 import 'package:casa_flutter/src/common/widgets/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,8 +11,8 @@ import '../widgets/auth_button.dart';
 class ChangePasswordScreen extends StatelessWidget {
   ChangePasswordScreen({super.key});
 
-  final authCtrl = Get.put(
-    AuthController(),
+  final changePasswordController = Get.put(
+    ChangePasswordController(),
   );
 
   @override
@@ -21,15 +22,17 @@ class ChangePasswordScreen extends StatelessWidget {
         child: Stack(
           children: [
             Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 50, left: 20),
-                  child: IconButton(
-                      onPressed: () {
-                        context.pop();
-                      },
-                      icon: Icon(Icons.arrow_back_ios)),
-                )),
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 50, left: 20),
+                child: IconButton(
+                  onPressed: () {
+                    context.pop();
+                  },
+                  icon: Icon(Icons.arrow_back_ios),
+                ),
+              ),
+            ),
             Align(
               alignment: Alignment.center,
               child: Padding(
@@ -56,27 +59,6 @@ class ChangePasswordScreen extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Old Password'),
-                        Obx(
-                          () => CustomTextFormField(
-                            controller: authCtrl.oldPassword,
-                            obscureText: authCtrl.isOldPasswordObscured(),
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                authCtrl.showOldPassword();
-                              },
-                              icon: Icon(
-                                authCtrl.isOldPasswordObscured()
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onSecondaryContainer,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 40),
                         Text(
                           'Your New Password Must Be Different From Previously Used Password.',
                           style: Theme.of(context).textTheme.bodySmall,
@@ -85,14 +67,15 @@ class ChangePasswordScreen extends StatelessWidget {
                         Text('New Password'),
                         Obx(
                           () => CustomTextFormField(
-                            controller: authCtrl.newPassword,
-                            obscureText: authCtrl.isNewPasswordObscured(),
+                            controller: changePasswordController.newPassword,
+                            obscureText: changePasswordController
+                                .isNewPasswordObscured(),
                             suffixIcon: IconButton(
                               onPressed: () {
-                                authCtrl.showNewPassword();
+                                changePasswordController.showNewPassword();
                               },
                               icon: Icon(
-                                authCtrl.isNewPasswordObscured()
+                                changePasswordController.isNewPasswordObscured()
                                     ? Icons.visibility_off
                                     : Icons.visibility,
                                 color: Theme.of(context)
@@ -106,14 +89,17 @@ class ChangePasswordScreen extends StatelessWidget {
                         Text('Confirm Password'),
                         Obx(
                           () => CustomTextFormField(
-                            controller: authCtrl.confirmPassword,
-                            obscureText: authCtrl.isConfirmPasswordObscured(),
+                            controller:
+                                changePasswordController.confirmPassword,
+                            obscureText: changePasswordController
+                                .isConfirmPasswordObscured(),
                             suffixIcon: IconButton(
                               onPressed: () {
-                                authCtrl.showConfirmPassword();
+                                changePasswordController.showConfirmPassword();
                               },
                               icon: Icon(
-                                authCtrl.isConfirmPasswordObscured()
+                                changePasswordController
+                                        .isConfirmPasswordObscured()
                                     ? Icons.visibility_off
                                     : Icons.visibility,
                                 color: Theme.of(context)
@@ -129,12 +115,14 @@ class ChangePasswordScreen extends StatelessWidget {
                     AuthButton(
                       type: AuthButtonType.save,
                       onPressed: () async {
-                        authCtrl.changePassword();
-                        if (authCtrl.message().isNotEmpty) {
+                        changePasswordController.changePassword();
+                        if (changePasswordController.message().isNotEmpty) {
                           showToast(
-                            message: authCtrl.message(),
+                            message: changePasswordController.message(),
                           );
-                          //context.goNamed(RouteNames.signIn);
+                          if (changePasswordController.isPasswordChanged()) {
+                            router.goNamed(RouteNames.signIn);
+                          }
                         }
                       },
                     ),

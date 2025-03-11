@@ -61,8 +61,8 @@ class StylePreferencesScreen extends StatelessWidget {
                     () => AuthButton(
                       type: AuthButtonType.saveStylePreferences,
                       isLoading: stylePreferencesController.isLoading(),
-                      onPressed: () {
-                        stylePreferencesController
+                      onPressed: () async {
+                        await stylePreferencesController
                             .saveStylePreferencesDetails();
                         if (stylePreferencesController.message().isNotEmpty) {
                           showToast(

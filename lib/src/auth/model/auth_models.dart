@@ -8,16 +8,6 @@ class LoginRequestModel {
   });
 }
 
-class ChangePasswordRequestModel {
-  String oldPassword;
-  String newPassword;
-
-  ChangePasswordRequestModel({
-    required this.oldPassword,
-    required this.newPassword,
-  });
-}
-
 class LoginResponseModel {
   Login? login;
 
@@ -67,6 +57,8 @@ class User {
   String? createdAt;
   String? email;
   String? id;
+  String? name;
+  String? phone;
   String? role;
   String? updatedAt;
 
@@ -75,6 +67,8 @@ class User {
     this.createdAt,
     this.email,
     this.id,
+    this.name,
+    this.phone,
     this.role,
     this.updatedAt,
   });
@@ -84,6 +78,8 @@ class User {
     createdAt = json?['createdAt'];
     email = json?['email'];
     id = json?['id'];
+    name = json?['name'];
+    phone = json?['phone'];
     role = json?['role'];
     updatedAt = json?['updatedAt'];
   }
@@ -94,6 +90,8 @@ class User {
     data['createdAt'] = createdAt;
     data['email'] = email;
     data['id'] = id;
+    data['name'] = name;
+    data['phone'] = phone;
     data['role'] = role;
     data['updatedAt'] = updatedAt;
     return data;

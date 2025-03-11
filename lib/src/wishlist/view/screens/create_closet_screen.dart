@@ -34,15 +34,17 @@ class CreateClosetScreen extends StatelessWidget {
                         children: [
                           Text(
                             'Add to Closet',
-                            style:
-                                Theme.of(context).textTheme.titleLarge?.copyWith(
-                                      // fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(
+                                  // fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
                           ),
                           InkWell(
-                            overlayColor:
-                                WidgetStateProperty.all(ButtonColor.transparent),
+                            overlayColor: WidgetStateProperty.all(
+                                ButtonColor.transparent),
                             splashFactory: NoSplash.splashFactory,
                             onTap: () => context.pop(),
                             child: Container(
@@ -56,20 +58,21 @@ class CreateClosetScreen extends StatelessWidget {
                       ),
                     )
                   else
-                    CustomAppbar(
-                        title: 'Create a Closet'),
+                    CustomAppbar(title: 'Create a Closet'),
                   Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: PaddingSize.commonPadding, vertical: isBottomSheet ? 5 : 10),
+                        horizontal: PaddingSize.commonPadding,
+                        vertical: isBottomSheet ? 5 : 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Choose a closet name:',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                // fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    // fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                         ),
                         const SizedBox(
                           height: 5,
@@ -213,17 +216,14 @@ class CreateClosetScreen extends StatelessWidget {
                             onPressed: () async {
                               wishlistController.closetInit();
                               context.pop();
-                            }
-                        ),
+                            }),
                         const SizedBox(height: 10),
                         AuthButton(
                             type: AuthButtonType.createCloset,
                             onPressed: () async {
                               wishlistController.addCloset();
                               context.pop();
-                            }
-                        ),
-
+                            }),
                       ],
                     ),
                   ),
