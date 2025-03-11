@@ -212,7 +212,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.location,
       name: RouteNames.location,
-      builder: (context, state) => const LocationScreen(),
+      builder: (context, state) => LocationScreen(),
     ),
     GoRoute(
       path: _AppPaths.faq,

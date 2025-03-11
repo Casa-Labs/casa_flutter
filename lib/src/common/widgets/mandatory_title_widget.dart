@@ -17,14 +17,14 @@ class MandatoryTitle extends StatelessWidget {
           TextSpan(
             text: text.toUpperCase(),
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w500,
                   color: TextColor.black,
                 ),
           ),
           TextSpan(
             text: '*',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w500,
                   color: TextColor.lightBlue,
                 ),
           ),

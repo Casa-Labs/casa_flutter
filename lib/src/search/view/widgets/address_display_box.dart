@@ -2,6 +2,7 @@ import 'package:casa_flutter/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+
 class Address {
   final String label;
   final String address;
@@ -21,9 +22,9 @@ class Address {
 }
 
 class AddressDisplayBox extends StatelessWidget {
-  final List<Address> addresses;
+  final String address;
 
-  const AddressDisplayBox({super.key, required this.addresses});
+  const AddressDisplayBox({super.key, required this.address});
 
   @override
   Widget build(BuildContext context) {
@@ -56,37 +57,14 @@ class AddressDisplayBox extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 10),
-
-          // Address list
-          Column(
-            children: addresses
-                .map((address) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(address.icon, color: Colors.black),
-                              const SizedBox(width: 10),
-                              Text(
-                                address.label,
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            address.address,
-                            style: Theme.of(context).textTheme.bodyMedium,
-                            softWrap: true,
-                          ),
-                        ],
-                      ),
-                    ))
-                .toList(),
-          ),
+          address.isNotEmpty ?Text(
+            address,
+            style: Theme
+                .of(context)
+                .textTheme
+                .bodyMedium,
+            softWrap: true,
+          ):SizedBox(),
         ],
       ),
     );
