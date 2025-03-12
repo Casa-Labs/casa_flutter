@@ -31,7 +31,7 @@ class WishlistItemScreen extends StatelessWidget {
                     image: NetworkImage(
                       wishlistController
                           .wishlistData[wishlistController.itemIndex.value]
-                          .imageUrl,
+                          .imageUrl!,
                     ), // Add an image URL if needed
                     fit: BoxFit.cover,
                   ),
@@ -62,7 +62,7 @@ class WishlistItemScreen extends StatelessWidget {
                                 wishlistController
                                     .wishlistData[
                                         wishlistController.itemIndex.value]
-                                    .name,
+                                    .name!,
                                 style: const TextStyle(
                                   color: TextColor.white,
                                   fontSize: 20,
@@ -95,17 +95,20 @@ class WishlistItemScreen extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding, vertical: 5),
+                padding: EdgeInsets.symmetric(
+                    horizontal: PaddingSize.commonPadding, vertical: 5),
                 child: FilterRow(
                   brandList: wishlistController.brandFilter,
                   colorList: wishlistController.colorFilter,
                   productList: wishlistController.productFilter,
+                  sizedList: wishlistController.sizedFilter,
                 ),
               ),
               Obx(() {
                 return Expanded(
                   child: GridView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: PaddingSize.commonPadding),
                       shrinkWrap: true,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(

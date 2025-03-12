@@ -1,71 +1,53 @@
+import 'package:casa_flutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../utils/preference_manager.dart';
+import '../../../utils/utils.dart';
 import '../../home/model/home_models.dart';
-import '../model/wishlist_models.dart';
+import '../model/add_board_to_closet_model.dart';
+import '../model/get_closet_model.dart';
+import '../model/service/wishlist_service.dart';
 
 class WishlistController extends GetxController {
-  RxList<WishlistModels> wishlistData = <WishlistModels>[].obs;
-  RxList<ProductModel> wishItemList = <ProductModel>[].obs;
+  // ========= OBJECTS ============= //
+  final WishlistService _wishlistService = WishlistService();
+  // ========= CONTROLLERS ========= //
   TextEditingController searchController = TextEditingController();
   TextEditingController closetController = TextEditingController();
+
+  // ========= VARIABLES ========= //
+  final userID = PreferenceManager.getString(PreferenceManager.userId);
+  RxList<ClothingItems> wishlistData = <ClothingItems>[].obs;
+  RxList<GetUserClosets> getUserClosetList = <GetUserClosets>[].obs;
+  RxList<ProductModel> wishItemList = <ProductModel>[].obs;
   RxBool isDeleted = false.obs;
   RxBool isWishItemDeleted = false.obs;
   RxBool isBottomSheet = false.obs;
   RxInt itemIndex = (-1).obs;
-  final List<ProductModelFilter> brandFilter = [
-    ProductModelFilter(leading: '', title: 'Zara'),
-    ProductModelFilter(leading: '', title: 'H&M'),
-    ProductModelFilter(leading: '', title: 'Gap'),
-    ProductModelFilter(leading: '', title: 'CASA'),
-    ProductModelFilter(leading: '', title: 'Tommy hilfiger')
-  ];
-  final List<ProductModelFilter> productFilter = [
-    ProductModelFilter(leading: '', title: 'Topwear'),
-    ProductModelFilter(leading: '', title: 'Shirt'),
-    ProductModelFilter(leading: '', title: 'Sweatshirt'),
-    ProductModelFilter(leading: '', title: 'T- shirt'),
-    ProductModelFilter(leading: '', title: 'Hoodie')
-  ];
-  final List<ProductModelFilter> colorFilter = [
-    ProductModelFilter(leading: '', title:'Black'),
-    ProductModelFilter(leading: '', title:'Brown'),
-    ProductModelFilter(leading: '', title:'Green'),
-    ProductModelFilter(leading: '', title:'Denim'),
-    ProductModelFilter(leading: '', title:'Zebra print')
-  ];
 
   RxString searchQuery = ''.obs;
   RxString selectedImage = ''.obs;
-  ProductModel productModel = ProductModel(
-      price: "₹20",
-      title: "White and golden shorts for women",
-      images: [
-        Images(
-            src:
-                'https://srstore.in/cdn/shop/files/O1CN01iWwp191LUMaFHeZpu__2209587281302-0-cib_2000x.jpg?v=1712055840'),
-      ]);
+  bool isLoading = true;
+  // ========== STATES ========== //
 
   @override
   void onInit() {
     super.onInit();
-    wishlistData.add(WishlistModels(
-        imageUrl:
-            'https://static.vecteezy.com/system/resources/thumbnails/031/623/946/small_2x/background-for-productgraphy-ai-generated-photo.jpg',
-        name: "All Saved",
-        productList: [productModel, productModel, productModel]));
+    getUserClosets();
     selectedImage.value = imageLinks[0];
     searchController.addListener(() {
       searchQuery.value = searchController.text;
     });
   }
 
-  List<WishlistModels> get filteredWishlist {
+// ========== UI FUNCTIONS ========== //
+  List<ClothingItems> get filteredWishlist {
     if (searchQuery.value.isEmpty) {
       return wishlistData;
     }
     return wishlistData
-        .where((wishlist) => wishlist.name
+        .where((wishlist) => wishlist.name!
             .toLowerCase()
             .contains(searchQuery.value.toLowerCase()))
         .toList();
@@ -74,7 +56,7 @@ class WishlistController extends GetxController {
   void addCloset() async {
     if (closetController.text.isNotEmpty) {
       wishlistData.add(
-        WishlistModels(
+        ClothingItems(
           imageUrl: selectedImage.value,
           name: closetController.text,
         ),
@@ -83,7 +65,7 @@ class WishlistController extends GetxController {
     }
   }
 
-  void removeCloset(WishlistModels wishlist) async {
+  void removeCloset(ClothingItems wishlist) async {
     wishlistData.remove(wishlist);
   }
 
@@ -114,6 +96,65 @@ class WishlistController extends GetxController {
     wishItemList.refresh();
   }
 
+  // ========== APIs FUNCTIONS ========== //
+  Future<void> createCloset() async {
+    var response = await _wishlistService.createCloset();
+    if (response != null) {
+      getUserClosets();
+    }
+  }
+
+  Future<void> getUserClosets() async {
+    GetClosetRequestModel getClosetRequestModel = GetClosetRequestModel(
+      userId: userID!,
+    );
+    try {
+      isLoading = true;
+      update();
+      var response = await _wishlistService.getUserClosets(
+          getClosetRequestModel: getClosetRequestModel);
+      // logg.d("get Data ====> $response");
+      if (response != null) {
+        if (response.getUserClosets!.isEmpty) {
+          createCloset();
+        } else {
+          if (response.getUserClosets!.first.clothingItems!.isEmpty) {
+            addItemToCloset(
+                closetId: response.getUserClosets!.first.id.toString(),
+                imageUrl: AppStrings.defaultClosetImageUrel,
+                name: AppStrings.defaulttClosetName);
+          } else {
+            getUserClosetList(response.getUserClosets);
+            wishlistData(getUserClosetList.first.clothingItems);
+          }
+        }
+      }
+      isLoading = false;
+      update();
+    } catch (e) {
+      logg.e('get error to fetch closet data $e');
+      isLoading = false;
+      update();
+    }
+  }
+
+  Future<void> addItemToCloset(
+      {required String closetId,
+      required String imageUrl,
+      required String name}) async {
+    AddBoardRequestModel addBoardRequestModel = AddBoardRequestModel(
+      closetId: closetId,
+      imageUrl: imageUrl,
+      name: name,
+    );
+    var response = await _wishlistService.addItemToCloset(
+        addBoardRequestModel: addBoardRequestModel);
+    logg.d("get Data ====> $response");
+    getUserClosets();
+  }
+
+  //=========== CONSTANT LIST =========== //
+
   List<String> imageLinks = [
     "https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?cs=srgb&dl=pexels-padrinan-255379.jpg&fm=jpg",
     'https://t3.ftcdn.net/jpg/08/52/51/04/360_F_852510478_KdKJ1xGmlHICE8TD3QM68W6m7m1E7fHT.jpg',
@@ -139,5 +180,39 @@ class WishlistController extends GetxController {
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3IoMJuoE1LC9-Ado1qPjVitRXmLkAFhV-gA&s',
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxgVcve4HzfyMm88qW1pZMuxry1tg81PE2-A&s',
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-uWsMJev5y2_S1EpvpFSDed5oJwcPpBwbrA&s',
+  ];
+
+  final List<ProductModelFilter> brandFilter = [
+    ProductModelFilter(leading: '', title: 'Zara'),
+    ProductModelFilter(leading: '', title: 'H&M'),
+    ProductModelFilter(leading: '', title: 'Gap'),
+    ProductModelFilter(leading: '', title: 'CASA'),
+    ProductModelFilter(leading: '', title: 'Tommy hilfiger')
+  ];
+
+  final List<ProductModelFilter> productFilter = [
+    ProductModelFilter(leading: '', title: 'Topwear'),
+    ProductModelFilter(leading: '', title: 'Shirt'),
+    ProductModelFilter(leading: '', title: 'Sweatshirt'),
+    ProductModelFilter(leading: '', title: 'T- shirt'),
+    ProductModelFilter(leading: '', title: 'Hoodie')
+  ];
+
+  final List<ProductModelFilter> colorFilter = [
+    ProductModelFilter(leading: '', title: 'Black'),
+    ProductModelFilter(leading: '', title: 'Brown'),
+    ProductModelFilter(leading: '', title: 'Green'),
+    ProductModelFilter(leading: '', title: 'Denim'),
+    ProductModelFilter(leading: '', title: 'Zebra print')
+  ];
+
+  final List<ProductModelFilter> sizedFilter = [
+    ProductModelFilter(leading: '', title: 'XXS'),
+    ProductModelFilter(leading: '', title: 'XS'),
+    ProductModelFilter(leading: '', title: 'S'),
+    ProductModelFilter(leading: '', title: 'M'),
+    ProductModelFilter(leading: '', title: 'L'),
+    ProductModelFilter(leading: '', title: 'XL'),
+    ProductModelFilter(leading: '', title: 'XXL')
   ];
 }

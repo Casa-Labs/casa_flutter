@@ -44,13 +44,14 @@ class OrderReviewController extends GetxController {
       double itemPrice = product.item!.price!.toDouble();
       totalSum += itemPrice * product.item!.quantity!;
     }
-    itemtotal.value = totalSum;
+    itemtotal.value = double.parse(totalSum.toStringAsFixed(2));
     gst.value = calculateGST(itemtotal.value);
-    total.value = itemtotal.value + gst.value;
+    total.value =
+        double.parse((itemtotal.value + gst.value).toStringAsFixed(2));
   }
 
   double calculateGST(double totalValue) {
-    return (totalValue * 18) / 100;
+    return double.parse(((totalValue * 18) / 100).toStringAsFixed(2));
   }
 
   // ========== APIs FUNCTIONS ========== //

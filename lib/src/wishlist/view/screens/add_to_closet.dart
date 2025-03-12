@@ -10,8 +10,12 @@ import 'create_closet_screen.dart';
 
 class AddToCloset extends StatelessWidget {
   final RxSet<String> selectedClosets = <String>{}.obs;
+  final String imageUrl;
+  final String itemId;
   AddToCloset({
     super.key,
+    required this.imageUrl,
+    required this.itemId,
   }); // Assign product to class variable
 
   @override
@@ -27,7 +31,7 @@ class AddToCloset extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(28.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -36,11 +40,13 @@ class AddToCloset extends StatelessWidget {
                         children: [
                           Text(
                             'Add to Closet',
-                            style:
-                                Theme.of(context).textTheme.titleLarge?.copyWith(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
                           ),
                           InkWell(
                             overlayColor:
@@ -80,15 +86,15 @@ class AddToCloset extends StatelessWidget {
 
                             return Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 8.0, vertical: 12),
+                                  horizontal: 8.0, vertical: 8),
                               child: GestureDetector(
                                 onTap: () {
-                                  final currentValue =
-                                      selectedClosets.contains(categoryMap.name);
+                                  final currentValue = selectedClosets
+                                      .contains(categoryMap.name);
                                   if (currentValue) {
                                     selectedClosets.remove(categoryMap.name);
                                   } else {
-                                    selectedClosets.add(categoryMap.name);
+                                    selectedClosets.add(categoryMap.name!);
                                   }
                                 },
                                 child: Row(
@@ -96,15 +102,15 @@ class AddToCloset extends StatelessWidget {
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(8),
                                       child: Image.network(
-                                        categoryMap.imageUrl,
-                                        width: 80,
-                                        height: 50,
+                                        categoryMap.imageUrl!,
+                                        width: 90,
+                                        height: 60,
                                         fit: BoxFit.cover,
                                       ),
                                     ),
                                     const SizedBox(width: 20),
                                     Text(
-                                      categoryMap.name,
+                                      categoryMap.name!,
                                       style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
@@ -117,14 +123,16 @@ class AddToCloset extends StatelessWidget {
                                             .contains(categoryMap.name),
                                         onChanged: (bool? value) {
                                           if (value == true) {
-                                            selectedClosets.add(categoryMap.name);
+                                            selectedClosets
+                                                .add(categoryMap.name!);
                                           } else {
                                             selectedClosets
                                                 .remove(categoryMap.name);
                                           }
                                         },
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(50),
+                                          borderRadius:
+                                              BorderRadius.circular(50),
                                         ),
                                         checkColor: IconColor.white,
                                         activeColor: IconColor.black,

@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/font.dart';
 import '../../../cart/controller/cart_controller.dart';
+import '../../../wishlist/view/screens/add_to_closet.dart';
 import '../../model/home_models.dart';
 
 class ProductDetails extends StatelessWidget {
@@ -42,24 +43,16 @@ class ProductDetails extends StatelessWidget {
                   ),
                   GestureDetector(
                       onTap: () {
-                        // Get.bottomSheet(
-                        //     AddToCloset(
-                        //       newProduct: WhishProductItem(
-                        //           imageUrl: logic
-                        //               .products[logic.cardIndex != -1
-                        //               ? logic.cardIndex
-                        //               : 0]
-                        //               .images![0]
-                        //               .src
-                        //               .toString(),
-                        //           itemId: logic
-                        //               .products[logic.cardIndex != -1
-                        //               ? logic.cardIndex
-                        //               : 0]
-                        //               .id
-                        //               .toString()),
-                        //     ),
-                        //     isScrollControlled: true);
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) {
+                            return AddToCloset(
+                              imageUrl: product.mainImage.toString(),
+                              itemId: product.id.toString(),
+                            );
+                          },
+                        );
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
