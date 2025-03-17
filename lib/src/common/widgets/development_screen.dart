@@ -1,3 +1,4 @@
+import 'package:casa_flutter/src/common/widgets/app_bar.dart';
 import 'package:casa_flutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,9 @@ class DevelopmentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppbar(
+        isLeadingBack: true,
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
