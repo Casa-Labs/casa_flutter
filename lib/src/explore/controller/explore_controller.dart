@@ -35,6 +35,16 @@ class ExploreController extends GetxController {
     ProductModelFilter(leading: '', title: 'Zebra print')
   ];
 
+  final List<ProductModelFilter> sizedFilter = [
+    ProductModelFilter(leading: '', title: 'XXS'),
+    ProductModelFilter(leading: '', title: 'XS'),
+    ProductModelFilter(leading: '', title: 'S'),
+    ProductModelFilter(leading: '', title: 'M'),
+    ProductModelFilter(leading: '', title: 'L'),
+    ProductModelFilter(leading: '', title: 'XL'),
+    ProductModelFilter(leading: '', title: 'XXL')
+  ];
+
   RxInt selectedIndex = 0.obs;
   RxList<tpm.Products> trendingProducts = <tpm.Products>[].obs;
   RxList<nam.Products> newArrivalProducts = <nam.Products>[].obs;
