@@ -13,6 +13,7 @@ import '../../controller/explore_controller.dart';
 
 class ExploreScreen extends StatelessWidget {
   ExploreScreen({super.key});
+
   final exploreCtrl = Get.put(ExploreController());
 
   @override
@@ -185,58 +186,64 @@ class BrandsSection extends StatelessWidget {
                       Expanded(flex: 2, child: Divider()),
                     ],
                   ),
-                  Container(
-                    height: 200,
-                    margin: EdgeInsets.only(top: 8, left: 8),
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: exploreCtrl.trendingProducts.length,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              context.pushNamed(RouteNames.productDescription);
-                            },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  height: 130,
-                                  width: 100,
-                                  margin: EdgeInsets.only(right: 20),
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            ImageConstants.splashBackground),
-                                        fit: BoxFit.cover),
-                                    borderRadius: BorderRadius.circular(15),
+                  exploreCtrl.trendingProducts.isNotEmpty
+                      ? Container(
+                          height: 200,
+                          margin: EdgeInsets.only(top: 8, left: 8),
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: exploreCtrl.trendingProducts.length,
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  onTap: () {
+                                    context.pushNamed(
+                                        RouteNames.productDescription);
+                                  },
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height: 130,
+                                        width: 100,
+                                        margin: EdgeInsets.only(right: 20),
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: AssetImage(ImageConstants
+                                                  .splashBackground),
+                                              fit: BoxFit.cover),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                      ),
+                                      SizedBox(height: 10),
+                                      SizedBox(
+                                        width: 100,
+                                        child: Text(
+                                          'GAP Bodycon Dress',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 100,
+                                        child: Text(
+                                          '\$20',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                SizedBox(height: 10),
-                                SizedBox(
-                                  width: 100,
-                                  child: Text(
-                                    'GAP Bodycon Dress',
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 100,
-                                  child: Text(
-                                    '\$20',
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }),
-                  ),
+                                );
+                              }),
+                        )
+                      : Text('No data available'),
                 ],
               ),
-
               // New Arrivals Column
               Column(
                 children: [

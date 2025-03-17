@@ -42,7 +42,9 @@ class HomeScreen extends StatelessWidget {
                         sizedList: logic.sizedFilter,
                       ),
                       SizedBox(height: 5),
-                      _cardSwiper(logic, context, logic.products)
+                      logic.products.isNotEmpty
+                          ? _cardSwiper(logic, context, logic.products)
+                          : Center(child: Text('No products found')),
                     ],
                   ),
                 );
@@ -70,7 +72,7 @@ class HomeScreen extends StatelessWidget {
                   right: true,
                 ),
                 backgroundCardCount: 0,
-                cardCount: 15,
+                cardCount: products.length,
                 isDisabled: logic.isDisabled,
                 onEnd: logic.onEnd,
                 initialIndex: logic.cardIndex != -1 ? logic.cardIndex : null,

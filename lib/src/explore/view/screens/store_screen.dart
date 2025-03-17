@@ -28,7 +28,7 @@ class StoreScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     FilterRow(
-                      brandList: exploreCtrl.brandFilter,colorList: exploreCtrl.colorFilter,productList: exploreCtrl.productFilter,
+                      brandList: exploreCtrl.brandFilter,colorList: exploreCtrl.colorFilter,productList: exploreCtrl.productFilter,sizedList: exploreCtrl.sizedFilter,
                     ),
                     const SizedBox(height: 20),
                     Expanded(
