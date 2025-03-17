@@ -1,6 +1,3 @@
-import 'package:casa_flutter/src/common/widgets/buttons/add_to_cart_button.dart';
-import 'package:casa_flutter/src/common/widgets/buttons/select_size_button.dart';
-import 'package:casa_flutter/src/explore/view/widgets/quantity_selector_button.dart';
 import 'package:casa_flutter/src/home/controller/home_controller.dart';
 import 'package:casa_flutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +6,8 @@ import 'package:get/get.dart';
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/font.dart';
 import '../../../cart/controller/cart_controller.dart';
+import '../../../common/widgets/buttons/add_to_cart_button.dart';
+import '../../../explore/view/widgets/quantity_selector_button.dart';
 import '../../model/home_models.dart';
 
 class ProductDetails extends StatelessWidget {
@@ -61,10 +60,7 @@ class ProductDetails extends StatelessWidget {
                         //     ),
                         //     isScrollControlled: true);
                       },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4.0),
-                        child: Icon(Icons.bookmark_border_rounded),
-                      ))
+                      child: const SizedBox.shrink())
                 ],
               ),
               const SizedBox(height: 15),

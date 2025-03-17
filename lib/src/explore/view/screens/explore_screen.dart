@@ -158,6 +158,7 @@ class BrandsSection extends StatelessWidget {
                               width: 80,
                               margin: EdgeInsets.only(right: 8),
                               decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
                                 image: DecorationImage(
                                     image:
                                         CachedNetworkImageProvider(brand.logo!),
