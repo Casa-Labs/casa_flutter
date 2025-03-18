@@ -64,17 +64,17 @@ class _CustomDropDownState extends State<CustomDropDown> {
         items: widget.items
             .map((String item) => DropdownMenuItem<String>(
                   value: item,
-                  child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        item,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              fontSize: widget.menufontSize,
-                              fontWeight: FontWeight.w500,
-                              color: TextColor.white, // Menu item text color
-                            ),
-                        overflow: TextOverflow.ellipsis,
-                      )),
+                  child: Center(
+                    child: Text(
+                      item,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontSize: widget.menufontSize,
+                            fontWeight: FontWeight.w500,
+                            color: TextColor.black, // Menu item text color
+                          ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ))
             .toList(),
         value: dropdownValue,
@@ -129,23 +129,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
           width: widget.width ?? (widget.fullSize ? Get.width : Get.width / 2),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14),
-            gradient: const LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color.fromARGB(207, 193, 193, 193),
-                Color.fromARGB(207, 193, 193, 193),
-                Color.fromARGB(209, 148, 148, 148),
-                Color.fromARGB(205, 135, 135, 135),
-                Color.fromARGB(205, 135, 135, 135),
-                Color.fromARGB(208, 108, 108, 108),
-                Color.fromARGB(207, 80, 80, 80),
-                Color.fromARGB(226, 68, 67, 67),
-                Color.fromARGB(230, 53, 53, 53),
-                //Color.fromARGB(228, 25, 25, 25),
-
-              ],
-            ),
+          color: /*DialogColor.white54*/ Colors.white,
           ),
         ),
         menuItemStyleData:

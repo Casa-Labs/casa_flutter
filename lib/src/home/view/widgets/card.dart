@@ -44,7 +44,7 @@ class Cards extends StatelessWidget {
                           child: ClipRRect(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
                             child: Image.network(product.mainImage!,
-                                fit: BoxFit.fill),
+                                fit: BoxFit.cover),
                           ),
                         ),
                       ),
@@ -55,21 +55,29 @@ class Cards extends StatelessWidget {
                             child: Image.asset('assets/images/placeholder.png',
                                 fit: BoxFit.fill)),
                       ),*/
-                      ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(20),
-                            bottomRight: Radius.circular(20)),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Colors.black.withValues(alpha: 0.0),
-                                Colors.black.withValues(alpha: 0.5),
-                                Colors.black.withValues(alpha: 0.7),
-                              ],
-                              stops: const [0.65, 0.95, 1.0],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
+                      Positioned.fill(
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20),
+                            ),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Colors.black.withValues(alpha: 0.0),
+                                    Colors.black.withValues(alpha:0.5),
+                                    Colors.black.withValues(alpha:0.7),
+                                  ],
+                                  stops: const [0.2, 0.78, 1.0],
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                ),
+                              ),
+                              // Ensure the height of the gradient container fits the view
+                              height: MediaQuery.of(context).size.height * 0.4, // Adjust this based on the size of the image
                             ),
                           ),
                         ),
