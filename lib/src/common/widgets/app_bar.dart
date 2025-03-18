@@ -1,4 +1,5 @@
 import 'package:casa_flutter/routes/app_routes.dart';
+import 'package:casa_flutter/src/common/widgets/casa_button.dart';
 import 'package:casa_flutter/src/common/widgets/dropdown.dart';
 import 'package:casa_flutter/src/common/widgets/textfields.dart';
 import 'package:casa_flutter/utils/color_constant.dart';
@@ -55,7 +56,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                       child: Icon(Icons.arrow_back_ios_new_rounded),
                     ),
                   ),
-                Expanded(
+                /*               Expanded(
                   child: CustomDropDown(
                     items: const [
                       'BRAND',
@@ -92,7 +93,8 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                     },
                     label: '',
                   ),
-                ),
+                ),*/
+                CasaButton(isLeadingBack : isLeadingBack)
               ],
             )
           : isLeadingBack
