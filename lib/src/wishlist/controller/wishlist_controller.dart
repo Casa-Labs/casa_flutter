@@ -43,7 +43,7 @@ class WishlistController extends GetxController {
       images: [
         Images(
             src:
-                'https://srstore.in/cdn/shop/files/O1CN01iWwp191LUMaFHeZpu__2209587281302-0-cib_2000x.jpg?v=1712055840'),
+                'https://srstore.com/cdn/shop/files/O1CN01iWwp191LUMaFHeZpu__2209587281302-0-cib_2000x.jpg?v=1712055840'),
       ]);
 
   @override
@@ -119,7 +119,7 @@ class WishlistController extends GetxController {
     'https://t3.ftcdn.net/jpg/08/52/51/04/360_F_852510478_KdKJ1xGmlHICE8TD3QM68W6m7m1E7fHT.jpg',
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcL3kn1Z7tCYhQa-vOaLHwHTPIT81-uLoDBw&s',
     'https://media.istockphoto.com/id/833727890/photo/wooden-table-background.jpg?s=170667a&w=0&k=20&c=X0T-EH3_hWKTTVOrEYxPWpFWHUzKD3VkMMAyOrmh8ac=',
-    'https://static.vecteezy.com/system/resources/thumbnails/037/814/719/small_2x/ai-generated-autumn-leaves-in-the-forest-nature-background-photo.jpg',
+    'https://static.vecteezy.com/system/resources/thumbnails/037/814/719/small_2x/ai-generated-autumn-leaves-com-the-forest-nature-background-photo.jpg',
     'https://static.vecteezy.com/system/resources/thumbnails/036/226/872/small_2x/ai-generated-nature-landscapes-background-free-photo.jpg',
     'https://images.unsplash.com/photo-1593642532973-d31b6557fa68',
     'https://t3.ftcdn.net/jpg/05/54/02/68/360_F_554026892_UsZG4Tm3GPUV6fxzlpvV0qOOe9KKYvCj.jpg',

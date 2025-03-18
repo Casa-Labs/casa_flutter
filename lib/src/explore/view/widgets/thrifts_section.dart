@@ -1,6 +1,6 @@
-import 'package:casa_flutter/src/common/widgets/custom_dropdown_menu.dart';
-import 'package:casa_flutter/src/explore/controller/explore_controller.dart';
-import 'package:casa_flutter/utils/string_constant.dart';
+import 'package:casaflutter/src/common/widgets/custom_dropdown_menu.dart';
+import 'package:casaflutter/src/explore/controller/explore_controller.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';

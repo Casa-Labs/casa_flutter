@@ -1,4 +1,4 @@
-import 'package:casa_flutter/utils/color.dart';
+import 'package:casaflutter/utils/color.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/color_constant.dart';

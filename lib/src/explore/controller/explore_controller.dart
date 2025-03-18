@@ -1,9 +1,9 @@
-import 'package:casa_flutter/src/explore/model/brands_model.dart' as brand;
-import 'package:casa_flutter/src/explore/model/new_arrivals_model.dart' as nam;
-import 'package:casa_flutter/src/explore/model/product_categories_model.dart'
+import 'package:casaflutter/src/explore/model/brands_model.dart' as brand;
+import 'package:casaflutter/src/explore/model/new_arrivals_model.dart' as nam;
+import 'package:casaflutter/src/explore/model/product_categories_model.dart'
     as pcm;
-import 'package:casa_flutter/src/explore/model/service/explore_service.dart';
-import 'package:casa_flutter/src/explore/model/trending_products_model.dart'
+import 'package:casaflutter/src/explore/model/service/explore_service.dart';
+import 'package:casaflutter/src/explore/model/trending_products_model.dart'
     as tpm;
 import 'package:get/get.dart';
 

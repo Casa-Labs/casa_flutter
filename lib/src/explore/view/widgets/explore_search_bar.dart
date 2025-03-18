@@ -1,5 +1,5 @@
-import 'package:casa_flutter/routes/app_routes.dart';
-import 'package:casa_flutter/utils/color_constant.dart';
+import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

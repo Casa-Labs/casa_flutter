@@ -84,7 +84,7 @@ String formatDateToYYYY(String dateString) {
 
 String formatDateTimeForQueryParams(String dateTimeString) {
   try {
-    // Decode any URL encoding in the string
+    // Decode any URL encoding com the string
     String decodedDateTime = Uri.decodeComponent(dateTimeString);
 
     // Parse the string into a DateTime object

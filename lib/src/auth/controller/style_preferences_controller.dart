@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:casa_flutter/src/auth/model/auth_models.dart';
-import 'package:casa_flutter/src/auth/model/chip_list_model.dart';
-import 'package:casa_flutter/src/auth/model/service/auth_service.dart';
-import 'package:casa_flutter/utils/preference_manager.dart';
+import 'package:casaflutter/src/auth/model/auth_models.dart';
+import 'package:casaflutter/src/auth/model/chip_list_model.dart';
+import 'package:casaflutter/src/auth/model/service/auth_service.dart';
+import 'package:casaflutter/utils/preference_manager.dart';
 import 'package:get/get.dart';
 
 class StylePreferencesController extends GetxController {

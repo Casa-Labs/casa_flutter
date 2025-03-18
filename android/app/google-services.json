@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "437823381958",
+    "project_id": "casa-1e442",
+    "storage_bucket": "casa-1e442.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437823381958:android:b002d49e490a31479e92c7",
+        "android_client_info": {
+          "package_name": "com.casashop.casaflutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "437823381958-n8cnidfnsirpm3cjf26nqprlj9u2264e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.casashop.casaflutter",
+            "certificate_hash": "c6e33c98ce6ab29b10742d3438d686757c24353e"
+          }
+        },
+        {
+          "client_id": "437823381958-qldtc305rhvgripj035d5jsj3p6a2sno.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpv7lCm0ptBw3_6dO01FN6rhh3UGSGu5c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "437823381958-qldtc305rhvgripj035d5jsj3p6a2sno.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

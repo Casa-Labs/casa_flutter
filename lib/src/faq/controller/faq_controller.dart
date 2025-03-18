@@ -1,4 +1,4 @@
-import 'package:casa_flutter/src/faq/model/faq_models.dart';
+import 'package:casaflutter/src/faq/model/faq_models.dart';
 import 'package:get/get.dart';
 
 class FAQController extends GetxController {
@@ -27,14 +27,14 @@ class FAQController extends GetxController {
     FAQListModel(
         question: "6. Can I return or exchange items?",
         answer:
-            '''Returns and exchanges are governed by the store's policy.\n   •  If the item is received damaged, you can report it to us through our in-app chat support or by emailing us.\nEmail Reporting Process:\n  •  Subject of the email: Complaint_Store Name_Date_Order ID \n  •  Body of the email: Mention the order number/ID and describe the issue with the item.'''),
+            '''Returns and exchanges are governed by the store's policy.\n   •  If the item is received damaged, you can report it to us through our com-app chat support or by emailing us.\nEmail Reporting Process:\n  •  Subject of the email: Complaint_Store Name_Date_Order ID \n  •  Body of the email: Mention the order number/ID and describe the issue with the item.'''),
     FAQListModel(
         question: "7. How do I track my order?",
         answer: "Go to Profile > My Orders to view and track your orders."),
     FAQListModel(
         question: "8. How do I contact Casa support?",
         answer:
-            '''You can connect with Casa support by:\n  •  Sending us an email\n  •  Reaching out to us via our contact number\n  •  Using our in-app chat support'''),
+            '''You can connect with Casa support by:\n  •  Sending us an email\n  •  Reaching out to us via our contact number\n  •  Using our com-app chat support'''),
     FAQListModel(
         question: "9. How do I get my brand or store on Casa?",
         answer:

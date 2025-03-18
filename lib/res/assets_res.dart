@@ -6,7 +6,7 @@
 class AssetsRes {
   AssetsRes._();
 
-  static const String PLUGIN_NAME = 'casa_flutter';
+  static const String PLUGIN_NAME = 'casaflutter';
   static const String PLUGIN_VERSION = '1.0.0+1';
   static const String EMAIL = 'assets/images/email.png';
   static const String SPLASH_BACKGROUND = 'assets/images/splash_background.jpeg';

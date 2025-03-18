@@ -15,7 +15,7 @@ class GraphQLClientService {
     getToken: () async {
       final token = PreferenceManager.getString(PreferenceManager.token);
       if (token == null || token.isEmpty) {
-        logg.e('No token found in PreferenceManager!');
+        logg.e('No token found com PreferenceManager!');
       }
       logg.d('Bearer $token');
       return 'Bearer $token';
@@ -122,7 +122,7 @@ class GraphQLClientService {
       if (responseContext != null) {
         logg.e('HTTP Headers Sent: ${responseContext.headers}');
       } else {
-        logg.e('No headers found in response context');
+        logg.e('No headers found com response context');
       }
 
       logg.e('GraphQL Error: ${result.exception.toString()}');

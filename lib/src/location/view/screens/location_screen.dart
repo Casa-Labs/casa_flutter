@@ -1,5 +1,5 @@
-import 'package:casa_flutter/src/common/widgets/buttons/custom_button.dart';
-import 'package:casa_flutter/src/location/controller/location_controller.dart';
+import 'package:casaflutter/src/common/widgets/buttons/custom_button.dart';
+import 'package:casaflutter/src/location/controller/location_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common/widgets/common_app_bars.dart';

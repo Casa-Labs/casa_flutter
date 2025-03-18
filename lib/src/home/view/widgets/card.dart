@@ -1,10 +1,10 @@
-import 'package:casa_flutter/routes/app_routes.dart';
-import 'package:casa_flutter/src/cart/controller/cart_controller.dart';
-import 'package:casa_flutter/src/common/widgets/buttons/buy_now_button.dart';
-import 'package:casa_flutter/src/home/controller/home_controller.dart';
-import 'package:casa_flutter/src/home/view/widgets/details_widget.dart';
-import 'package:casa_flutter/utils/font.dart';
-import 'package:casa_flutter/utils/string_constant.dart';
+import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutter/src/cart/controller/cart_controller.dart';
+import 'package:casaflutter/src/common/widgets/buttons/buy_now_button.dart';
+import 'package:casaflutter/src/home/controller/home_controller.dart';
+import 'package:casaflutter/src/home/view/widgets/details_widget.dart';
+import 'package:casaflutter/utils/font.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';

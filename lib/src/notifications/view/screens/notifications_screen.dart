@@ -1,6 +1,6 @@
-import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
-import 'package:casa_flutter/src/notifications/controller/notifications_controller.dart';
-import 'package:casa_flutter/utils/padding_size.dart';
+import 'package:casaflutter/src/common/widgets/common_app_bars.dart';
+import 'package:casaflutter/src/notifications/controller/notifications_controller.dart';
+import 'package:casaflutter/utils/padding_size.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

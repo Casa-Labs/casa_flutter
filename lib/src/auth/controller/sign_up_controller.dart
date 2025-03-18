@@ -1,8 +1,8 @@
-import 'package:casa_flutter/src/auth/model/auth_models.dart';
-import 'package:casa_flutter/src/auth/model/service/auth_service.dart';
-import 'package:casa_flutter/utils/extensions.dart';
-import 'package:casa_flutter/utils/preference_manager.dart';
-import 'package:casa_flutter/utils/validators.dart';
+import 'package:casaflutter/src/auth/model/auth_models.dart';
+import 'package:casaflutter/src/auth/model/service/auth_service.dart';
+import 'package:casaflutter/utils/extensions.dart';
+import 'package:casaflutter/utils/preference_manager.dart';
+import 'package:casaflutter/utils/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

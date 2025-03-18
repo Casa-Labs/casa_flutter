@@ -1,5 +1,5 @@
-import 'package:casa_flutter/src/home/controller/home_controller.dart';
-import 'package:casa_flutter/utils/string_constant.dart';
+import 'package:casaflutter/src/home/controller/home_controller.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
