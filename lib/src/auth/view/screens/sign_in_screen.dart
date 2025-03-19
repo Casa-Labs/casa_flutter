@@ -119,7 +119,6 @@ class SignInScreen extends StatelessWidget {
                       },
                     ),
                   ),
-
                  /* AuthButton(
                     type: AuthButtonType.apple,
                     onPressed: () {
