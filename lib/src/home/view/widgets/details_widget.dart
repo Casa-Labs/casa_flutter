@@ -355,29 +355,24 @@ class ProductDetails extends StatelessWidget {
                 height: 20,
               ),
               GridView.builder(
-                // No horizontal spacing
                 shrinkWrap: true,
                 itemCount: product.productImages!.length > 4
                     ? 4
                     : product.productImages!.length,
-                // Makes GridView fit its content
                 physics: const NeverScrollableScrollPhysics(),
-                // Disables scrolling
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
+                    crossAxisCount: 2,crossAxisSpacing: 8,childAspectRatio: 0.85,mainAxisSpacing: 8),
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
                       print('------>>> hello ${product.productImages![index]}');
                     },
-                    child: Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        Image.network(
-                          product.productImages![index],
-                          fit: BoxFit.cover,
-                        ),
-                      ],
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.network(
+                        product.productImages![index],
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   );
                 },
@@ -386,94 +381,83 @@ class ProductDetails extends StatelessWidget {
                 height: 50,
               ),
               const Divider(thickness: 1, color: Colors.black26),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  InkWell(
-                    overlayColor: WidgetStateProperty.all(Colors.transparent),
-                    splashFactory: NoSplash.splashFactory,
-                    onTap: () {
-                      logic.changeReturnPolicy();
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'RETURN POLICY',
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: TextColor.black,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: Font.gilroy),
-                          ),
-                          logic.isShowReturn
-                              ? const Icon(Icons.keyboard_arrow_up_rounded,
-                                  size: 15, color: IconColor.black54)
-                              : const Icon(Icons.keyboard_arrow_down_rounded,
-                                  size: 15, color: IconColor.black54),
-                        ],
+              InkWell(
+                overlayColor: WidgetStateProperty.all(Colors.transparent),
+                splashFactory: NoSplash.splashFactory,
+                onTap: () {
+                  logic.changeReturnPolicy();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'RETURN POLICY',
+                        style: TextStyle(
+                            fontSize: 13,
+                            color: TextColor.black.withValues(alpha: 0.5),
+                            fontWeight: FontWeight.w700,
+                            fontFamily: Font.gilroy),
                       ),
-                    ),
+                      logic.isShowReturn
+                          ? const Icon(Icons.keyboard_arrow_up_rounded,
+                              size: 15, color: IconColor.black54)
+                          : const Icon(Icons.keyboard_arrow_down_rounded,
+                              size: 15, color: IconColor.black54),
+                    ],
                   ),
-                  logic.isShowReturn
-                      ? Text(
-                          'This product have no any return policy',
-                          style: TextStyle(
-                              fontSize: 12.5,
-                              color: TextColor.black54,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: Font.gilroy),
-                        )
-                      : const SizedBox(),
-                ],
+                ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  InkWell(
-                    overlayColor: WidgetStateProperty.all(Colors.transparent),
-                    splashFactory: NoSplash.splashFactory,
-                    onTap: () {
-                      logic.changeShippingPolicy();
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'SHIPPING POLICY',
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: TextColor.black,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: Font.gilroy),
-                          ),
-                          logic.isShowShipping
-                              ? const Icon(Icons.keyboard_arrow_up_rounded,
-                                  size: 15, color: TextColor.black54)
-                              : const Icon(Icons.keyboard_arrow_down_rounded,
-                                  size: 15, color: TextColor.black54),
-                        ],
+              logic.isShowReturn
+                  ? Text(
+                      'This product have no any return policy',
+                      style: TextStyle(
+                          fontSize: 12.5,
+                          color: TextColor.black54,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: Font.gilroy),
+                    )
+                  : const SizedBox(),
+              const Divider(thickness: 1, color: Colors.black26),
+              InkWell(
+                overlayColor: WidgetStateProperty.all(Colors.transparent),
+                splashFactory: NoSplash.splashFactory,
+                onTap: () {
+                  logic.changeShippingPolicy();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'SHIPPING POLICY',
+                        style: TextStyle(
+                            fontSize: 13,
+                            color: TextColor.black.withValues(alpha: 0.5),
+                            fontWeight: FontWeight.w700,
+                            fontFamily: Font.gilroy),
                       ),
-                    ),
+                      logic.isShowShipping
+                          ? const Icon(Icons.keyboard_arrow_up_rounded,
+                              size: 15, color: TextColor.black54)
+                          : const Icon(Icons.keyboard_arrow_down_rounded,
+                              size: 15, color: TextColor.black54),
+                    ],
                   ),
-                  logic.isShowShipping
-                      ? Text(
-                          'For order values below \$50, product charges a \$8 shipping fee.',
-                          style: TextStyle(
-                              fontSize: 12.5,
-                              color: TextColor.black54,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: Font.gilroy),
-                        )
-                      : const SizedBox(),
-                ],
+                ),
               ),
+              logic.isShowShipping
+                  ? Text(
+                      'For order values below \$50, product charges a \$8 shipping fee.',
+                      style: TextStyle(
+                          fontSize: 12.5,
+                          color: TextColor.black54,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: Font.gilroy),
+                    )
+                  : const SizedBox(),
               const Divider(thickness: 1, color: DividerColor.grey),
               const SizedBox(
                 height: 10,
@@ -542,6 +526,7 @@ class ProductDetails extends StatelessWidget {
                                   // fontSize: 15,
                                   fontWeight: FontWeight.w600,
                                   color: TextColor.black,
+                                  fontFamily: Font.timeNew
                                 ),
                               )
                             ],
