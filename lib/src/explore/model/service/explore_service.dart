@@ -1,7 +1,7 @@
-import 'package:casa_flutter/src/explore/model/brands_model.dart';
-import 'package:casa_flutter/src/explore/model/new_arrivals_model.dart';
-import 'package:casa_flutter/src/explore/model/product_categories_model.dart';
-import 'package:casa_flutter/src/explore/model/trending_products_model.dart';
+import 'package:casaflutter/src/explore/model/brands_model.dart';
+import 'package:casaflutter/src/explore/model/new_arrivals_model.dart';
+import 'package:casaflutter/src/explore/model/product_categories_model.dart';
+import 'package:casaflutter/src/explore/model/trending_products_model.dart';
 import 'package:get/get.dart';
 
 import '../../../../network/graph_ql_manager.dart';

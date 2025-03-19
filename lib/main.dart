@@ -1,10 +1,11 @@
-import 'package:casa_flutter/src/common/widgets/show_toast.dart'
+import 'package:casaflutter/src/common/widgets/show_toast.dart'
     show scaffoldMessengerKey;
-import 'package:casa_flutter/theme/light_theme.dart';
+import 'package:casaflutter/theme/light_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'routes/app_routes.dart';
 
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
 Future<void> setup() async {
   await GetStorage.init(); //keep first
   WidgetsFlutterBinding.ensureInitialized(); //2nd
+  await Firebase.initializeApp();
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]); // 3rd
 }

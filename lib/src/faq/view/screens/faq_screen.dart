@@ -1,4 +1,4 @@
-import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
+import 'package:casaflutter/src/common/widgets/common_app_bars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -33,7 +33,7 @@ class _FAQScreenState extends State<FAQScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "We're here to help you with anything and everything on Casa.\nAt Casa, we're committed to making your shopping and selling experience enjoyable. Check out our FAQs or get in touch with us for further assistance.",
+                      "We're here to help you with anything and everything on Casa.\nAt Casa, we're committed to making your shopping and selling experience enjoyable. Check out our FAQs or get com touch with us for further assistance.",
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     SizedBox(height: 15),

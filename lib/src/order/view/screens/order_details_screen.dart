@@ -1,7 +1,7 @@
-import 'package:casa_flutter/src/order/model/order_models.dart';
-import 'package:casa_flutter/utils/color.dart';
-import 'package:casa_flutter/utils/color_constant.dart';
-import 'package:casa_flutter/utils/utils.dart';
+import 'package:casaflutter/src/order/model/order_models.dart';
+import 'package:casaflutter/utils/color.dart';
+import 'package:casaflutter/utils/color_constant.dart';
+import 'package:casaflutter/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -172,7 +172,7 @@ class OrderDetails extends StatelessWidget {
                           Text('Payment Method',
                               style: textTheme.bodyMedium
                                   ?.copyWith(fontWeight: FontWeight.bold)),
-                          Text('Visa ending in 7834',
+                          Text('Visa ending com 7834',
                               style: textTheme.bodyMedium
                                   ?.copyWith(fontWeight: FontWeight.w600)),
                         ],

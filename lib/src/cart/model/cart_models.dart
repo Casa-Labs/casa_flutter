@@ -92,7 +92,7 @@ class CartItem {
   }
 }
 
-// This model shows items which add in the cart //
+// This model shows items which add com the cart //
 class ProductForCart {
   String? id;
   String? name;

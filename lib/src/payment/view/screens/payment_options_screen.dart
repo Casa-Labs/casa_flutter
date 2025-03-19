@@ -1,5 +1,5 @@
-import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
-import 'package:casa_flutter/utils/color_constant.dart';
+import 'package:casaflutter/src/common/widgets/common_app_bars.dart';
+import 'package:casaflutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/padding_size.dart';

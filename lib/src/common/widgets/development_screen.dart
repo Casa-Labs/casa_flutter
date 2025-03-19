@@ -1,5 +1,5 @@
-import 'package:casa_flutter/src/common/widgets/app_bar.dart';
-import 'package:casa_flutter/utils/string_constant.dart';
+import 'package:casaflutter/src/common/widgets/app_bar.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 
 class DevelopmentScreen extends StatelessWidget {

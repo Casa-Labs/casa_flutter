@@ -1,5 +1,5 @@
-import 'package:casa_flutter/utils/color_constant.dart';
-import 'package:casa_flutter/utils/string_constant.dart';
+import 'package:casaflutter/utils/color_constant.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';

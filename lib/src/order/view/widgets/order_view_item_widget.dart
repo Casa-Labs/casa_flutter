@@ -1,4 +1,4 @@
-import 'package:casa_flutter/src/cart/model/cart_models.dart';
+import 'package:casaflutter/src/cart/model/cart_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';

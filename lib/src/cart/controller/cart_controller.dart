@@ -1,5 +1,5 @@
-import 'package:casa_flutter/src/cart/model/cart_models.dart';
-import 'package:casa_flutter/src/cart/model/service/cart_service.dart';
+import 'package:casaflutter/src/cart/model/cart_models.dart';
+import 'package:casaflutter/src/cart/model/service/cart_service.dart';
 import 'package:get/get.dart';
 
 import '../../../network/graph_ql_manager.dart';

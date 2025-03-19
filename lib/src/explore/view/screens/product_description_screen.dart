@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:casa_flutter/src/common/widgets/buttons/buy_now_button.dart';
-import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
-import 'package:casa_flutter/src/common/widgets/custom_image_view.dart';
+import 'package:casaflutter/src/common/widgets/buttons/buy_now_button.dart';
+import 'package:casaflutter/src/common/widgets/common_app_bars.dart';
+import 'package:casaflutter/src/common/widgets/custom_image_view.dart';
 // import 'package:share_plus/share_plus.dart';
-import 'package:casa_flutter/src/explore/model/new_arrivals_model.dart';
-import 'package:casa_flutter/utils/color_constant.dart';
-import 'package:casa_flutter/utils/string_constant.dart';
+import 'package:casaflutter/src/explore/model/new_arrivals_model.dart';
+import 'package:casaflutter/utils/color_constant.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';

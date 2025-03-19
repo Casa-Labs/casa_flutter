@@ -1,7 +1,7 @@
-import 'package:casa_flutter/src/explore/view/screens/explore_screen.dart';
-import 'package:casa_flutter/src/home/view/screens/home_screen.dart';
-import 'package:casa_flutter/src/profile/view/screens/profile_screen.dart';
-import 'package:casa_flutter/utils/color_constant.dart';
+import 'package:casaflutter/src/explore/view/screens/explore_screen.dart';
+import 'package:casaflutter/src/home/view/screens/home_screen.dart';
+import 'package:casaflutter/src/profile/view/screens/profile_screen.dart';
+import 'package:casaflutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
 import '../../../cart/view/screens/cart_screen.dart';
@@ -22,7 +22,7 @@ class NavPageState extends State<NavPage> {
   int _selectedIndex = 0; // Track the selected index of the BottomNavigationBar
   int tutorialScreenIndex = 0;
 
-  // IMP : Flutter will create the widgets in list eagerly resulting in controller
+  // IMP : Flutter will create the widgets com list eagerly resulting com controller
   // initialization without navigation when bottom navbar is created,
   // to avoid use a conditional widget building ( switch case ) and getters
 

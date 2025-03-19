@@ -1,9 +1,9 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
-import 'package:casa_flutter/src/common/widgets/app_bar.dart';
-import 'package:casa_flutter/src/home/controller/home_controller.dart';
-import 'package:casa_flutter/src/home/view/widgets/card.dart';
-import 'package:casa_flutter/src/home/view/widgets/swipe_animation.dart';
-import 'package:casa_flutter/utils/color_constant.dart';
+import 'package:casaflutter/src/common/widgets/app_bar.dart';
+import 'package:casaflutter/src/home/controller/home_controller.dart';
+import 'package:casaflutter/src/home/view/widgets/card.dart';
+import 'package:casaflutter/src/home/view/widgets/swipe_animation.dart';
+import 'package:casaflutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

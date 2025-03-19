@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:casa_flutter/src/auth/controller/auth_controller.dart';
-import 'package:casa_flutter/src/auth/model/auth_models.dart';
-import 'package:casa_flutter/src/auth/model/service/auth_service.dart';
-import 'package:casa_flutter/utils/preference_manager.dart';
+import 'package:casaflutter/src/auth/controller/auth_controller.dart';
+import 'package:casaflutter/src/auth/model/auth_models.dart';
+import 'package:casaflutter/src/auth/model/service/auth_service.dart';
+import 'package:casaflutter/utils/preference_manager.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 

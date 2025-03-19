@@ -1,9 +1,10 @@
 // graphql_manager.dart
 
-import 'package:casa_flutter/network/graph_ql_mutations.dart';
-import 'package:casa_flutter/network/graph_ql_queries.dart';
-import 'package:casa_flutter/network/graph_ql_variables.dart';
-import 'package:casa_flutter/network/graphql_client.dart';
+import 'package:casaflutter/network/graph_ql_mutations.dart';
+import 'package:casaflutter/network/graph_ql_queries.dart';
+import 'package:casaflutter/network/graph_ql_variables.dart';
+import 'package:casaflutter/network/graphql_client.dart';
+import 'package:casaflutter/network/graphql_client.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 class GraphQLManager {
@@ -118,7 +119,7 @@ class GraphQLManager {
 
   Future<QueryResult> singleSignOn(
       String email, String provider, String providerId) async {
-    return await _clientService.performMutation(
+    return await _clientService.performMutationWithoutToken(
       document: GraphQLMutations.singleSignOnMutation,
       variables:
           GraphQLVariables.singleSignOnVariables(email, provider, providerId),
