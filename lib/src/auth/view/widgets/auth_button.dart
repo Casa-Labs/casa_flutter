@@ -50,8 +50,8 @@ class AuthButton extends StatelessWidget {
         icon = TablerIcons.brand_google_filled;
         break;
       case AuthButtonType.apple:
-        backgroundColor = ButtonColor.white;
-        textColor = TextColor.black;
+        // backgroundColor = ButtonColor.white;
+        // textColor = TextColor.black;
         text = 'Continue with Apple';
         showIcon = true;
         icon = TablerIcons.brand_apple_filled;

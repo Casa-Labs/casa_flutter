@@ -119,7 +119,16 @@ class SignInScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                 /* AuthButton(
+                  Obx(
+                        () => AuthButton(
+                      type: AuthButtonType.apple,
+                      isLoading: authController.isAppleSignInLoading(),
+                      onPressed: () async {
+                        await    authController.signInWithApple();
+                      },
+                    ),
+                  ),
+                  /*AuthButton(
                     type: AuthButtonType.apple,
                     onPressed: () {
                       context.pushNamed(RouteNames.navigation);

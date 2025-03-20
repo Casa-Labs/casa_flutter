@@ -45,5 +45,25 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSHumanReadableDescription</key>
+    <string>We use Sign in with Apple to authenticate users.</string>
+<key>CFBundleURLTypes</key>
+<array>
+    <!-- Apple Sign-In -->
+    <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+            <string>com.casashop.casaflutter</string> <!-- Your App's Bundle ID -->
+        </array>
+    </dict>
+
+    <!-- Google Sign-In -->
+    <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+            <string>com.googleusercontent.apps.437823381958-reteljblu0n4dajtman6idgq234acj03</string> <!-- Replace with Reverse Client ID from GoogleService-Info.plist -->
+        </array>
+    </dict>
+</array>
 </dict>
 </plist>
