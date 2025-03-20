@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:casaflutter/routes/app_routes.dart';
 import 'package:casaflutter/utils/extensions.dart';
 import 'package:casaflutter/utils/preference_manager.dart';
@@ -5,6 +7,8 @@ import 'package:casaflutter/utils/validators.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../model/auth_models.dart';
 import '../model/service/auth_service.dart';
@@ -27,6 +31,7 @@ class AuthController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isPasswordObscured = true.obs;
   RxBool isGoogleSignInLoading = false.obs;
+  RxBool isAppleSignInLoading = false.obs;
 
   RxString message = ''.obs;
 
@@ -118,7 +123,7 @@ class AuthController extends GetxController {
       final firebase_auth.User? user = userCredential.user;
       if (user != null) {
         print('google login ${user}');
-        googleLoginCall(email:user.email! ,provider: "GOOGLE",providerId:user.uid );
+        socialLoginCall(email:user.email! ,provider: "GOOGLE",providerId:user.uid );
       } else {
         message("Google Sign-In failed");
       }
@@ -128,42 +133,90 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> googleLoginCall({required String email,required String providerId,required String provider}) async {
+  Future<void> socialLoginCall({
+    required String email,
+    required String providerId,
+    required String provider,
+  }) async {
+    // Determine which loading state to update
+    RxBool isLoading =
+    provider == 'GOOGLE' ? isGoogleSignInLoading : isAppleSignInLoading;
 
-    isGoogleSignInLoading(true);
+    isLoading(true); // Set loading to true
+
     GoogleLoginRequestModel googleLoginRequestModel = GoogleLoginRequestModel(
       email: email,
       providerId: providerId,
-      provider: provider
+      provider: provider,
+    );
+
+    final googleLoginResponse = await _authService.googleLoginUser(
+      googleLoginRequestModel: googleLoginRequestModel,
+    );
+
+    if (googleLoginResponse?.singleSignOn != null) {
+      // Set token to storage
+      await PreferenceManager.setData(
+        PreferenceManager.token,
+        googleLoginResponse?.singleSignOn?.token,
+      );
+      // Set user details
+      await PreferenceManager.setData(
+        PreferenceManager.userDetails,
+        googleLoginResponse?.singleSignOn?.user?.toJsonString(),
+      );
+      // Set only user ID
+      await PreferenceManager.setData(
+        PreferenceManager.userId,
+        googleLoginResponse?.singleSignOn?.user?.id.toString(),
       );
 
-      final googleLoginResponse = await _authService.googleLoginUser(
-        googleLoginRequestModel: googleLoginRequestModel,
+      message('User logged in successfully');
+
+      /// Navigate after login
+      router.goNamed(RouteNames.navigation);
+    }
+
+    isLoading(false); // Set loading to false
+  }
+
+
+  // ========== Apple Sign-In  ==========
+  Future<void> signInWithApple() async {
+    if (!Platform.isIOS) {
+      message("Apple Sign-In is only available on iOS");
+      return;
+    }
+
+    try {
+      final credential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
       );
-      if (googleLoginResponse?.singleSignOn!= null) {
-        // set token to storage
-        await PreferenceManager.setData(
-          PreferenceManager.token,
-          googleLoginResponse?.singleSignOn?.token,
-        );
-        // set user details
-        await PreferenceManager.setData(
-          PreferenceManager.userDetails,
-          googleLoginResponse?.singleSignOn?.user?.toJsonString(),
-        );
-        // set only user id
-        await PreferenceManager.setData(
-          PreferenceManager.userId,
-          googleLoginResponse?.singleSignOn?.user?.id.toString(),
-        );
-        message('User logged com successfully');
-        ///todo Need to fix navigation from screen
-        router.goNamed(RouteNames.navigation);
-        isGoogleSignInLoading(true);
+      // Store details on first login
+      String userId = credential.userIdentifier ?? "";
+      String? email = credential.email;
+      String? fullName = credential.givenName;
+      print('apple login response : $credential');
+      if (email != null) {
+        // Store in local storage or send to backend
+        await saveUserData(userId, email, fullName);
       } else {
-        isGoogleSignInLoading(false);
+        // Fetch email from stored data if available
+        final storedData = await getStoredUserData(userId);
+        email = storedData?['email'] ?? 'No email found';
+        fullName = storedData?['fullName'] ?? 'No name found';
       }
+      socialLoginCall(email:email! ,provider: "APPLE",providerId:userId );
 
+
+      message("Apple Sign-In successful");
+    } catch (e) {
+      message("Apple Sign-In failed: ${e.toString()}");
+    } finally {
+    }
   }
 
   void showPassword() {
@@ -173,13 +226,20 @@ class AuthController extends GetxController {
       isPasswordObscured(true);
     }
   }
-  //
+
   // Google Sign-Out
   Future<void> signOut() async {
     await _googleSignIn.signOut();
     await _auth.signOut();
   }
+  Future<void> logoutFromApple() async {
+    final box = GetStorage();
+    await box.erase(); // Clears all stored data
 
+    message("User logged out successfully");
+  }
+
+  // Apple Sign-Out
   Future<void> logOutUser() async {
     // clear user details
     await PreferenceManager.setData(
@@ -199,4 +259,14 @@ class AuthController extends GetxController {
       '',
     );
   }
+}
+Future<void> saveUserData(String userId, String email, String? fullName) async {
+  // Save to local storage or backend
+  final box = GetStorage();
+  box.write(userId, {'email': email, 'fullName': fullName});
+}
+
+Future<Map<String, dynamic>?> getStoredUserData(String userId) async {
+  final box = GetStorage();
+  return box.read(userId);
 }
