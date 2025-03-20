@@ -181,7 +181,7 @@ class AuthController extends GetxController {
   }
 
 
-  // ========== Apple Sign-In Function ==========
+  // ========== Apple Sign-In  ==========
   Future<void> signInWithApple() async {
     if (!Platform.isIOS) {
       message("Apple Sign-In is only available on iOS");
