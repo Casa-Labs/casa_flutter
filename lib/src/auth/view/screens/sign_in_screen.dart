@@ -105,12 +105,12 @@ class SignInScreen extends StatelessWidget {
                   Text('OR'),
                   Spacer(),
                   Obx(
-                        () => AuthButton(
+                    () => AuthButton(
                       type: AuthButtonType.google,
                       isLoading: authController.isGoogleSignInLoading(),
                       onPressed: () async {
-                        await    authController.signInWithGoogle();
-                       /* if (authController.message().isNotEmpty) {
+                        await authController.signInWithGoogle();
+                        /* if (authController.message().isNotEmpty) {
                           showToast(
                             message: authController.message(),
                           );
@@ -121,15 +121,17 @@ class SignInScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  Platform.isIOS?Obx(
-                        () => AuthButton(
-                      type: AuthButtonType.apple,
-                      isLoading: authController.isAppleSignInLoading(),
-                      onPressed: () async {
-                        await    authController.signInWithApple();
-                      },
-                    ),
-                  ):SizedBox(),
+                  Platform.isIOS
+                      ? Obx(
+                          () => AuthButton(
+                            type: AuthButtonType.apple,
+                            isLoading: authController.isAppleSignInLoading(),
+                            onPressed: () async {
+                              await authController.signInWithApple();
+                            },
+                          ),
+                        )
+                      : SizedBox(),
                   /*AuthButton(
                     type: AuthButtonType.apple,
                     onPressed: () {

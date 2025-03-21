@@ -126,7 +126,7 @@ class GraphQLClientService {
       }
 
       logg.e('GraphQL Error: ${result.exception.toString()}');
-      throw Exception(result.exception.toString());
+      //throw Exception(result.exception.toString());
     }
   }
 }

@@ -21,9 +21,16 @@ class AuthService {
       response.data,
     );
 
-    return loginResponse;
+    if (response.exception != null) {
+      return LoginResponseModel(
+        errorMessage: response.exception?.graphqlErrors.first.message,
+      );
+    } else {
+      return loginResponse;
+    }
   }
- Future<GoogleLoginResponse?> googleLoginUser({
+
+  Future<GoogleLoginResponse?> googleLoginUser({
     required GoogleLoginRequestModel googleLoginRequestModel,
   }) async {
     final GoogleLoginResponse googleLoginResponse;
@@ -40,8 +47,6 @@ class AuthService {
 
     return googleLoginResponse;
   }
-
-
 
   Future<RegisterUserResponseModel?> registerUser({
     required LoginRequestModel loginRequestModel,
