@@ -1,5 +1,5 @@
-import 'package:casa_flutter/src/auth/model/chip_list_model.dart';
-import 'package:casa_flutter/utils/color_constant.dart';
+import 'package:casaflutter/src/auth/model/chip_list_model.dart';
+import 'package:casaflutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
 class ChipList extends StatelessWidget {

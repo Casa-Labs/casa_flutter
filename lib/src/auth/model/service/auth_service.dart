@@ -1,8 +1,8 @@
-import 'package:casa_flutter/network/graph_ql_manager.dart';
-import 'package:casa_flutter/src/auth/model/add_preferences_response_model.dart';
-import 'package:casa_flutter/src/auth/model/add_user_address_response_model.dart';
-import 'package:casa_flutter/src/auth/model/auth_models.dart';
-import 'package:casa_flutter/src/auth/model/update_user_details_response_model.dart';
+import 'package:casaflutter/network/graph_ql_manager.dart';
+import 'package:casaflutter/src/auth/model/add_preferences_response_model.dart';
+import 'package:casaflutter/src/auth/model/add_user_address_response_model.dart';
+import 'package:casaflutter/src/auth/model/auth_models.dart';
+import 'package:casaflutter/src/auth/model/update_user_details_response_model.dart';
 
 class AuthService {
   final GraphQLManager _graphQLManager = GraphQLManager();
@@ -21,7 +21,31 @@ class AuthService {
       response.data,
     );
 
-    return loginResponse;
+    if (response.exception != null) {
+      return LoginResponseModel(
+        errorMessage: response.exception?.graphqlErrors.first.message,
+      );
+    } else {
+      return loginResponse;
+    }
+  }
+
+  Future<GoogleLoginResponse?> googleLoginUser({
+    required GoogleLoginRequestModel googleLoginRequestModel,
+  }) async {
+    final GoogleLoginResponse googleLoginResponse;
+
+    final response = await _graphQLManager.singleSignOn(
+      googleLoginRequestModel.email,
+      googleLoginRequestModel.provider,
+      googleLoginRequestModel.providerId,
+    );
+
+    googleLoginResponse = GoogleLoginResponse.fromJson(
+      response.data!,
+    );
+
+    return googleLoginResponse;
   }
 
   Future<RegisterUserResponseModel?> registerUser({

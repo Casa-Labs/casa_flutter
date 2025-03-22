@@ -1,3 +1,5 @@
+import 'package:casaflutter/utils/base_model.dart';
+
 class LoginRequestModel {
   String username;
   String password;
@@ -8,11 +10,24 @@ class LoginRequestModel {
   });
 }
 
-class LoginResponseModel {
+class GoogleLoginRequestModel {
+  String email;
+  String provider;
+  String providerId;
+
+  GoogleLoginRequestModel({
+    required this.email,
+    required this.provider,
+    required this.providerId,
+  });
+}
+
+class LoginResponseModel extends BaseModel {
   Login? login;
 
   LoginResponseModel({
     this.login,
+    super.errorMessage,
   });
 
   LoginResponseModel.fromJson(Map<String, dynamic>? json) {
@@ -115,6 +130,66 @@ class RegisterUserResponseModel {
     if (register != null) {
       data['register'] = register!.toJson();
     }
+    return data;
+  }
+}
+
+class GoogleLoginResponse {
+  SingleSignOn? singleSignOn;
+
+  GoogleLoginResponse({this.singleSignOn});
+
+  GoogleLoginResponse.fromJson(Map<String, dynamic> json) {
+    singleSignOn = json['SingleSignOn'] != null
+        ? new SingleSignOn.fromJson(json['SingleSignOn'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.singleSignOn != null) {
+      data['SingleSignOn'] = this.singleSignOn!.toJson();
+    }
+    return data;
+  }
+}
+
+class SingleSignOn {
+  String? token;
+  User? user;
+
+  SingleSignOn({this.token, this.user});
+
+  SingleSignOn.fromJson(Map<String, dynamic> json) {
+    token = json['token'];
+    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['token'] = this.token;
+    if (this.user != null) {
+      data['user'] = this.user!.toJson();
+    }
+    return data;
+  }
+}
+
+class GoogleUser {
+  String? email;
+  String? id;
+
+  GoogleUser({this.email, this.id});
+
+  GoogleUser.fromJson(Map<String, dynamic> json) {
+    email = json['email'];
+    id = json['id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['email'] = this.email;
+    data['id'] = this.id;
     return data;
   }
 }

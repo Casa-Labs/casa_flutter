@@ -1,4 +1,4 @@
-import 'package:casa_flutter/utils/validators.dart';
+import 'package:casaflutter/utils/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

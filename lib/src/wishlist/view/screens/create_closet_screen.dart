@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:casa_flutter/src/auth/view/widgets/auth_button.dart';
-import 'package:casa_flutter/utils/color_constant.dart';
-import 'package:casa_flutter/utils/padding_size.dart';
+import 'package:casaflutter/src/auth/view/widgets/auth_button.dart';
+import 'package:casaflutter/utils/color_constant.dart';
+import 'package:casaflutter/utils/padding_size.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';

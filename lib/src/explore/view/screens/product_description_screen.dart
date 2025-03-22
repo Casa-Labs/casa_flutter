@@ -1,12 +1,14 @@
-import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
-import 'package:casa_flutter/src/common/widgets/custom_image_view.dart';
-import 'package:casa_flutter/utils/color_constant.dart';
-import 'package:casa_flutter/utils/string_constant.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:casaflutter/src/common/widgets/buttons/buy_now_button.dart';
+import 'package:casaflutter/src/common/widgets/common_app_bars.dart';
+import 'package:casaflutter/src/common/widgets/custom_image_view.dart';
+// import 'package:share_plus/share_plus.dart';
+import 'package:casaflutter/src/explore/model/new_arrivals_model.dart';
+import 'package:casaflutter/utils/color_constant.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-
-// import 'package:share_plus/share_plus.dart';
 
 import '../../../../routes/app_routes.dart';
 import '../../../../utils/padding_size.dart';
@@ -16,7 +18,9 @@ import '../widgets/care_composition_tile.dart';
 import '../widgets/quantity_selector_button.dart';
 
 class ProductDescriptionScreen extends StatelessWidget {
-  const ProductDescriptionScreen({super.key});
+  final Products product;
+
+  const ProductDescriptionScreen({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +64,9 @@ class ProductDescriptionScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   child: Stack(
                     children: [
-                      Image.asset(
-                        ImageConstants.placeholderProduct,
+                      CachedNetworkImage(
                         scale: 1.82,
+                        imageUrl: product.mainImage!,
                       ),
                       Positioned(
                         bottom: 10,
@@ -117,7 +121,7 @@ class ProductDescriptionScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                'Viscose Long Coat',
+                product.name ?? 'NA',
                 style: Theme.of(context)
                     .textTheme
                     .titleMedium
@@ -125,7 +129,7 @@ class ProductDescriptionScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                'Long sleeve coat with a lapel collar. Front button fastening.',
+                product.description ?? 'NA',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: 10),
@@ -134,7 +138,7 @@ class ProductDescriptionScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               Text(
-                'Rs. 1000',
+                'Rs ${product.price}',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 20),
@@ -155,37 +159,6 @@ class ProductDescriptionScreen extends StatelessWidget {
               const CareCompositionTile(),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class BuyNowButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  const BuyNowButton({super.key, required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: ButtonColor.white,
-        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-      ),
-      onPressed: onPressed,
-      child: Text(
-        'Buy now',
-        style: TextStyle(
-          fontWeight: FontWeight.w600,
-          color: TextColor.black,
-          fontSize: 13,
-          shadows: [
-            Shadow(
-              offset: const Offset(1.0, 1.0),
-              blurRadius: 6.0,
-              color: TextColor.blackWithAlphaColors2,
-            ),
-          ],
         ),
       ),
     );

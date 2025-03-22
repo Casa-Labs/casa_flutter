@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:casa_flutter/src/location/model/service/location_service.dart';
+import 'package:casaflutter/src/location/model/service/location_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -73,14 +73,14 @@ class LocationController extends GetxController {
   Future<void> saveDeliveryAddressDetails() async {
     if (streetAddress.text.isEmpty) {
       showToast(message: 'Enter street address');
-    } else if (city.text.isEmpty) {
+    }else if (landmark.text.isEmpty) {
+      showToast(message: 'Enter landmark');
+    }  else if (city.text.isEmpty) {
       showToast(message: 'Enter city');
     } else if (state.text.isEmpty) {
       showToast(message: 'Enter state');
     } else if (zipCode.text.isEmpty) {
       showToast(message: 'Enter pin-code');
-    } else if (landmark.text.isEmpty) {
-      showToast(message: 'Enter landmark');
     } else if (country.text.isEmpty) {
       showToast(message: 'Enter Country');
     } else {

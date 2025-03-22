@@ -1,10 +1,10 @@
-import 'package:casa_flutter/routes/app_routes.dart';
-import 'package:casa_flutter/src/cart/controller/cart_controller.dart';
-import 'package:casa_flutter/src/explore/view/screens/product_description_screen.dart';
-import 'package:casa_flutter/src/home/controller/home_controller.dart';
-import 'package:casa_flutter/src/home/view/widgets/details_widget.dart';
-import 'package:casa_flutter/utils/font.dart';
-import 'package:casa_flutter/utils/string_constant.dart';
+import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutter/src/cart/controller/cart_controller.dart';
+import 'package:casaflutter/src/common/widgets/buttons/buy_now_button.dart';
+import 'package:casaflutter/src/home/controller/home_controller.dart';
+import 'package:casaflutter/src/home/view/widgets/details_widget.dart';
+import 'package:casaflutter/utils/font.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -29,132 +29,142 @@ class Cards extends StatelessWidget {
             builder: (orderReviewController) {
           return Container(
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey.shade200),
+              // border: Border.all(color: Colors.grey.shade200),
               borderRadius: BorderRadius.vertical(
                   top: Radius.circular(18), bottom: Radius.circular(18)),
             ),
             alignment: Alignment.center,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Stack(
-                    children: [
-                      Align(
-                        alignment: Alignment.center,
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.758,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(18)),
-                            child: Image.network(product.mainImage!,
-                                fit: BoxFit.fill),
-                          ),
-                        ),
-                      ),
-                      /*   Align(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Stack(
+                      children: [
+                        Align(
                           alignment: Alignment.center,
                           child: SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.75,
-                              child: Image.asset('assets/images/placeholder.png',
-                                  fit: BoxFit.fill)),
-                        ),*/
-                      ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(20),
-                            bottomRight: Radius.circular(20)),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Colors.black.withValues(alpha: 0.0),
-                                Colors.black.withValues(alpha: 0.5),
-                                Colors.black.withValues(alpha: 0.7),
-                              ],
-                              stops: const [0.65, 0.95, 1.0],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
+                            height: MediaQuery.of(context).size.height * 0.758,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.all(Radius.circular(18)),
+                              child: Image.network(product.mainImage!,
+                                  fit: BoxFit.fill),
+                            ),
+                          ),
+                        ),
+                        /*   Align(
+                            alignment: Alignment.center,
+                            child: SizedBox(
+                                height: MediaQuery.of(context).size.height * 0.75,
+                                child: Image.asset('assets/images/placeholder.png',
+                                    fit: BoxFit.fill)),
+                          ),*/
+     Positioned.fill(
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20),
+                            ),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Colors.black.withValues(alpha: 0.0),
+                                    Colors.black.withValues(alpha:0.5),
+                                    Colors.black.withValues(alpha:0.7),
+                                  ],
+                                  stops: const [0.2, 0.78, 1.0],
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                ),
+                              ),
+                              // Ensure the height of the gradient container fits the view
+                              height: MediaQuery.of(context).size.height * 0.4, // Adjust this based on the size of the image
                             ),
                           ),
                         ),
                       ),
-                      Positioned(
-                        bottom: 0,
-                        left: 15,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.75,
-                          decoration: const BoxDecoration(
-                              color: Color.fromARGB(0, 0, 0, 0),
-                              borderRadius: BorderRadius.vertical(
-                                  bottom: Radius.circular(15))),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              InkWell(
-                                overlayColor:
-                                    WidgetStateProperty.all(Colors.transparent),
-                                splashFactory: NoSplash.splashFactory,
-                                onTap: () {
-                                  context.pushNamed(RouteNames.store);
-                                },
-                                child: CircleAvatar(
-                                  maxRadius: 24,
-                                  backgroundColor: const Color(0xFF002957),
-                                  child: Text(
-                                    "ZARA".substring(0, 4).toUpperCase(),
-                                    style: const TextStyle(
-                                        color: TextColor.white, fontSize: 14),
+                        Positioned(
+                          bottom: 0,
+                          left: 15,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.75,
+                            decoration: const BoxDecoration(
+                                color: Color.fromARGB(0, 0, 0, 0),
+                                borderRadius: BorderRadius.vertical(
+                                    bottom: Radius.circular(15))),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                InkWell(
+                                  overlayColor:
+                                      WidgetStateProperty.all(Colors.transparent),
+                                  splashFactory: NoSplash.splashFactory,
+                                  onTap: () {
+                                    context.pushNamed(RouteNames.store);
+                                  },
+                                  child: CircleAvatar(
+                                    maxRadius: 24,
+                                    backgroundColor: const Color(0xFF002957),
+                                    child: Text(
+                                      "ZARA".substring(0, 4).toUpperCase(),
+                                      style: const TextStyle(
+                                          color: TextColor.white, fontSize: 14),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 3),
-                              // Shimmer.fromColors(
-                              //   baseColor: Colors.grey[400]!,
-                              //   highlightColor: Colors.grey[100]!,
-                              // child:
-                              Text(
-                                product.name ?? AppStrings.productName,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      color: TextColor.white,
-                                    ),
-                              ),
-                              // ),
-                              const SizedBox(height: 10),
-                              // Shimmer.fromColors(
-                              //   baseColor: Colors.grey[400]!,
-                              //   highlightColor: Colors.grey[100]!,
-                              //   child:
-                              Text(
-                                '₹ ${AppStrings.productPrice}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                        fontFamily: Font.timeNew,
+                                const SizedBox(height: 3),
+                                // Shimmer.fromColors(
+                                //   baseColor: Colors.grey[400]!,
+                                //   highlightColor: Colors.grey[100]!,
+                                // child:
+                                Text(
+                                  product.name ?? AppStrings.productName,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
                                         fontWeight: FontWeight.w600,
                                         color: TextColor.white,
-                                        fontSize: 20),
-                              )
-
+                                      ),
+                                ),
+                                // ),
+                                const SizedBox(height: 10),
+                                // Shimmer.fromColors(
+                                //   baseColor: Colors.grey[400]!,
+                                //   highlightColor: Colors.grey[100]!,
+                                //   child:
+                                Text(
+                                  '₹ ${AppStrings.productPrice}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                          fontFamily: Font.timeNew,
+                                          fontWeight: FontWeight.w600,
+                                          color: TextColor.white,
+                                          fontSize: 20),
+                                )
+              
                               // ),
                             ],
                           ),
                         ),
                       ),
                       Positioned(
-                        top: 0,
+                        top: 30,
                         left: 10,
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Material(
                             elevation: 0,
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(70),
                             surfaceTintColor: Colors.transparent,
-                            color: Colors.transparent,
+                            color:IconColor.black,
                             child: InkWell(
                               overlayColor:
                                   WidgetStateProperty.all(Colors.transparent),
@@ -162,15 +172,16 @@ class Cards extends StatelessWidget {
                               borderRadius: BorderRadius.circular(12),
                               onTap: () {} /*logic.controller.unswipe*/,
                               child: Container(
-                                width: 35,
-                                height: 35,
-                                decoration: BoxDecoration(
+  width: 45,
+                                height: 45,
+                                padding: EdgeInsets.all(5),
+                                                              decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
                                   color: Colors.transparent,
                                 ),
                                 child: const Icon(
                                   Icons.undo,
-                                  size: 30,
+                                  size: 35,
                                   color: IconColor.white,
                                 ),
                               ),
@@ -180,7 +191,7 @@ class Cards extends StatelessWidget {
                       ),
                       Positioned(
                         bottom: 0,
-                        right: 10,
+                        right: 0,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 8),
@@ -194,8 +205,8 @@ class Cards extends StatelessWidget {
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 10),
                                 child: InkWell(
-                                  overlayColor: WidgetStateProperty.all(
-                                      Colors.transparent),
+                                  overlayColor:
+                                      WidgetStateProperty.all(Colors.transparent),
                                   splashFactory: NoSplash.splashFactory,
                                   onTap: () {
                                     cartLogin.addProductsToCart(
@@ -203,6 +214,15 @@ class Cards extends StatelessWidget {
                                   },
                                   child: Icon(Icons.add_shopping_cart_outlined,
                                       color: IconColor.white, size: 30),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4.0),
+                                child: Icon(
+                                  Icons.bookmark_border_rounded,
+                                  color: IconColor.white,
+                                  size: 30,
                                 ),
                               ),
                               Padding(
@@ -220,7 +240,7 @@ class Cards extends StatelessWidget {
                                         color: IconColor.white, size: 30)),
                               ),
                               BuyNowButton(onPressed: () {
-                                orderReviewController.getAllProductItem([
+                               orderReviewController.getAllProductItem([
                                   CartItem(
                                       item: ProductForCart.fromJson({
                                         ...product.toJson(),
@@ -241,9 +261,9 @@ class Cards extends StatelessWidget {
                   ProductDetails(product: product)
                 ],
               ),
+                        ),
             ),
-          );
-        });
+        );
       });
     });
   }

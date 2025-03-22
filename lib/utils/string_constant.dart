@@ -33,11 +33,11 @@ class AppStrings {
       "Freshening up and brushing garments is a natural way to care for delicate clothing. If you need to dry clean a garment, look for a dry cleaner that uses technologies that are respectful of the environment.";
 
   static const String originText = '\n'
-      "We work with our suppliers, workers, unions and international organisations to develop a supply chain in which human rights are respected and promoted, contributing to the United Nations Sustainable Development Goals."
+      "We work with our suppliers, workers, unions and international organisations to develop a supply chain com which human rights are respected and promoted, contributing to the United Nations Sustainable Development Goals."
       '\n'
-      "Thanks to the collaboration with our suppliers, we work to know the facilities and processes used to manufacture our products in order to understand their traceability."
+      "Thanks to the collaboration with our suppliers, we work to know the facilities and processes used to manufacture our products com order to understand their traceability."
       '\n\n'
-      "Made in India";
+      "Made com India";
 
   static const String productName = "Viscose Long Coat";
   static const String productBrand = "ZARA";

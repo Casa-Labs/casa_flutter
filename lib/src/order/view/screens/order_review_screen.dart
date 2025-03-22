@@ -1,6 +1,6 @@
-import 'package:casa_flutter/routes/app_routes.dart';
-import 'package:casa_flutter/src/common/widgets/common_app_bars.dart';
-import 'package:casa_flutter/src/order/controller/order_review_controller.dart';
+import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutter/src/common/widgets/common_app_bars.dart';
+import 'package:casaflutter/src/order/controller/order_review_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';

@@ -1,7 +1,7 @@
+import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../../routes/app_routes.dart';
 
 class ExploreSearchBar extends StatelessWidget {
   const ExploreSearchBar({super.key});
@@ -21,7 +21,7 @@ class ExploreSearchBar extends StatelessWidget {
                 hintText: 'Search',
                 hintStyle: Theme.of(context).textTheme.bodySmall!.copyWith(),
                 prefixIcon: Icon(Icons.search),
-                fillColor: Color(0xffEFEFEF),
+                fillColor: TextFieldColor.offWhite,
                 filled: true,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(100),

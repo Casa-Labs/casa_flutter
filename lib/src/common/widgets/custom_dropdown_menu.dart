@@ -80,31 +80,33 @@ class CustomDropDownMenu<T> extends StatelessWidget {
   }
 }
 
-class CustomDropDownIcon extends StatelessWidget {
-  final List<String?> items;
-  final void Function(String)? onSelected;
+class CustomDropDownIcon<T> extends StatelessWidget {
+  final List<T> items;
+  final String Function(T item) itemLabel; // Extracts display value
+  final void Function(T)? onSelected;
   final double? width;
   final String hintText;
-  final String? Function(String?)? validator;
-  final String? initialValue;
+  final String? Function(T?)? validator;
+  final T? initialValue;
   final bool? check;
 
-  const CustomDropDownIcon(
-      {super.key,
-      required this.items,
-      this.onSelected,
-      this.width,
-      this.hintText = '',
-      this.validator,
-      this.initialValue,
-      this.check});
+  const CustomDropDownIcon({
+    super.key,
+    required this.items,
+    required this.itemLabel,
+    this.onSelected,
+    this.width,
+    this.hintText = '',
+    this.validator,
+    this.initialValue,
+    this.check,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      // height: 48.h,
       width: width,
-      child: DropdownButtonFormField<String?>(
+      child: DropdownButtonFormField<T>(
         isExpanded: true,
         isDense: true,
         value: initialValue,
@@ -112,18 +114,16 @@ class CustomDropDownIcon extends StatelessWidget {
         validator: validator,
         icon: Icon(Icons.keyboard_arrow_down, color: IconColor.grey),
         dropdownColor: Theme.of(context).colorScheme.surface,
-        hint: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                hintText,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: TextColor.black,
-                    ), // original : display large
-              ),
-            ],
-          ),
+        hint: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              hintText,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: TextColor.black,
+                  ),
+            ),
+          ],
         ),
         decoration: InputDecoration(
           fillColor: check == true ? BackgroundColor.white : Colors.transparent,
@@ -131,19 +131,18 @@ class CustomDropDownIcon extends StatelessWidget {
           contentPadding: EdgeInsets.fromLTRB(15, 10, 15, 10),
           enabledBorder: InputBorder.none,
           focusedBorder: InputBorder.none,
-
         ),
         items: items.map((item) {
-          return (DropdownMenuItem<String?>(
+          return DropdownMenuItem<T>(
             value: item,
             child: Text(
-              item.toString(),
+              itemLabel(item), // Dynamically extract the display text
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
-          ));
+          );
         }).toList(),
-        onChanged: (String? value) {
+        onChanged: (T? value) {
           if (value != null && onSelected != null) {
             onSelected!(value);
           }

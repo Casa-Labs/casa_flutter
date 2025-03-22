@@ -1,5 +1,5 @@
-import 'package:casa_flutter/src/order/controller/order_review_controller.dart';
-import 'package:casa_flutter/utils/color_constant.dart';
+import 'package:casaflutter/src/order/controller/order_review_controller.dart';
+import 'package:casaflutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

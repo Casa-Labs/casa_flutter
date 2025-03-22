@@ -1,5 +1,10 @@
-import 'package:casa_flutter/src/explore/model/service/explore_service.dart';
-import 'package:casa_flutter/src/explore/model/trending_products_model.dart';
+import 'package:casaflutter/src/explore/model/brands_model.dart' as brand;
+import 'package:casaflutter/src/explore/model/new_arrivals_model.dart' as nam;
+import 'package:casaflutter/src/explore/model/product_categories_model.dart'
+    as pcm;
+import 'package:casaflutter/src/explore/model/service/explore_service.dart';
+import 'package:casaflutter/src/explore/model/trending_products_model.dart'
+    as tpm;
 import 'package:get/get.dart';
 
 import '../../home/model/home_models.dart';
@@ -30,8 +35,24 @@ class ExploreController extends GetxController {
     ProductModelFilter(leading: '', title: 'Zebra print')
   ];
 
+  final List<ProductModelFilter> sizedFilter = [
+    ProductModelFilter(leading: '', title: 'XXS'),
+    ProductModelFilter(leading: '', title: 'XS'),
+    ProductModelFilter(leading: '', title: 'S'),
+    ProductModelFilter(leading: '', title: 'M'),
+    ProductModelFilter(leading: '', title: 'L'),
+    ProductModelFilter(leading: '', title: 'XL'),
+    ProductModelFilter(leading: '', title: 'XXL')
+  ];
+
   RxInt selectedIndex = 0.obs;
-  RxList<Products> trendingProducts = <Products>[].obs;
+  RxList<tpm.Products> trendingProducts = <tpm.Products>[].obs;
+  RxList<nam.Products> newArrivalProducts = <nam.Products>[].obs;
+  RxList<brand.Data> brands = <brand.Data>[].obs;
+  RxList<pcm.GetProductCategories> categories =
+      <pcm.GetProductCategories>[].obs;
+
+  RxString storeType = 'BRAND'.obs;
 
   // Pagination - temporary calling 100 items
   RxInt page = 1.obs;
@@ -43,13 +64,33 @@ class ExploreController extends GetxController {
   void onReady() async {
     super.onReady();
     await getTrendingNowProductsCall();
+    await getNewArrivalProductsCall();
+    await getBrandsCall();
+    await getCategoriesCall();
   }
 
   // ========== UI FUNCTIONS ========== //
 
   // ========== APIs FUNCTIONS ========== //
 
+  Future<void> onRefresh() async {
+    await getTrendingNowProductsCall();
+    await getNewArrivalProductsCall();
+  }
+
   Future<void> getTrendingNowProductsCall() async {
     await ExploreService().getTrendingNowProducts();
+  }
+
+  Future<void> getNewArrivalProductsCall() async {
+    await ExploreService().getNewArrivalProducts();
+  }
+
+  Future<void> getBrandsCall() async {
+    await ExploreService().getBrands();
+  }
+
+  Future<void> getCategoriesCall() async {
+    await ExploreService().getProductCategories();
   }
 }

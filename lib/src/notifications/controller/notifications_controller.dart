@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:casa_flutter/src/notifications/model/service/notifications_service.dart';
+import 'package:casaflutter/src/notifications/model/service/notifications_service.dart';
 import 'package:get/get.dart';
 
 import '../../../utils/preference_manager.dart';

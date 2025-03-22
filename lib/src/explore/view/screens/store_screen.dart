@@ -1,9 +1,9 @@
-import 'package:casa_flutter/routes/app_routes.dart';
-import 'package:casa_flutter/src/explore/controller/explore_controller.dart';
-import 'package:casa_flutter/src/wishlist/view/widgets/icons_widget.dart';
-import 'package:casa_flutter/utils/color_constant.dart';
-import 'package:casa_flutter/utils/padding_size.dart';
-import 'package:casa_flutter/utils/string_constant.dart';
+import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutter/src/explore/controller/explore_controller.dart';
+import 'package:casaflutter/src/wishlist/view/widgets/icons_widget.dart';
+import 'package:casaflutter/utils/color_constant.dart';
+import 'package:casaflutter/utils/padding_size.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -28,7 +28,7 @@ class StoreScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     FilterRow(
-                      brandList: exploreCtrl.brandFilter,colorList: exploreCtrl.colorFilter,productList: exploreCtrl.productFilter,
+                      brandList: exploreCtrl.brandFilter,colorList: exploreCtrl.colorFilter,productList: exploreCtrl.productFilter,sizedList: exploreCtrl.sizedFilter,
                     ),
                     const SizedBox(height: 20),
                     Expanded(

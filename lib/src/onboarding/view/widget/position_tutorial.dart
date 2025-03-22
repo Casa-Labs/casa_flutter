@@ -1,4 +1,4 @@
-import 'package:casa_flutter/src/onboarding/view/widget/text_container.dart';
+import 'package:casaflutter/src/onboarding/view/widget/text_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

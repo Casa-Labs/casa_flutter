@@ -37,7 +37,7 @@ class _QuantitySelectorButtonState extends State<QuantitySelectorButton> {
             backgroundColor:
                 WidgetStatePropertyAll<Color>(ButtonColor.lightGrey),
           ),
-          highlightColor: ButtonColor.yellow,
+          highlightColor: ButtonColor.black.withValues(alpha: 0.3),
           onPressed: _decreaseCount,
           icon: const Icon(Icons.remove),
           color: IconColor.black,
@@ -60,7 +60,7 @@ class _QuantitySelectorButtonState extends State<QuantitySelectorButton> {
             backgroundColor:
                 WidgetStatePropertyAll<Color>(ButtonColor.lightGrey),
           ),
-          highlightColor: ButtonColor.yellow,
+          highlightColor: ButtonColor.black.withValues(alpha: 0.3),
           onPressed: _increaseCount,
           icon: const Icon(Icons.add),
           color: IconColor.black,
