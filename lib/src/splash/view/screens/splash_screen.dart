@@ -17,7 +17,9 @@ class SplashScreen extends StatelessWidget {
         margin: EdgeInsets.all(60),
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(ImageConstants.splashBackground),
+            image: splashCtrl.netImage() != ""
+                ? NetworkImage(splashCtrl.netImage())
+                : AssetImage(ImageConstants.splashBackground),
             fit: BoxFit.cover,
           ),
         ),
