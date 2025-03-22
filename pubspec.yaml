@@ -50,6 +50,7 @@ dependencies:
   graphql_flutter: ^5.2.0-beta.8
   share_plus: ^10.1.4
   shimmer: ^3.0.0
+  razorpay_flutter: ^1.4.0
   google_sign_in: ^6.3.0
   firebase_auth: ^5.5.1
   firebase_core: ^3.12.1
