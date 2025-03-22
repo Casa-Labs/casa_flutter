@@ -110,14 +110,14 @@ class SignInScreen extends StatelessWidget {
                       isLoading: authController.isGoogleSignInLoading(),
                       onPressed: () async {
                         await authController.signInWithGoogle();
-                        /* if (authController.message().isNotEmpty) {
+                        if (authController.message().isNotEmpty) {
                           showToast(
                             message: authController.message(),
                           );
-                          if (authController.isGoogleSignInLoading()) {
+                          if (authController.isGoogleLoggedIn()) {
                             router.goNamed(RouteNames.navigation);
                           }
-                        }*/
+                        }
                       },
                     ),
                   ),
