@@ -81,7 +81,7 @@ class AddToCloset extends StatelessWidget {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: wishController.filteredWishlist.length,
                           itemBuilder: (context, index) {
-                            var categoryMap =
+                            var closetData =
                                 wishController.filteredWishlist[index];
 
                             return Padding(
@@ -89,12 +89,12 @@ class AddToCloset extends StatelessWidget {
                                   horizontal: 8.0, vertical: 8),
                               child: GestureDetector(
                                 onTap: () {
-                                  final currentValue = selectedClosets
-                                      .contains(categoryMap.name);
+                                  final currentValue =
+                                      selectedClosets.contains(closetData.id);
                                   if (currentValue) {
-                                    selectedClosets.remove(categoryMap.name);
+                                    selectedClosets.remove(closetData.id);
                                   } else {
-                                    selectedClosets.add(categoryMap.name!);
+                                    selectedClosets.add(closetData.id!);
                                   }
                                 },
                                 child: Row(
@@ -102,7 +102,7 @@ class AddToCloset extends StatelessWidget {
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(8),
                                       child: Image.network(
-                                        categoryMap.imageUrl!,
+                                        closetData.imageUrl!,
                                         width: 90,
                                         height: 60,
                                         fit: BoxFit.cover,
@@ -110,7 +110,7 @@ class AddToCloset extends StatelessWidget {
                                     ),
                                     const SizedBox(width: 20),
                                     Text(
-                                      categoryMap.name!,
+                                      closetData.name!,
                                       style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
@@ -120,14 +120,13 @@ class AddToCloset extends StatelessWidget {
                                     Obx(() {
                                       return Checkbox(
                                         value: selectedClosets
-                                            .contains(categoryMap.name),
+                                            .contains(closetData.id),
                                         onChanged: (bool? value) {
                                           if (value == true) {
-                                            selectedClosets
-                                                .add(categoryMap.name!);
+                                            selectedClosets.add(closetData.id!);
                                           } else {
                                             selectedClosets
-                                                .remove(categoryMap.name);
+                                                .remove(closetData.id);
                                           }
                                         },
                                         shape: RoundedRectangleBorder(
@@ -206,6 +205,12 @@ class AddToCloset extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () async {
+                        for (String closet in selectedClosets) {
+                          wishController.saveItemToCloset(
+                            clothingItemId: closet,
+                            productId: itemId,
+                          );
+                        }
                         context.pop();
                       },
                       style: ElevatedButton.styleFrom(

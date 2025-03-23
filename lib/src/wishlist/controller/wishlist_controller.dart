@@ -1,4 +1,5 @@
-import 'package:casa_flutter/utils/string_constant.dart';
+import 'package:casaflutter/src/wishlist/model/save_item_to_closet_model.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -150,6 +151,19 @@ class WishlistController extends GetxController {
     var response = await _wishlistService.addItemToCloset(
         addBoardRequestModel: addBoardRequestModel);
     logg.d("get Data ====> $response");
+    getUserClosets();
+  }
+
+  Future<void> saveItemToCloset(
+      {required String clothingItemId, required String productId}) async {
+    SaveItemToClosetRequestModel saveItemToClosetRequestModel =
+        SaveItemToClosetRequestModel(
+      clothingItemId: clothingItemId,
+      productId: productId,
+    );
+    var response = await _wishlistService.saveItemToCloset(
+        saveItemToClosetRequestModel: saveItemToClosetRequestModel);
+    logg.d("get Data save item ====> $response");
     getUserClosets();
   }
 

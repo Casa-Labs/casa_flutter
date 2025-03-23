@@ -308,6 +308,7 @@ mutation SaveItem(\$clothingItemId: ID!, \$productId: ID!) {
       productImages
     }
   }
+}
 ''';
 
   static const String removeItemFromCloset = '''

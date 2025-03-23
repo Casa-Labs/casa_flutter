@@ -1,4 +1,4 @@
-import 'package:casa_flutter/network/graph_ql_manager.dart';
+import 'package:casaflutter/network/graph_ql_manager.dart';
 
 import '../add_board_to_closet_model.dart';
 import '../create_closet_model.dart';
@@ -36,19 +36,19 @@ class WishlistService {
     return addBoardResponse;
   }
 
-  Future<AddBoardResponse?> saveItemToCloset(
+  Future<SaveItemToClosetResponseModel?> saveItemToCloset(
       {required SaveItemToClosetRequestModel
           saveItemToClosetRequestModel}) async {
-    final AddBoardResponse addBoardResponse;
+    final SaveItemToClosetResponseModel saveItemToClosetRM;
 
     final response = await _graphQLManager.saveItemToCloset(
         clothingItemId: saveItemToClosetRequestModel.clothingItemId,
         productId: saveItemToClosetRequestModel.productId);
 
-    addBoardResponse = AddBoardResponse.fromJson(
+    saveItemToClosetRM = SaveItemToClosetResponseModel.fromJson(
       response.data!,
     );
-    return addBoardResponse;
+    return saveItemToClosetRM;
   }
 
   Future<AddBoardResponse?> removeItemFromCloset(
