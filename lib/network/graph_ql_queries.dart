@@ -301,8 +301,8 @@ query GetCloset(\$getClosetId: ID!) {
 """;
 
   static const String getSavedItemsToCloset = """
-query GetSavedItems(\$userId: ID!) {
-  getSavedItems(userId: \$userId) {
+query GetSavedItems(\$userId: ID!, \$clothingItemId: ID) {
+  getSavedItems(userId: \$userId, clothingItemId: \$clothingItemId) {
     clothingItem {
       id
       name

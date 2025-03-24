@@ -1,10 +1,9 @@
 import 'package:casaflutter/network/graph_ql_manager.dart';
 
 import '../add_board_to_closet_model.dart';
-import '../create_closet_model.dart';
 import '../get_closet_model.dart';
-import '../remove_item_from_closet_model.dart';
 import '../save_item_to_closet_model.dart';
+import '../wishlist_models.dart';
 
 class WishlistService {
   final GraphQLManager _graphQLManager = GraphQLManager();
@@ -51,17 +50,32 @@ class WishlistService {
     return saveItemToClosetRM;
   }
 
-  Future<AddBoardResponse?> removeItemFromCloset(
-      {required RemoveItemRequestModel removeItemRequestModel}) async {
-    final AddBoardResponse addBoardResponse;
+  Future<RemoveClosetItemResponseModel?> removeItemFromCloset(
+      {required RemoveClosetItemRequestModel
+          removeClosetItemRequestModel}) async {
+    final RemoveClosetItemResponseModel removeClosetItemResponseModel;
 
     final response = await _graphQLManager.removeItemFromCloset(
-        itemId: removeItemRequestModel.itemId);
+        itemId: removeClosetItemRequestModel.itemId);
 
-    addBoardResponse = AddBoardResponse.fromJson(
+    removeClosetItemResponseModel = RemoveClosetItemResponseModel.fromJson(
       response.data!,
     );
-    return addBoardResponse;
+    return removeClosetItemResponseModel;
+  }
+
+  Future<RemoveClothingItemResponseModel?> removeItemFromClothingItem(
+      {required RemoveClothingItemRequestModel
+          removeClothingItemRequestModel}) async {
+    final RemoveClothingItemResponseModel removeClothingItemResponseModel;
+
+    final response = await _graphQLManager.removeItemFromClothingItem(
+        itemId: removeClothingItemRequestModel.itemId);
+
+    removeClothingItemResponseModel = RemoveClothingItemResponseModel.fromJson(
+      response.data!,
+    );
+    return removeClothingItemResponseModel;
   }
 
   Future<GetUserClosetsResponseModel?> getUserClosets(
@@ -88,5 +102,21 @@ class WishlistService {
       response.data!,
     );
     return getUserClosets;
+  }
+
+  Future<GetSavedItemsToClosetResponseModel?> getSavedItemsToCloset(
+      {required GetSavedItemsToClosetRequestModel
+          getSavedItemsToClosetRequestModel}) async {
+    final GetSavedItemsToClosetResponseModel getSavedItemsToClosetResponseModel;
+
+    final response = await _graphQLManager.getSavedItemsToCloset(
+        clothingItemId: getSavedItemsToClosetRequestModel.clothingItemId,
+        userId: getSavedItemsToClosetRequestModel.userId);
+
+    getSavedItemsToClosetResponseModel =
+        GetSavedItemsToClosetResponseModel.fromJson(
+      response.data!,
+    );
+    return getSavedItemsToClosetResponseModel;
   }
 }

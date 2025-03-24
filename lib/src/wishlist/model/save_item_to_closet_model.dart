@@ -14,15 +14,47 @@ class SaveItemToClosetResponseModel {
   SaveItemToClosetResponseModel({this.saveItem});
 
   SaveItemToClosetResponseModel.fromJson(Map<String, dynamic> json) {
-    saveItem = json['saveItem'] != null
-        ? SaveItem.fromJson(json['saveItem'])
-        : null;
+    saveItem =
+        json['saveItem'] != null ? SaveItem.fromJson(json['saveItem']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (saveItem != null) {
       data['saveItem'] = saveItem!.toJson();
+    }
+    return data;
+  }
+}
+
+class GetSavedItemsToClosetRequestModel {
+  String clothingItemId;
+  String userId;
+
+  GetSavedItemsToClosetRequestModel({
+    required this.clothingItemId,
+    required this.userId,
+  });
+}
+
+class GetSavedItemsToClosetResponseModel {
+  List<SaveItem>? getSavedItems;
+
+  GetSavedItemsToClosetResponseModel({this.getSavedItems});
+
+  GetSavedItemsToClosetResponseModel.fromJson(Map<String, dynamic> json) {
+    if (json['getSavedItems'] != null) {
+      getSavedItems = <SaveItem>[];
+      json['getSavedItems'].forEach((v) {
+        getSavedItems!.add(SaveItem.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (getSavedItems != null) {
+      data['getSavedItems'] = getSavedItems!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -118,15 +150,18 @@ class Product {
   String? description;
   double? price;
   List<String>? productImages;
+  bool? isSelected;
 
-  Product(
-      {this.mainImage,
-      this.gender,
-      this.id,
-      this.name,
-      this.description,
-      this.price,
-      this.productImages});
+  Product({
+    this.mainImage,
+    this.gender,
+    this.id,
+    this.name,
+    this.description,
+    this.price,
+    this.productImages,
+    this.isSelected = false,
+  });
 
   Product.fromJson(Map<String, dynamic> json) {
     mainImage = json['mainImage'];
@@ -134,8 +169,13 @@ class Product {
     id = json['id'];
     name = json['name'];
     description = json['description'];
-    price = json['price'];
+    if (json['price'] is double) {
+      price = json['price'];
+    } else {
+      price = double.parse(json['price'].toString());
+    }
     productImages = json['productImages'].cast<String>();
+    isSelected = false;
   }
 
   Map<String, dynamic> toJson() {
@@ -147,6 +187,30 @@ class Product {
     data['description'] = description;
     data['price'] = price;
     data['productImages'] = productImages;
+    return data;
+  }
+}
+
+class RemoveClothingItemRequestModel {
+  String itemId;
+
+  RemoveClothingItemRequestModel({
+    required this.itemId,
+  });
+}
+
+class RemoveClothingItemResponseModel {
+  bool? removeItemFromClothingItem;
+
+  RemoveClothingItemResponseModel({this.removeItemFromClothingItem});
+
+  RemoveClothingItemResponseModel.fromJson(Map<String, dynamic> json) {
+    removeItemFromClothingItem = json['removeItemFromClothingItem'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['removeItemFromClothingItem'] = removeItemFromClothingItem;
     return data;
   }
 }

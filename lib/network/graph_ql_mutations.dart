@@ -316,4 +316,10 @@ mutation RemoveItemFromCloset(\$itemId: ID!) {
   removeItemFromCloset(itemId: \$itemId)
 }
 ''';
+
+  static const String removeItemFromClothingItem = '''
+mutation RemoveItemFromClothingItem(\$itemId: ID!) {
+  removeItemFromClothingItem(itemId: \$itemId)
+}
+''';
 }

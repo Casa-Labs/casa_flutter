@@ -249,6 +249,12 @@ class GraphQLVariables {
     };
   }
 
+  static Map<String, dynamic> removeItemFromClothingItem(String itemId) {
+    return {
+      "itemId": itemId,
+    };
+  }
+
   //QUERIES
 
   static Map<String, dynamic> getNewArrivalProductsVariables(
@@ -329,9 +335,11 @@ class GraphQLVariables {
     };
   }
 
-  static Map<String, dynamic> getSavedItemsToCloset(String userId) {
+  static Map<String, dynamic> getSavedItemsToCloset(
+      String userId, String clothingItemId) {
     return {
       "userId": userId,
+      "clothingItemId": clothingItemId,
     };
   }
 }

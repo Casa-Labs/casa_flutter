@@ -1,35 +1,91 @@
-import '../../home/model/home_models.dart';
+// ====Create Closet ==== //
+class CreateClosetResponse {
+  CreateCloset? createCloset;
 
-class WishlistModels {
-  String name;
-  String imageUrl;
-  List<ProductModel> productList;
+  CreateClosetResponse({this.createCloset});
 
-  WishlistModels({
-    this.name = "",
-    this.imageUrl = "",
-    this.productList = const [],
-  });
-
-  factory WishlistModels.fromJson(Map<dynamic, dynamic> parsedJson) {
-    return WishlistModels(
-      name: parsedJson['name'] ?? '',
-      imageUrl: parsedJson['image_url'] ?? '',
-      productList:
-          (parsedJson['product_list'] as List<dynamic>? ?? []).map((item) {
-        if (item is Map<String, dynamic>) {
-          return ProductModel.fromJson(item);
-        }
-        return ProductModel(); // Return a default item if the cast fails
-      }).toList(),
-    );
+  CreateClosetResponse.fromJson(Map<String, dynamic> json) {
+    createCloset = json['createCloset'] != null
+        ? CreateCloset.fromJson(json['createCloset'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'image_url': imageUrl,
-      'product_list': productList,
-    };
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (createCloset != null) {
+      data['createCloset'] = createCloset!.toJson();
+    }
+    return data;
+  }
+}
+
+class CreateCloset {
+  String? createdAt;
+  String? id;
+  String? name;
+  User? user;
+
+  CreateCloset({this.createdAt, this.id, this.name, this.user});
+
+  CreateCloset.fromJson(Map<String, dynamic> json) {
+    createdAt = json['createdAt'];
+    id = json['id'];
+    name = json['name'];
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['createdAt'] = createdAt;
+    data['id'] = id;
+    data['name'] = name;
+    if (user != null) {
+      data['user'] = user!.toJson();
+    }
+    return data;
+  }
+}
+
+class User {
+  String? id;
+  String? name;
+
+  User({this.id, this.name});
+
+  User.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    return data;
+  }
+}
+
+// ==== Remove Board From Closet ==== //
+class RemoveClosetItemRequestModel {
+  String itemId;
+
+  RemoveClosetItemRequestModel({
+    required this.itemId,
+  });
+}
+
+class RemoveClosetItemResponseModel {
+  bool? removeItemFromCloset;
+
+  RemoveClosetItemResponseModel({this.removeItemFromCloset});
+
+  RemoveClosetItemResponseModel.fromJson(Map<String, dynamic> json) {
+    removeItemFromCloset = json['removeItemFromCloset'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['removeItemFromCloset'] = removeItemFromCloset;
+    return data;
   }
 }

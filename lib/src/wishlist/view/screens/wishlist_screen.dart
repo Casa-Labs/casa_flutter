@@ -1,4 +1,5 @@
 import 'package:casaflutter/src/common/widgets/common_app_bars.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -84,6 +85,8 @@ class WishlistScreen extends StatelessWidget {
                             onTap: () {
                               // wishController.wishItemList.value =
                               //     wishData.productList;
+                              wishController.getSavedItemsToCloset(
+                                  clothingItemId: wishData.id!);
                               wishController.itemIndex.value = index;
                               context.pushNamed(RouteNames.wishlistItem);
                             },
@@ -118,15 +121,17 @@ class WishlistScreen extends StatelessWidget {
                                   ),
                                 ),
                                 if (wishController.isDeleted.value)
-                                  if (wishData.name != "All Saved")
+                                  if (wishData.name!.trim().toLowerCase() !=
+                                      AppStrings.defaulttClosetName
+                                          .toLowerCase())
                                     Align(
                                       alignment: Alignment.topRight,
                                       child: Padding(
                                         padding: const EdgeInsets.all(4.0),
                                         child: IconsWidget(
                                           onTap: () {
-                                            wishController
-                                                .removeCloset(wishData);
+                                            wishController.removeItemFromCloset(
+                                                itemId: wishData.id!);
                                           },
                                           icon: Icons.remove,
                                           size: 23,

@@ -119,7 +119,8 @@ class WishlistItemScreen extends StatelessWidget {
                       ),
                       itemCount: wishlistController.wishItemList.length,
                       itemBuilder: (context, index) {
-                        var itemData = wishlistController.wishItemList[index];
+                        var itemData =
+                            wishlistController.wishItemList[index].product!;
                         return Column(
                           children: [
                             GestureDetector(
@@ -138,9 +139,21 @@ class WishlistItemScreen extends StatelessWidget {
                                       ),
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(15),
-                                        child: Image.network(
-                                          itemData.images![0].src!,
-                                          fit: BoxFit.cover,
+                                        child: SizedBox(
+                                          height: MediaQuery.sizeOf(context)
+                                                  .height *
+                                              0.27,
+                                          width:
+                                              MediaQuery.sizeOf(context).width *
+                                                  0.6,
+                                          child: Image.network(
+                                            itemData.mainImage!,
+                                            fit: BoxFit.cover,
+                                          ),
+                                          // Image.asset(
+                                          //   ImageConstants.placeholderProduct,
+                                          //   fit: BoxFit.cover,
+                                          // ),
                                         ),
                                       ),
                                     ),
@@ -189,16 +202,20 @@ class WishlistItemScreen extends StatelessWidget {
                                                   fontSize: 13,
                                                 ),
                                           ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              wishlistController
+                                                  .removeItemFromClothingItem(
+                                                itemId: wishlistController
+                                                    .wishItemList[index].id!,
+                                              );
+                                            },
+                                            child: Icon(Icons.bookmark_rounded),
+                                          ),
                                         ],
                                       ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          wishlistController.wishRemoveItem();
-                                        },
-                                        child: Icon(Icons.bookmark_rounded),
-                                      ),
                                       Text(
-                                        itemData.title!,
+                                        itemData.name!,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium
@@ -208,7 +225,7 @@ class WishlistItemScreen extends StatelessWidget {
                                             ),
                                       ),
                                       Text(
-                                        itemData.price!,
+                                        itemData.price.toString(),
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium

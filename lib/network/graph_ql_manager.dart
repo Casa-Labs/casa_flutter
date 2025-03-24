@@ -262,6 +262,14 @@ class GraphQLManager {
     );
   }
 
+  Future<QueryResult> removeItemFromClothingItem(
+      {required String itemId}) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.removeItemFromClothingItem,
+      variables: GraphQLVariables.removeItemFromClothingItem(itemId),
+    );
+  }
+
   //QUERIES
 
   Future<QueryResult> getNewArrivalProducts(
@@ -375,10 +383,11 @@ class GraphQLManager {
     );
   }
 
-  Future<QueryResult> getSavedItemsToCloset({required String userId}) async {
+  Future<QueryResult> getSavedItemsToCloset(
+      {required String userId, required String clothingItemId}) async {
     return await _clientService.performQuery(
       document: GraphQLQueries.getSavedItemsToCloset,
-      variables: GraphQLVariables.getSavedItemsToCloset(userId),
+      variables: GraphQLVariables.getSavedItemsToCloset(userId, clothingItemId),
     );
   }
 }

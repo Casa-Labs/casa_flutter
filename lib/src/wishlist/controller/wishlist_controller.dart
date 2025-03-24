@@ -1,3 +1,4 @@
+import 'package:casaflutter/src/common/widgets/show_toast.dart';
 import 'package:casaflutter/src/wishlist/model/save_item_to_closet_model.dart';
 import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import '../../home/model/home_models.dart';
 import '../model/add_board_to_closet_model.dart';
 import '../model/get_closet_model.dart';
 import '../model/service/wishlist_service.dart';
+import '../model/wishlist_models.dart';
 
 class WishlistController extends GetxController {
   // ========= OBJECTS ============= //
@@ -21,7 +23,7 @@ class WishlistController extends GetxController {
   final userID = PreferenceManager.getString(PreferenceManager.userId);
   RxList<ClothingItems> wishlistData = <ClothingItems>[].obs;
   RxList<GetUserClosets> getUserClosetList = <GetUserClosets>[].obs;
-  RxList<ProductModel> wishItemList = <ProductModel>[].obs;
+  RxList<SaveItem> wishItemList = <SaveItem>[].obs;
   RxBool isDeleted = false.obs;
   RxBool isWishItemDeleted = false.obs;
   RxBool isBottomSheet = false.obs;
@@ -86,14 +88,18 @@ class WishlistController extends GetxController {
 
   void wishRemoveItem() {
     for (var i = 0; i < wishItemList.length; i++) {
-      if (wishItemList[i].isSelected!) {
-        wishItemList.removeAt(i);
+      if (wishItemList[i].product!.isSelected!) {
+        removeItemFromClothingItem(
+            itemId: wishItemList[i].id!, isMultiple: true);
       }
     }
+    getSavedItemsToCloset(clothingItemId: wishItemList[0].clothingItem!.id!);
+    showToast(message: "All products deleted successfully!!");
   }
 
   void wishSelectedtem(int index) {
-    wishItemList[index].isSelected = !wishItemList[index].isSelected!;
+    wishItemList[index].product!.isSelected =
+        !wishItemList[index].product!.isSelected!;
     wishItemList.refresh();
   }
 
@@ -165,6 +171,52 @@ class WishlistController extends GetxController {
         saveItemToClosetRequestModel: saveItemToClosetRequestModel);
     logg.d("get Data save item ====> $response");
     getUserClosets();
+  }
+
+  Future<void> removeItemFromCloset({required String itemId}) async {
+    RemoveClosetItemRequestModel removeClosetItemRequestModel =
+        RemoveClosetItemRequestModel(
+      itemId: itemId,
+    );
+    var response = await _wishlistService.removeItemFromCloset(
+        removeClosetItemRequestModel: removeClosetItemRequestModel);
+    getUserClosets();
+    if (response != null &&
+        response.removeItemFromCloset != null &&
+        response.removeItemFromCloset!) {
+      showToast(message: "Closet deleted successfully!!");
+    }
+    logg.d("get Delete save item ====> $response");
+  }
+
+  Future<void> getSavedItemsToCloset({required String clothingItemId}) async {
+    GetSavedItemsToClosetRequestModel getSavedItemsToClosetRequestModel =
+        GetSavedItemsToClosetRequestModel(
+      clothingItemId: clothingItemId,
+      userId: userID!,
+    );
+    var response = await _wishlistService.getSavedItemsToCloset(
+        getSavedItemsToClosetRequestModel: getSavedItemsToClosetRequestModel);
+    wishItemList(response!.getSavedItems!);
+    logg.d("get Date save item ====> $response");
+  }
+
+  Future<void> removeItemFromClothingItem(
+      {required String itemId, bool isMultiple = false}) async {
+    RemoveClothingItemRequestModel removeClothingItemRequestModel =
+        RemoveClothingItemRequestModel(
+      itemId: itemId,
+    );
+    var response = await _wishlistService.removeItemFromClothingItem(
+        removeClothingItemRequestModel: removeClothingItemRequestModel);
+    if (response != null &&
+        response.removeItemFromClothingItem != null &&
+        response.removeItemFromClothingItem! &&
+        !isMultiple) {
+      getSavedItemsToCloset(clothingItemId: wishItemList[0].clothingItem!.id!);
+      showToast(message: "Product deleted successfully!!");
+    }
+    logg.d("get Delete save item ====> $response");
   }
 
   //=========== CONSTANT LIST =========== //

@@ -354,12 +354,13 @@ class ProductDetails extends StatelessWidget {
                     : product.productImages!.length,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,crossAxisSpacing: 8,childAspectRatio: 0.85,mainAxisSpacing: 8),
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 8,
+                    childAspectRatio: 0.85,
+                    mainAxisSpacing: 8),
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
-                    onTap: () {
-                      print('------>>> hello ${product.productImages![index]}');
-                    },
+                    onTap: () {},
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image.network(
@@ -516,11 +517,10 @@ class ProductDetails extends StatelessWidget {
                               Text(
                                 '5/5',
                                 style: textTheme.bodyMedium?.copyWith(
-                                  // fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                  color: TextColor.black,
-                                  fontFamily: Font.timeNew
-                                ),
+                                    // fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                    color: TextColor.black,
+                                    fontFamily: Font.timeNew),
                               )
                             ],
                           ),
