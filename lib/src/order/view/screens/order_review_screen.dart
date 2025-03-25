@@ -11,13 +11,14 @@ import '../widgets/expandable_card.dart';
 import '../widgets/order_view_item_widget.dart';
 
 class OrderReviewScreen extends StatelessWidget {
-  OrderReviewScreen({
+  const OrderReviewScreen({
     super.key,
   });
-  final orderRiviweCtrl = Get.find<OrderReviewController>();
 
   @override
   Widget build(BuildContext context) {
+    final orderRiviweCtrl = Get.find<OrderReviewController>();
+
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: BackgroundColor.white,

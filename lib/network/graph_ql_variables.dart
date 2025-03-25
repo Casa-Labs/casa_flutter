@@ -36,7 +36,6 @@ class GraphQLVariables {
     };
   }
 
-
   static Map<String, dynamic> updateUserDetailsVariables(
     String userId,
     String name,
@@ -221,6 +220,41 @@ class GraphQLVariables {
     };
   }
 
+  static Map<String, dynamic> createCloset(String name) {
+    return {
+      "name": name,
+    };
+  }
+
+  static Map<String, dynamic> addItemToCloset(
+      String closetId, String name, String imageUrl) {
+    return {
+      "closetId": closetId,
+      "name": name,
+      "imageUrl": imageUrl,
+    };
+  }
+
+  static Map<String, dynamic> saveItemToCloset(
+      String clothingItemId, String productId) {
+    return {
+      "clothingItemId": clothingItemId,
+      "productId": productId,
+    };
+  }
+
+  static Map<String, dynamic> removeItemFromCloset(String itemId) {
+    return {
+      "itemId": itemId,
+    };
+  }
+
+  static Map<String, dynamic> removeItemFromClothingItem(String itemId) {
+    return {
+      "itemId": itemId,
+    };
+  }
+
   //QUERIES
 
   static Map<String, dynamic> getNewArrivalProductsVariables(
@@ -286,6 +320,26 @@ class GraphQLVariables {
   static Map<String, dynamic> getCartItemsVariables(String userId) {
     return {
       "userId": userId,
+    };
+  }
+
+  static Map<String, dynamic> getUserClosets(String userId) {
+    return {
+      "userId": userId,
+    };
+  }
+
+  static Map<String, dynamic> getClosetById(String getClosetId) {
+    return {
+      "getClosetId": getClosetId,
+    };
+  }
+
+  static Map<String, dynamic> getSavedItemsToCloset(
+      String userId, String clothingItemId) {
+    return {
+      "userId": userId,
+      "clothingItemId": clothingItemId,
     };
   }
 }

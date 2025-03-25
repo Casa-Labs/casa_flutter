@@ -33,7 +33,7 @@ class CreateClosetScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Add to Closet',
+                            'Create a Closet',
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge
@@ -221,7 +221,14 @@ class CreateClosetScreen extends StatelessWidget {
                         AuthButton(
                             type: AuthButtonType.createCloset,
                             onPressed: () async {
-                              wishlistController.addCloset();
+                              wishlistController.addItemToCloset(
+                                  closetId: wishlistController
+                                      .getUserClosetList.first.id
+                                      .toString(),
+                                  imageUrl: wishlistController.selectedImage(),
+                                  name:
+                                      wishlistController.closetController.text);
+                              wishlistController.closetInit();
                               context.pop();
                             }),
                       ],

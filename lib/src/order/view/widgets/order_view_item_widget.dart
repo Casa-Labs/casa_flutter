@@ -1,18 +1,14 @@
 import 'package:casaflutter/src/cart/model/cart_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/string_constant.dart';
-import '../../controller/order_review_controller.dart';
 
 class OrderViewItemWidget extends StatelessWidget {
   final ProductForCart item;
   final Function() onorderItemDelete;
-  final orderReviewController = Get.find<OrderReviewController>();
-
-  OrderViewItemWidget(
+  const OrderViewItemWidget(
       {super.key, required this.item, required this.onorderItemDelete});
 
   @override

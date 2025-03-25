@@ -263,4 +263,64 @@ query GetCartItems(\$userId: String!) {
   }
 }
 """;
+
+  static const String getUserClosets = """
+query GetUserClosets(\$userId: ID!) {
+  getUserClosets(userId: \$userId) {
+    clothingItems {
+      name
+      imageUrl
+      id
+      createdAt
+    }
+    name
+    id
+    createdAt
+  }
+}
+""";
+
+  static const String getClosetById = """
+query GetCloset(\$getClosetId: ID!) {
+  getCloset(id: \$getClosetId) {
+    user {
+      id
+      name
+    }
+    name
+    id
+    createdAt
+    clothingItems {
+      name
+      imageUrl
+      id
+      createdAt
+    }
+  }
+}
+""";
+
+  static const String getSavedItemsToCloset = """
+query GetSavedItems(\$userId: ID!, \$clothingItemId: ID) {
+  getSavedItems(userId: \$userId, clothingItemId: \$clothingItemId) {
+    clothingItem {
+      id
+      name
+      createdAt
+    }
+    id
+    createdAt
+    product {
+      productImages
+      mainImage
+      name
+      price
+      isDeleted
+      id
+      gender
+      description
+    }
+  }
+}
+""";
 }
