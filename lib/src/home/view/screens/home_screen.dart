@@ -1,15 +1,15 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
+import 'package:casaflutter/src/cart/controller/cart_controller.dart';
 import 'package:casaflutter/src/common/widgets/app_bar.dart';
 import 'package:casaflutter/src/home/controller/home_controller.dart';
 import 'package:casaflutter/src/home/view/widgets/card.dart';
 import 'package:casaflutter/src/home/view/widgets/swipe_animation.dart';
+import 'package:casaflutter/src/order/controller/order_review_controller.dart';
 import 'package:casaflutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../cart/controller/cart_controller.dart';
 import '../../../common/widgets/filter_row.dart';
-import '../../../order/controller/order_review_controller.dart';
 import '../../model/home_models.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: BackgroundColor.white,
       appBar: CustomAppbar(),
-      body: SafeArea(child: GetBuilder<HomeController>(
+      body: GetBuilder<HomeController>(
         builder: (logic) {
           return logic.isLoading
               ? Center(
@@ -41,6 +41,10 @@ class HomeScreen extends StatelessWidget {
                         productList: logic.productFilter,
                         sizedList: logic.sizedFilter,
                       ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: FilterButtonRow(),
+                      ),
                       SizedBox(height: 5),
                       logic.products.isNotEmpty
                           ? _cardSwiper(logic, context, logic.products)
@@ -49,7 +53,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 );
         },
-      )),
+      ),
     );
   }
 
@@ -87,6 +91,73 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           SwipeAnimation(swipeIcon: logic.swipeIcon),
+        ],
+      ),
+    );
+  }
+}
+
+class FilterButtonRow extends StatelessWidget {
+  const FilterButtonRow({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        spacing: 10,
+        children: [
+          CircleAvatar(
+            radius: 18,
+            backgroundColor: ButtonColor.mildGrey,
+            child: Icon(Icons.tune_rounded, size: 20, color: IconColor.black),
+          ),
+          FilterChipButton(
+            text: 'Brand',
+          ),
+          FilterChipButton(
+            text: 'Product',
+          ),
+          FilterChipButton(
+            text: 'Color',
+          ),
+          FilterChipButton(
+            text: 'Price',
+          ),
+          FilterChipButton(
+            text: 'Size',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FilterChipButton extends StatelessWidget {
+  final String text;
+  const FilterChipButton({super.key, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: ButtonColor.mildGrey,
+        minimumSize: Size.zero,
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+        textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
+              color: TextColor.black,
+            ),
+      ),
+      onPressed: () {},
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(text),
+          Icon(
+            Icons.arrow_drop_down,
+            color: IconColor.black,
+            size: 20,
+          ),
         ],
       ),
     );

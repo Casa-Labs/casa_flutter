@@ -16,6 +16,13 @@ class ImageConstants {
   static String verify = 'assets/images/verify.png';
 }
 
+class IconConstants {
+  static String searchIcon = 'assets/icons/search.svg';
+  static String cartIcon = 'assets/icons/search.svg';
+  static String wishlistIcon = 'assets/icons/search.svg';
+  static String profileIcon = 'assets/icons/search.svg';
+}
+
 class AppStrings {
   static const String appName = 'CASA';
   static const String compositionText = '\n'

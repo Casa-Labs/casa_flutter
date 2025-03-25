@@ -229,4 +229,6 @@ class HomeController extends GetxController {
       update();
     }
   }
+
+  Future<void> addToWishlist() async {}
 }

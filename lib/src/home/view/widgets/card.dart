@@ -68,8 +68,8 @@ class Cards extends StatelessWidget {
                                 gradient: LinearGradient(
                                   colors: [
                                     Colors.black.withValues(alpha: 0.0),
-                                    Colors.black.withValues(alpha:0.5),
-                                    Colors.black.withValues(alpha:0.7),
+                                    Colors.black.withValues(alpha: 0.5),
+                                    Colors.black.withValues(alpha: 0.7),
                                   ],
                                   stops: const [0.2, 0.78, 1.0],
                                   begin: Alignment.topCenter,
@@ -77,7 +77,8 @@ class Cards extends StatelessWidget {
                                 ),
                               ),
                               // Ensure the height of the gradient container fits the view
-                              height: MediaQuery.of(context).size.height * 0.4, // Adjust this based on the size of the image
+                              height: MediaQuery.of(context).size.height *
+                                  0.4, // Adjust this based on the size of the image
                             ),
                           ),
                         ),
@@ -216,10 +217,13 @@ class Cards extends StatelessWidget {
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 4.0),
-                                child: Icon(
-                                  Icons.bookmark_border_rounded,
-                                  color: IconColor.white,
-                                  size: 30,
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: Icon(
+                                    Icons.bookmark_border_rounded,
+                                    color: IconColor.white,
+                                    size: 30,
+                                  ),
                                 ),
                               ),
                               Padding(
