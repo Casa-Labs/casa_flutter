@@ -1,4 +1,4 @@
-package com.casashop.casaflutter
+package com.casashop.casaflutterapp
 
 import io.flutter.embedding.android.FlutterActivity
 

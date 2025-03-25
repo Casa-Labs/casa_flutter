@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>437823381958-reteljblu0n4dajtman6idgq234acj03.apps.googleusercontent.com</string>
+	<string>437823381958-8d0nav8eq4jin2akeda8odgctl0lvotj.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.437823381958-reteljblu0n4dajtman6idgq234acj03</string>
+	<string>com.googleusercontent.apps.437823381958-8d0nav8eq4jin2akeda8odgctl0lvotj</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>437823381958-n8cnidfnsirpm3cjf26nqprlj9u2264e.apps.googleusercontent.com</string>
+	<string>437823381958-8373i5culfli93vf173g7hbo5hdjcqb5.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBsnKFxxNRZugFNcy5T7dpbyvzlwOoGYPU</string>
 	<key>GCM_SENDER_ID</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.casashop.casaflutter</string>
+	<string>com.casashop.casaflutterapp</string>
 	<key>PROJECT_ID</key>
 	<string>casa-1e442</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:437823381958:ios:150448a542de70a79e92c7</string>
+	<string>1:437823381958:ios:a012c1bd4ae3b8e49e92c7</string>
 </dict>
 </plist>

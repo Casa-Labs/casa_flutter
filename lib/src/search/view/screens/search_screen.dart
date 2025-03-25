@@ -1,5 +1,5 @@
-import 'package:casaflutter/src/common/widgets/common_app_bars.dart';
-import 'package:casaflutter/utils/color_constant.dart';
+import 'package:casaflutterapp/src/common/widgets/common_app_bars.dart';
+import 'package:casaflutterapp/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

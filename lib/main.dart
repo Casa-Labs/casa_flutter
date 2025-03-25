@@ -1,6 +1,6 @@
-import 'package:casaflutter/src/common/widgets/show_toast.dart'
+import 'package:casaflutterapp/src/common/widgets/show_toast.dart'
     show scaffoldMessengerKey;
-import 'package:casaflutter/theme/light_theme.dart';
+import 'package:casaflutterapp/theme/light_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

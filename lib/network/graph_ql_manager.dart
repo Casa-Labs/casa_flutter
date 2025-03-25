@@ -1,10 +1,10 @@
 // graphql_manager.dart
 
-import 'package:casaflutter/network/graph_ql_mutations.dart';
-import 'package:casaflutter/network/graph_ql_queries.dart';
-import 'package:casaflutter/network/graph_ql_variables.dart';
-import 'package:casaflutter/network/graphql_client.dart';
-import 'package:casaflutter/network/graphql_client.dart';
+import 'package:casaflutterapp/network/graph_ql_mutations.dart';
+import 'package:casaflutterapp/network/graph_ql_queries.dart';
+import 'package:casaflutterapp/network/graph_ql_variables.dart';
+import 'package:casaflutterapp/network/graphql_client.dart';
+import 'package:casaflutterapp/network/graphql_client.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 class GraphQLManager {

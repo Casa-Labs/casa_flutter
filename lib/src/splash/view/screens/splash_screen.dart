@@ -1,4 +1,4 @@
-import 'package:casaflutter/utils/string_constant.dart';
+import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

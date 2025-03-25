@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:casaflutter/routes/app_routes.dart';
-import 'package:casaflutter/utils/extensions.dart';
-import 'package:casaflutter/utils/preference_manager.dart';
-import 'package:casaflutter/utils/validators.dart';
+import 'package:casaflutterapp/routes/app_routes.dart';
+import 'package:casaflutterapp/utils/extensions.dart';
+import 'package:casaflutterapp/utils/preference_manager.dart';
+import 'package:casaflutterapp/utils/validators.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';

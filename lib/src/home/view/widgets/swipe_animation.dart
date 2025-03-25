@@ -1,5 +1,5 @@
-import 'package:casaflutter/utils/color.dart';
-import 'package:casaflutter/utils/color_constant.dart';
+import 'package:casaflutterapp/utils/color.dart';
+import 'package:casaflutterapp/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
 class SwipeAnimation extends StatelessWidget {

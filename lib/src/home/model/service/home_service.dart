@@ -1,4 +1,4 @@
-import 'package:casaflutter/src/home/controller/home_controller.dart';
+import 'package:casaflutterapp/src/home/controller/home_controller.dart';
 import 'package:get/get.dart';
 
 class HomeService {
