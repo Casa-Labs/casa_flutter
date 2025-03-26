@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:casaflutter/routes/app_routes.dart';
-import 'package:casaflutter/src/common/widgets/custom_dropdown_menu.dart';
-import 'package:casaflutter/src/explore/view/widgets/explore_search_bar.dart';
-import 'package:casaflutter/src/explore/view/widgets/thrifts_section.dart';
+import 'package:casaflutterapp/routes/app_routes.dart';
+import 'package:casaflutterapp/src/common/widgets/custom_dropdown_menu.dart';
+import 'package:casaflutterapp/src/explore/view/widgets/explore_search_bar.dart';
+import 'package:casaflutterapp/src/explore/view/widgets/thrifts_section.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';

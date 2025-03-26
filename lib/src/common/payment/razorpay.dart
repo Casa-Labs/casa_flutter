@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:casaflutter/src/auth/model/auth_models.dart';
-import 'package:casaflutter/src/common/payment/razorpay_consts.dart';
-import 'package:casaflutter/utils/preference_manager.dart';
+import 'package:casaflutterapp/src/auth/model/auth_models.dart';
+import 'package:casaflutterapp/src/common/payment/razorpay_consts.dart';
+import 'package:casaflutterapp/utils/preference_manager.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 // Usage

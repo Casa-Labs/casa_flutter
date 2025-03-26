@@ -1,5 +1,5 @@
-import 'package:casaflutter/network/graph_ql_manager.dart';
-import 'package:casaflutter/src/order/model/order_models.dart';
+import 'package:casaflutterapp/network/graph_ql_manager.dart';
+import 'package:casaflutterapp/src/order/model/order_models.dart';
 import 'package:get/get.dart';
 
 import '../../../utils/preference_manager.dart';

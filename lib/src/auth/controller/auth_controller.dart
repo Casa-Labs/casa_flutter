@@ -1,18 +1,18 @@
 import 'dart:io';
 
-import 'package:casaflutter/utils/extensions.dart';
-import 'package:casaflutter/utils/preference_manager.dart';
-import 'package:casaflutter/utils/validators.dart';
+import 'package:casaflutterapp/utils/extensions.dart';
+import 'package:casaflutterapp/utils/preference_manager.dart';
+import 'package:casaflutterapp/utils/validators.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../model/auth_models.dart';
 import '../model/service/auth_service.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 class AuthController extends GetxController {
   // ========= OBJECTS ============= //

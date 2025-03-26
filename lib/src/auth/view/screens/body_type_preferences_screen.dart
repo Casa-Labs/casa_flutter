@@ -1,8 +1,8 @@
-import 'package:casaflutter/routes/app_routes.dart';
-import 'package:casaflutter/src/auth/controller/body_type_controller.dart';
-import 'package:casaflutter/src/auth/view/screens/chip_list.dart';
-import 'package:casaflutter/src/auth/view/widgets/auth_button.dart';
-import 'package:casaflutter/src/common/widgets/show_toast.dart';
+import 'package:casaflutterapp/routes/app_routes.dart';
+import 'package:casaflutterapp/src/auth/controller/body_type_controller.dart';
+import 'package:casaflutterapp/src/auth/view/screens/chip_list.dart';
+import 'package:casaflutterapp/src/auth/view/widgets/auth_button.dart';
+import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

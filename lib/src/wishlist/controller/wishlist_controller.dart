@@ -1,6 +1,6 @@
-import 'package:casaflutter/src/common/widgets/show_toast.dart';
-import 'package:casaflutter/src/wishlist/model/save_item_to_closet_model.dart';
-import 'package:casaflutter/utils/string_constant.dart';
+import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
+import 'package:casaflutterapp/src/wishlist/model/save_item_to_closet_model.dart';
+import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

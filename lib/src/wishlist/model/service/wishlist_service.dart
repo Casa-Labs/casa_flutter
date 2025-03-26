@@ -1,4 +1,4 @@
-import 'package:casaflutter/network/graph_ql_manager.dart';
+import 'package:casaflutterapp/network/graph_ql_manager.dart';
 
 import '../add_board_to_closet_model.dart';
 import '../get_closet_model.dart';

@@ -1,4 +1,4 @@
-import 'package:casaflutter/src/faq/model/faq_models.dart';
+import 'package:casaflutterapp/src/faq/model/faq_models.dart';
 import 'package:get/get.dart';
 
 class FAQController extends GetxController {
