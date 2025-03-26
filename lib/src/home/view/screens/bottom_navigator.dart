@@ -22,7 +22,7 @@ class NavPageState extends State<NavPage> {
   int _selectedIndex = 0; // Track the selected index of the BottomNavigationBar
   int tutorialScreenIndex = 0;
 
-  // IMP : Flutter will create the widgets com list eagerly resulting com controller
+  // IMP : Flutter will create the widgets list eagerly resulting in controller
   // initialization without navigation when bottom navbar is created,
   // to avoid use a conditional widget building ( switch case ) and getters
 

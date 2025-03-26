@@ -57,16 +57,17 @@ class ProductDetails extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 15),
-              Text('Description:', style: textTheme.bodyMedium),
+              Text('Description:',
+                  style: Theme.of(context).textTheme.bodyMedium),
               const SizedBox(height: 8),
               product.description!.isNotEmpty
                   ? Text(
                       product.description.toString(),
-                      style: textTheme.bodySmall,
+                      style: Theme.of(context).textTheme.bodyMedium,
                       textAlign: TextAlign.start,
                     )
                   : Text(AppStrings.productDescription,
-                      style: textTheme.bodySmall),
+                      style: Theme.of(context).textTheme.bodyMedium),
               const SizedBox(height: 16),
               /*products[currentIndex].colors.isNotEmpty
                       ? Column(
@@ -77,7 +78,7 @@ class ProductDetails extends StatelessWidget {
                         fontSize: 14,
                       ),
                       const SizedBox(height: 8),
-          
+
                       SizedBox(
                         height:
                         60, // Adjust height based on your design
@@ -95,7 +96,7 @@ class ProductDetails extends StatelessWidget {
                             final isSelected =
                                 selectedColorIndex ==
                                     index;
-          
+
                             return GestureDetector(
                               onTap: () {
                                 selectColor(index);
@@ -132,7 +133,7 @@ class ProductDetails extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-          
+
                                     // Check icon overlay
                                     if (isSelected)
                                       const Icon(

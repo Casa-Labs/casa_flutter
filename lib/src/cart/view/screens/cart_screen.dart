@@ -42,12 +42,7 @@ class CartScreen extends StatelessWidget {
                     ),
                   ),
                 )
-              : IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon: const Icon(Icons.arrow_back_ios),
-                ),
+              : SizedBox.shrink(),
           leadingWidth: 60,
           backgroundColor: BackgroundColor.white,
           actions: [

@@ -94,3 +94,73 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
+class FilterButtonRow extends StatelessWidget {
+  const FilterButtonRow({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 10,
+        children: [
+          IconButton(
+            icon: Icon(Icons.tune_rounded),
+            iconSize: 20,
+            color: IconColor.black,
+            onPressed: () {},
+          ),
+          FilterChipButton(
+            text: 'Brand',
+          ),
+          FilterChipButton(
+            text: 'Product',
+          ),
+          FilterChipButton(
+            text: 'Color',
+          ),
+          FilterChipButton(
+            text: 'Price',
+          ),
+          FilterChipButton(
+            text: 'Size',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FilterChipButton extends StatelessWidget {
+  final String text;
+  const FilterChipButton({super.key, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: ButtonColor.mildGrey,
+        minimumSize: Size.zero,
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+        textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
+              color: TextColor.black,
+            ),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
+      onPressed: () {},
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(text),
+          Icon(
+            Icons.arrow_drop_down,
+            color: IconColor.black,
+            size: 20,
+          ),
+        ],
+      ),
+    );
+  }
+}
