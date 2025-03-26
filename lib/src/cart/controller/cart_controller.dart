@@ -1,5 +1,7 @@
+
 import 'package:casaflutterapp/src/cart/model/cart_models.dart';
 import 'package:casaflutterapp/src/cart/model/service/cart_service.dart';
+import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
 import 'package:get/get.dart';
 
 import '../../../network/graph_ql_manager.dart';
@@ -41,7 +43,7 @@ class CartController extends GetxController {
     for (var i = 0; i < cartList.length; i++) {
       total += cartList[i].item!.price! * cartList[i].item!.quantity!;
     }
-    totalPrice(total);
+    totalPrice(double.parse(total.toStringAsFixed(2)));
     update();
   }
 
@@ -60,14 +62,21 @@ class CartController extends GetxController {
       userId: userID!,
       item: item,
     );
-
-    var response = await _cartService.addItemToCart(
-        addCartRequestModel: addCartRequestModel);
-    if (response != null) {
-      getCartItems();
+    try {
+      var response = await _cartService.addItemToCart(
+          addCartRequestModel: addCartRequestModel);
+      if (response != null) {
+        getCartItems();
+      }
+      showToast(
+        message: "Added to the cart!!",
+      );
+    } catch (e) {
+      showToast(
+        message: "Something went wrong, please try again",
+      );
     }
     update();
-    logg.d("add Data ====> $response");
   }
 
   // fetch data for cart //

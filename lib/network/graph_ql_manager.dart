@@ -4,12 +4,12 @@ import 'package:casaflutterapp/network/graph_ql_mutations.dart';
 import 'package:casaflutterapp/network/graph_ql_queries.dart';
 import 'package:casaflutterapp/network/graph_ql_variables.dart';
 import 'package:casaflutterapp/network/graphql_client.dart';
-import 'package:casaflutterapp/network/graphql_client.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 class GraphQLManager {
   final GraphQLClientService _clientService = GraphQLClientService();
 
+  //MUTATION
   Future<QueryResult> registerUser(String email, String password) async {
     return await _clientService.performMutationWithoutToken(
       document: GraphQLMutations.registerMutation,
@@ -197,7 +197,9 @@ class GraphQLManager {
   }
 
   Future<QueryResult> updateCartItem(
-      String userId, String productId, int quantity) async {
+      {required String userId,
+      required String productId,
+      required int quantity}) async {
     return await _clientService.performMutation(
       document: GraphQLMutations.updateCartItem,
       variables:
@@ -226,6 +228,48 @@ class GraphQLManager {
           returnId, status, replacementId),
     );
   }
+
+  Future<QueryResult> createCloset({required String name}) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.createCloset,
+      variables: GraphQLVariables.createCloset(name),
+    );
+  }
+
+  Future<QueryResult> addItemToCloset(
+      {required String closetId,
+      required String name,
+      required String imageUrl}) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.addItemToCloset,
+      variables: GraphQLVariables.addItemToCloset(closetId, name, imageUrl),
+    );
+  }
+
+  Future<QueryResult> saveItemToCloset(
+      {required String clothingItemId, required String productId}) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.saveItemToCloset,
+      variables: GraphQLVariables.saveItemToCloset(clothingItemId, productId),
+    );
+  }
+
+  Future<QueryResult> removeItemFromCloset({required String itemId}) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.removeItemFromCloset,
+      variables: GraphQLVariables.removeItemFromCloset(itemId),
+    );
+  }
+
+  Future<QueryResult> removeItemFromClothingItem(
+      {required String itemId}) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.removeItemFromClothingItem,
+      variables: GraphQLVariables.removeItemFromClothingItem(itemId),
+    );
+  }
+
+  //QUERIES
 
   Future<QueryResult> getNewArrivalProducts(
       int page, int limit, String? search) async {
@@ -317,10 +361,32 @@ class GraphQLManager {
     );
   }
 
-  Future<QueryResult> getCartItems(String userId) async {
+  Future<QueryResult> getCartItems({required String userId}) async {
     return await _clientService.performQuery(
       document: GraphQLQueries.getCartItems,
       variables: GraphQLVariables.getCartItemsVariables(userId),
+    );
+  }
+
+  Future<QueryResult> getUserClosets({required String userId}) async {
+    return await _clientService.performQuery(
+      document: GraphQLQueries.getUserClosets,
+      variables: GraphQLVariables.getUserClosets(userId),
+    );
+  }
+
+  Future<QueryResult> getClosetById({required String getClosetId}) async {
+    return await _clientService.performQuery(
+      document: GraphQLQueries.getClosetById,
+      variables: GraphQLVariables.getClosetById(getClosetId),
+    );
+  }
+
+  Future<QueryResult> getSavedItemsToCloset(
+      {required String userId, required String clothingItemId}) async {
+    return await _clientService.performQuery(
+      document: GraphQLQueries.getSavedItemsToCloset,
+      variables: GraphQLVariables.getSavedItemsToCloset(userId, clothingItemId),
     );
   }
 }

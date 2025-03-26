@@ -10,8 +10,12 @@ import 'create_closet_screen.dart';
 
 class AddToCloset extends StatelessWidget {
   final RxSet<String> selectedClosets = <String>{}.obs;
+  final String imageUrl;
+  final String itemId;
   AddToCloset({
     super.key,
+    required this.imageUrl,
+    required this.itemId,
   }); // Assign product to class variable
 
   @override
@@ -27,7 +31,7 @@ class AddToCloset extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(28.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -36,11 +40,13 @@ class AddToCloset extends StatelessWidget {
                         children: [
                           Text(
                             'Add to Closet',
-                            style:
-                                Theme.of(context).textTheme.titleLarge?.copyWith(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
                           ),
                           InkWell(
                             overlayColor:
@@ -75,20 +81,20 @@ class AddToCloset extends StatelessWidget {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: wishController.filteredWishlist.length,
                           itemBuilder: (context, index) {
-                            var categoryMap =
+                            var closetData =
                                 wishController.filteredWishlist[index];
 
                             return Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 8.0, vertical: 12),
+                                  horizontal: 8.0, vertical: 8),
                               child: GestureDetector(
                                 onTap: () {
                                   final currentValue =
-                                      selectedClosets.contains(categoryMap.name);
+                                      selectedClosets.contains(closetData.id);
                                   if (currentValue) {
-                                    selectedClosets.remove(categoryMap.name);
+                                    selectedClosets.remove(closetData.id);
                                   } else {
-                                    selectedClosets.add(categoryMap.name);
+                                    selectedClosets.add(closetData.id!);
                                   }
                                 },
                                 child: Row(
@@ -96,15 +102,15 @@ class AddToCloset extends StatelessWidget {
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(8),
                                       child: Image.network(
-                                        categoryMap.imageUrl,
-                                        width: 80,
-                                        height: 50,
+                                        closetData.imageUrl!,
+                                        width: 90,
+                                        height: 60,
                                         fit: BoxFit.cover,
                                       ),
                                     ),
                                     const SizedBox(width: 20),
                                     Text(
-                                      categoryMap.name,
+                                      closetData.name!,
                                       style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
@@ -114,17 +120,18 @@ class AddToCloset extends StatelessWidget {
                                     Obx(() {
                                       return Checkbox(
                                         value: selectedClosets
-                                            .contains(categoryMap.name),
+                                            .contains(closetData.id),
                                         onChanged: (bool? value) {
                                           if (value == true) {
-                                            selectedClosets.add(categoryMap.name);
+                                            selectedClosets.add(closetData.id!);
                                           } else {
                                             selectedClosets
-                                                .remove(categoryMap.name);
+                                                .remove(closetData.id);
                                           }
                                         },
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(50),
+                                          borderRadius:
+                                              BorderRadius.circular(50),
                                         ),
                                         checkColor: IconColor.white,
                                         activeColor: IconColor.black,
@@ -198,6 +205,12 @@ class AddToCloset extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () async {
+                        for (String closet in selectedClosets) {
+                          wishController.saveItemToCloset(
+                            clothingItemId: closet,
+                            productId: itemId,
+                          );
+                        }
                         context.pop();
                       },
                       style: ElevatedButton.styleFrom(

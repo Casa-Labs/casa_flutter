@@ -1,4 +1,6 @@
+
 import 'package:casaflutterapp/src/common/widgets/common_app_bars.dart';
+import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -10,11 +12,11 @@ import '../../controller/wishlist_controller.dart';
 import '../widgets/icons_widget.dart';
 
 class WishlistScreen extends StatelessWidget {
-  WishlistScreen({super.key});
-  final wishController = Get.put(WishlistController());
+  const WishlistScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final wishController = Get.find<WishlistController>();
     return Scaffold(
       backgroundColor: BackgroundColor.white,
       appBar: CommonAppBar(
@@ -82,8 +84,10 @@ class WishlistScreen extends StatelessWidget {
                           var wishData = wishController.filteredWishlist[index];
                           return GestureDetector(
                             onTap: () {
-                              wishController.wishItemList.value =
-                                  wishData.productList;
+                              // wishController.wishItemList.value =
+                              //     wishData.productList;
+                              wishController.getSavedItemsToCloset(
+                                  clothingItemId: wishData.id!);
                               wishController.itemIndex.value = index;
                               context.pushNamed(RouteNames.wishlistItem);
                             },
@@ -96,7 +100,7 @@ class WishlistScreen extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(15),
                                       image: DecorationImage(
                                         image: NetworkImage(
-                                          wishData.imageUrl,
+                                          wishData.imageUrl!,
                                         ), // Add an image URL if needed
                                         fit: BoxFit.cover,
                                       ),
@@ -106,7 +110,7 @@ class WishlistScreen extends StatelessWidget {
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
-                                          wishData.name,
+                                          wishData.name!,
                                           style: const TextStyle(
                                             color: TextColor.white,
                                             fontSize: 16,
@@ -118,14 +122,17 @@ class WishlistScreen extends StatelessWidget {
                                   ),
                                 ),
                                 if (wishController.isDeleted.value)
-                                  if (wishData.name != "All Saved")
+                                  if (wishData.name!.trim().toLowerCase() !=
+                                      AppStrings.defaulttClosetName
+                                          .toLowerCase())
                                     Align(
                                       alignment: Alignment.topRight,
                                       child: Padding(
                                         padding: const EdgeInsets.all(4.0),
                                         child: IconsWidget(
                                           onTap: () {
-                                            wishController.removeCloset(wishData);
+                                            wishController.removeItemFromCloset(
+                                                itemId: wishData.id!);
                                           },
                                           icon: Icons.remove,
                                           size: 23,

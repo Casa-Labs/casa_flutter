@@ -8,6 +8,7 @@ import '../../../../utils/font.dart';
 import '../../../cart/controller/cart_controller.dart';
 import '../../../common/widgets/buttons/add_to_cart_button.dart';
 import '../../../explore/view/widgets/quantity_selector_button.dart';
+import '../../../wishlist/view/screens/add_to_closet.dart';
 import '../../model/home_models.dart';
 
 class ProductDetails extends StatelessWidget {
@@ -41,24 +42,16 @@ class ProductDetails extends StatelessWidget {
                   ),
                   GestureDetector(
                       onTap: () {
-                        // Get.bottomSheet(
-                        //     AddToCloset(
-                        //       newProduct: WhishProductItem(
-                        //           imageUrl: logic
-                        //               .products[logic.cardIndex != -1
-                        //               ? logic.cardIndex
-                        //               : 0]
-                        //               .images![0]
-                        //               .src
-                        //               .toString(),
-                        //           itemId: logic
-                        //               .products[logic.cardIndex != -1
-                        //               ? logic.cardIndex
-                        //               : 0]
-                        //               .id
-                        //               .toString()),
-                        //     ),
-                        //     isScrollControlled: true);
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) {
+                            return AddToCloset(
+                              imageUrl: product.mainImage.toString(),
+                              itemId: product.id.toString(),
+                            );
+                          },
+                        );
                       },
                       child: const SizedBox.shrink())
                 ],
@@ -361,12 +354,13 @@ class ProductDetails extends StatelessWidget {
                     : product.productImages!.length,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,crossAxisSpacing: 8,childAspectRatio: 0.85,mainAxisSpacing: 8),
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 8,
+                    childAspectRatio: 0.85,
+                    mainAxisSpacing: 8),
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
-                    onTap: () {
-                      print('------>>> hello ${product.productImages![index]}');
-                    },
+                    onTap: () {},
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image.network(
@@ -523,11 +517,10 @@ class ProductDetails extends StatelessWidget {
                               Text(
                                 '5/5',
                                 style: textTheme.bodyMedium?.copyWith(
-                                  // fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                  color: TextColor.black,
-                                  fontFamily: Font.timeNew
-                                ),
+                                    // fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                    color: TextColor.black,
+                                    fontFamily: Font.timeNew),
                               )
                             ],
                           ),

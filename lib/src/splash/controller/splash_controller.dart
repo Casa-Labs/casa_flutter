@@ -5,6 +5,8 @@ import '../../../routes/app_routes.dart';
 import '../../common/service/global_navigator_service.dart';
 
 class SplashController extends GetxController {
+  RxString netImage = "".obs;
+
   @override
   void onInit() {
     super.onInit();

@@ -1,20 +1,18 @@
 import 'dart:io';
 
-import 'package:casaflutterapp/routes/app_routes.dart';
 import 'package:casaflutterapp/utils/extensions.dart';
 import 'package:casaflutterapp/utils/preference_manager.dart';
 import 'package:casaflutterapp/utils/validators.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../model/auth_models.dart';
 import '../model/service/auth_service.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 class AuthController extends GetxController {
   // ========= OBJECTS ============= //
@@ -32,6 +30,8 @@ class AuthController extends GetxController {
   RxBool isPasswordObscured = true.obs;
   RxBool isGoogleSignInLoading = false.obs;
   RxBool isAppleSignInLoading = false.obs;
+  RxBool isGoogleLoggedIn = false.obs;
+  RxBool isAppleLoggedIn = false.obs;
 
   RxString message = ''.obs;
 
@@ -46,6 +46,9 @@ class AuthController extends GetxController {
     isLoading(false);
     message('');
     isPasswordObscured(true);
+    isGoogleSignInLoading(false);
+    isGoogleLoggedIn(false);
+    isAppleLoggedIn(false);
     checkboxValue(false);
   }
 
@@ -77,7 +80,8 @@ class AuthController extends GetxController {
         loginRequestModel: loginRequestModel,
       );
 
-      if (loginResponse?.login != null) {
+      if (loginResponse?.login != null &&
+          (loginResponse?.errorMessage ?? '').isEmpty) {
         // set token to storage
         await PreferenceManager.setData(
           PreferenceManager.token,
@@ -96,6 +100,7 @@ class AuthController extends GetxController {
         message('User logged com successfully');
         isLoggedIn(true);
       } else {
+        message(loginResponse?.errorMessage);
         isLoading(false);
       }
     }
@@ -111,25 +116,66 @@ class AuthController extends GetxController {
       }
 
       final GoogleSignInAuthentication googleAuth =
-      await googleUser.authentication;
+          await googleUser.authentication;
       final OAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
       final UserCredential userCredential =
-      await _auth.signInWithCredential(credential);
+          await _auth.signInWithCredential(credential);
 
       final firebase_auth.User? user = userCredential.user;
       if (user != null) {
-        print('google login ${user}');
-        socialLoginCall(email:user.email! ,provider: "GOOGLE",providerId:user.uid );
+        await socialLoginCall(
+          email: user.email ?? '',
+          provider: "GOOGLE",
+          providerId: user.uid,
+        );
       } else {
         message("Google Sign-In failed");
       }
     } catch (e) {
       message("Google Sign-In error: ${e.toString()}");
-    } finally {
+    }
+  }
+
+  // ========== Apple Sign-In  ==========
+  Future<void> signInWithApple() async {
+    if (!Platform.isIOS) {
+      message("Apple Sign-In is only available on iOS");
+      return;
+    }
+
+    try {
+      final credential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+      );
+      // Store details on first login
+      String userId = credential.userIdentifier ?? "";
+      String? email = credential.email;
+      String? fullName = credential.givenName;
+      if (email != null) {
+        // Store in local storage or send to backend
+        await saveUserData(userId, email, fullName);
+      } else {
+        // Fetch email from stored data if available
+        final storedData = await getStoredUserData(userId);
+        email = storedData?['email'] ?? 'No email found';
+        fullName = storedData?['fullName'] ?? 'No name found';
+      }
+      await socialLoginCall(
+        email: email ?? '',
+        provider: "APPLE",
+        providerId: userId,
+      );
+
+      message("Apple Sign-In successful");
+    } catch (e) {
+      message("Apple Sign-In failed: ${e.toString()}");
     }
   }
 
@@ -139,10 +185,11 @@ class AuthController extends GetxController {
     required String provider,
   }) async {
     // Determine which loading state to update
-    RxBool isLoading =
-    provider == 'GOOGLE' ? isGoogleSignInLoading : isAppleSignInLoading;
-
-    isLoading(true); // Set loading to true
+    if (provider == 'GOOGLE') {
+      isGoogleSignInLoading(true);
+    } else {
+      isAppleSignInLoading(true);
+    }
 
     GoogleLoginRequestModel googleLoginRequestModel = GoogleLoginRequestModel(
       email: email,
@@ -171,51 +218,17 @@ class AuthController extends GetxController {
         googleLoginResponse?.singleSignOn?.user?.id.toString(),
       );
 
-      message('User logged in successfully');
-
-      /// Navigate after login
-      router.goNamed(RouteNames.navigation);
-    }
-
-    isLoading(false); // Set loading to false
-  }
-
-
-  // ========== Apple Sign-In  ==========
-  Future<void> signInWithApple() async {
-    if (!Platform.isIOS) {
-      message("Apple Sign-In is only available on iOS");
-      return;
-    }
-
-    try {
-      final credential = await SignInWithApple.getAppleIDCredential(
-        scopes: [
-          AppleIDAuthorizationScopes.email,
-          AppleIDAuthorizationScopes.fullName,
-        ],
-      );
-      // Store details on first login
-      String userId = credential.userIdentifier ?? "";
-      String? email = credential.email;
-      String? fullName = credential.givenName;
-      print('apple login response : $credential');
-      if (email != null) {
-        // Store in local storage or send to backend
-        await saveUserData(userId, email, fullName);
+      if (provider == 'GOOGLE') {
+        isGoogleLoggedIn(true);
+        isGoogleSignInLoading(false);
       } else {
-        // Fetch email from stored data if available
-        final storedData = await getStoredUserData(userId);
-        email = storedData?['email'] ?? 'No email found';
-        fullName = storedData?['fullName'] ?? 'No name found';
+        isAppleLoggedIn(true);
+        isAppleSignInLoading(false);
       }
-      socialLoginCall(email:email! ,provider: "APPLE",providerId:userId );
-
-
-      message("Apple Sign-In successful");
-    } catch (e) {
-      message("Apple Sign-In failed: ${e.toString()}");
-    } finally {
+      message('User logged in successfully');
+    } else {
+      isGoogleSignInLoading(false);
+      isAppleSignInLoading(false);
     }
   }
 
@@ -232,6 +245,7 @@ class AuthController extends GetxController {
     await _googleSignIn.signOut();
     await _auth.signOut();
   }
+
   Future<void> logoutFromApple() async {
     final box = GetStorage();
     await box.erase(); // Clears all stored data
@@ -260,6 +274,7 @@ class AuthController extends GetxController {
     );
   }
 }
+
 Future<void> saveUserData(String userId, String email, String? fullName) async {
   // Save to local storage or backend
   final box = GetStorage();

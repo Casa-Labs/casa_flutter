@@ -1,3 +1,5 @@
+import 'package:casaflutterapp/utils/base_model.dart';
+
 class LoginRequestModel {
   String username;
   String password;
@@ -19,11 +21,13 @@ class GoogleLoginRequestModel {
     required this.providerId,
   });
 }
-class LoginResponseModel {
+
+class LoginResponseModel extends BaseModel {
   Login? login;
 
   LoginResponseModel({
     this.login,
+    super.errorMessage,
   });
 
   LoginResponseModel.fromJson(Map<String, dynamic>? json) {
@@ -129,6 +133,7 @@ class RegisterUserResponseModel {
     return data;
   }
 }
+
 class GoogleLoginResponse {
   SingleSignOn? singleSignOn;
 
@@ -188,4 +193,3 @@ class GoogleUser {
     return data;
   }
 }
-
