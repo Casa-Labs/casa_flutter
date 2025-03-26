@@ -1,5 +1,5 @@
 import 'package:casaflutterapp/routes/app_routes.dart';
-import 'package:casaflutterapp/src/common/widgets/casa_button.dart';
+import 'package:casaflutterapp/src/common/widgets/buttons/casa_button.dart';
 import 'package:casaflutterapp/src/common/widgets/textfields.dart';
 import 'package:casaflutterapp/utils/color_constant.dart';
 import 'package:flutter/material.dart';

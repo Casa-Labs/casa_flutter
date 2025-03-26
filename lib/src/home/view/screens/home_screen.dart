@@ -103,12 +103,14 @@ class FilterButtonRow extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 10,
         children: [
-          CircleAvatar(
-            radius: 18,
-            backgroundColor: ButtonColor.mildGrey,
-            child: Icon(Icons.tune_rounded, size: 20, color: IconColor.black),
+          IconButton(
+            icon: Icon(Icons.tune_rounded),
+            iconSize: 20,
+            color: IconColor.black,
+            onPressed: () {},
           ),
           FilterChipButton(
             text: 'Brand',
@@ -145,6 +147,7 @@ class FilterChipButton extends StatelessWidget {
         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
               color: TextColor.black,
             ),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
       onPressed: () {},
       child: Row(
