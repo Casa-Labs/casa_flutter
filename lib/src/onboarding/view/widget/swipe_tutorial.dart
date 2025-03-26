@@ -1,4 +1,4 @@
-import 'package:casaflutter/src/onboarding/view/widget/text_container.dart';
+import 'package:casaflutterapp/src/onboarding/view/widget/text_container.dart';
 import 'package:flutter/material.dart';
 
 class SwipeTutorial extends StatelessWidget {

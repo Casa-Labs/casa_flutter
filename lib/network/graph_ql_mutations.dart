@@ -253,4 +253,73 @@ mutation UpdateOrderReturnStatus(\$returnId: String!, \$status: String!, \$repla
   }
 }
 ''';
+
+  static const String createCloset = '''
+mutation CreateCloset(\$name: String!) {
+  createCloset(name: \$name) {
+    createdAt
+    id
+    name
+    user {
+      id
+      name
+    }
+  }
+}
+''';
+
+  static const String addItemToCloset = '''
+mutation AddItemToCloset(\$closetId: ID!, \$name: String!, \$imageUrl: String!) {
+  addItemToCloset(closetId: \$closetId, name: \$name, imageUrl: \$imageUrl) {
+    id
+    createdAt
+    closet {
+      id
+      name
+    }
+    imageUrl
+    name
+  }
+}
+''';
+
+  static const String saveItemToCloset = '''
+mutation SaveItem(\$clothingItemId: ID!, \$productId: ID!) {
+  saveItem(clothingItemId: \$clothingItemId, productId: \$productId) {
+    clothingItem {
+      name
+      imageUrl
+      id
+      createdAt
+    }
+    user {
+      name
+      id
+    }
+    id
+    createdAt
+    product {
+      mainImage
+      gender
+      id
+      name
+      description
+      price
+      productImages
+    }
+  }
+}
+''';
+
+  static const String removeItemFromCloset = '''
+mutation RemoveItemFromCloset(\$itemId: ID!) {
+  removeItemFromCloset(itemId: \$itemId)
+}
+''';
+
+  static const String removeItemFromClothingItem = '''
+mutation RemoveItemFromClothingItem(\$itemId: ID!) {
+  removeItemFromClothingItem(itemId: \$itemId)
+}
+''';
 }

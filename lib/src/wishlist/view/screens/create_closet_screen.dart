@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:casaflutter/src/auth/view/widgets/auth_button.dart';
-import 'package:casaflutter/utils/color_constant.dart';
-import 'package:casaflutter/utils/padding_size.dart';
+import 'package:casaflutterapp/src/auth/view/widgets/auth_button.dart';
+import 'package:casaflutterapp/utils/color_constant.dart';
+import 'package:casaflutterapp/utils/padding_size.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -33,7 +33,7 @@ class CreateClosetScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Add to Closet',
+                            'Create a Closet',
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge
@@ -221,7 +221,14 @@ class CreateClosetScreen extends StatelessWidget {
                         AuthButton(
                             type: AuthButtonType.createCloset,
                             onPressed: () async {
-                              wishlistController.addCloset();
+                              wishlistController.addItemToCloset(
+                                  closetId: wishlistController
+                                      .getUserClosetList.first.id
+                                      .toString(),
+                                  imageUrl: wishlistController.selectedImage(),
+                                  name:
+                                      wishlistController.closetController.text);
+                              wishlistController.closetInit();
                               context.pop();
                             }),
                       ],

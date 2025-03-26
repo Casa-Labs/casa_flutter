@@ -1,4 +1,4 @@
-import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutterapp/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -10,13 +10,12 @@ import '../../controller/cart_controller.dart';
 import '../widgets/cart_item.dart';
 
 class CartScreen extends StatelessWidget {
-  CartScreen({super.key});
-
-  final cartController = Get.find<CartController>();
-  final orderReviewController = Get.find<OrderReviewController>();
+ const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final cartController = Get.find<CartController>();
+    final orderReviewController = Get.find<OrderReviewController>();
     final textTheme = Theme.of(context).textTheme;
 
     return Obx(() {

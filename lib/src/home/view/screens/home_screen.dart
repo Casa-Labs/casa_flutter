@@ -1,15 +1,16 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
-import 'package:casaflutter/src/cart/controller/cart_controller.dart';
-import 'package:casaflutter/src/common/widgets/app_bar.dart';
-import 'package:casaflutter/src/home/controller/home_controller.dart';
-import 'package:casaflutter/src/home/view/widgets/card.dart';
-import 'package:casaflutter/src/home/view/widgets/swipe_animation.dart';
-import 'package:casaflutter/src/order/controller/order_review_controller.dart';
-import 'package:casaflutter/utils/color_constant.dart';
+import 'package:casaflutterapp/src/common/widgets/app_bar.dart';
+import 'package:casaflutterapp/src/home/controller/home_controller.dart';
+import 'package:casaflutterapp/src/home/view/widgets/card.dart';
+import 'package:casaflutterapp/src/home/view/widgets/swipe_animation.dart';
+import 'package:casaflutterapp/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../cart/controller/cart_controller.dart';
 import '../../../common/widgets/filter_row.dart';
+import '../../../order/controller/order_review_controller.dart';
+import '../../../wishlist/controller/wishlist_controller.dart';
 import '../../model/home_models.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -17,14 +18,15 @@ class HomeScreen extends StatelessWidget {
 
   final homeCtrl = Get.put(HomeController());
   final cartController = Get.put(CartController());
-  final qrderReviewController = Get.put(OrderReviewController());
+  final orderReviewController = Get.put(OrderReviewController());
+  final wishController = Get.put(WishlistController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BackgroundColor.white,
       appBar: CustomAppbar(),
-      body: GetBuilder<HomeController>(
+      body: SafeArea(child: GetBuilder<HomeController>(
         builder: (logic) {
           return logic.isLoading
               ? Center(
@@ -41,10 +43,6 @@ class HomeScreen extends StatelessWidget {
                         productList: logic.productFilter,
                         sizedList: logic.sizedFilter,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: FilterButtonRow(),
-                      ),
                       SizedBox(height: 5),
                       logic.products.isNotEmpty
                           ? _cardSwiper(logic, context, logic.products)
@@ -53,7 +51,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 );
         },
-      ),
+      )),
     );
   }
 

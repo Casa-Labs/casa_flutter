@@ -1,4 +1,4 @@
-import 'package:casaflutter/utils/base_model.dart';
+import 'package:casaflutterapp/utils/base_model.dart';
 
 class LoginRequestModel {
   String username;

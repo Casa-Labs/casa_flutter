@@ -50,4 +50,7 @@ class AppStrings {
   static const String productBrand = "ZARA";
   static const String productDescription = "Long coat with a lapel collar";
   static const String productPrice = "1000";
+  static const String defaulttClosetName = "All Save";
+  static const String defaultClosetImageUrel =
+      "https://static.vecteezy.com/system/resources/thumbnails/031/623/946/small_2x/background-for-productgraphy-ai-generated-photo.jpg";
 }

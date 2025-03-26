@@ -1,71 +1,56 @@
+import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
+import 'package:casaflutterapp/src/wishlist/model/save_item_to_closet_model.dart';
+import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../utils/preference_manager.dart';
+import '../../../utils/utils.dart';
 import '../../home/model/home_models.dart';
+import '../model/add_board_to_closet_model.dart';
+import '../model/get_closet_model.dart';
+import '../model/service/wishlist_service.dart';
 import '../model/wishlist_models.dart';
 
 class WishlistController extends GetxController {
-  RxList<WishlistModels> wishlistData = <WishlistModels>[].obs;
-  RxList<ProductModel> wishItemList = <ProductModel>[].obs;
+  // ========= OBJECTS ============= //
+  final WishlistService _wishlistService = WishlistService();
+  // ========= CONTROLLERS ========= //
   TextEditingController searchController = TextEditingController();
   TextEditingController closetController = TextEditingController();
+
+  // ========= VARIABLES ========= //
+  final userID = PreferenceManager.getString(PreferenceManager.userId);
+  RxList<ClothingItems> wishlistData = <ClothingItems>[].obs;
+  RxList<GetUserClosets> getUserClosetList = <GetUserClosets>[].obs;
+  RxList<SaveItem> wishItemList = <SaveItem>[].obs;
   RxBool isDeleted = false.obs;
   RxBool isWishItemDeleted = false.obs;
   RxBool isBottomSheet = false.obs;
   RxInt itemIndex = (-1).obs;
-  final List<ProductModelFilter> brandFilter = [
-    ProductModelFilter(leading: '', title: 'Zara'),
-    ProductModelFilter(leading: '', title: 'H&M'),
-    ProductModelFilter(leading: '', title: 'Gap'),
-    ProductModelFilter(leading: '', title: 'CASA'),
-    ProductModelFilter(leading: '', title: 'Tommy hilfiger')
-  ];
-  final List<ProductModelFilter> productFilter = [
-    ProductModelFilter(leading: '', title: 'Topwear'),
-    ProductModelFilter(leading: '', title: 'Shirt'),
-    ProductModelFilter(leading: '', title: 'Sweatshirt'),
-    ProductModelFilter(leading: '', title: 'T- shirt'),
-    ProductModelFilter(leading: '', title: 'Hoodie')
-  ];
-  final List<ProductModelFilter> colorFilter = [
-    ProductModelFilter(leading: '', title:'Black'),
-    ProductModelFilter(leading: '', title:'Brown'),
-    ProductModelFilter(leading: '', title:'Green'),
-    ProductModelFilter(leading: '', title:'Denim'),
-    ProductModelFilter(leading: '', title:'Zebra print')
-  ];
 
   RxString searchQuery = ''.obs;
   RxString selectedImage = ''.obs;
-  ProductModel productModel = ProductModel(
-      price: "₹20",
-      title: "White and golden shorts for women",
-      images: [
-        Images(
-            src:
-                'https://srstore.com/cdn/shop/files/O1CN01iWwp191LUMaFHeZpu__2209587281302-0-cib_2000x.jpg?v=1712055840'),
-      ]);
+  bool isLoading = true;
+  // ========== STATES ========== //
 
   @override
   void onInit() {
     super.onInit();
-    wishlistData.add(WishlistModels(
-        imageUrl:
-            'https://static.vecteezy.com/system/resources/thumbnails/031/623/946/small_2x/background-for-productgraphy-ai-generated-photo.jpg',
-        name: "All Saved",
-        productList: [productModel, productModel, productModel]));
+    getUserClosets();
     selectedImage.value = imageLinks[0];
     searchController.addListener(() {
       searchQuery.value = searchController.text;
     });
   }
 
-  List<WishlistModels> get filteredWishlist {
+// ========== UI FUNCTIONS ========== //
+  List<ClothingItems> get filteredWishlist {
     if (searchQuery.value.isEmpty) {
       return wishlistData;
     }
     return wishlistData
-        .where((wishlist) => wishlist.name
+        .where((wishlist) => wishlist.name!
             .toLowerCase()
             .contains(searchQuery.value.toLowerCase()))
         .toList();
@@ -74,7 +59,7 @@ class WishlistController extends GetxController {
   void addCloset() async {
     if (closetController.text.isNotEmpty) {
       wishlistData.add(
-        WishlistModels(
+        ClothingItems(
           imageUrl: selectedImage.value,
           name: closetController.text,
         ),
@@ -83,7 +68,7 @@ class WishlistController extends GetxController {
     }
   }
 
-  void removeCloset(WishlistModels wishlist) async {
+  void removeCloset(ClothingItems wishlist) async {
     wishlistData.remove(wishlist);
   }
 
@@ -103,16 +88,138 @@ class WishlistController extends GetxController {
 
   void wishRemoveItem() {
     for (var i = 0; i < wishItemList.length; i++) {
-      if (wishItemList[i].isSelected!) {
-        wishItemList.removeAt(i);
+      if (wishItemList[i].product!.isSelected!) {
+        removeItemFromClothingItem(
+            itemId: wishItemList[i].id!, isMultiple: true);
       }
     }
+    getSavedItemsToCloset(clothingItemId: wishItemList[0].clothingItem!.id!);
+    showToast(message: "All products deleted successfully!!");
   }
 
   void wishSelectedtem(int index) {
-    wishItemList[index].isSelected = !wishItemList[index].isSelected!;
+    wishItemList[index].product!.isSelected =
+        !wishItemList[index].product!.isSelected!;
     wishItemList.refresh();
   }
+
+  // ========== APIs FUNCTIONS ========== //
+  Future<void> createCloset() async {
+    var response = await _wishlistService.createCloset();
+    if (response != null) {
+      getUserClosets();
+    }
+  }
+
+  Future<void> getUserClosets() async {
+    GetClosetRequestModel getClosetRequestModel = GetClosetRequestModel(
+      userId: userID!,
+    );
+    try {
+      isLoading = true;
+      update();
+      var response = await _wishlistService.getUserClosets(
+          getClosetRequestModel: getClosetRequestModel);
+      // logg.d("get Data ====> $response");
+      if (response != null) {
+        if (response.getUserClosets!.isEmpty) {
+          createCloset();
+        } else {
+          if (response.getUserClosets!.first.clothingItems!.isEmpty) {
+            addItemToCloset(
+                closetId: response.getUserClosets!.first.id.toString(),
+                imageUrl: AppStrings.defaultClosetImageUrel,
+                name: AppStrings.defaulttClosetName);
+          } else {
+            getUserClosetList(response.getUserClosets);
+            wishlistData(getUserClosetList.first.clothingItems);
+          }
+        }
+      }
+      isLoading = false;
+      update();
+    } catch (e) {
+      logg.e('get error to fetch closet data $e');
+      isLoading = false;
+      update();
+    }
+  }
+
+  Future<void> addItemToCloset(
+      {required String closetId,
+      required String imageUrl,
+      required String name}) async {
+    AddBoardRequestModel addBoardRequestModel = AddBoardRequestModel(
+      closetId: closetId,
+      imageUrl: imageUrl,
+      name: name,
+    );
+    var response = await _wishlistService.addItemToCloset(
+        addBoardRequestModel: addBoardRequestModel);
+    logg.d("get Data ====> $response");
+    getUserClosets();
+  }
+
+  Future<void> saveItemToCloset(
+      {required String clothingItemId, required String productId}) async {
+    SaveItemToClosetRequestModel saveItemToClosetRequestModel =
+        SaveItemToClosetRequestModel(
+      clothingItemId: clothingItemId,
+      productId: productId,
+    );
+    var response = await _wishlistService.saveItemToCloset(
+        saveItemToClosetRequestModel: saveItemToClosetRequestModel);
+    logg.d("get Data save item ====> $response");
+    getUserClosets();
+  }
+
+  Future<void> removeItemFromCloset({required String itemId}) async {
+    RemoveClosetItemRequestModel removeClosetItemRequestModel =
+        RemoveClosetItemRequestModel(
+      itemId: itemId,
+    );
+    var response = await _wishlistService.removeItemFromCloset(
+        removeClosetItemRequestModel: removeClosetItemRequestModel);
+    getUserClosets();
+    if (response != null &&
+        response.removeItemFromCloset != null &&
+        response.removeItemFromCloset!) {
+      showToast(message: "Closet deleted successfully!!");
+    }
+    logg.d("get Delete save item ====> $response");
+  }
+
+  Future<void> getSavedItemsToCloset({required String clothingItemId}) async {
+    GetSavedItemsToClosetRequestModel getSavedItemsToClosetRequestModel =
+        GetSavedItemsToClosetRequestModel(
+      clothingItemId: clothingItemId,
+      userId: userID!,
+    );
+    var response = await _wishlistService.getSavedItemsToCloset(
+        getSavedItemsToClosetRequestModel: getSavedItemsToClosetRequestModel);
+    wishItemList(response!.getSavedItems!);
+    logg.d("get Date save item ====> $response");
+  }
+
+  Future<void> removeItemFromClothingItem(
+      {required String itemId, bool isMultiple = false}) async {
+    RemoveClothingItemRequestModel removeClothingItemRequestModel =
+        RemoveClothingItemRequestModel(
+      itemId: itemId,
+    );
+    var response = await _wishlistService.removeItemFromClothingItem(
+        removeClothingItemRequestModel: removeClothingItemRequestModel);
+    if (response != null &&
+        response.removeItemFromClothingItem != null &&
+        response.removeItemFromClothingItem! &&
+        !isMultiple) {
+      getSavedItemsToCloset(clothingItemId: wishItemList[0].clothingItem!.id!);
+      showToast(message: "Product deleted successfully!!");
+    }
+    logg.d("get Delete save item ====> $response");
+  }
+
+  //=========== CONSTANT LIST =========== //
 
   List<String> imageLinks = [
     "https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?cs=srgb&dl=pexels-padrinan-255379.jpg&fm=jpg",
@@ -139,5 +246,39 @@ class WishlistController extends GetxController {
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3IoMJuoE1LC9-Ado1qPjVitRXmLkAFhV-gA&s',
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxgVcve4HzfyMm88qW1pZMuxry1tg81PE2-A&s',
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-uWsMJev5y2_S1EpvpFSDed5oJwcPpBwbrA&s',
+  ];
+
+  final List<ProductModelFilter> brandFilter = [
+    ProductModelFilter(leading: '', title: 'Zara'),
+    ProductModelFilter(leading: '', title: 'H&M'),
+    ProductModelFilter(leading: '', title: 'Gap'),
+    ProductModelFilter(leading: '', title: 'CASA'),
+    ProductModelFilter(leading: '', title: 'Tommy hilfiger')
+  ];
+
+  final List<ProductModelFilter> productFilter = [
+    ProductModelFilter(leading: '', title: 'Topwear'),
+    ProductModelFilter(leading: '', title: 'Shirt'),
+    ProductModelFilter(leading: '', title: 'Sweatshirt'),
+    ProductModelFilter(leading: '', title: 'T- shirt'),
+    ProductModelFilter(leading: '', title: 'Hoodie')
+  ];
+
+  final List<ProductModelFilter> colorFilter = [
+    ProductModelFilter(leading: '', title: 'Black'),
+    ProductModelFilter(leading: '', title: 'Brown'),
+    ProductModelFilter(leading: '', title: 'Green'),
+    ProductModelFilter(leading: '', title: 'Denim'),
+    ProductModelFilter(leading: '', title: 'Zebra print')
+  ];
+
+  final List<ProductModelFilter> sizedFilter = [
+    ProductModelFilter(leading: '', title: 'XXS'),
+    ProductModelFilter(leading: '', title: 'XS'),
+    ProductModelFilter(leading: '', title: 'S'),
+    ProductModelFilter(leading: '', title: 'M'),
+    ProductModelFilter(leading: '', title: 'L'),
+    ProductModelFilter(leading: '', title: 'XL'),
+    ProductModelFilter(leading: '', title: 'XXL')
   ];
 }

@@ -1,5 +1,5 @@
-import 'package:casaflutter/network/graph_ql_manager.dart';
-import 'package:casaflutter/src/cart/model/cart_models.dart';
+import 'package:casaflutterapp/network/graph_ql_manager.dart';
+import 'package:casaflutterapp/src/cart/model/cart_models.dart';
 
 class CartService {
   final GraphQLManager _graphQLManager = GraphQLManager();
@@ -27,7 +27,7 @@ class CartService {
     final GetCartResponseModel getCartResponseModel;
 
     final response = await _graphQLManager.getCartItems(
-      getCartRequestModel.userId,
+      userId: getCartRequestModel.userId,
     );
 
     getCartResponseModel = GetCartResponseModel.fromJson(
@@ -59,9 +59,9 @@ class CartService {
     final GetCartResponseModel getCartResponseModel;
 
     final response = await _graphQLManager.updateCartItem(
-        updateCartRequestModel.userId,
-        updateCartRequestModel.productId,
-        updateCartRequestModel.quantity);
+        userId: updateCartRequestModel.userId,
+        productId: updateCartRequestModel.productId,
+        quantity: updateCartRequestModel.quantity);
 
     getCartResponseModel = GetCartResponseModel.fromJson(
       response.data!,

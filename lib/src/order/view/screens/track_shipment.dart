@@ -1,5 +1,5 @@
-import 'package:casaflutter/src/order/model/order_models.dart';
-import 'package:casaflutter/utils/color_constant.dart';
+import 'package:casaflutterapp/src/order/model/order_models.dart';
+import 'package:casaflutterapp/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/padding_size.dart';

@@ -1,4 +1,4 @@
-import 'package:casaflutter/src/onboarding/controller/onboarding_controller.dart';
+import 'package:casaflutterapp/src/onboarding/controller/onboarding_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

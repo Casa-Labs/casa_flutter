@@ -1,5 +1,5 @@
-import 'package:casaflutter/src/home/controller/home_controller.dart';
-import 'package:casaflutter/utils/string_constant.dart';
+import 'package:casaflutterapp/src/home/controller/home_controller.dart';
+import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,6 +8,7 @@ import '../../../../utils/font.dart';
 import '../../../cart/controller/cart_controller.dart';
 import '../../../common/widgets/buttons/add_to_cart_button.dart';
 import '../../../explore/view/widgets/quantity_selector_button.dart';
+import '../../../wishlist/view/screens/add_to_closet.dart';
 import '../../model/home_models.dart';
 
 class ProductDetails extends StatelessWidget {
@@ -41,24 +42,16 @@ class ProductDetails extends StatelessWidget {
                   ),
                   GestureDetector(
                       onTap: () {
-                        // Get.bottomSheet(
-                        //     AddToCloset(
-                        //       newProduct: WhishProductItem(
-                        //           imageUrl: logic
-                        //               .products[logic.cardIndex != -1
-                        //               ? logic.cardIndex
-                        //               : 0]
-                        //               .images![0]
-                        //               .src
-                        //               .toString(),
-                        //           itemId: logic
-                        //               .products[logic.cardIndex != -1
-                        //               ? logic.cardIndex
-                        //               : 0]
-                        //               .id
-                        //               .toString()),
-                        //     ),
-                        //     isScrollControlled: true);
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) {
+                            return AddToCloset(
+                              imageUrl: product.mainImage.toString(),
+                              itemId: product.id.toString(),
+                            );
+                          },
+                        );
                       },
                       child: const SizedBox.shrink())
                 ],
@@ -368,9 +361,7 @@ class ProductDetails extends StatelessWidget {
                     mainAxisSpacing: 8),
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
-                    onTap: () {
-                      print('------>>> hello ${product.productImages![index]}');
-                    },
+                    onTap: () {},
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image.network(

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:casaflutter/src/auth/model/auth_models.dart';
-import 'package:casaflutter/src/auth/model/service/auth_service.dart';
-import 'package:casaflutter/utils/preference_manager.dart';
+import 'package:casaflutterapp/src/auth/model/auth_models.dart';
+import 'package:casaflutterapp/src/auth/model/service/auth_service.dart';
+import 'package:casaflutterapp/utils/preference_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

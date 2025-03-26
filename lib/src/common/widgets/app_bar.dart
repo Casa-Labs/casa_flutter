@@ -1,7 +1,7 @@
-import 'package:casaflutter/routes/app_routes.dart';
-import 'package:casaflutter/src/common/widgets/buttons/casa_button.dart';
-import 'package:casaflutter/src/common/widgets/textfields.dart';
-import 'package:casaflutter/utils/color_constant.dart';
+import 'package:casaflutterapp/routes/app_routes.dart';
+import 'package:casaflutterapp/src/common/widgets/casa_button.dart';
+import 'package:casaflutterapp/src/common/widgets/textfields.dart';
+import 'package:casaflutterapp/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -55,6 +55,44 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                       child: Icon(Icons.arrow_back_ios_new_rounded),
                     ),
                   ),
+                /*               Expanded(
+                  child: CustomDropDown(
+                    items: const [
+                      'BRAND',
+                      'THRIFT',
+                    ],
+                    hint: Padding(
+                        padding: EdgeInsets.only(left: isLeadingBack ? 0 : 8),
+                        child: Row(
+                          children: [
+                            Text(
+                              'CASA',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(
+                                    fontSize: 22,
+                                    // fontFamily:
+                                    //     Font.montaga, // Custom font, if needed
+                                  ),
+                            ),
+                            Icon(Icons.keyboard_arrow_down_rounded,
+                                color: CColor.black)
+                          ],
+                        )),
+                    width: 150,
+                    mode: DropdownMode.single,
+                    fontSize: 15,
+                    menufontSize: 20,
+                    fullSize: false,
+                    onSelected: (selectedItems) {
+                      homeCtrl.fetchProducts({
+                        "storeType":selectedItems[0].toUpperCase()
+                      });
+                    },
+                    label: '',
+                  ),
+                ),*/
                 CasaButton(isLeadingBack: isLeadingBack)
               ],
             )
@@ -110,6 +148,11 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
             overlayColor: WidgetStateProperty.all(Colors.transparent),
             splashFactory: NoSplash.splashFactory,
             onTap: () {
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (context) => FilterPage(),
+              //     ));
               context.pushNamed(RouteNames.search);
             },
             child: Padding(
@@ -120,13 +163,36 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
           InkWell(
             overlayColor: WidgetStateProperty.all(Colors.transparent),
             splashFactory: NoSplash.splashFactory,
-            onTap: () {},
+            onTap: () {
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (context) => FilterPage(),
+              //     ));
+            },
             child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Icon(Icons.headphones, color: CColor.black)),
           ),
         const SizedBox(width: 15),
       ],
+      // bottom: PreferredSize(
+      //   preferredSize: const Size.fromHeight(10),
+      //   child: Container(
+      //     height: 2.5,
+      //     width: double.infinity,
+      //     decoration: BoxDecoration(
+      //       boxShadow: [
+      //         BoxShadow(
+      //           color: Colors.black.withOpacity(0.4),
+      //           blurRadius: 4,
+      //           offset: const Offset(0, 6),
+      //         ),
+      //       ],
+      //     ),
+      //     child: const Divider(),
+      //   ),
+      // ),
     );
   }
 

@@ -1,6 +1,6 @@
-import 'package:casaflutter/routes/app_routes.dart';
-import 'package:casaflutter/src/common/widgets/common_app_bars.dart';
-import 'package:casaflutter/src/order/controller/order_review_controller.dart';
+import 'package:casaflutterapp/routes/app_routes.dart';
+import 'package:casaflutterapp/src/common/widgets/common_app_bars.dart';
+import 'package:casaflutterapp/src/order/controller/order_review_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -11,13 +11,14 @@ import '../widgets/expandable_card.dart';
 import '../widgets/order_view_item_widget.dart';
 
 class OrderReviewScreen extends StatelessWidget {
-  OrderReviewScreen({
+  const OrderReviewScreen({
     super.key,
   });
-  final orderRiviweCtrl = Get.find<OrderReviewController>();
 
   @override
   Widget build(BuildContext context) {
+    final orderRiviweCtrl = Get.find<OrderReviewController>();
+
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: BackgroundColor.white,
