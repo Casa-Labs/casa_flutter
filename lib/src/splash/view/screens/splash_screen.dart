@@ -1,4 +1,3 @@
-import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,9 +15,9 @@ class SplashScreen extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: splashCtrl.netImage() != ""
-                ? AssetImage(splashCtrl.netImage.value)
-                : AssetImage(ImageConstants.splashBackground),
+            image: AssetImage(splashCtrl.splashLogos
+                .firstWhere((logo) => logo.logoId == splashCtrl.dayIndex())
+                .logo),
             fit: BoxFit.cover,
           ),
         ),
