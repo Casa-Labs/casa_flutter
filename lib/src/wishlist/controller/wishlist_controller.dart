@@ -21,6 +21,7 @@ class WishlistController extends GetxController {
 
   // ========= VARIABLES ========= //
   final userID = PreferenceManager.getString(PreferenceManager.userId);
+  final RxSet<String> selectedClosets = <String>{}.obs;
   RxList<ClothingItems> wishlistData = <ClothingItems>[].obs;
   RxList<GetUserClosets> getUserClosetList = <GetUserClosets>[].obs;
   RxList<SaveItem> wishItemList = <SaveItem>[].obs;
