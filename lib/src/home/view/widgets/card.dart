@@ -30,7 +30,6 @@ class Cards extends StatelessWidget {
             builder: (orderReviewController) {
           return Container(
             decoration: BoxDecoration(
-              // border: Border.all(color: Colors.grey.shade200),
               borderRadius: BorderRadius.vertical(
                   top: Radius.circular(18), bottom: Radius.circular(18)),
             ),

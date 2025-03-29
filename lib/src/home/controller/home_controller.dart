@@ -25,7 +25,7 @@ class HomeController extends GetxController {
   List<GetProductSizes> size = [];
   List<BrandData> brand = [];
   List<GetProductCategories> category = [];
-  bool isLoading = false;
+  RxBool isLoading = false.obs;
   RxList<Product> reactiveProducts = <Product>[].obs;
   bool isShowReturn = false;
   bool isShowShipping = false;
@@ -78,11 +78,11 @@ class HomeController extends GetxController {
 
   @override
   void onInit() async {
+    super.onInit();
     await fetchProducts({});
     await getBrand();
     await getSize();
     await getCategory();
-    super.onInit();
   }
 
   // ========== UI FUNCTIONS ========== //
@@ -162,70 +162,70 @@ class HomeController extends GetxController {
 
   Future<void> fetchProducts(Map<String, dynamic> map) async {
     try {
-      isLoading = true;
+      isLoading.value = true;
       update();
       var response = await manager.getProducts(map);
       var getProductList = GetProductData.fromJson(response.data!);
       products = getProductList.getProducts!.data ?? [];
       logg.d('get products ------ >>>>> $getProductList');
       products.shuffle(Random());
-      isLoading = false;
+      isLoading.value = false;
       update();
     } catch (e) {
       logg.e('get error to fetch product data $e');
-      isLoading = false;
+      isLoading.value = false;
       update();
     }
   }
 
   Future<void> getSize() async {
     try {
-      isLoading = true;
+      isLoading.value = true;
       update();
       var response = await manager.getSizes();
       var getSizeData = GetSizeData.fromJson(response.data!);
       size = getSizeData.getProductSizes ?? [];
       logg.d('size data ------ >>>>> $getSizeData');
-      // isLoading =  false;
+      // isLoading.value =  false;
       update();
     } catch (e) {
       logg.e('get error to fetch product data $e');
-      isLoading = false;
+      isLoading.value = false;
       update();
     }
   }
 
   Future<void> getCategory() async {
     try {
-      isLoading = true;
+      isLoading.value = true;
       update();
       var response = await manager.getCategory();
       var catList = GetCategories.fromJson(response.data!);
       category = catList.getProductCategories ?? [];
       logg.d('categories data ------ >>>>> $catList');
-      isLoading = false;
+      isLoading.value = false;
       update();
     } catch (e) {
       logg.e('get error to fetch product data $e');
-      isLoading = false;
+      isLoading.value = false;
       update();
     }
   }
 
   Future<void> getBrand() async {
     try {
-      isLoading = true;
+      isLoading.value = true;
       update();
       var response = await manager.getBrands(
           limit: 5, page: 1, search: "", storeType: "BRAND");
       var brandList = GetBrandData.fromJson(response.data!);
       brand = brandList.getBrands!.data ?? [];
       logg.d('brand data ------ >>>>> $brandList');
-      // isLoading =  false;
+      // isLoading.value =  false;
       update();
     } catch (e) {
       logg.e('get error to fetch product data $e');
-      isLoading = false;
+      isLoading.value = false;
       update();
     }
   }

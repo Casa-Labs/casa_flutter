@@ -40,7 +40,7 @@ class BorderColor {
 }
 
 class BackgroundColor {
-  static const Color white = Color(0xffFCFDFF);
+  static const Color white = Color(0xffFFFFFF);
 }
 
 class BottomNavbarColor {
