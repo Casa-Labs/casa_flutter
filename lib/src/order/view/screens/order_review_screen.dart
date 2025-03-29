@@ -275,7 +275,8 @@ class OrderReviewScreen extends StatelessWidget {
                         backgroundColor: const Color(0xFF2C9D24),
                       ),
                       onPressed: () {
-                        context.pushNamed(RouteNames.paymentOptions);
+                        // context.pushNamed(RouteNames.paymentOptions);
+                        orderRiviweCtrl.createOrder();
                       },
                       child: Text(
                         "Pay ₹${orderRiviweCtrl.total}",

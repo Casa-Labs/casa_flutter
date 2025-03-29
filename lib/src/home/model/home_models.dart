@@ -155,6 +155,7 @@ class Product {
   double? price;
   String? category;
   // List<String>? size;
+  List<ColorsModel>? colors;
   int? stock;
   String? storeId;
   String? mainImage;
@@ -172,6 +173,7 @@ class Product {
       this.price,
       this.category,
       // this.size,
+        this.colors,
       this.productImages,
       this.mainImage,
       this.stock,
@@ -185,6 +187,12 @@ class Product {
     id = json['id'] ?? "";
     name = json['name'] ?? "";
     description = json['description'] ?? "";
+    if (json['colors'] != null) {
+      colors = <ColorsModel>[];
+      json['colors'].forEach((v) {
+        colors!.add(ColorsModel.fromJson(v));
+      });
+    }
     price = json['price'] is int
         ? (json['price'] as int).toDouble()
         : (json['price'] ?? 0).toDouble();
@@ -210,6 +218,9 @@ class Product {
     data['productImages'] = productImages;
     data['mainImage'] = mainImage;
     // data['sizes'] = size;
+    if (colors != null) {
+      data['colors'] = colors!.map((v) => v.toJson()).toList();
+    }
     data['stock'] = stock;
     data['storeId'] = storeId;
     data['isNewArrival'] = isNewArrival;
@@ -227,4 +238,56 @@ class ProductModelFilter {
   bool isTabView = false;
 
   ProductModelFilter({this.leading, this.title});
+}
+
+class ColorsModel {
+  String? productId;
+  String? colorId;
+  ColorData? color;
+
+  ColorsModel({this.productId, this.colorId, this.color});
+
+  ColorsModel.fromJson(Map<String, dynamic> json) {
+    productId = json['productId'];
+    colorId = json['colorId'];
+    color = json['color'] != null ? ColorData.fromJson(json['color']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['productId'] = productId;
+    data['colorId'] = colorId;
+    if (color != null) {
+      data['color'] = color!.toJson();
+    }
+    return data;
+  }
+}
+
+class ColorData {
+  String? id;
+  String? name;
+  String? hexCode;
+  String? createdAt;
+  String? updatedAt;
+
+  ColorData({this.id, this.name, this.hexCode, this.createdAt, this.updatedAt});
+
+  ColorData.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    hexCode = json['hexCode'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['hexCode'] = hexCode;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    return data;
+  }
 }

@@ -94,9 +94,9 @@ class Cards extends StatelessWidget {
                           left: 15,
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.75,
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                                 color: Color.fromARGB(0, 0, 0, 0),
-                                borderRadius: BorderRadius.vertical(
+                                borderRadius: const BorderRadius.vertical(
                                     bottom: Radius.circular(15))),
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 20),
