@@ -14,6 +14,13 @@ class ImageConstants {
   static String ruler = 'assets/icons/ruler.svg';
   static String email = 'assets/images/email.png';
   static String verify = 'assets/images/verify.png';
+  static String mondayLogo = 'assets/logos/monday_logo.png';
+  static String tusedayLogo = 'assets/logos/tuseday_logo.png';
+  static String wednesdayLogo = 'assets/logos/wednesday_logo.png';
+  static String thursdayLogo = 'assets/logos/thursday_logo.png';
+  static String fridayLogo = 'assets/logos/friday_logo.png';
+  static String saturdayLogo = 'assets/logos/saturday_logo.png';
+  static String sundayLogo = 'assets/logos/sunday_logo.png';
 }
 
 class IconConstants {
