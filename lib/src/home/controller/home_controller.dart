@@ -25,7 +25,7 @@ class HomeController extends GetxController {
   List<GetProductSizes> size = [];
   List<BrandData> brand = [];
   List<GetProductCategories> category = [];
-  bool isLoading = false;
+  RxBool isLoading = false.obs;
   RxList<Product> reactiveProducts = <Product>[].obs;
   bool isShowReturn = false;
   bool isShowShipping = false;
@@ -42,47 +42,50 @@ class HomeController extends GetxController {
   RxInt quantity = 1.obs;
   final ValueNotifier<int> counter = ValueNotifier<int>(1);
   IconData? swipeIcon;
-  final List<ProductModelFilter> brandFilter = [
-    ProductModelFilter(leading: 'Z', title: 'Zara'),
-    ProductModelFilter(leading: 'H', title: 'H&M'),
-    ProductModelFilter(leading: 'G', title: 'Gap'),
-    ProductModelFilter(leading: 'C', title: 'CASA'),
-    ProductModelFilter(leading: 'T', title: 'Tommy hilfiger')
-  ];
-  final List<ProductModelFilter> productFilter = [
-    ProductModelFilter(leading: '', title: 'Topwear'),
-    ProductModelFilter(leading: '', title: 'Shirt'),
-    ProductModelFilter(leading: '', title: 'Sweatshirt'),
-    ProductModelFilter(leading: '', title: 'T- shirt'),
-    ProductModelFilter(leading: '', title: 'Hoodie')
-  ];
-  final List<ProductModelFilter> colorFilter = [
-    ProductModelFilter(leading: '', title: 'Black'),
-    ProductModelFilter(leading: '', title: 'Brown'),
-    ProductModelFilter(leading: '', title: 'Green'),
-    ProductModelFilter(leading: '', title: 'Denim'),
-    ProductModelFilter(leading: '', title: 'Zebra print')
-  ];
-  final List<ProductModelFilter> sizedFilter = [
-    ProductModelFilter(leading: '', title: 'XXS'),
-    ProductModelFilter(leading: '', title: 'XS'),
-    ProductModelFilter(leading: '', title: 'S'),
-    ProductModelFilter(leading: '', title: 'M'),
-    ProductModelFilter(leading: '', title: 'L'),
-    ProductModelFilter(leading: '', title: 'XL'),
-    ProductModelFilter(leading: '', title: 'XXL')
-  ];
+
+  RxString shareMessage = ''.obs;
+
+  // final List<ProductModelFilter> brandFilter = [
+  //   ProductModelFilter(leading: 'Z', title: 'Zara'),
+  //   ProductModelFilter(leading: 'H', title: 'H&M'),
+  //   ProductModelFilter(leading: 'G', title: 'Gap'),
+  //   ProductModelFilter(leading: 'C', title: 'CASA'),
+  //   ProductModelFilter(leading: 'T', title: 'Tommy hilfiger')
+  // ];
+  // final List<ProductModelFilter> productFilter = [
+  //   ProductModelFilter(leading: '', title: 'Topwear'),
+  //   ProductModelFilter(leading: '', title: 'Shirt'),
+  //   ProductModelFilter(leading: '', title: 'Sweatshirt'),
+  //   ProductModelFilter(leading: '', title: 'T- shirt'),
+  //   ProductModelFilter(leading: '', title: 'Hoodie')
+  // ];
+  // final List<ProductModelFilter> colorFilter = [
+  //   ProductModelFilter(leading: '', title: 'Black'),
+  //   ProductModelFilter(leading: '', title: 'Brown'),
+  //   ProductModelFilter(leading: '', title: 'Green'),
+  //   ProductModelFilter(leading: '', title: 'Denim'),
+  //   ProductModelFilter(leading: '', title: 'Zebra print')
+  // ];
+  // final List<ProductModelFilter> sizedFilter = [
+  //   ProductModelFilter(leading: '', title: 'XXS'),
+  //   ProductModelFilter(leading: '', title: 'XS'),
+  //   ProductModelFilter(leading: '', title: 'S'),
+  //   ProductModelFilter(leading: '', title: 'M'),
+  //   ProductModelFilter(leading: '', title: 'L'),
+  //   ProductModelFilter(leading: '', title: 'XL'),
+  //   ProductModelFilter(leading: '', title: 'XXL')
+  // ];
   final manager = GraphQLManager();
 
   // ========== STATES ========== //
 
   @override
   void onInit() async {
+    super.onInit();
     await fetchProducts({});
     await getBrand();
     await getSize();
     await getCategory();
-    super.onInit();
   }
 
   // ========== UI FUNCTIONS ========== //
@@ -162,70 +165,70 @@ class HomeController extends GetxController {
 
   Future<void> fetchProducts(Map<String, dynamic> map) async {
     try {
-      isLoading = true;
+      isLoading.value = true;
       update();
       var response = await manager.getProducts(map);
       var getProductList = GetProductData.fromJson(response.data!);
       products = getProductList.getProducts!.data ?? [];
       logg.d('get products ------ >>>>> $getProductList');
       products.shuffle(Random());
-      isLoading = false;
+      isLoading.value = false;
       update();
     } catch (e) {
       logg.e('get error to fetch product data $e');
-      isLoading = false;
+      isLoading.value = false;
       update();
     }
   }
 
   Future<void> getSize() async {
     try {
-      isLoading = true;
+      isLoading.value = true;
       update();
       var response = await manager.getSizes();
       var getSizeData = GetSizeData.fromJson(response.data!);
       size = getSizeData.getProductSizes ?? [];
       logg.d('size data ------ >>>>> $getSizeData');
-      // isLoading =  false;
+      // isLoading.value =  false;
       update();
     } catch (e) {
       logg.e('get error to fetch product data $e');
-      isLoading = false;
+      isLoading.value = false;
       update();
     }
   }
 
   Future<void> getCategory() async {
     try {
-      isLoading = true;
+      isLoading.value = true;
       update();
       var response = await manager.getCategory();
       var catList = GetCategories.fromJson(response.data!);
       category = catList.getProductCategories ?? [];
       logg.d('categories data ------ >>>>> $catList');
-      isLoading = false;
+      isLoading.value = false;
       update();
     } catch (e) {
       logg.e('get error to fetch product data $e');
-      isLoading = false;
+      isLoading.value = false;
       update();
     }
   }
 
   Future<void> getBrand() async {
     try {
-      isLoading = true;
+      isLoading.value = true;
       update();
       var response = await manager.getBrands(
           limit: 5, page: 1, search: "", storeType: "BRAND");
       var brandList = GetBrandData.fromJson(response.data!);
       brand = brandList.getBrands!.data ?? [];
       logg.d('brand data ------ >>>>> $brandList');
-      // isLoading =  false;
+      // isLoading.value =  false;
       update();
     } catch (e) {
       logg.e('get error to fetch product data $e');
-      isLoading = false;
+      isLoading.value = false;
       update();
     }
   }

@@ -11,16 +11,19 @@ class ExploreSearchBar extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox(width: 20),
+        SizedBox(width: 40),
         Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
+          child: SizedBox(
+            height: 40,
             child: TextFormField(
-              textAlign: TextAlign.center,
+              // textAlign: TextAlign.center,
               decoration: InputDecoration(
                 hintText: 'Search',
-                hintStyle: Theme.of(context).textTheme.bodySmall!.copyWith(),
-                prefixIcon: Icon(Icons.search),
+                hintStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(),
+                prefixIcon: Icon(
+                  Icons.search,
+                  size: 15,
+                ),
                 fillColor: TextFieldColor.offWhite,
                 filled: true,
                 border: OutlineInputBorder(
@@ -43,6 +46,7 @@ class ExploreSearchBar extends StatelessWidget {
             onPressed: () {
               context.pushNamed(RouteNames.search);
             },
+            iconSize: 20,
             icon: Icon(Icons.tune))
       ],
     );

@@ -26,12 +26,12 @@ class _SelectSizeButtonState extends State<SelectSizeButton> {
             elevation: 0,
             backgroundColor: widget.size.contains(sizes[index])
                 ? isSelected
-                    ? ButtonColor.grey
+                    ? ButtonColor.black
                     : ButtonColor.white
                 : ButtonColor.lightGrey,
             foregroundColor: widget.size.contains(sizes[index])
                 ? isSelected
-                    ? ButtonColor.black
+                    ? ButtonColor.white
                     : ButtonColor.black
                 : ButtonColor.grey,
             minimumSize: Size.zero,

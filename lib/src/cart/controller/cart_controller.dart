@@ -1,4 +1,3 @@
-
 import 'package:casaflutterapp/src/cart/model/cart_models.dart';
 import 'package:casaflutterapp/src/cart/model/service/cart_service.dart';
 import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
@@ -68,9 +67,11 @@ class CartController extends GetxController {
       if (response != null) {
         getCartItems();
       }
+
       showToast(
         message: "Added to the cart!!",
       );
+      logg.i('Added to the cart');
     } catch (e) {
       showToast(
         message: "Something went wrong, please try again",

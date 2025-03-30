@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:casaflutterapp/routes/app_routes.dart';
-import 'package:casaflutterapp/src/common/widgets/custom_dropdown_menu.dart';
 import 'package:casaflutterapp/src/explore/view/widgets/explore_search_bar.dart';
 import 'package:casaflutterapp/src/explore/view/widgets/thrifts_section.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +55,7 @@ class ExploreScreen extends StatelessWidget {
                                       ? TabBarColor.white
                                       : TabBarColor.black,
                             ),
-                            child: Text('Brands'),
+                            child: Text('MEN'),
                             onPressed: () {
                               exploreCtrl.selectedIndex.value = 0;
                             },
@@ -80,7 +79,7 @@ class ExploreScreen extends StatelessWidget {
                                       ? TabBarColor.white
                                       : TabBarColor.black,
                             ),
-                            child: Text('Thrifts'),
+                            child: Text('WOMEN'),
                             onPressed: () async {
                               exploreCtrl.selectedIndex.value = 1;
                               await exploreCtrl.getTrendingNowProductsCall();
@@ -129,63 +128,46 @@ class BrandsSection extends StatelessWidget {
               // Brands Column
               Column(
                 children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Expanded(
-                        child: CustomDropDownIcon(
-                          items: exploreCtrl.brands,
-                          hintText: 'BRANDS',
-                          itemLabel: (brand) => brand.name!,
+                  DividerTitle(
+                    text: 'BRANDS',
+                  ),
+                  exploreCtrl.brands.isEmpty
+                      ? Text('No Brands Found',
+                          style: Theme.of(context).textTheme.bodyLarge)
+                      : SizedBox(
+                          height: 50,
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: exploreCtrl.brands.length,
+                              itemBuilder: (context, index) {
+                                final brand = exploreCtrl.brands[index];
+                                return InkWell(
+                                  onTap: () {
+                                    context.pushNamed(RouteNames.store);
+                                  },
+                                  child: Container(
+                                    width: 80,
+                                    margin: EdgeInsets.only(right: 8),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30),
+                                      image: DecorationImage(
+                                          image: CachedNetworkImageProvider(
+                                              brand.logo!),
+                                          fit: BoxFit.cover),
+                                    ),
+                                  ),
+                                );
+                              }),
                         ),
-                      ),
-                      Expanded(flex: 2, child: Divider()),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 50,
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: exploreCtrl.brands.length,
-                        itemBuilder: (context, index) {
-                          final brand = exploreCtrl.brands[index];
-                          return InkWell(
-                            onTap: () {
-                              context.pushNamed(RouteNames.store);
-                            },
-                            child: Container(
-                              width: 80,
-                              margin: EdgeInsets.only(right: 8),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                image: DecorationImage(
-                                    image:
-                                        CachedNetworkImageProvider(brand.logo!),
-                                    fit: BoxFit.cover),
-                              ),
-                            ),
-                          );
-                        }),
-                  ),
                 ],
               ),
 
               // Trending Now Column
               Column(
                 children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          'TRENDING NOW',
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                      ),
-                      Expanded(flex: 2, child: Divider()),
-                    ],
+                  DividerTitle(
+                    text: 'TRENDING NOW',
                   ),
                   exploreCtrl.trendingProducts.isNotEmpty
                       ? Container(
@@ -248,32 +230,88 @@ class BrandsSection extends StatelessWidget {
               // New Arrivals Column
               Column(
                 children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          'NEW ARRIVALS',
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                      ),
-                      Expanded(flex: 2, child: Divider()),
-                    ],
+                  // Row(
+                  //   mainAxisSize: MainAxisSize.min,
+                  //   children: [
+                  //     Padding(
+                  //       padding: const EdgeInsets.symmetric(horizontal: 10),
+                  //       child: Text(
+                  //         'NEW ARRIVALS',
+                  //         style: Theme.of(context).textTheme.bodyLarge,
+                  //       ),
+                  //     ),
+                  //     Expanded(flex: 2, child: Divider()),
+                  //   ],
+                  // ),
+                  DividerTitle(
+                    text: 'NEW ARRIVALS',
                   ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 10, top: 20, bottom: 20),
-                    child: Row(
-                      children: [
-                        CircleAvatar(),
-                        SizedBox(width: 10),
-                        Text(
-                          'H&M Store',
-                          style: Theme.of(context).textTheme.bodyLarge,
+                  exploreCtrl.newArrivalProducts.isEmpty
+                      ? Text('No brand data available')
+                      : Padding(
+                          padding: const EdgeInsets.only(
+                              left: 10, top: 20, bottom: 20),
+                          child: Row(
+                            children: [
+                              CircleAvatar(),
+                              SizedBox(width: 10),
+                              Text(
+                                'H&M Store',
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
+                  exploreCtrl.newArrivalProducts.isEmpty
+                      ? Text('No data available')
+                      : Container(
+                          height: 220,
+                          margin: EdgeInsets.only(top: 8, left: 8),
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: exploreCtrl.newArrivalProducts.length,
+                              itemBuilder: (context, index) {
+                                final newArrivalProduct =
+                                    exploreCtrl.newArrivalProducts[index];
+                                return InkWell(
+                                  onTap: () {
+                                    context.pushNamed(
+                                      RouteNames.productDescription,
+                                      extra: newArrivalProduct,
+                                    );
+                                  },
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height: 210,
+                                        width: 100,
+                                        margin: EdgeInsets.only(right: 20),
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: CachedNetworkImageProvider(
+                                                  newArrivalProduct.mainImage ??
+                                                      ''),
+                                              fit: BoxFit.cover),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }),
+                        ),
+                ],
+              ),
+
+              // Clothes you might like column
+              Column(
+                children: [
+                  DividerTitle(
+                    text: 'Clothes you might like',
                   ),
                   Container(
                     height: 220,
@@ -281,15 +319,13 @@ class BrandsSection extends StatelessWidget {
                     child: ListView.builder(
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
-                        itemCount: exploreCtrl.newArrivalProducts.length,
+                        itemCount: 10,
                         itemBuilder: (context, index) {
-                          final newArrivalProduct =
-                              exploreCtrl.newArrivalProducts[index];
                           return InkWell(
                             onTap: () {
                               context.pushNamed(
                                 RouteNames.productDescription,
-                                extra: newArrivalProduct,
+                                // extra: newArrivalProduct,
                               );
                             },
                             child: Column(
@@ -302,7 +338,8 @@ class BrandsSection extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: CachedNetworkImageProvider(
-                                            newArrivalProduct.mainImage ?? ''),
+                                            ImageConstants
+                                                .dummyNetworkPortrait),
                                         fit: BoxFit.cover),
                                     borderRadius: BorderRadius.circular(15),
                                   ),
@@ -315,67 +352,100 @@ class BrandsSection extends StatelessWidget {
                 ],
               ),
 
-              // Shop By Category Row
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  CustomDropDownIcon(
-                    width: 230,
-                    items: exploreCtrl.categories,
-                    hintText: 'SHOP BY CATEGORY',
-                    itemLabel: (category) => category.name!,
-                  ),
-                  Flexible(child: Divider()),
-                ],
-              ),
+              // Related Grid View
 
-              // Top Wear Column
-              Column(
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: CustomDropDownIcon(
-                          items: exploreCtrl.categories,
-                          hintText: 'TOP WEAR',
-                          itemLabel: (category) => category.name!,
-                        ),
-                      ),
-                      Expanded(flex: 3, child: Divider()),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 90,
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 5,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            width: 80,
-                            margin: EdgeInsets.only(right: 8),
-                            child: Column(
-                              children: [
-                                CircleAvatar(
-                                  radius: 30,
-                                  backgroundImage:
-                                      AssetImage(ImageConstants.avatarLogo),
-                                ),
-                                const SizedBox(height: 5),
-                                Text('T-SHIRT'),
-                              ],
-                            ),
-                          );
-                        }),
-                  ),
-                ],
-              ),
+              // // Shop By Category Row
+              // Row(
+              //   mainAxisSize: MainAxisSize.min,
+              //   children: [
+              //     CustomDropDownIcon(
+              //       width: 230,
+              //       items: exploreCtrl.categories,
+              //       hintText: 'SHOP BY CATEGORY',
+              //       itemLabel: (category) => category.name!,
+              //     ),
+              //     Flexible(child: Divider()),
+              //   ],
+              // ),
+              //
+              // // Top Wear Column
+              // Column(
+              //   children: [
+              //     Row(
+              //       mainAxisSize: MainAxisSize.min,
+              //       children: [
+              //         Expanded(
+              //           flex: 2,
+              //           child: CustomDropDownIcon(
+              //             items: exploreCtrl.categories,
+              //             hintText: 'TOP WEAR',
+              //             itemLabel: (category) => category.name!,
+              //           ),
+              //         ),
+              //         Expanded(flex: 3, child: Divider()),
+              //       ],
+              //     ),
+              //     SizedBox(
+              //       height: 90,
+              //       child: ListView.builder(
+              //           shrinkWrap: true,
+              //           scrollDirection: Axis.horizontal,
+              //           itemCount: 5,
+              //           itemBuilder: (context, index) {
+              //             return Container(
+              //               width: 80,
+              //               margin: EdgeInsets.only(right: 8),
+              //               child: Column(
+              //                 children: [
+              //                   CircleAvatar(
+              //                     radius: 30,
+              //                     backgroundImage:
+              //                         AssetImage(ImageConstants.avatarLogo),
+              //                   ),
+              //                   const SizedBox(height: 5),
+              //                   Text('T-SHIRT'),
+              //                 ],
+              //               ),
+              //             );
+              //           }),
+              //     ),
+              //   ],
+              // ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class DividerTitle extends StatelessWidget {
+  final String text;
+
+  const DividerTitle({
+    super.key,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Expanded(
+        //   child: CustomDropDownIcon(
+        //     items: exploreCtrl.brands,
+        //     hintText: 'BRANDS',
+        //     itemLabel: (brand) => brand.name!,
+        //   ),
+        // ),
+        Expanded(flex: 1, child: Divider()),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Text(text, style: Theme.of(context).textTheme.bodyLarge),
+        ),
+        Expanded(flex: 5, child: Divider()),
+      ],
     );
   }
 }

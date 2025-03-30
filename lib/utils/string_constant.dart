@@ -1,5 +1,7 @@
 class ImageConstants {
   static String splashBackground = 'assets/images/splash_background.jpeg';
+  static String dummyNetworkPortrait =
+      'https://static.zara.net/assets/public/fc4d/82fd/112c4f65b37a/cbc21e516880/03152381402-p/03152381402-p.jpg?ts=1743090495295&w=1024';
   static String authBackground = 'assets/images/auth_background.png';
   static String removeIcon = 'assets/icons/remove-icon.svg';
   static String forgotPasswordLogo = 'assets/images/forgot_password_logo.png';
@@ -15,7 +17,7 @@ class ImageConstants {
   static String email = 'assets/images/email.png';
   static String verify = 'assets/images/verify.png';
   static String mondayLogo = 'assets/logos/monday_logo.png';
-  static String tusedayLogo = 'assets/logos/tuseday_logo.png';
+  static String tuesdayLogo = 'assets/logos/tuseday_logo.png';
   static String wednesdayLogo = 'assets/logos/wednesday_logo.png';
   static String thursdayLogo = 'assets/logos/thursday_logo.png';
   static String fridayLogo = 'assets/logos/friday_logo.png';
@@ -55,7 +57,8 @@ class AppStrings {
 
   static const String productName = "Viscose Long Coat";
   static const String productBrand = "ZARA";
-  static const String productDescription = "Long coat with a lapel collar";
+  static const String productDescription =
+      "Short dress with a sweetheart neckline and adjustable thin straps with tie fastening. Featuring a lining and concealed zip fastening at the back.";
   static const String productPrice = "1000";
   static const String defaulttClosetName = "All Save";
   static const String defaultClosetImageUrel =

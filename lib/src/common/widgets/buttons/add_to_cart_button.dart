@@ -11,7 +11,7 @@ class AddToCartButton extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 7),
           foregroundColor: TextColor.white,
           backgroundColor: ButtonColor.black,
           shape: RoundedRectangleBorder(
