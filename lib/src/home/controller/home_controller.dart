@@ -42,36 +42,39 @@ class HomeController extends GetxController {
   RxInt quantity = 1.obs;
   final ValueNotifier<int> counter = ValueNotifier<int>(1);
   IconData? swipeIcon;
-  final List<ProductModelFilter> brandFilter = [
-    ProductModelFilter(leading: 'Z', title: 'Zara'),
-    ProductModelFilter(leading: 'H', title: 'H&M'),
-    ProductModelFilter(leading: 'G', title: 'Gap'),
-    ProductModelFilter(leading: 'C', title: 'CASA'),
-    ProductModelFilter(leading: 'T', title: 'Tommy hilfiger')
-  ];
-  final List<ProductModelFilter> productFilter = [
-    ProductModelFilter(leading: '', title: 'Topwear'),
-    ProductModelFilter(leading: '', title: 'Shirt'),
-    ProductModelFilter(leading: '', title: 'Sweatshirt'),
-    ProductModelFilter(leading: '', title: 'T- shirt'),
-    ProductModelFilter(leading: '', title: 'Hoodie')
-  ];
-  final List<ProductModelFilter> colorFilter = [
-    ProductModelFilter(leading: '', title: 'Black'),
-    ProductModelFilter(leading: '', title: 'Brown'),
-    ProductModelFilter(leading: '', title: 'Green'),
-    ProductModelFilter(leading: '', title: 'Denim'),
-    ProductModelFilter(leading: '', title: 'Zebra print')
-  ];
-  final List<ProductModelFilter> sizedFilter = [
-    ProductModelFilter(leading: '', title: 'XXS'),
-    ProductModelFilter(leading: '', title: 'XS'),
-    ProductModelFilter(leading: '', title: 'S'),
-    ProductModelFilter(leading: '', title: 'M'),
-    ProductModelFilter(leading: '', title: 'L'),
-    ProductModelFilter(leading: '', title: 'XL'),
-    ProductModelFilter(leading: '', title: 'XXL')
-  ];
+
+  RxString shareMessage = ''.obs;
+
+  // final List<ProductModelFilter> brandFilter = [
+  //   ProductModelFilter(leading: 'Z', title: 'Zara'),
+  //   ProductModelFilter(leading: 'H', title: 'H&M'),
+  //   ProductModelFilter(leading: 'G', title: 'Gap'),
+  //   ProductModelFilter(leading: 'C', title: 'CASA'),
+  //   ProductModelFilter(leading: 'T', title: 'Tommy hilfiger')
+  // ];
+  // final List<ProductModelFilter> productFilter = [
+  //   ProductModelFilter(leading: '', title: 'Topwear'),
+  //   ProductModelFilter(leading: '', title: 'Shirt'),
+  //   ProductModelFilter(leading: '', title: 'Sweatshirt'),
+  //   ProductModelFilter(leading: '', title: 'T- shirt'),
+  //   ProductModelFilter(leading: '', title: 'Hoodie')
+  // ];
+  // final List<ProductModelFilter> colorFilter = [
+  //   ProductModelFilter(leading: '', title: 'Black'),
+  //   ProductModelFilter(leading: '', title: 'Brown'),
+  //   ProductModelFilter(leading: '', title: 'Green'),
+  //   ProductModelFilter(leading: '', title: 'Denim'),
+  //   ProductModelFilter(leading: '', title: 'Zebra print')
+  // ];
+  // final List<ProductModelFilter> sizedFilter = [
+  //   ProductModelFilter(leading: '', title: 'XXS'),
+  //   ProductModelFilter(leading: '', title: 'XS'),
+  //   ProductModelFilter(leading: '', title: 'S'),
+  //   ProductModelFilter(leading: '', title: 'M'),
+  //   ProductModelFilter(leading: '', title: 'L'),
+  //   ProductModelFilter(leading: '', title: 'XL'),
+  //   ProductModelFilter(leading: '', title: 'XXL')
+  // ];
   final manager = GraphQLManager();
 
   // ========== STATES ========== //

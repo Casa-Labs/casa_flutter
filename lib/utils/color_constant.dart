@@ -41,6 +41,7 @@ class BorderColor {
 
 class BackgroundColor {
   static const Color white = Color(0xffFFFFFF);
+  static const Color black = Color(0xff000000);
 }
 
 class BottomNavbarColor {
@@ -54,8 +55,6 @@ class ErrorColor {
 class DividerColor {
   static const Color grey = Color(0xffCCCCCC);
 }
-
-class Carousel {}
 
 class ProgressIndicatorColor {
   static const Color black = Color(0xff000000);

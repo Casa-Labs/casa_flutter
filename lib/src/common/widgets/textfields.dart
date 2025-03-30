@@ -181,7 +181,7 @@ class CustomSearchBar extends StatelessWidget {
           onTap: () {
             onFieldSubmitted?.call(controller!.text);
           },
-          child: Icon(Icons.search_rounded, size: 22),
+          child: Icon(Icons.search_rounded, size: 15),
         ),
         counterStyle: TextStyle(
             fontFamily: Font.gilroy,
@@ -190,7 +190,7 @@ class CustomSearchBar extends StatelessWidget {
             fontSize: 12),
         filled: true,
         fillColor: TextFieldColor.white,
-        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        contentPadding: EdgeInsets.symmetric(horizontal: 10),
         hintText: hintText,
         isDense: true,
         hintStyle: TextStyle(

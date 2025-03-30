@@ -13,7 +13,7 @@ class SplashController extends GetxController {
   List<SplashModels> splashLogos = [
     SplashModels(logoId: 0, logo: ImageConstants.splashBackground),
     SplashModels(logoId: 1, logo: ImageConstants.mondayLogo),
-    SplashModels(logoId: 2, logo: ImageConstants.tusedayLogo),
+    SplashModels(logoId: 2, logo: ImageConstants.tuesdayLogo),
     SplashModels(logoId: 3, logo: ImageConstants.wednesdayLogo),
     SplashModels(logoId: 4, logo: ImageConstants.thursdayLogo),
     SplashModels(logoId: 5, logo: ImageConstants.fridayLogo),
@@ -26,7 +26,7 @@ class SplashController extends GetxController {
   void onInit() {
     super.onInit();
     dayIndex(DateTime.now().weekday);
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 5), () {
       navigatorKey.currentContext?.goNamed(RouteNames.signIn);
     });
   }

@@ -12,7 +12,7 @@ class FilterButtonRow extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 10,
+        spacing: 8,
         children: [
           IconButton(
             icon: Icon(Icons.tune_rounded),
@@ -31,7 +31,7 @@ class FilterButtonRow extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (context) => FilterSelectionDialog(
-                  showTabs: true, // Toggle Men/Women tab visibility
+                  showTabs: false, // Toggle Men/Women tab visibility
                   categories: [
                     "Topwear",
                     "Shirt",
