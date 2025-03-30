@@ -4,6 +4,7 @@ import 'package:casaflutterapp/src/auth/controller/auth_controller.dart';
 import 'package:casaflutterapp/src/auth/view/widgets/auth_button.dart';
 import 'package:casaflutterapp/src/common/widgets/custom_text_form_field_widget.dart';
 import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -76,6 +77,7 @@ class SignInScreen extends StatelessWidget {
                           type: AuthButtonType.signIn,
                           isLoading: authController.isLoading(),
                           onPressed: () async {
+
                             await authController.loginUserCall();
                             if (authController.message().isNotEmpty) {
                               showToast(
