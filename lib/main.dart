@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:casaflutterapp/src/common/widgets/show_toast.dart'
     show scaffoldMessengerKey;
 import 'package:casaflutterapp/theme/light_theme.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -39,6 +42,13 @@ Future<void> setup() async {
   await GetStorage.init(); //keep first
   WidgetsFlutterBinding.ensureInitialized(); //2nd
   await Firebase.initializeApp();
+  // Enable Crashlytics Logging
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  // Set up error handling
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]); // 3rd
 }
