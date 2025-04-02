@@ -23,6 +23,8 @@ class HomeController extends GetxController {
   bool isDisabled = false;
   List<Product> products = [];
   List<GetProductSizes> size = [];
+  // Convert API sizes to button format
+  List<String> formattedSizes =[];
   List<BrandData> brand = [];
   List<GetProductCategories> category = [];
   RxBool isLoading = false.obs;
@@ -170,7 +172,6 @@ class HomeController extends GetxController {
       var response = await manager.getProducts(map);
       var getProductList = GetProductData.fromJson(response.data!);
       products = getProductList.getProducts!.data ?? [];
-      logg.d('get products ------ >>>>> $getProductList');
       products.shuffle(Random());
       isLoading.value = false;
       update();
@@ -188,7 +189,9 @@ class HomeController extends GetxController {
       var response = await manager.getSizes();
       var getSizeData = GetSizeData.fromJson(response.data!);
       size = getSizeData.getProductSizes ?? [];
-      logg.d('size data ------ >>>>> $getSizeData');
+      // Convert API sizes to button format
+      formattedSizes =
+          size.map((s) => GetProductSizes.mapSize(s.name!)).toList();
       // isLoading.value =  false;
       update();
     } catch (e) {
