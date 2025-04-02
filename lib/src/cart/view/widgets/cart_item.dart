@@ -1,9 +1,11 @@
+import 'package:casaflutterapp/src/cart/view/widgets/size_guide_dialog.dart';
 import 'package:casaflutterapp/utils/color_constant.dart';
 import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../utils/color.dart';
 import '../../../common/widgets/buttons/custom_button.dart';
 import '../../controller/cart_controller.dart';
 import '../../model/cart_models.dart';
@@ -26,7 +28,32 @@ class CartItem extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        Container(
+          height: 50,
+          width: 50,
+          padding: EdgeInsets.all(2),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: CColor.circleBoarder,width: 1)
+          ),
+          child: CircleAvatar(
+            maxRadius: 24,
+            backgroundColor:
+            const Color(0xFF002957),
+            child: Text(
+              "ZARA"
+                  .substring(0, 4)
+                  .toUpperCase(),
+              style: const TextStyle(
+                  color: TextColor.white,
+                  fontSize: 14),
+            ),
+          ),
+        ),
+        SizedBox(height: 15),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -38,9 +65,10 @@ class CartItem extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(4),
-                child: SizedBox(
+                child: Container(
                     height: MediaQuery.of(context).size.height * 0.2,
                     width: MediaQuery.of(context).size.width * 0.25,
+                    color: Colors.red,
                     child: Image.network(item.mainImage!, fit: BoxFit.fill)
                     //  Image.asset(
                     //   'assets/images/placeholder.png',
@@ -62,6 +90,7 @@ class CartItem extends StatelessWidget {
                         Expanded(
                           child: Text(
                             item.name!,
+                            // "hello",
                             style: textTheme.bodyLarge?.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
@@ -69,6 +98,7 @@ class CartItem extends StatelessWidget {
                         ),
                         Text(
                           "₹${item.price!}",
+                          // "₹100",
                           style: textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.w700,
                           ),
@@ -82,18 +112,29 @@ class CartItem extends StatelessWidget {
                         color: TextColor.black54,
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        SvgPicture.asset(ImageConstants.ruler),
-                        const SizedBox(width: 10),
-                        Text(
-                          'Size Guide',
-                          style: textTheme.labelSmall?.copyWith(
-                            color: TextColor.black54,
-                          ),
+                    InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => SizeGuideDialog(),
+                        );
+                      },
+                      child: Align(
+                        alignment: AlignmentDirectional.centerEnd,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SvgPicture.asset(ImageConstants.ruler),
+                            const SizedBox(width: 10),
+                            Text(
+                              'Size Guide',
+                              style: textTheme.labelSmall?.copyWith(
+                                color: TextColor.black54,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                     _buildSizeSelector(textTheme),
                     const SizedBox(height: 6),
@@ -139,7 +180,6 @@ class CartItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: ButtonColor.lightGrey,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -151,11 +191,18 @@ class CartItem extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            highlightColor: ButtonColor.transparent,
-            icon: const Icon(Icons.keyboard_arrow_down, size: 18),
+          Text(
+            'M',
+            style: textTheme.bodySmall?.copyWith(
+              color: TextColor.black,
+              fontWeight: FontWeight.w500,
+            ),
           ),
+          // IconButton(
+          //   onPressed: () {},
+          //   highlightColor: ButtonColor.transparent,
+          //   icon: const Icon(Icons.keyboard_arrow_down, size: 18),
+          // ),
         ],
       ),
     );
