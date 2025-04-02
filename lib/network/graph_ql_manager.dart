@@ -6,6 +6,8 @@ import 'package:casaflutterapp/network/graph_ql_variables.dart';
 import 'package:casaflutterapp/network/graphql_client.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
+import '../src/order/model/create_order.dart';
+
 class GraphQLManager {
   final GraphQLClientService _clientService = GraphQLClientService();
 
@@ -135,15 +137,18 @@ class GraphQLManager {
   }
 
   Future<QueryResult> createOrder(
-      String productId,
-      double total,
       String userId,
-      Map<String, dynamic> orderedProductDetails,
-      Map<String, dynamic> shippingInfo) async {
+      double totalAmount,
+      String deliveryType,
+      String discountCode,
+      String deliveryInstructions,
+      List<Items> items,
+      PaymentInfo paymentInfo,
+      ShippingInfo shippingInfo) async {
     return await _clientService.performMutation(
       document: GraphQLMutations.createOrder,
       variables: GraphQLVariables.createOrderVariables(
-          productId, total, userId, orderedProductDetails, shippingInfo),
+          userId, totalAmount, deliveryType, discountCode, deliveryInstructions,items,paymentInfo,shippingInfo),
     );
   }
 
@@ -314,6 +319,13 @@ class GraphQLManager {
     return await _clientService.performQuery(
       document: GraphQLQueries.getProducts,
       variables: GraphQLVariables.getProductsVariables(params),
+    );
+  }
+
+  Future<QueryResult> getProductsById(String productId) async {
+    return await _clientService.performQuery(
+      document: GraphQLQueries.getProducts,
+      variables: GraphQLVariables.getProductById(productId),
     );
   }
 

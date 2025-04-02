@@ -1,3 +1,5 @@
+import '../src/order/model/create_order.dart';
+
 class GraphQLVariables {
   //MUTATION
   static Map<String, dynamic> loginVariables(String email, String password) {
@@ -118,16 +120,17 @@ class GraphQLVariables {
   }
 
   static Map<String, dynamic> createOrderVariables(
-      String productId,
-      double total,
       String userId,
-      Map<String, dynamic> orderedProductDetails,
-      Map<String, dynamic> shippingInfo) {
+      double totalAmount,
+      String deliveryType,
+      String discountCode,
+      String deliveryInstructions,
+      List<Items> items,
+      PaymentInfo paymentInfo,
+      ShippingInfo shippingInfo) {
     return {
-      "productId": productId,
-      "total": total,
-      "userId": userId,
-      "orderedProductDetails": orderedProductDetails,
+      "totalAmount": totalAmount,
+      "deliveryType": deliveryType,
       "shippingInfo": shippingInfo,
     };
   }
@@ -281,6 +284,12 @@ class GraphQLVariables {
   }
 
   static Map<String, dynamic> getProductReviewsVariables(String productId) {
+    return {
+      "productId": productId,
+    };
+  }
+
+  static Map<String, dynamic> getProductById(String productId) {
     return {
       "productId": productId,
     };

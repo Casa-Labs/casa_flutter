@@ -120,16 +120,55 @@ mutation AddItemToCart(\$item: JSON!, \$userId: String) {
 ''';
 
   static const String createOrder = '''
-mutation CreateOrder(\$productId: String!, \$total: Float!, \$userId: String, \$orderedProductDetails: JSON, \$shippingInfo: JSON) {
-  createOrder(productId: \$productId, total: \$total, userId: \$userId, orderedProductDetails: \$orderedProductDetails, shippingInfo: \$shippingInfo) {
-    createdAt
+mutation CreateOrder(\$totalAmount: Float!, \$deliveryType: String!, \$shippingInfo: JSON!, \$items: [JSON!]!, \$userId: ID!, \$paymentInfo: JSON, \$deliveryInstructions: String, \$discountCode: String) {
+  createOrder(totalAmount: \$totalAmount, deliveryType: \$deliveryType, shippingInfo: \$shippingInfo, items: \$items, userId: \$userId, paymentInfo: \$paymentInfo, deliveryInstructions: \$deliveryInstructions, discountCode: \$discountCode) {
     id
-    orderedProductDetails
-    productId
-    shippingInfo
-    total
-    updatedAt
     userId
+    status
+    shippingInfo
+    paymentInfo
+    totalAmount
+    discountCode
+    deliveryType
+    deliveryInstructions
+    items {
+      id
+      productId
+      product {
+        name
+        price
+        isNewArrival
+        isTrending
+        isDeleted
+        gender
+        stock
+        createdAt
+        description
+        customReturnPolicy
+        customShippingPolicy
+        id
+        mainImage
+        productImages
+        storeId
+      }
+      quantity
+      price
+      total
+    }
+    createdAt
+    updatedAt
+    paymentOrderDetails {
+      id
+      amount
+      currency
+      status
+      orderId
+      paymentId
+      createdAt
+      updatedAt
+      razorpayOrderId
+      userId
+    }
   }
 }
 ''';

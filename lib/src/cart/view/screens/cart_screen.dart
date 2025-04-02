@@ -94,18 +94,23 @@ class CartScreen extends StatelessWidget {
                         itemCount: cartController.cartList.length,
                         itemBuilder: (context, index) {
                           final cartItem = cartController.cartList[index];
-                          return CartItem(
-                            item: cartItem.item!,
-                            // This for Deleting cart item
-                            onCartItemDelete: () {
-                              cartController.removeItemFromCart(cartItem.id!);
+                          return InkWell(
+                            onTap: () {
+                              context.pushNamed(RouteNames.productDescription,extra: cartItem.id);
                             },
-                            // This for buying cart only one item instantly
-                            onBuyNow: () {
-                              orderReviewController
-                                  .getAllProductItem([cartItem]);
-                              context.pushNamed(RouteNames.orderReview);
-                            },
+                            child: CartItem(
+                              item: cartItem.item!,
+                              // This for Deleting cart item
+                              onCartItemDelete: () {
+                                cartController.removeItemFromCart(cartItem.id!);
+                              },
+                              // This for buying cart only one item instantly
+                              onBuyNow: () {
+                                orderReviewController
+                                    .getAllProductItem([cartItem]);
+                                context.pushNamed(RouteNames.orderReview);
+                              },
+                            ),
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) {
