@@ -9,10 +9,9 @@ import '../../controller/wishlist_controller.dart';
 import 'create_closet_screen.dart';
 
 class AddToCloset extends StatelessWidget {
-  final RxSet<String> selectedClosets = <String>{}.obs;
   final String imageUrl;
   final String itemId;
-  AddToCloset({
+  const AddToCloset({
     super.key,
     required this.imageUrl,
     required this.itemId,
@@ -90,11 +89,11 @@ class AddToCloset extends StatelessWidget {
                               child: GestureDetector(
                                 onTap: () {
                                   final currentValue =
-                                      selectedClosets.contains(closetData.id);
+                                      wishController.selectedClosets.contains(closetData.id);
                                   if (currentValue) {
-                                    selectedClosets.remove(closetData.id);
+                                    wishController.selectedClosets.remove(closetData.id);
                                   } else {
-                                    selectedClosets.add(closetData.id!);
+                                    wishController.selectedClosets.add(closetData.id!);
                                   }
                                 },
                                 child: Row(
@@ -119,13 +118,13 @@ class AddToCloset extends StatelessWidget {
                                     const Spacer(),
                                     Obx(() {
                                       return Checkbox(
-                                        value: selectedClosets
+                                        value: wishController.selectedClosets
                                             .contains(closetData.id),
                                         onChanged: (bool? value) {
                                           if (value == true) {
-                                            selectedClosets.add(closetData.id!);
+                                            wishController.selectedClosets.add(closetData.id!);
                                           } else {
-                                            selectedClosets
+                                            wishController.selectedClosets
                                                 .remove(closetData.id);
                                           }
                                         },
@@ -205,7 +204,7 @@ class AddToCloset extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () async {
-                        for (String closet in selectedClosets) {
+                        for (String closet in wishController.selectedClosets) {
                           wishController.saveItemToCloset(
                             clothingItemId: closet,
                             productId: itemId,
