@@ -186,6 +186,7 @@ query GetProducts(\$params: GetProduct!) {
 }
 """;
 
+
 //   static const String getTrendingProducts = """
 // query GetTrendingProducts(\$page: Int!, \$limit: Int!, \$search: String) {
 //   getTrendingProducts(page: \$page, limit: \$limit, search: \$search) {

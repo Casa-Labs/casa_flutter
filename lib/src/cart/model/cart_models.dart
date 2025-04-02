@@ -1,4 +1,6 @@
 // Add items to cart request model //
+import '../../home/model/home_models.dart';
+
 class AddCartRequestModel {
   String userId;
   Map<String, dynamic> item;
@@ -100,6 +102,7 @@ class ProductForCart {
   double? price;
   String? category;
   // List<String>? size;
+  List<ColorsModel>? colors;
   int? stock;
   String? storeId;
   String? mainImage;
@@ -137,6 +140,12 @@ class ProductForCart {
         : (json['price'] ?? 0).toDouble();
     category = json['category'] ?? "";
     mainImage = json['mainImage'] ?? "";
+    if (json['colors'] != null) {
+      colors = <ColorsModel>[];
+      json['colors'].forEach((v) {
+        colors!.add(ColorsModel.fromJson(v));
+      });
+    }
     // size = json['sizes'] ?? [];
     productImages = json['productImages'].cast<String>() ?? [];
     stock = json['stock'] ?? 0;
@@ -158,6 +167,9 @@ class ProductForCart {
     data['productImages'] = productImages;
     data['mainImage'] = mainImage;
     // data['sizes'] = size;
+    if (colors != null) {
+      data['colors'] = colors!.map((v) => v.toJson()).toList();
+    }
     data['stock'] = stock;
     data['storeId'] = storeId;
     data['isNewArrival'] = isNewArrival;

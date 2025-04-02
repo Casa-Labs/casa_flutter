@@ -1,6 +1,10 @@
 import 'package:get/get.dart';
 
+import '../../../utils/preference_manager.dart';
+import '../../../utils/utils.dart';
 import '../../cart/model/cart_models.dart';
+import '../model/create_order.dart';
+import '../model/service/order_service.dart';
 
 class OrderReviewController extends GetxController {
   // ========= OBJECTS ============= //
@@ -16,6 +20,7 @@ class OrderReviewController extends GetxController {
   RxBool isExpaned = false.obs;
   double deliveryCharge = 34.00;
   double platFormFee = 7.00;
+  final OrderService orderService = OrderService();
 
   // ========== STATES ========== //
   void getAllProductItem(List<CartItem> cartList) {
@@ -55,4 +60,24 @@ class OrderReviewController extends GetxController {
   }
 
   // ========== APIs FUNCTIONS ========== //
+
+  Future<void> createOrder() async {
+    List<Items> productItem = [];
+    for (var product in productsList) {
+      var item = Items();
+      item.productId = product.id;
+      item.quantity = product.item!.quantity;
+      item.price = product.item!.price!;
+      // item.color  = product.item!.color!;
+      // item.size = product.item!.size!;
+      productItem.add(item);
+    }
+    CreateOrder createOrder = CreateOrder(
+        userId: PreferenceManager.getString(PreferenceManager.userId) ?? "",
+        items: productItem,
+        totalAmount: total.value);
+    final createOrderResponse =
+        await orderService.createOrder(createOrderRequestModel: createOrder);
+   logg.d('create order $createOrderResponse');
+  }
 }

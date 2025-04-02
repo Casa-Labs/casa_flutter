@@ -1,3 +1,4 @@
+import 'package:casaflutterapp/src/cart/model/cart_models.dart';
 import 'package:casaflutterapp/src/explore/model/brands_model.dart';
 import 'package:casaflutterapp/src/explore/model/new_arrivals_model.dart';
 import 'package:casaflutterapp/src/explore/model/product_categories_model.dart';
@@ -67,4 +68,18 @@ class ExploreService {
       logg.e('Get brands Exception: ${response.exception}');
     }
   }
+
+  Future<CartItem> getProductById(String productId) async {
+    var response = await GraphQLManager().getProductsById(productId);
+
+    if (!response.hasException && response.data != null) {
+      final categoriesResponse =
+      CartItem.fromJson(response.data!);
+      return categoriesResponse;
+    } else {
+      logg.e('Get brands Exception: ${response.exception}');
+      return CartItem();
+    }
+  }
+
 }

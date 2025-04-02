@@ -13,7 +13,9 @@ import '../../model/home_models.dart';
 
 class ProductDetails extends StatelessWidget {
   final Product product;
-  const ProductDetails({super.key, required this.product});
+  final List<String> size;
+
+  const ProductDetails({super.key, required this.product, required this.size});
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +60,8 @@ class ProductDetails extends StatelessWidget {
               const SizedBox(height: 35),
               Text('Size:', style: textTheme.bodyLarge),
               const SizedBox(height: 10),
-              // TODO : Pass the size as a list from API
-              SelectSizeButton(size: ["XS", "S", "M", "L", "XL"]),
+              // TODO : Pass the size as a list from API => done
+              SelectSizeButton(size: size),
               const SizedBox(height: 80),
               Center(child: QuantitySelectorButton()),
               const SizedBox(height: 80),
@@ -95,86 +97,20 @@ class ProductDetails extends StatelessWidget {
               //   },
               // ),
               ProductImageGrid(productImages: product.productImages ?? []),
-              const SizedBox(height: 50),
-              const Divider(thickness: 1, color: Colors.black26),
-              InkWell(
-                overlayColor: WidgetStateProperty.all(Colors.transparent),
-                splashFactory: NoSplash.splashFactory,
-                onTap: () {
-                  logic.changeReturnPolicy();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'RETURN POLICY',
-                        style: TextStyle(
-                            fontSize: 13,
-                            color: TextColor.black.withValues(alpha: 0.5),
-                            fontWeight: FontWeight.w700,
-                            fontFamily: Font.gilroy),
-                      ),
-                      logic.isShowReturn
-                          ? const Icon(Icons.keyboard_arrow_up_rounded,
-                              size: 15, color: IconColor.black54)
-                          : const Icon(Icons.keyboard_arrow_down_rounded,
-                              size: 15, color: IconColor.black54),
-                    ],
-                  ),
-                ),
+              const SizedBox(height: 20),
+              _buildPolicyTile(
+                title: 'RETURN POLICY',
+                isExpanded: logic.isShowReturn,
+                onTap: () => logic.changeReturnPolicy(),
+                content: product.customReturnPolicy!,
               ),
-              logic.isShowReturn
-                  ? Text(
-                      'This product have no any return policy',
-                      style: TextStyle(
-                          fontSize: 12.5,
-                          color: TextColor.black54,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: Font.gilroy),
-                    )
-                  : const SizedBox(),
-              const Divider(thickness: 1, color: Colors.black26),
-              InkWell(
-                overlayColor: WidgetStateProperty.all(Colors.transparent),
-                splashFactory: NoSplash.splashFactory,
-                onTap: () {
-                  logic.changeShippingPolicy();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'SHIPPING POLICY',
-                        style: TextStyle(
-                            fontSize: 13,
-                            color: TextColor.black.withValues(alpha: 0.5),
-                            fontWeight: FontWeight.w700,
-                            fontFamily: Font.gilroy),
-                      ),
-                      logic.isShowShipping
-                          ? const Icon(Icons.keyboard_arrow_up_rounded,
-                              size: 15, color: TextColor.black54)
-                          : const Icon(Icons.keyboard_arrow_down_rounded,
-                              size: 15, color: TextColor.black54),
-                    ],
-                  ),
-                ),
+              const SizedBox(height: 10),
+              _buildPolicyTile(
+                title: 'SHIPPING POLICY',
+                isExpanded: logic.isShowShipping,
+                onTap: () => logic.changeShippingPolicy(),
+                content:product.customShippingPolicy!,
               ),
-              logic.isShowShipping
-                  ? Text(
-                      'For order values below \$50, product charges a \$8 shipping fee.',
-                      style: TextStyle(
-                          fontSize: 12.5,
-                          color: TextColor.black54,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: Font.gilroy),
-                    )
-                  : const SizedBox(),
-              const Divider(thickness: 1, color: DividerColor.grey),
               const SizedBox(height: 10),
               Text(
                 'Reviews',
@@ -254,6 +190,60 @@ class ProductDetails extends StatelessWidget {
         );
       });
     });
+  }
+
+  Widget _buildPolicyTile({
+    required String title,
+    required bool isExpanded,
+    required VoidCallback onTap,
+    required String content,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        padding: const EdgeInsets.symmetric( vertical: 5),
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(25),
+          border: Border.all(color: Colors.white, width: 1),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Icon(
+                  isExpanded ? Icons.keyboard_arrow_up_rounded : Icons.add,
+                  color: Colors.white,
+                ),
+              ],
+            ).paddingSymmetric(horizontal: 15),
+            if (isExpanded) ...[
+              Divider(color: Colors.white, thickness: 1),
+              Text(
+                content,
+                style: TextStyle(
+                    fontSize: 12.5,
+                    color: TextColor.white,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: Font.gilroy),
+              ).paddingSymmetric(horizontal: 15,vertical: 5),
+            ],
+          ],
+        ),
+      ),
+    );
   }
 }
 

@@ -57,4 +57,27 @@ class GetProductSizes {
     data['id'] = id;
     return data;
   }
+  /// Function to convert API size names to standard short forms
+  static String mapSize(String apiSize) {
+    switch (apiSize.toLowerCase()) {
+      case 'xx-small':
+        return 'XXS';
+      case 'x-small':
+        return 'XS';
+      case 'small':
+        return 'S';
+      case 'medium':
+        return 'M';
+      case 'large':
+        return 'L';
+      case 'x-large':
+        return 'XL';
+      case 'xx-large':
+        return 'XXL';
+      default:
+        return apiSize; // Default fallback
+    }
+  }
 }
+
+

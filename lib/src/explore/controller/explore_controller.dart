@@ -7,6 +7,7 @@ import 'package:casaflutterapp/src/explore/model/trending_products_model.dart'
     as tpm;
 import 'package:get/get.dart';
 
+import '../../cart/model/cart_models.dart';
 import '../../home/model/home_models.dart';
 
 class ExploreController extends GetxController {
@@ -92,5 +93,9 @@ class ExploreController extends GetxController {
 
   Future<void> getCategoriesCall() async {
     await ExploreService().getProductCategories();
+  }
+
+  Future<CartItem> getProductById(String productId) async {
+   return await ExploreService().getProductById(productId);
   }
 }

@@ -303,8 +303,8 @@ final GoRouter router = GoRouter(
       path: _AppPaths.productDescription,
       name: RouteNames.productDescription,
       builder: (context, state) {
-        final product = state.extra as nam.Products; // ✅ Retrieve the object
-        return ProductDescriptionScreen(product: product);
+        final productId = state.extra as String; // ✅ Retrieve the object
+        return ProductDescriptionScreen(id: productId);
       },
     ),
     GoRoute(

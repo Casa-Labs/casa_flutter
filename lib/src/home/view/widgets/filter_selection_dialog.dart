@@ -26,23 +26,23 @@ class FilterSelectionDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Todo : Uncomment to add Search Bar
+            // Todo : Uncomment to add Search Bar => done
             // // Search Bar
-            // Container(
-            //   decoration: BoxDecoration(
-            //     color: Colors.white,
-            //     borderRadius: BorderRadius.circular(24),
-            //     border: Border.all(color: Colors.grey.shade400),
-            //   ),
-            //   child: TextField(
-            //     decoration: InputDecoration(
-            //       prefixIcon: Icon(Icons.search, color: Colors.black54),
-            //       hintText: "Search for something",
-            //       border: InputBorder.none,
-            //       contentPadding: EdgeInsets.symmetric(vertical: 12),
-            //     ),
-            //   ),
-            // ),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(color: Colors.grey.shade400),
+              ),
+              child: TextField(
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.search, color: Colors.black54),
+                  hintText: "Search for something",
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(vertical: 12),
+                ),
+              ),
+            ),
             // const SizedBox(height: 10),
 
             // Tabs (Men/Women)

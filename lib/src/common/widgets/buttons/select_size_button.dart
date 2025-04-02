@@ -11,25 +11,25 @@ class SelectSizeButton extends StatefulWidget {
 }
 
 class _SelectSizeButtonState extends State<SelectSizeButton> {
-  final List<String> sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL'];
+  //final List<String> sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL'];
   String? selectedSize;
 
   @override
   Widget build(BuildContext context) {
     return Wrap(
       spacing: 10,
-      children: List.generate(sizes.length, (index) {
-        final isSelected = selectedSize == sizes[index];
+      children: List.generate(widget.size.length, (index) {
+        final isSelected = selectedSize == widget.size[index];
 
         return ElevatedButton(
           style: ElevatedButton.styleFrom(
             elevation: 0,
-            backgroundColor: widget.size.contains(sizes[index])
+            backgroundColor: widget.size.contains(widget.size[index])
                 ? isSelected
                     ? ButtonColor.black
                     : ButtonColor.white
                 : ButtonColor.lightGrey,
-            foregroundColor: widget.size.contains(sizes[index])
+            foregroundColor: widget.size.contains(widget.size[index])
                 ? isSelected
                     ? ButtonColor.white
                     : ButtonColor.black
@@ -39,7 +39,7 @@ class _SelectSizeButtonState extends State<SelectSizeButton> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(35),
               side: BorderSide(
-                  color: widget.size.contains(sizes[index])
+                  color: widget.size.contains(widget.size[index])
                       ? BorderColor.black
                       : ButtonColor.grey,
                   width: 0.5),
@@ -47,11 +47,11 @@ class _SelectSizeButtonState extends State<SelectSizeButton> {
           ),
           onPressed: () {
             setState(() {
-              selectedSize = sizes[index];
+              selectedSize = widget.size[index];
             });
           },
           child: Text(
-            sizes[index],
+            widget.size[index],
           ),
         );
       }),
