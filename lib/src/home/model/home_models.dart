@@ -152,6 +152,8 @@ class Product {
   String? id;
   String? name;
   String? description;
+  String? customReturnPolicy;
+  String? customShippingPolicy;
   double? price;
   String? category;
   // List<String>? size;
@@ -170,6 +172,8 @@ class Product {
       {this.id,
       this.name,
       this.description,
+      this.customReturnPolicy,
+      this.customShippingPolicy,
       this.price,
       this.category,
       // this.size,
@@ -193,6 +197,8 @@ class Product {
         colors!.add(ColorsModel.fromJson(v));
       });
     }
+    customReturnPolicy = json['customReturnPolicy'] ?? "No Policy Found";
+    customShippingPolicy = json['customShippingPolicy'] ?? "No Policy Found";
     price = json['price'] is int
         ? (json['price'] as int).toDouble()
         : (json['price'] ?? 0).toDouble();
@@ -213,8 +219,11 @@ class Product {
     data['id'] = id;
     data['name'] = name;
     data['description'] = description;
+    data['customReturnPolicy'] = customReturnPolicy;
+    data['customShippingPolicy'] = customShippingPolicy;
     data['price'] = price;
     data['category'] = category;
+
     data['productImages'] = productImages;
     data['mainImage'] = mainImage;
     // data['sizes'] = size;

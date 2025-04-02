@@ -14,6 +14,7 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../../../utils/color_constant.dart';
 import '../../../cart/model/cart_models.dart';
+import '../../../common/widgets/network_image_widget.dart';
 import '../../../order/controller/order_review_controller.dart';
 import '../../../wishlist/controller/wishlist_controller.dart';
 import '../../../wishlist/view/screens/add_to_closet.dart';
@@ -134,7 +135,7 @@ class Cards extends StatelessWidget {
                                             CrossAxisAlignment.start,
                                         spacing: 5,
                                         children: [
-                                          // Todo : Circle Avatar should accept network image
+                                          // Todo : Circle Avatar should accept network image => done
                                           InkWell(
                                             overlayColor:
                                                 WidgetStateProperty.all(
@@ -144,7 +145,14 @@ class Cards extends StatelessWidget {
                                             onTap: () {
                                               // context.pushNamed(RouteNames.store);
                                             },
-                                            child: Container(
+                                            /// Need to add dummy image preview image
+                                            child: /*NetworkImageWidget(
+                                              url: '',
+                                              height: 50,
+                                              width: 50,
+                                            )*/
+                                            /// Remove this after use above code
+                                            Container(
                                               decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: Colors.black,
@@ -284,7 +292,8 @@ class Cards extends StatelessWidget {
                           ),
                         ],
                       ),
-                      ProductDetails(product: product)
+                      ProductDetails(product: product,size:homeCtrl.formattedSizes)
+
                     ],
                   ),
                 ),
