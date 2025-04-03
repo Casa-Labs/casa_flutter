@@ -351,4 +351,16 @@ class GraphQLVariables {
       "clothingItemId": clothingItemId,
     };
   }
+
+  static Map<String, dynamic> verifyPayment(
+    String paymentId,
+    String orderId,
+    String signature,
+  ) {
+    return {
+      "paymentId": paymentId,
+      "orderId": orderId,
+      "signature": signature,
+    };
+  }
 }

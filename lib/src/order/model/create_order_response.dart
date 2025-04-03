@@ -3,11 +3,13 @@ import 'package:casaflutterapp/src/order/model/create_order.dart';
 class CreateOrderResponse {
   CreateOrderData? createOrder;
 
-  CreateOrderResponse({this.createOrder});
+  CreateOrderResponse({
+    this.createOrder,
+  });
 
-  CreateOrderResponse.fromJson(Map<String, dynamic> json) {
-    createOrder = json['createOrder'] != null
-        ? CreateOrderData.fromJson(json['createOrder'])
+  CreateOrderResponse.fromJson(Map<String, dynamic>? json) {
+    createOrder = json?['createOrder'] != null
+        ? CreateOrderData.fromJson(json?['createOrder'])
         : null;
   }
 
@@ -36,21 +38,22 @@ class CreateOrderData {
   String? updatedAt;
   PaymentOrderDetails? paymentOrderDetails;
 
-  CreateOrderData(
-      {this.id,
-        this.userId,
-        this.status,
-        this.shippingInfo,
-        this.paymentInfo,
-        this.totalAmount,
-        this.discountCode,
-        this.deliveryType,
-        this.deliveryInstructions,
-        this.items,
-        this.returns,
-        this.createdAt,
-        this.updatedAt,
-        this.paymentOrderDetails});
+  CreateOrderData({
+    this.id,
+    this.userId,
+    this.status,
+    this.shippingInfo,
+    this.paymentInfo,
+    this.totalAmount,
+    this.discountCode,
+    this.deliveryType,
+    this.deliveryInstructions,
+    this.items,
+    this.returns,
+    this.createdAt,
+    this.updatedAt,
+    this.paymentOrderDetails,
+  });
 
   CreateOrderData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -132,17 +135,18 @@ class PaymentOrderDetails {
   String? createdAt;
   String? updatedAt;
 
-  PaymentOrderDetails(
-      {this.id,
-        this.amount,
-        this.currency,
-        this.status,
-        this.orderId,
-        this.paymentId,
-        this.userId,
-        this.razorpayOrderId,
-        this.createdAt,
-        this.updatedAt});
+  PaymentOrderDetails({
+    this.id,
+    this.amount,
+    this.currency,
+    this.status,
+    this.orderId,
+    this.paymentId,
+    this.userId,
+    this.razorpayOrderId,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   PaymentOrderDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];

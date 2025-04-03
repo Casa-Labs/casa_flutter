@@ -1,6 +1,7 @@
-import '../../../../network/graph_ql_manager.dart';
-import '../create_order.dart';
-import '../create_order_response.dart';
+import 'package:casaflutterapp/network/graph_ql_manager.dart';
+import 'package:casaflutterapp/src/order/model/create_order.dart';
+import 'package:casaflutterapp/src/order/model/create_order_response.dart';
+import 'package:casaflutterapp/src/order/model/verify_payment_response_model.dart';
 
 class OrderService {
   final GraphQLManager _graphQLManager = GraphQLManager();
@@ -22,10 +23,35 @@ class OrderService {
     );
 
     createOrderResponse = CreateOrderResponse.fromJson(
-      response.data!,
+      response.data,
     );
 
     return createOrderResponse;
   }
 
+  Future<VerifyPaymentResponseModel?> verifyPayment({
+    required String paymentId,
+    required String orderId,
+    required String signature,
+  }) async {
+    final VerifyPaymentResponseModel verifyPaymentResponseModel;
+
+    final response = await _graphQLManager.verifyPayment(
+      paymentId: paymentId,
+      orderId: orderId,
+      signature: signature,
+    );
+
+    verifyPaymentResponseModel = VerifyPaymentResponseModel.fromJson(
+      response.data,
+    );
+
+    if (response.exception != null) {
+      return VerifyPaymentResponseModel(
+        errorMessage: response.exception?.graphqlErrors.first.message,
+      );
+    } else {
+      return verifyPaymentResponseModel;
+    }
+  }
 }
