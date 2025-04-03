@@ -1,13 +1,16 @@
+import 'package:casaflutterapp/src/common/payment/razorpay.dart';
+import 'package:casaflutterapp/src/order/model/service/order_service.dart';
 import 'package:get/get.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../../../utils/preference_manager.dart';
 import '../../../utils/utils.dart';
 import '../../cart/model/cart_models.dart';
 import '../model/create_order.dart';
-import '../model/service/order_service.dart';
 
 class OrderReviewController extends GetxController {
   // ========= OBJECTS ============= //
+  final OrderService _orderService = OrderService();
 
   // ========= CONTROLLERS ========= //
 
@@ -20,7 +23,7 @@ class OrderReviewController extends GetxController {
   RxBool isExpaned = false.obs;
   double deliveryCharge = 34.00;
   double platFormFee = 7.00;
-  final OrderService orderService = OrderService();
+  RxString message = ''.obs;
 
   // ========== STATES ========== //
   void getAllProductItem(List<CartItem> cartList) {
@@ -72,12 +75,81 @@ class OrderReviewController extends GetxController {
       // item.size = product.item!.size!;
       productItem.add(item);
     }
+
     CreateOrder createOrder = CreateOrder(
-        userId: PreferenceManager.getString(PreferenceManager.userId) ?? "",
-        items: productItem,
-        totalAmount: total.value);
-    final createOrderResponse =
-        await orderService.createOrder(createOrderRequestModel: createOrder);
-   logg.d('create order $createOrderResponse');
+      userId: PreferenceManager.getString(PreferenceManager.userId) ?? "",
+      items: productItem,
+      totalAmount: total.value,
+    );
+
+    final createOrderResponse = await _orderService.createOrder(
+      createOrderRequestModel: createOrder,
+    );
+
+    // call razorpay payment gateway
+    if (createOrderResponse != null &&
+        (createOrderResponse
+                    .createOrder?.paymentOrderDetails?.razorpayOrderId ??
+                '')
+            .isNotEmpty &&
+        (createOrderResponse.createOrder?.paymentOrderDetails?.amount ?? 0) >
+            0) {
+      final amount =
+          (createOrderResponse.createOrder?.paymentOrderDetails?.amount ?? 0) *
+              100;
+      await callPaymentGateway(
+        razorPayOrderId: createOrderResponse
+                .createOrder?.paymentOrderDetails?.razorpayOrderId ??
+            '',
+        amount: amount.toInt(),
+      );
+    }
+
+    logg.d('create order $createOrderResponse');
+  }
+
+  Future<void> callPaymentGateway({
+    required String razorPayOrderId,
+    required int amount,
+  }) async {
+    Payment.of(
+      amount: amount, // Amount
+      orderId: razorPayOrderId, // Order ID of Razorpay
+      handlePaymentSuccess: (final PaymentSuccessResponse? response) {
+        _handlePaymentSuccess(response);
+      }, // Success Handler
+      handlePaymentError: (final PaymentFailureResponse? response) {
+        //showToast(message: response?.message ?? '');
+        message(response?.message ?? '');
+      }, // Error Handler
+      handleExternalWallet: (final ExternalWalletResponse? response) {
+        //showToast(message: 'External Wallet - ${response?.walletName ?? ''}');
+        message('External Wallet - ${response?.walletName ?? ''}');
+      }, // External wallet Handler
+    );
+  }
+
+  Future<void> _handlePaymentSuccess(
+    final PaymentSuccessResponse? response,
+  ) async {
+    // verify Payment
+    final verifyPaymentResponse = await _orderService.verifyPayment(
+      paymentId: response?.paymentId ?? '',
+      orderId: response?.orderId ?? '',
+      signature: response?.signature ?? '',
+    );
+
+    if (verifyPaymentResponse != null &&
+        verifyPaymentResponse.verifyPayment?.success == true &&
+        (verifyPaymentResponse.errorMessage ?? '').isEmpty) {
+      //showToast(message: 'Payment is successful.');
+      message('Order placed successfully');
+    } else {
+      //showToast(message: verifyPaymentResponse?.errorMessage ?? '');
+      message(
+        verifyPaymentResponse?.errorMessage ??
+            verifyPaymentResponse?.verifyPayment?.message,
+      );
+    }
   }
 }

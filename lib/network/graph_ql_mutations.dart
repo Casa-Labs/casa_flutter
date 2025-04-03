@@ -361,4 +361,23 @@ mutation RemoveItemFromClothingItem(\$itemId: ID!) {
   removeItemFromClothingItem(itemId: \$itemId)
 }
 ''';
+
+  static const String verifyPayment = '''
+mutation VerifyPayment(\$paymentId: String!, \$orderId: String!, \$signature: String!) {
+  verifyPayment(paymentId: \$paymentId, orderId: \$orderId, signature: \$signature) {
+    success
+    message
+    data {
+      id
+      amount
+      currency
+      status
+      orderId
+      paymentId
+      createdAt
+      updatedAt
+    }
+  }
+}
+''';
 }

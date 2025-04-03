@@ -21,8 +21,8 @@ typedef ExternalWalletCallback = Function(ExternalWalletResponse? response);
 class Payment {
   /// The [amount] should not be in small unit
   /// [orderId] to be generated using a backend API
-  static Future<void> of(
-    final int amount, {
+  static Future<void> of({
+    required final int amount,
     required final String orderId,
     required final PaymentSuccessCallback handlePaymentSuccess,
     required final PaymentErrorCallback handlePaymentError,
