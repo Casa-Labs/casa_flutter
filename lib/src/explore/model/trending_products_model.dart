@@ -46,7 +46,7 @@ class GetTrendingProducts {
 
 class Products {
   String? name;
-  int? price;
+  double? price;
   List<String>? productImages;
 
   Products({this.name, this.price, this.productImages});

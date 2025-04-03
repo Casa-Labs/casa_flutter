@@ -11,48 +11,46 @@ class SelectSizeButton extends StatefulWidget {
 }
 
 class _SelectSizeButtonState extends State<SelectSizeButton> {
-  //final List<String> sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL'];
   String? selectedSize;
+  // Define all possible standard sizes
+  final List<String> standardSizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
+    return  Wrap(
       spacing: 10,
-      children: List.generate(widget.size.length, (index) {
-        final isSelected = selectedSize == widget.size[index];
+      children: List.generate(standardSizes.length, (index) {
+        final String currentSize = standardSizes[index];
+        final bool isAvailable = widget.size.contains(currentSize);
+        final bool isSelected = selectedSize == currentSize;
 
         return ElevatedButton(
           style: ElevatedButton.styleFrom(
             elevation: 0,
-            backgroundColor: widget.size.contains(widget.size[index])
-                ? isSelected
-                    ? ButtonColor.black
-                    : ButtonColor.white
-                : ButtonColor.lightGrey,
-            foregroundColor: widget.size.contains(widget.size[index])
-                ? isSelected
-                    ? ButtonColor.white
-                    : ButtonColor.black
+            backgroundColor: isAvailable
+                ? (isSelected ? ButtonColor.black : ButtonColor.white)
+                : ButtonColor.lightGrey, // Grey for unavailable sizes
+            foregroundColor: isAvailable
+                ? (isSelected ? ButtonColor.white : ButtonColor.black)
                 : ButtonColor.grey,
             minimumSize: Size.zero,
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(35),
               side: BorderSide(
-                  color: widget.size.contains(widget.size[index])
-                      ? BorderColor.black
-                      : ButtonColor.grey,
-                  width: 0.5),
+                color: isAvailable ? BorderColor.black : ButtonColor.grey,
+                width: 0.5,
+              ),
             ),
           ),
-          onPressed: () {
+          onPressed: isAvailable
+              ? () {
             setState(() {
-              selectedSize = widget.size[index];
+              selectedSize = currentSize;
             });
-          },
-          child: Text(
-            widget.size[index],
-          ),
+          }
+              : null, // Disable button if size is unavailable
+          child: Text(currentSize),
         );
       }),
     );
