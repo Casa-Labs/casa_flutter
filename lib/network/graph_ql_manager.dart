@@ -1,5 +1,4 @@
 // graphql_manager.dart
-
 import 'package:casaflutterapp/network/graph_ql_mutations.dart';
 import 'package:casaflutterapp/network/graph_ql_queries.dart';
 import 'package:casaflutterapp/network/graph_ql_variables.dart';
@@ -148,7 +147,14 @@ class GraphQLManager {
     return await _clientService.performMutation(
       document: GraphQLMutations.createOrder,
       variables: GraphQLVariables.createOrderVariables(
-          userId, totalAmount, deliveryType, discountCode, deliveryInstructions,items,paymentInfo,shippingInfo),
+          userId,
+          totalAmount,
+          deliveryType,
+          discountCode,
+          deliveryInstructions,
+          items,
+          paymentInfo,
+          shippingInfo),
     );
   }
 
@@ -399,6 +405,21 @@ class GraphQLManager {
     return await _clientService.performQuery(
       document: GraphQLQueries.getSavedItemsToCloset,
       variables: GraphQLVariables.getSavedItemsToCloset(userId, clothingItemId),
+    );
+  }
+
+  Future<QueryResult> verifyPayment({
+    required String paymentId,
+    required String orderId,
+    required String signature,
+  }) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.verifyPayment,
+      variables: GraphQLVariables.verifyPayment(
+        paymentId,
+        orderId,
+        signature,
+      ),
     );
   }
 }
