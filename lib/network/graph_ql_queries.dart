@@ -186,6 +186,16 @@ query GetProducts(\$params: GetProduct!) {
 }
 """;
 
+  static const String getProductsForExplore = """
+query GetProducts(\$params: GetProduct!) {
+  getProducts(params: \$params) {
+   data {
+      mainImage
+      id
+    }
+  }
+}
+""";
 
 //   static const String getTrendingProducts = """
 // query GetTrendingProducts(\$page: Int!, \$limit: Int!, \$search: String) {
@@ -215,8 +225,8 @@ query GetTrendingProducts(\$page: Int!, \$limit: Int!) {
     totalCount
     products {
       name
+      mainImage
       price
-      productImages
     }
   }
 }

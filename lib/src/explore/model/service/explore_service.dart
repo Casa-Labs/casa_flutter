@@ -1,5 +1,6 @@
 import 'package:casaflutterapp/src/cart/model/cart_models.dart';
 import 'package:casaflutterapp/src/explore/model/brands_model.dart';
+import 'package:casaflutterapp/src/explore/model/explore_products_model.dart';
 import 'package:casaflutterapp/src/explore/model/new_arrivals_model.dart';
 import 'package:casaflutterapp/src/explore/model/product_categories_model.dart';
 import 'package:casaflutterapp/src/explore/model/trending_products_model.dart';
@@ -73,8 +74,7 @@ class ExploreService {
     var response = await GraphQLManager().getProductsById(productId);
 
     if (!response.hasException && response.data != null) {
-      final categoriesResponse =
-      CartItem.fromJson(response.data!);
+      final categoriesResponse = CartItem.fromJson(response.data!);
       return categoriesResponse;
     } else {
       logg.e('Get brands Exception: ${response.exception}');
@@ -82,4 +82,15 @@ class ExploreService {
     }
   }
 
+  Future<void> getProductsCall() async {
+    var response = await GraphQLManager().getProductsForExplore({});
+
+    if (!response.hasException && response.data != null) {
+      final productsResponse = ExploreGetProductsModel.fromJson(response.data!);
+      exploreCtrl.clothesYouMightLike
+          .assignAll(productsResponse.getProducts?.data ?? []);
+    } else {
+      logg.e('Get clothes you might like Exception: ${response.exception}');
+    }
+  }
 }

@@ -48,7 +48,7 @@ class Products {
   String? mainImage;
   String? id;
   String? name;
-  int? price;
+  double? price;
   String? description;
 
   Products({this.mainImage, this.id, this.name, this.price, this.description});
