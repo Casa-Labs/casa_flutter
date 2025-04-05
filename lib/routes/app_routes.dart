@@ -7,13 +7,13 @@ import 'package:casaflutterapp/src/auth/view/screens/style_preferences_screen.da
 import 'package:casaflutterapp/src/auth/view/screens/verify_your_email.dart';
 import 'package:casaflutterapp/src/cart/view/screens/cart_screen.dart';
 import 'package:casaflutterapp/src/common/widgets/development_screen.dart';
-import 'package:casaflutterapp/src/explore/model/new_arrivals_model.dart' as nam;
 import 'package:casaflutterapp/src/explore/view/screens/products_list_screen.dart';
 import 'package:casaflutterapp/src/explore/view/screens/store_screen.dart';
 import 'package:casaflutterapp/src/order/model/order_models.dart';
 import 'package:casaflutterapp/src/order/view/screens/current_orders_screen.dart';
 import 'package:casaflutterapp/src/order/view/screens/order_review_screen.dart';
 import 'package:casaflutterapp/src/payment/view/screens/payment_options_screen.dart';
+import 'package:casaflutterapp/src/profile/view/screens/contact_us_screen.dart';
 import 'package:casaflutterapp/src/profile/view/screens/profile_screen.dart';
 import 'package:casaflutterapp/utils/preference_manager.dart';
 import 'package:flutter/material.dart';
@@ -74,6 +74,7 @@ class _AppPaths {
   static const String paymentOptions = '/paymentOptions';
   static const String cart = '/cart';
   static const String orderReview = '/orderReview';
+  static const String contactUs = '/contactUs';
 }
 
 // Public: Use these for named navigation
@@ -111,6 +112,7 @@ class RouteNames {
   static const String paymentOptions = 'paymentOptions';
   static const String cart = 'cart';
   static const String orderReview = 'orderReview';
+  static const String contactUs = 'contactUs';
 }
 
 // Central GoRouter instance
@@ -245,7 +247,6 @@ final GoRouter router = GoRouter(
         return TrackShipment(orderItem: orderItem!);
       },
     ),
-
     GoRoute(
       path: _AppPaths.wishlist,
       name: RouteNames.wishlist,
@@ -321,6 +322,11 @@ final GoRouter router = GoRouter(
       path: _AppPaths.orderReview,
       name: RouteNames.orderReview,
       builder: (context, state) => OrderReviewScreen(),
+    ),
+    GoRoute(
+      path: _AppPaths.contactUs,
+      name: RouteNames.contactUs,
+      builder: (context, state) => ContactUsScreen(),
     ),
   ],
 );
