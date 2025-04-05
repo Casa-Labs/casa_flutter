@@ -2,7 +2,7 @@ import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:casaflutterapp/src/home/controller/home_controller.dart';
 import 'package:casaflutterapp/src/home/view/widgets/card.dart';
 import 'package:casaflutterapp/src/home/view/widgets/filter_button_row.dart';
-import 'package:casaflutterapp/src/home/view/widgets/home_app_bar.dart';
+import 'package:casaflutterapp/src/home/view/widgets/home_search_app_bar.dart';
 import 'package:casaflutterapp/src/home/view/widgets/swipe_animation.dart';
 import 'package:casaflutterapp/utils/color_constant.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BackgroundColor.white,
-      appBar: HomeAppBar(),
+      appBar: HomeSearchAppBar(),
       body: Obx(() => homeCtrl.isLoading.value
           ? Center(
               child: CircularProgressIndicator(color: BorderColor.black),

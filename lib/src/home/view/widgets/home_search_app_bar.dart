@@ -4,8 +4,8 @@ import 'package:casaflutterapp/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const HomeAppBar({
+class HomeSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const HomeSearchAppBar({
     super.key,
   });
 
