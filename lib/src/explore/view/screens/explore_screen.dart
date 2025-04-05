@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:casaflutterapp/routes/app_routes.dart';
+import 'package:casaflutterapp/src/explore/view/widgets/divider_title.dart';
 import 'package:casaflutterapp/src/explore/view/widgets/explore_search_bar.dart';
 import 'package:casaflutterapp/src/explore/view/widgets/thrifts_section.dart';
 import 'package:flutter/material.dart';
@@ -153,7 +154,9 @@ class BrandsSection extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(30),
                                       image: DecorationImage(
                                           image: CachedNetworkImageProvider(
-                                              brand.logo!),
+                                              brand.logo ??
+                                                  ImageConstants
+                                                      .dummyNetworkPortrait),
                                           fit: BoxFit.cover),
                                     ),
                                   ),
@@ -178,6 +181,8 @@ class BrandsSection extends StatelessWidget {
                               scrollDirection: Axis.horizontal,
                               itemCount: exploreCtrl.trendingProducts.length,
                               itemBuilder: (context, index) {
+                                final trendingProduct =
+                                    exploreCtrl.trendingProducts[index];
                                 return InkWell(
                                   onTap: () {
                                     context.pushNamed(
@@ -193,9 +198,12 @@ class BrandsSection extends StatelessWidget {
                                         margin: EdgeInsets.only(right: 20),
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
-                                              image: AssetImage(ImageConstants
-                                                  .splashBackground),
-                                              fit: BoxFit.cover),
+                                              image: CachedNetworkImageProvider(
+                                                  trendingProduct.mainImage ??
+                                                      ImageConstants
+                                                          .dummyNetworkPortrait),
+                                              fit: BoxFit.cover,
+                                              alignment: Alignment.center),
                                           borderRadius:
                                               BorderRadius.circular(15),
                                         ),
@@ -204,7 +212,7 @@ class BrandsSection extends StatelessWidget {
                                       SizedBox(
                                         width: 100,
                                         child: Text(
-                                          'GAP Bodycon Dress',
+                                          trendingProduct.name ?? 'NA',
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodySmall,
@@ -213,7 +221,7 @@ class BrandsSection extends StatelessWidget {
                                       SizedBox(
                                         width: 100,
                                         child: Text(
-                                          '\$20',
+                                          '\$${trendingProduct.price ?? 'NA'}',
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodySmall,
@@ -230,38 +238,9 @@ class BrandsSection extends StatelessWidget {
               // New Arrivals Column
               Column(
                 children: [
-                  // Row(
-                  //   mainAxisSize: MainAxisSize.min,
-                  //   children: [
-                  //     Padding(
-                  //       padding: const EdgeInsets.symmetric(horizontal: 10),
-                  //       child: Text(
-                  //         'NEW ARRIVALS',
-                  //         style: Theme.of(context).textTheme.bodyLarge,
-                  //       ),
-                  //     ),
-                  //     Expanded(flex: 2, child: Divider()),
-                  //   ],
-                  // ),
                   DividerTitle(
                     text: 'NEW ARRIVALS',
                   ),
-                  exploreCtrl.newArrivalProducts.isEmpty
-                      ? Text('No brand data available')
-                      : Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10, top: 20, bottom: 20),
-                          child: Row(
-                            children: [
-                              CircleAvatar(),
-                              SizedBox(width: 10),
-                              Text(
-                                'H&M Store',
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                            ],
-                          ),
-                        ),
                   exploreCtrl.newArrivalProducts.isEmpty
                       ? Text('No data available')
                       : Container(
@@ -313,139 +292,59 @@ class BrandsSection extends StatelessWidget {
                   DividerTitle(
                     text: 'Clothes you might like',
                   ),
-                  Container(
-                    height: 220,
-                    margin: EdgeInsets.only(top: 8, left: 8),
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 10,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              context.pushNamed(
-                                RouteNames.productDescription,
-                                // extra: newArrivalProduct,
-                              );
-                            },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  height: 210,
-                                  width: 100,
-                                  margin: EdgeInsets.only(right: 20),
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: CachedNetworkImageProvider(
-                                            ImageConstants
-                                                .dummyNetworkPortrait),
-                                        fit: BoxFit.cover),
-                                    borderRadius: BorderRadius.circular(15),
+                  exploreCtrl.clothesYouMightLike.isEmpty
+                      ? Text('No Clothes you might like Found',
+                          style: Theme.of(context).textTheme.bodyLarge)
+                      : Container(
+                          height: 220,
+                          margin: EdgeInsets.only(top: 8, left: 8),
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: 10,
+                              itemBuilder: (context, index) {
+                                final product =
+                                    exploreCtrl.clothesYouMightLike[index];
+
+                                return InkWell(
+                                  onTap: () {
+                                    context.pushNamed(
+                                      RouteNames.productDescription,
+                                      // extra: newArrivalProduct,
+                                    );
+                                  },
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height: 210,
+                                        width: 100,
+                                        margin: EdgeInsets.only(right: 20),
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: CachedNetworkImageProvider(
+                                                  product.mainImage ??
+                                                      ImageConstants
+                                                          .dummyNetworkPortrait),
+                                              fit: BoxFit.cover),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }),
-                  ),
+                                );
+                              }),
+                        ),
                 ],
               ),
 
               // Related Grid View
-
-              // // Shop By Category Row
-              // Row(
-              //   mainAxisSize: MainAxisSize.min,
-              //   children: [
-              //     CustomDropDownIcon(
-              //       width: 230,
-              //       items: exploreCtrl.categories,
-              //       hintText: 'SHOP BY CATEGORY',
-              //       itemLabel: (category) => category.name!,
-              //     ),
-              //     Flexible(child: Divider()),
-              //   ],
-              // ),
-              //
-              // // Top Wear Column
-              // Column(
-              //   children: [
-              //     Row(
-              //       mainAxisSize: MainAxisSize.min,
-              //       children: [
-              //         Expanded(
-              //           flex: 2,
-              //           child: CustomDropDownIcon(
-              //             items: exploreCtrl.categories,
-              //             hintText: 'TOP WEAR',
-              //             itemLabel: (category) => category.name!,
-              //           ),
-              //         ),
-              //         Expanded(flex: 3, child: Divider()),
-              //       ],
-              //     ),
-              //     SizedBox(
-              //       height: 90,
-              //       child: ListView.builder(
-              //           shrinkWrap: true,
-              //           scrollDirection: Axis.horizontal,
-              //           itemCount: 5,
-              //           itemBuilder: (context, index) {
-              //             return Container(
-              //               width: 80,
-              //               margin: EdgeInsets.only(right: 8),
-              //               child: Column(
-              //                 children: [
-              //                   CircleAvatar(
-              //                     radius: 30,
-              //                     backgroundImage:
-              //                         AssetImage(ImageConstants.avatarLogo),
-              //                   ),
-              //                   const SizedBox(height: 5),
-              //                   Text('T-SHIRT'),
-              //                 ],
-              //               ),
-              //             );
-              //           }),
-              //     ),
-              //   ],
-              // ),
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-class DividerTitle extends StatelessWidget {
-  final String text;
-
-  const DividerTitle({
-    super.key,
-    required this.text,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        // Expanded(
-        //   child: CustomDropDownIcon(
-        //     items: exploreCtrl.brands,
-        //     hintText: 'BRANDS',
-        //     itemLabel: (brand) => brand.name!,
-        //   ),
-        // ),
-        Expanded(flex: 1, child: Divider()),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Text(text, style: Theme.of(context).textTheme.bodyLarge),
-        ),
-        Expanded(flex: 5, child: Divider()),
-      ],
     );
   }
 }

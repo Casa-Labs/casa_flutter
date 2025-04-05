@@ -328,6 +328,13 @@ class GraphQLManager {
     );
   }
 
+  Future<QueryResult> getProductsForExplore(Map<String, dynamic> params) async {
+    return await _clientService.performQuery(
+      document: GraphQLQueries.getProductsForExplore,
+      variables: GraphQLVariables.getProductsVariables(params),
+    );
+  }
+
   Future<QueryResult> getProductsById(String productId) async {
     return await _clientService.performQuery(
       document: GraphQLQueries.getProducts,

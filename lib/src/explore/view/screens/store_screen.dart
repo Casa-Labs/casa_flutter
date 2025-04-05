@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../common/widgets/filter_row.dart';
 import '../widgets/product_card.dart';
 
 class StoreScreen extends StatelessWidget {
@@ -24,12 +23,13 @@ class StoreScreen extends StatelessWidget {
             BannerImage(),
             Flexible(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: PaddingSize.commonPadding),
                 child: Column(
                   children: [
-                    FilterRow(
-                      brandList: exploreCtrl.brandFilter,colorList: exploreCtrl.colorFilter,productList: exploreCtrl.productFilter,sizedList: exploreCtrl.sizedFilter,
-                    ),
+                    // FilterRow(
+                    //   brandList: exploreCtrl.brandFilter,colorList: exploreCtrl.colorFilter,productList: exploreCtrl.productFilter,sizedList: exploreCtrl.sizedFilter,
+                    // ),
                     const SizedBox(height: 20),
                     Expanded(
                       child: GridView.builder(
@@ -81,7 +81,6 @@ class BannerImage extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-
         IconsWidget(
           onTap: () {
             context.pop();

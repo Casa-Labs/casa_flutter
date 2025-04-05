@@ -45,23 +45,23 @@ class GetTrendingProducts {
 }
 
 class Products {
+  String? mainImage;
   String? name;
   double? price;
-  List<String>? productImages;
 
-  Products({this.name, this.price, this.productImages});
+  Products({this.mainImage, this.name, this.price});
 
   Products.fromJson(Map<String, dynamic> json) {
+    mainImage = json['mainImage'];
     name = json['name'];
     price = json['price'];
-    productImages = json['productImages'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['mainImage'] = mainImage;
     data['name'] = name;
     data['price'] = price;
-    data['productImages'] = productImages;
     return data;
   }
 }
