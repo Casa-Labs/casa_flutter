@@ -6,7 +6,7 @@ class PreferenceManager {
   static const String userId = "userId";
   static const String keyIsDarkMode = 'isPrefDarkMode';
   static const String keyAddress = 'userAddress';
-
+  static const String userAddressDetails = 'userAddressDetails';
 
   static setData(String key, dynamic value) async {
     getStorage().write(key, value);

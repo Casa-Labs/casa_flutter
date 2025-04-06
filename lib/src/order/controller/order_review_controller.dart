@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:casaflutterapp/src/auth/model/add_user_address_response_model.dart';
 import 'package:casaflutterapp/src/common/payment/razorpay.dart';
 import 'package:casaflutterapp/src/order/model/service/order_service.dart';
 import 'package:get/get.dart';
@@ -5,6 +8,7 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../../../utils/preference_manager.dart';
 import '../../../utils/utils.dart';
+import '../../auth/model/auth_models.dart';
 import '../../cart/model/cart_models.dart';
 import '../model/create_order.dart';
 
@@ -76,10 +80,44 @@ class OrderReviewController extends GetxController {
       productItem.add(item);
     }
 
+    // get user details
+    final userDetailsData = PreferenceManager.getString(
+      PreferenceManager.userDetails,
+    );
+    var userDetailsMap = <String, dynamic>{};
+    if (userDetailsData != null) {
+      userDetailsMap = json.decode(userDetailsData.trim());
+    }
+    final userDetails = User.fromJson(userDetailsMap);
+
+    // get user address details
+    final userAddressDetails =
+        PreferenceManager.getString(PreferenceManager.userAddressDetails);
+    var userAddressDetailsMap = <String, dynamic>{};
+    if (userAddressDetails != null) {
+      userAddressDetailsMap = json.decode(userAddressDetails.trim());
+    }
+    final addressDetails = AddUserAddress.fromJson(userAddressDetailsMap);
+    final shippingInfo = ShippingInfo(
+      name: userDetails.name,
+      city: addressDetails.city,
+      pincode: int.parse(addressDetails.pincode ?? ''),
+      address: addressDetails.address,
+    );
+
     CreateOrder createOrder = CreateOrder(
       userId: PreferenceManager.getString(PreferenceManager.userId) ?? "",
       items: productItem,
       totalAmount: total.value,
+      shippingInfo: shippingInfo,
+      deliveryType: 'STANDARD',
+      paymentInfo: PaymentInfo(
+        method: "CARD",
+        paidAmount: total.value.toInt(),
+        paymentDate: "2025-01-20",
+        serviceProvider: "razorpay",
+      ),
+      discountCode: "CASA20",
     );
 
     final createOrderResponse = await _orderService.createOrder(
