@@ -40,7 +40,7 @@ class CartController extends GetxController {
   void totalPriceCount() {
     double total = 0;
     for (var i = 0; i < cartList.length; i++) {
-      total += cartList[i].item!.price! * cartList[i].item!.quantity!;
+      total += cartList[i].item!.productPrice! * cartList[i].item!.quantity!;
     }
     totalPrice(double.parse(total.toStringAsFixed(2)));
     update();
@@ -49,10 +49,27 @@ class CartController extends GetxController {
   // ========== APIs FUNCTIONS ========== //
 
   // Add data to cart //
-  Future<void> addProductsToCart(Product product, int quantity) async {
+  Future<void> addProductsToCart(
+      Product product, int quantity, String selectedSize) async {
+    String sizeID = "";
+    for (var sizes in product.sizes!) {
+      if (selectedSize == SizeItem.mapSize(sizes.size!.name!)) {
+        sizeID = sizes.size!.id!;
+      }
+    }
+
     Map<String, dynamic> item = {
-      ...product.toJson(), // Convert product to JSON
+      "productId": product.id,
+      "name": product.name,
+      "productPrice": product.price,
+      "mainImage": product.mainImage,
+      "color": product.colors!.first.color!.id,
+      "size": sizeID,
+      "sizeValue": selectedSize,
+      "description": product.description,
       "quantity": quantity, // Add quantity field
+      // ...product.toJson(), // Convert product to JSON
+      // "quantity": quantity, // Add quantity field
     };
 
     logg.d(item);

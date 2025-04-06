@@ -156,7 +156,7 @@ class Product {
   String? customShippingPolicy;
   double? price;
   String? category;
-  // List<String>? size;
+  List<Sizes>? sizes;
   List<ColorsModel>? colors;
   int? stock;
   String? storeId;
@@ -176,8 +176,8 @@ class Product {
       this.customShippingPolicy,
       this.price,
       this.category,
-      // this.size,
-        this.colors,
+      this.sizes,
+      this.colors,
       this.productImages,
       this.mainImage,
       this.stock,
@@ -204,7 +204,12 @@ class Product {
         : (json['price'] ?? 0).toDouble();
     category = json['category'] ?? "";
     mainImage = json['mainImage'] ?? "";
-    // size = json['sizes'] ?? [];
+    if (json['sizes'] != null) {
+      sizes = <Sizes>[];
+      json['sizes'].forEach((v) {
+        sizes!.add(Sizes.fromJson(v));
+      });
+    }
     productImages = json['productImages'].cast<String>() ?? [];
     stock = json['stock'] ?? 0;
     storeId = json['storeId'] ?? "";
@@ -226,7 +231,9 @@ class Product {
 
     data['productImages'] = productImages;
     data['mainImage'] = mainImage;
-    // data['sizes'] = size;
+    if (sizes != null) {
+      data['sizes'] = sizes!.map((v) => v.toJson()).toList();
+    }
     if (colors != null) {
       data['colors'] = colors!.map((v) => v.toJson()).toList();
     }
@@ -298,5 +305,63 @@ class ColorData {
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     return data;
+  }
+}
+
+class Sizes {
+  SizeItem? size;
+
+  Sizes({this.size});
+
+  Sizes.fromJson(Map<String, dynamic> json) {
+    size = json['size'] != null ? SizeItem.fromJson(json['size']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (size != null) {
+      data['size'] = size!.toJson();
+    }
+    return data;
+  }
+}
+
+class SizeItem {
+  String? id;
+  String? name;
+
+  SizeItem({this.id, this.name});
+
+  SizeItem.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    return data;
+  }
+
+  static String mapSize(String apiSize) {
+    switch (apiSize.toLowerCase()) {
+      case 'xx-small':
+        return 'XXS';
+      case 'x-small':
+        return 'XS';
+      case 'small':
+        return 'S';
+      case 'medium':
+        return 'M';
+      case 'large':
+        return 'L';
+      case 'x-large':
+        return 'XL';
+      case 'xx-large':
+        return 'XXL';
+      default:
+        return apiSize; // Default fallback
+    }
   }
 }

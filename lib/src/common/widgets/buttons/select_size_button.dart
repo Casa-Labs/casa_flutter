@@ -1,27 +1,35 @@
 import 'package:flutter/material.dart';
-
 import '../../../../utils/color_constant.dart';
 
-class SelectSizeButton extends StatefulWidget {
-  const SelectSizeButton({super.key, required this.size});
+class SelectSizeButton extends StatelessWidget {
+  const SelectSizeButton({
+    super.key,
+    required this.size,
+    required this.selectedSize,
+    required this.onSizeSelected,
+  });
+
   final List<String> size;
-
-  @override
-  State<SelectSizeButton> createState() => _SelectSizeButtonState();
-}
-
-class _SelectSizeButtonState extends State<SelectSizeButton> {
-  String? selectedSize;
-  // Define all possible standard sizes
-  final List<String> standardSizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL'];
+  final String selectedSize;
+  final Function(String) onSizeSelected; // Callback function
 
   @override
   Widget build(BuildContext context) {
-    return  Wrap(
+    final List<String> standardSizes = [
+      'XXS',
+      'XS',
+      'S',
+      'M',
+      'L',
+      'XL',
+      'XXL'
+    ];
+
+    return Wrap(
       spacing: 10,
       children: List.generate(standardSizes.length, (index) {
         final String currentSize = standardSizes[index];
-        final bool isAvailable = widget.size.contains(currentSize);
+        final bool isAvailable = size.contains(currentSize);
         final bool isSelected = selectedSize == currentSize;
 
         return ElevatedButton(
@@ -45,11 +53,9 @@ class _SelectSizeButtonState extends State<SelectSizeButton> {
           ),
           onPressed: isAvailable
               ? () {
-            setState(() {
-              selectedSize = currentSize;
-            });
-          }
-              : null, // Disable button if size is unavailable
+                  onSizeSelected(currentSize);
+                }
+              : null,
           child: Text(currentSize),
         );
       }),

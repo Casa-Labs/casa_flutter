@@ -173,6 +173,14 @@ query GetProducts(\$params: GetProduct!) {
           updatedAt
         }
       }
+      colors {
+        color {
+          id
+          hexCode
+          createdAt
+          name
+        }
+      }
       description
       customReturnPolicy
       customShippingPolicy
