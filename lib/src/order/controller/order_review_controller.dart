@@ -49,7 +49,7 @@ class OrderReviewController extends GetxController {
   void getTotalPrice() {
     double totalSum = 0.0;
     for (var product in productsList) {
-      double itemPrice = product.item!.price!.toDouble();
+      double itemPrice = product.item!.productPrice!.toDouble();
       totalSum += itemPrice * product.item!.quantity!;
     }
     itemtotal.value = double.parse(totalSum.toStringAsFixed(2));
@@ -70,7 +70,7 @@ class OrderReviewController extends GetxController {
       var item = Items();
       item.productId = product.id;
       item.quantity = product.item!.quantity;
-      item.price = product.item!.price!;
+      item.price = product.item!.productPrice!;
       // item.color  = product.item!.color!;
       // item.size = product.item!.size!;
       productItem.add(item);

@@ -65,7 +65,7 @@ class OrderViewItemWidget extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "₹${item.price!}",
+                              "₹${item.productPrice!}",
                               style: textTheme.bodyLarge?.copyWith(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w700,

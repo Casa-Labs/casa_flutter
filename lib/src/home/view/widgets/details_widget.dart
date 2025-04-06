@@ -60,17 +60,23 @@ class ProductDetails extends StatelessWidget {
               const SizedBox(height: 35),
               Text('Size:', style: textTheme.bodyLarge),
               const SizedBox(height: 10),
-              // TODO : Pass the size as a list from API => done
-              SelectSizeButton(size: size),
+              // Pass the size as a list from API => done
+              SelectSizeButton(
+                size: size,
+                selectedSize: logic.selectedSize.value,
+                onSizeSelected: (newSize) {
+                  logic.selectSize(newSize);
+                },
+              ),
               const SizedBox(height: 80),
               Center(child: QuantitySelectorButton()),
               const SizedBox(height: 80),
               AddToCartButton(
                 onPressed: () {
-                  cartLogin.addProductsToCart(product, logic.quantity.value);
+                  cartLogin.addProductsToCart(
+                      product, logic.quantity.value, logic.selectedSize.value);
                 },
               ),
-
               const SizedBox(height: 20),
               // GridView.builder(
               //   shrinkWrap: true,
@@ -109,7 +115,7 @@ class ProductDetails extends StatelessWidget {
                 title: 'SHIPPING POLICY',
                 isExpanded: logic.isShowShipping,
                 onTap: () => logic.changeShippingPolicy(),
-                content:product.customShippingPolicy!,
+                content: product.customShippingPolicy!,
               ),
               const SizedBox(height: 10),
               Text(
@@ -202,7 +208,7 @@ class ProductDetails extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        padding: const EdgeInsets.symmetric( vertical: 5),
+        padding: const EdgeInsets.symmetric(vertical: 5),
         decoration: BoxDecoration(
           color: Colors.black,
           borderRadius: BorderRadius.circular(25),
@@ -238,7 +244,7 @@ class ProductDetails extends StatelessWidget {
                     color: TextColor.white,
                     fontWeight: FontWeight.w500,
                     fontFamily: Font.gilroy),
-              ).paddingSymmetric(horizontal: 15,vertical: 5),
+              ).paddingSymmetric(horizontal: 15, vertical: 5),
             ],
           ],
         ),

@@ -24,7 +24,7 @@ class HomeController extends GetxController {
   List<Product> products = [];
   List<GetProductSizes> size = [];
   // Convert API sizes to button format
-  List<String> formattedSizes =[];
+  List<String> formattedSizes = [];
   List<BrandData> brand = [];
   List<GetProductCategories> category = [];
   RxBool isLoading = false.obs;
@@ -42,6 +42,7 @@ class HomeController extends GetxController {
   int minValue = 0;
   int maxValue = 0;
   RxInt quantity = 1.obs;
+  RxString selectedSize = "S".obs;
   final ValueNotifier<int> counter = ValueNotifier<int>(1);
   IconData? swipeIcon;
 
@@ -86,7 +87,7 @@ class HomeController extends GetxController {
     super.onInit();
     await fetchProducts({});
     await getBrand();
-    await getSize();
+    // await getSize();
     await getCategory();
   }
 
@@ -161,6 +162,21 @@ class HomeController extends GetxController {
   changeReturnPolicy() {
     isShowReturn = !isShowReturn;
     update();
+  }
+
+  selectSize(String size) {
+    selectedSize.value = size;
+    update();
+  }
+
+  List<String> formattedSizesList(Product product) {
+    selectedSize.value = SizeItem.mapSize(product.sizes![0].size!.name!);
+    List<String> sizes = [];
+    for (var i = 0; i < product.sizes!.length; i++) {
+      String formattedSize = SizeItem.mapSize(product.sizes![i].size!.name!);
+      sizes.add(formattedSize);
+    }
+    return sizes;
   }
 
 // ========== APIs FUNCTIONS ========== //

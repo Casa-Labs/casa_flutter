@@ -145,14 +145,15 @@ class Cards extends StatelessWidget {
                                             onTap: () {
                                               // context.pushNamed(RouteNames.store);
                                             },
+
                                             /// Need to add dummy image preview image
                                             child: /*NetworkImageWidget(
                                               url: '',
                                               height: 50,
                                               width: 50,
                                             )*/
-                                            /// Remove this after use above code
-                                            Container(
+                                                /// Remove this after use above code
+                                                Container(
                                               decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: Colors.black,
@@ -217,8 +218,9 @@ class Cards extends StatelessWidget {
                                                   onPressed: () {
                                                     cartLogin.addProductsToCart(
                                                         product,
-                                                        homeCtrl
-                                                            .quantity.value);
+                                                        homeCtrl.quantity.value,
+                                                        homeCtrl.selectedSize
+                                                            .value);
                                                   },
                                                   icon: Icon(
                                                       Icons
@@ -292,8 +294,9 @@ class Cards extends StatelessWidget {
                           ),
                         ],
                       ),
-                      ProductDetails(product: product,size:homeCtrl.formattedSizes)
-
+                      ProductDetails(
+                          product: product,
+                          size: homeCtrl.formattedSizesList(product))
                     ],
                   ),
                 ),
