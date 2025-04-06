@@ -1,8 +1,10 @@
 import 'package:casaflutterapp/src/common/widgets/buttons/select_size_button.dart';
 import 'package:casaflutterapp/src/home/controller/home_controller.dart';
+import 'package:casaflutterapp/src/home/view/screens/all_reviews_screen.dart';
 import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/font.dart';
@@ -10,12 +12,14 @@ import '../../../cart/controller/cart_controller.dart';
 import '../../../common/widgets/buttons/add_to_cart_button.dart';
 import '../../../explore/view/widgets/quantity_selector_button.dart';
 import '../../model/home_models.dart';
+import '../../model/review_response.dart';
 
 class ProductDetails extends StatelessWidget {
   final Product product;
   final List<String> size;
 
   const ProductDetails({super.key, required this.product, required this.size});
+
 
   @override
   Widget build(BuildContext context) {
@@ -125,70 +129,143 @@ class ProductDetails extends StatelessWidget {
                     ),
               ),
               const SizedBox(height: 10),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(1),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: ButtonColor.black),
-                        borderRadius: BorderRadius.circular(50)),
-                    child: CircleAvatar(
-                      maxRadius: 28,
-                      backgroundColor: const Color(0xFF002957),
-                      child: Text(
-                        "ZARA",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .copyWith(color: TextColor.white),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              FutureBuilder<GetProductReviewModel?>(
+                future: logic.getReviews(product.id ?? ''),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  if (snapshot.hasError) {
+                    return Text('Error loading reviews: ${snapshot.error}');
+                  }
+
+                  final reviews = snapshot.data?.getProductInteractions ?? [];
+
+                  if (reviews.isEmpty) {
+                    return const Text('No reviews yet');
+                  }
+
+                  return Column(
                     children: [
-                      Text(
-                        'Steve_vora_04',
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              fontWeight: FontWeight.bold,
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: reviews.length > 2 ? 2 : reviews.length,
+                        itemBuilder: (context, index) {
+                          final review = reviews[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 15),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(1),
+                                  decoration: BoxDecoration(
+                                      border:
+                                          Border.all(color: ButtonColor.black),
+                                      borderRadius: BorderRadius.circular(50)),
+                                  child: CircleAvatar(
+                                    maxRadius: 28,
+                                    backgroundColor: const Color(0xFF002957),
+                                    child: Text(
+                                      review.user?.name
+                                              ?.substring(0, 1)
+                                              .toUpperCase() ??
+                                          "U",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(color: TextColor.white),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        review.user?.name ?? 'Anonymous',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
+                                            .copyWith(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Row(
+                                        children: [
+                                          ...List.generate(
+                                            5,
+                                            (i) => Icon(
+                                              Icons.star,
+                                              size: 16,
+                                              color: i < (review.rating ?? 0)
+                                                  ? Colors.black
+                                                  : Colors.grey,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Text(
+                                            '${review.rating ?? 0}/5',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                      // if (review.comment != null &&
+                                      //     review.comment!.isNotEmpty) ...[
+                                      //   const SizedBox(height: 5),
+                                      //   Text(
+                                      //     review.comment!,
+                                      //     style: Theme.of(context)
+                                      //         .textTheme
+                                      //         .bodyMedium,
+                                      //   ),
+                                      // ],
+                                      // const SizedBox(height: 5),
+                                      // Text(
+                                      //   logic.formatDate(review.createdAt),
+                                      //   style: Theme.of(context)
+                                      //       .textTheme
+                                      //       .bodySmall,
+                                      // ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
+                          );
+                        },
                       ),
-                      const SizedBox(height: 10),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          for (int i = 0; i < 5; i++) const Icon(Icons.star),
-                          const SizedBox(width: 10),
-                          Text(
-                            '5/5',
+                      /*  if (reviews.length > 2) ...[
+                        const SizedBox(height: 10),
+                        TextButton(
+                          onPressed: () {
+                            Get.to(() => AllReviewsScreen(
+                                  productId: product.id ?? '',
+                                  productName: product.name ?? '',
+                                ));
+                          },
+                          child: Text(
+                            'More Reviews (${reviews.length - 2})',
                             style:
                                 Theme.of(context).textTheme.bodyLarge!.copyWith(
                                       fontWeight: FontWeight.bold,
                                     ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  Spacer(),
-                  TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.all(2),
-                      minimumSize: Size(0, 0),
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    ),
-                    child: Text(
-                      'More',
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.bold,
                           ),
-                    ),
-                  ),
-                ],
+                        ),
+                      ],*/
+                    ],
+                  );
+                },
               ),
               const SizedBox(height: 50),
             ],

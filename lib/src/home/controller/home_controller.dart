@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:appinio_swiper/appinio_swiper.dart';
+import 'package:casaflutterapp/src/home/model/service/home_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ import '../../../utils/utils.dart';
 import '../model/brand_response_model.dart';
 import '../model/cat_response_model.dart';
 import '../model/home_models.dart';
+import '../model/review_response.dart';
 import '../model/size_respose_model.dart';
 
 class HomeController extends GetxController {
@@ -179,6 +181,27 @@ class HomeController extends GetxController {
     return sizes;
   }
 
+  String formatDate(String? dateString) {
+    if (dateString == null) return '';
+    try {
+      final date = DateTime.parse(dateString);
+      final now = DateTime.now();
+      final difference = now.difference(date);
+
+      if (difference.inDays > 0) {
+        return '${difference.inDays}d ago';
+      } else if (difference.inHours > 0) {
+        return '${difference.inHours}h ago';
+      } else if (difference.inMinutes > 0) {
+        return '${difference.inMinutes}m ago';
+      } else {
+        return 'Just now';
+      }
+    } catch (e) {
+      return dateString;
+    }
+  }
+
 // ========== APIs FUNCTIONS ========== //
 
   Future<void> fetchProducts(Map<String, dynamic> map) async {
@@ -253,4 +276,8 @@ class HomeController extends GetxController {
   }
 
   Future<void> addToWishlist() async {}
+
+  Future<GetProductReviewModel?> getReviews(String productId) async {
+    return await HomeService().getReview(productId: productId);
+  }
 }
