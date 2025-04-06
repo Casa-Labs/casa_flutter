@@ -10,14 +10,14 @@ class NetworkImageWidget extends StatelessWidget {
   final String? url; // Made it nullable
 
   const NetworkImageWidget({
-    Key? key,
+    super.key,
     this.height = 100,
     this.width = 100,
     this.borderRadius = 120,
     this.showCircularProgressIndicator = false,
     this.fit = BoxFit.fill,
     this.url, // Nullable URL
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +28,15 @@ class NetworkImageWidget extends StatelessWidget {
         width: width,
         child: CachedNetworkImage(
           fit: fit,
-          imageUrl: url != null && url!.isNotEmpty ? url! : "AppConstants.dummyImageUrl", // Use dummy image if URL is null/empty
+          imageUrl: url != null && url!.isNotEmpty
+              ? url!
+              : "AppConstants.dummyImageUrl", // Use dummy image if URL is null/empty
           placeholder: (context, url) => const Center(
             child: CircularProgressIndicator(),
           ),
           errorWidget: (context, _, object) {
             return Container(
-              decoration:  BoxDecoration(color: Colors.grey.shade200),
+              decoration: BoxDecoration(color: Colors.grey.shade200),
               child: const Center(
                 child: Icon(Icons.error, size: 24),
               ),
