@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:casaflutterapp/src/auth/model/auth_models.dart';
 import 'package:casaflutterapp/src/auth/model/service/auth_service.dart';
+import 'package:casaflutterapp/utils/extensions.dart';
 import 'package:casaflutterapp/utils/preference_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -71,8 +72,13 @@ class DeliveryAddressController extends GetxController {
         if (deliveryAddressResponse != null) {
           isDeliveryAddressSaved(true);
           message('Delivery address details saved successfully');
+          PreferenceManager.setData(
+            PreferenceManager.userAddressDetails,
+            deliveryAddressResponse.addUserAddress?.toJsonString(),
+          );
           var userAddress = deliveryAddressResponse.addUserAddress;
-          String fullAddress = "${userAddress!.address}, ${userAddress.landmark}, ${userAddress.city}, ${userAddress.state}, ${userAddress.pincode}, ${userAddress.country}";
+          String fullAddress =
+              "${userAddress!.address}, ${userAddress.landmark}, ${userAddress.city}, ${userAddress.state}, ${userAddress.pincode}, ${userAddress.country}";
           PreferenceManager.setData(PreferenceManager.keyAddress, fullAddress);
           isLoading(false);
         } else {
