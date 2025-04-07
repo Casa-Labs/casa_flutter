@@ -264,6 +264,18 @@ class GraphQLVariables {
     };
   }
 
+  static Map<String, dynamic> deleteAllNotificationsForUser(String userId) {
+    return {
+      "userId": userId,
+    };
+  }
+
+  static Map<String, dynamic> deleteNotificationForUser(String id) {
+    return {
+      "id": id,
+    };
+  }
+
   //QUERIES
 
   static Map<String, dynamic> getNewArrivalProductsVariables(

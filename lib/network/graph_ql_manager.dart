@@ -282,6 +282,21 @@ class GraphQLManager {
     );
   }
 
+  Future<QueryResult> deleteAllNotificationsForUser(
+      {required String userId}) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.deleteAllNotificationsForUser,
+      variables: GraphQLVariables.deleteAllNotificationsForUser(userId),
+    );
+  }
+
+  Future<QueryResult> deleteNotificationForUser({required String id}) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.deleteNotificationForUser,
+      variables: GraphQLVariables.deleteNotificationForUser(id),
+    );
+  }
+
   //QUERIES
 
   Future<QueryResult> getNewArrivalProducts(

@@ -11,7 +11,8 @@ class NotificationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NotificationsController controller = Get.put(NotificationsController());
+    final NotificationsController controller =
+        Get.put(NotificationsController());
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: CommonAppBar(
@@ -20,7 +21,8 @@ class NotificationsScreen extends StatelessWidget {
           IconButton(
             onPressed: () {
               /// To Clear all notifications
-              controller.clearAllNotifications();
+              // controller.clearAllNotifications();
+              controller.deleteAllNotificationsForUser();
             },
             icon: const Icon(Icons.delete, color: Colors.red),
           )
@@ -28,8 +30,9 @@ class NotificationsScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Obx(
-              () => Padding(
-            padding: EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding),
+          () => Padding(
+            padding:
+                EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding),
             child: controller.isLoading()
                 ? Center(child: CircularProgressIndicator(color: Colors.black))
                 : (controller.notificationList.isNotEmpty)
@@ -39,8 +42,8 @@ class NotificationsScreen extends StatelessWidget {
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           return Dismissible(
-                            key: Key(
-                                controller.notificationList[index].id.toString()),
+                            key: Key(controller.notificationList[index].id
+                                .toString()),
                             direction: DismissDirection.endToStart,
                             background: Container(
                               alignment: Alignment.centerRight,
@@ -49,17 +52,20 @@ class NotificationsScreen extends StatelessWidget {
                               child: Icon(Icons.delete, color: Colors.white),
                             ),
                             onDismissed: (direction) {
-                              controller.removeNotification(index, false);
+                              // To delete notification one by one
+                              // controller.removeNotification(index, false);
+                              controller.deleteNotificationForUser(
+                                  controller.notificationList[index].id!);
                             },
                             child: NotificationTile(
-                              circleImageUrl:
-                                  controller.notificationList[index].firstImage ??
-                                      "",
+                              circleImageUrl: controller
+                                      .notificationList[index].firstImage ??
+                                  "",
                               squareImageUrl: controller
                                       .notificationList[index].secondImage ??
                                   "",
-                              text:
-                                  controller.notificationList[index].title ?? "",
+                              text: controller.notificationList[index].title ??
+                                  "",
                               message:
                                   controller.notificationList[index].message ??
                                       "",
