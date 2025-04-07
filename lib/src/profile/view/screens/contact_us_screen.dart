@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ContactUsScreen extends StatelessWidget {
-  const ContactUsScreen({super.key});
+import '../../controller/profile_controller.dart';
 
+class ContactUsScreen extends StatelessWidget {
+   ContactUsScreen({super.key});
+var controller=Get.put(ProfileController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,10 +29,17 @@ class ContactUsScreen extends StatelessWidget {
 
   // Function to launch the email client
   Future<void> _launchEmail() async {
+    final name = controller.loggedInUser.value;
+    final email = controller.loggedInEmail.value;
     final Uri emailUri = Uri(
       scheme: 'mailto',
       path: 'casa.helpme@gmail.com',
-      query: Uri.encodeFull('subject=Support Request&body=Hi, I need help with...'),
+      //query: Uri.encodeFull('subject=Support Request&body=Hi, I need help with...'),
+      query: Uri.encodeFull(
+        'subject=Contact Us - CASA App&body=Hi CASA Team,\n\n I would like to get in touch regarding the CASA shopping app.'
+            '\n\n Name: $name \n\n Email: $email \n\n'
+            'Thank you!',
+      ),
     );
 
     if (await canLaunchUrl(emailUri)) {
