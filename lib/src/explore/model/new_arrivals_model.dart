@@ -57,7 +57,7 @@ class Products {
     mainImage = json['mainImage'];
     id = json['id'];
     name = json['name'];
-    price = json['price'];
+    price = json['price'].toInt();
     description = json['description'];
   }
 

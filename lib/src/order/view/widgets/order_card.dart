@@ -21,11 +21,38 @@ class OrderCard extends StatelessWidget {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(4),
-            child: Image.network(
-              'https://imgs.search.brave.com/H18Uf8LvTehXwHq51SrFqdrx-e4pJiN-rVkJTC-2BcI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/c2hvcGFsZXhpcy5j/b20vY2RuL3Nob3Av/ZmlsZXMvRU5HTEFO/RF9EUkVTU19TQURE/TEVfRlJPTlQud2Vi/cD92PTE3MjYwMDQz/ODYmd2lkdGg9NTMz',
-              fit: BoxFit.cover,
-              width: 114,
-              height: 166,
+            child: SizedBox(
+              height: 120,
+              width: 100,
+              child: orderItem.image != null
+                  ? Image.network(
+                      orderItem.image!,
+                      fit: BoxFit.cover,
+                      filterQuality: FilterQuality.medium,
+                      cacheWidth: 200, // Limit image size
+                      cacheHeight: 240, // Limit image size
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          'assets/images/placeholder.png',
+                          fit: BoxFit.cover,
+                        );
+                      },
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
+                        );
+                      },
+                    )
+                  : Image.asset(
+                      'assets/images/placeholder.png',
+                      fit: BoxFit.cover,
+                    ),
             ),
           ),
         ),
@@ -88,7 +115,8 @@ class OrderCard extends StatelessWidget {
                                   .textTheme
                                   .bodyMedium
                                   ?.copyWith(
-                                    color: TextColor.black.withValues(alpha: 0.7),
+                                    color:
+                                        TextColor.black.withValues(alpha: 0.7),
                                     // fontFamily: Font.gilroy,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -119,7 +147,7 @@ class OrderCard extends StatelessWidget {
                           color: const Color(0xFFD9D9D9)),
                       child: Center(
                           child: Text(
-                            orderItem.quantity.toString(),
+                        orderItem.quantity.toString(),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               fontWeight: FontWeight.w300,
                             ),

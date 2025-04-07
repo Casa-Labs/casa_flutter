@@ -59,10 +59,9 @@ class CartItem extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(4),
-                child: Container(
+                child: SizedBox(
                     height: MediaQuery.of(context).size.height * 0.2,
                     width: MediaQuery.of(context).size.width * 0.25,
-                    color: Colors.red,
                     child: Image.network(item.mainImage!, fit: BoxFit.fill)
                     //  Image.asset(
                     //   'assets/images/placeholder.png',

@@ -72,11 +72,11 @@ class OrderReviewController extends GetxController {
     List<Items> productItem = [];
     for (var product in productsList) {
       var item = Items();
-      item.productId = product.id;
-      item.quantity = product.item!.quantity;
-      item.price = product.item!.productPrice!;
-      // item.color  = product.item!.color!;
-      // item.size = product.item!.size!;
+      item.productId = product.item?.productId;
+      item.quantity = product.item?.quantity;
+      item.price = product.item?.productPrice!;
+      item.color  = product.item?.color!;
+      item.size = product.item?.size!;
       productItem.add(item);
     }
 
@@ -101,7 +101,7 @@ class OrderReviewController extends GetxController {
     final shippingInfo = ShippingInfo(
       name: userDetails.name,
       city: addressDetails.city,
-      pincode: int.parse(addressDetails.pincode ?? ''),
+      pincode: int.parse(addressDetails.pincode ?? '0'),
       address: addressDetails.address,
     );
 

@@ -22,9 +22,7 @@ class OrderService {
       createOrderRequestModel.shippingInfo ?? ShippingInfo(),
     );
 
-    createOrderResponse = CreateOrderResponse.fromJson(
-      response.data,
-    );
+    createOrderResponse = CreateOrderResponse.fromJson(response.data);
 
     return createOrderResponse;
   }
