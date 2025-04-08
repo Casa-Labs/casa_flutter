@@ -19,6 +19,7 @@ class AuthController extends GetxController {
   final AuthService _authService = AuthService();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+
   // ========= CONTROLLERS ========= //
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
@@ -172,7 +173,6 @@ class AuthController extends GetxController {
         provider: "APPLE",
         providerId: userId,
       );
-
       message("Apple Sign-In successful");
     } catch (e) {
       message("Apple Sign-In failed: ${e.toString()}");

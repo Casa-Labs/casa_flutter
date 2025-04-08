@@ -108,7 +108,7 @@ class OrderReviewController extends GetxController {
     CreateOrder createOrder = CreateOrder(
       userId: PreferenceManager.getString(PreferenceManager.userId) ?? "",
       items: productItem,
-      totalAmount: total.value,
+      totalAmount: total.value.toInt(),
       shippingInfo: shippingInfo,
       deliveryType: 'STANDARD',
       paymentInfo: PaymentInfo(

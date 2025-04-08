@@ -18,10 +18,22 @@ class TutorialScreen extends StatefulWidget {
 
 class _TutorialScreenState extends State<TutorialScreen> {
   final OnBoardingController homeController = Get.put(OnBoardingController());
+  bool _isInitialized = false;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_isInitialized) {
+      _initializeTutorialList();
+      _isInitialized = true;
+    }
+  }
+
+  void _initializeTutorialList() {
+    var size = MediaQuery.of(context).size;
+    var height = size.height;
+    var width = size.width;
+
     homeController.tutorialList = [
       SwipeTutorial(
         image: "assets/icons/swipe_right.png",
@@ -37,7 +49,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
       ),
       PositionTutorial(
         horizontal: 20,
-        top: Get.height * .061,
+        top: height * .061,
         crossAxisAlignmentSecond: CrossAxisAlignment.start,
         text: "view all catogeies",
         data: Padding(
@@ -57,19 +69,27 @@ class _TutorialScreenState extends State<TutorialScreen> {
         onTap: widget.onTap,
       ),
       PositionTutorial(
-        top: Get.height * .11,
+        top: height * .11,
         onTap: widget.onTap,
         crossAxisAlignmentSecond: CrossAxisAlignment.start,
         text: "use filters to search specific item",
         data: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 2),
-          child:
-              SizedBox(height: 35, width: Get.width * .95, child: FilterRow()),
+          child: SizedBox(
+            height: 35,
+            width: width * .95,
+            child: FilterRow(
+              brandList: [],
+              colorList: [],
+              productList: [],
+              sizedList: [],
+            ),
+          ),
         ),
       ),
       PositionTutorial(
         onTap: widget.onTap,
-        top: Get.height * 0.18,
+        top: height * 0.18,
         text: "use the navigate go to previous\nitem",
         horizontal: 5,
         data: Container(
@@ -88,7 +108,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
       ),
       PositionTutorial(
           onTap: widget.onTap,
-          bottom: Get.height * 0.174,
+          bottom: height * 0.174,
           right: 0.0,
           crossAxisAlignment: CrossAxisAlignment.end,
           text: "use to add item to cart",
@@ -99,7 +119,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
           )),
       PositionTutorial(
           onTap: widget.onTap,
-          bottom: Get.height * 0.106,
+          bottom: height * 0.106,
           crossAxisAlignment: CrossAxisAlignment.end,
           text: "use to share",
           right: 0.0,
@@ -108,7 +128,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
           data: Icon(Icons.share_rounded)),
       PositionTutorial(
         onTap: widget.onTap,
-        bottom: Get.height * 0.01,
+        bottom: height * 0.01,
         crossAxisAlignment: CrossAxisAlignment.end,
         text: "instant buy",
         right: 0.0,
@@ -130,7 +150,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
                 Shadow(
                   offset: const Offset(1.0, 1.0),
                   blurRadius: 6.0,
-                  color: Colors.black.withValues(alpha: 0.2),
+                  color: Colors.black.withOpacity(0.2),
                 ),
               ],
             ),
@@ -139,7 +159,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
       ),
       PositionTutorial(
         onTap: widget.onTap,
-        bottom: Get.height * 0.136,
+        bottom: height * 0.136,
         text: "Click the logo to visit store",
         horizontal: 16,
         isAbove: false,
@@ -154,36 +174,36 @@ class _TutorialScreenState extends State<TutorialScreen> {
       ),
       PositionTutorial(
         onTap: widget.onTap,
-        bottom: Get.height * 0.0,
+        bottom: height * 0.0,
         text: "home",
         horizontal: 5,
         isAbove: false,
       ),
       PositionTutorial(
         onTap: widget.onTap,
-        bottom: Get.height * 0.0,
-        left: Get.width * .15,
+        bottom: height * 0.0,
+        left: width * .15,
         text: "explore",
         isAbove: false,
       ),
       PositionTutorial(
         onTap: widget.onTap,
-        bottom: Get.height * 0.0,
-        left: Get.width * .33,
+        bottom: height * 0.0,
+        left: width * .33,
         text: "add to\ncart",
         isAbove: false,
       ),
       PositionTutorial(
         onTap: widget.onTap,
-        bottom: Get.height * 0.0,
-        right: Get.width * .15,
+        bottom: height * 0.0,
+        right: width * .15,
         text: "my\ncloset",
         isAbove: false,
       ),
       PositionTutorial(
         onTap: widget.onTap,
-        bottom: Get.height * 0.0,
-        right: Get.width * .0,
+        bottom: height * 0.0,
+        right: width * .0,
         crossAxisAlignmentSecond: CrossAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         horizontal: 0,
