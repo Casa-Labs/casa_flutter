@@ -4,25 +4,24 @@ import 'package:casaflutterapp/utils/padding_size.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../utils/string_constant.dart';
 import '../widgets/notification_tile_widget.dart';
 
 class NotificationsScreen extends StatelessWidget {
-  const NotificationsScreen({super.key});
-
+  NotificationsScreen({super.key});
+  final NotificationsController controller = Get.put(NotificationsController());
   @override
   Widget build(BuildContext context) {
-    final NotificationsController controller =
-        Get.put(NotificationsController());
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: CommonAppBar(
         title: 'Notifications',
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: () async {
               /// To Clear all notifications
               // controller.clearAllNotifications();
-              controller.deleteAllNotificationsForUser();
+              await controller.deleteAllNotificationsForUser();
             },
             icon: const Icon(Icons.delete, color: Colors.red),
           )
@@ -51,19 +50,19 @@ class NotificationsScreen extends StatelessWidget {
                               color: Colors.red,
                               child: Icon(Icons.delete, color: Colors.white),
                             ),
-                            onDismissed: (direction) {
+                            onDismissed: (direction) async {
                               // To delete notification one by one
                               // controller.removeNotification(index, false);
-                              controller.deleteNotificationForUser(
+                              await controller.deleteNotificationForUser(
                                   controller.notificationList[index].id!);
                             },
                             child: NotificationTile(
                               circleImageUrl: controller
                                       .notificationList[index].firstImage ??
-                                  "",
+                                  ImageConstants.dummyNetworkPortrait,
                               squareImageUrl: controller
                                       .notificationList[index].secondImage ??
-                                  "",
+                                  ImageConstants.dummyNetworkPortrait,
                               text: controller.notificationList[index].title ??
                                   "",
                               message:

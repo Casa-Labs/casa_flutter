@@ -211,7 +211,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.notifications,
       name: RouteNames.notifications,
-      builder: (context, state) => const NotificationsScreen(),
+      builder: (context, state) => NotificationsScreen(),
     ),
     GoRoute(
       path: _AppPaths.location,
