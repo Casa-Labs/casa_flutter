@@ -15,6 +15,7 @@ import 'package:casaflutterapp/src/order/view/screens/order_review_screen.dart';
 import 'package:casaflutterapp/src/payment/view/screens/payment_options_screen.dart';
 import 'package:casaflutterapp/src/profile/view/screens/contact_us_screen.dart';
 import 'package:casaflutterapp/src/profile/view/screens/profile_screen.dart';
+import 'package:casaflutterapp/src/search/view/screens/search_view_screen.dart';
 import 'package:casaflutterapp/utils/preference_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -75,6 +76,7 @@ class _AppPaths {
   static const String cart = '/cart';
   static const String orderReview = '/orderReview';
   static const String contactUs = '/contactUs';
+  static const String searchView = '/searchView';
 }
 
 // Public: Use these for named navigation
@@ -113,6 +115,7 @@ class RouteNames {
   static const String cart = 'cart';
   static const String orderReview = 'orderReview';
   static const String contactUs = 'contactUs';
+  static const String searchView = 'searchView';
 }
 
 // Central GoRouter instance
@@ -137,13 +140,10 @@ final GoRouter router = GoRouter(
   errorBuilder: (context, state) {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        if (PreferenceManager.getBool(
-            PreferenceManager.isFirstTime)!) {
-          router.goNamed(RouteNames.navigation,
-              extra: true);
-        }else {
-          router.goNamed(
-              RouteNames.navigation, extra: false);
+        if (PreferenceManager.getBool(PreferenceManager.isFirstTime)!) {
+          router.goNamed(RouteNames.navigation, extra: true);
+        } else {
+          router.goNamed(RouteNames.navigation, extra: false);
         }
       },
     );
@@ -235,7 +235,7 @@ final GoRouter router = GoRouter(
       name: RouteNames.navigation,
       builder: (context, state) {
         bool isFirstLaunch = false;
-        if(state.extra != null) {
+        if (state.extra != null) {
           isFirstLaunch = state.extra as bool;
         }
         return NavPage(isFirstLaunch: isFirstLaunch);
@@ -340,6 +340,11 @@ final GoRouter router = GoRouter(
       path: _AppPaths.contactUs,
       name: RouteNames.contactUs,
       builder: (context, state) => ContactUsScreen(),
+    ),
+    GoRoute(
+      path: _AppPaths.searchView,
+      name: RouteNames.searchView,
+      builder: (context, state) => SearchViewScreen(),
     ),
   ],
 );

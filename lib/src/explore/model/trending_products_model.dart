@@ -54,7 +54,7 @@ class Products {
   Products.fromJson(Map<String, dynamic> json) {
     mainImage = json['mainImage'];
     name = json['name'];
-    price = json['price'].toInt();
+    price = (json['price'] != null) ? json['price'].toDouble() : null;
   }
 
   Map<String, dynamic> toJson() {
