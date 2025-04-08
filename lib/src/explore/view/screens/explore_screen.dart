@@ -18,99 +18,76 @@ class ExploreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => SafeArea(
+    return SafeArea(
         child: Scaffold(
-          body: DefaultTabController(
-            length: 2,
-            initialIndex: exploreCtrl.selectedIndex.value,
+          body: SingleChildScrollView(
             child: Column(
               children: [
                 ExploreSearchBar(),
                 const Divider(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: TabBar(
-                    indicatorWeight: 1,
-                    dividerHeight: 0,
-                    splashFactory: NoSplash.splashFactory,
-                    indicator: BoxDecoration(
-                        color: TabBarColor.transparent,
-                        border: Border.all(color: TabBarColor.transparent)),
-                    labelPadding: const EdgeInsets.symmetric(horizontal: 2),
-                    tabs: [
-                      Tab(
-                        child: SizedBox(
-                          width: double.maxFinite,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              backgroundColor:
-                                  exploreCtrl.selectedIndex.value == 0
-                                      ? TabBarColor.black
-                                      : TabBarColor.white,
-                              foregroundColor:
-                                  exploreCtrl.selectedIndex.value == 0
-                                      ? TabBarColor.white
-                                      : TabBarColor.black,
-                            ),
-                            child: Text('MEN'),
-                            onPressed: () {
-                              exploreCtrl.selectedIndex.value = 0;
-                            },
+                Row(
+                  children: [
+                    const SizedBox(width: 20),
+                    Expanded(
+                      flex: 5,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
                           ),
+                          backgroundColor:
+                          exploreCtrl.selectedIndex.value == 0
+                              ? TabBarColor.black
+                              : TabBarColor.white,
+                          foregroundColor:
+                          exploreCtrl.selectedIndex.value == 0
+                              ? TabBarColor.white
+                              : TabBarColor.black,
                         ),
+                        child: Text('MEN'),
+                        onPressed: () {
+                          exploreCtrl.selectedIndex.value = 0;
+                        },
                       ),
-                      Tab(
-                        child: SizedBox(
-                          width: double.maxFinite,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              backgroundColor:
-                                  exploreCtrl.selectedIndex.value == 1
-                                      ? TabBarColor.black
-                                      : TabBarColor.white,
-                              foregroundColor:
-                                  exploreCtrl.selectedIndex.value == 1
-                                      ? TabBarColor.white
-                                      : TabBarColor.black,
-                            ),
-                            child: Text('WOMEN'),
-                            onPressed: () async {
-                              exploreCtrl.selectedIndex.value = 1;
-                              await exploreCtrl.getTrendingNowProductsCall();
-                            },
+                    ),
+                    const Spacer(),
+                    Expanded(
+                      flex: 5,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
                           ),
+                          backgroundColor:
+                          exploreCtrl.selectedIndex.value == 1
+                              ? TabBarColor.black
+                              : TabBarColor.white,
+                          foregroundColor:
+                          exploreCtrl.selectedIndex.value == 1
+                              ? TabBarColor.white
+                              : TabBarColor.black,
                         ),
+                        child: Text('WOMEN'),
+                        onPressed: () async {
+                          exploreCtrl.selectedIndex.value = 1;
+                          await exploreCtrl.getTrendingNowProductsCall();
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(width: 20),
+                  ],
                 ),
-                Expanded(
-                  child: TabBarView(
-                    physics: NeverScrollableScrollPhysics(),
-                    children: [
-                      BrandsSection(),
-                      ThriftsSection(),
-                    ],
-                  ),
-                ),
+                ExploreSection(),
               ],
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
 
-class BrandsSection extends StatelessWidget {
-  const BrandsSection({super.key});
+class ExploreSection extends StatelessWidget {
+  const ExploreSection({super.key});
 
   @override
   Widget build(BuildContext context) {
