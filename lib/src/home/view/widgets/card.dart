@@ -269,18 +269,11 @@ class Cards extends StatelessWidget {
                                           ),
                                           BuyNowButton(onPressed: () {
                                             orderReviewController
-                                                .getAllProductItem([
-                                              CartItem(
-                                                  item:
-                                                      ProductForCart.fromJson({
-                                                    ...product.toJson(),
-                                                    "quantity":
-                                                        homeCtrl.quantity(),
-                                                  }),
-                                                  createdAt: "",
-                                                  id: "",
-                                                  updatedAt: "")
-                                            ]);
+                                                .getHomeProduct(
+                                                    product,
+                                                    homeCtrl.quantity.value,
+                                                    homeCtrl
+                                                        .selectedSize.value);
                                             context.pushNamed(
                                                 RouteNames.orderReview);
                                           }),
