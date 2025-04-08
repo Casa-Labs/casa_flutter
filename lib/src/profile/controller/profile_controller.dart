@@ -22,6 +22,7 @@ class ProfileController extends GetxController {
   RxBool isUserDeleted = false.obs;
   RxString message = ''.obs;
   RxString loggedInUser = ''.obs;
+  RxString loggedInEmail = ''.obs;
 
   // ========== STATES ========== //
 
@@ -63,6 +64,7 @@ class ProfileController extends GetxController {
     final userDetails = User.fromJson(userDetailsMap);
     if (userDetails.id != null) {
       loggedInUser(userDetails.name);
+      loggedInEmail(userDetails.email);
     }
   }
 

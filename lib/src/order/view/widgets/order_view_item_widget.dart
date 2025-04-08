@@ -111,7 +111,7 @@ class OrderViewItemWidget extends StatelessWidget {
                             ),
                             const Spacer(),
                             Text(
-                              'M',
+                              item.sizeValue!,
                               style: textTheme.bodyMedium?.copyWith(
                                 // fontSize: 16,
                                 fontWeight: FontWeight.w300,

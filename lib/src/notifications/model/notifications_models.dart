@@ -23,7 +23,7 @@ class NotificationModel {
 }
 
 class NotificationByUser {
-  int? id;
+  String? id;
   String? title;
   String? message;
   String? firstImage;
@@ -33,12 +33,12 @@ class NotificationByUser {
 
   NotificationByUser(
       {this.id,
-        this.title,
-        this.message,
-        this.firstImage,
-        this.secondImage,
-        this.isRead,
-        this.createdAt});
+      this.title,
+      this.message,
+      this.firstImage,
+      this.secondImage,
+      this.isRead,
+      this.createdAt});
 
   NotificationByUser.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -59,6 +59,38 @@ class NotificationByUser {
     data['secondImage'] = secondImage;
     data['isRead'] = isRead;
     data['createdAt'] = createdAt;
+    return data;
+  }
+}
+
+class DeleteAllNotificationsModel {
+  String? deleteAllNotificationsForUser;
+
+  DeleteAllNotificationsModel({this.deleteAllNotificationsForUser});
+
+  DeleteAllNotificationsModel.fromJson(Map<String, dynamic> json) {
+    deleteAllNotificationsForUser = json['deleteAllNotificationsForUser'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['deleteAllNotificationsForUser'] = deleteAllNotificationsForUser;
+    return data;
+  }
+}
+
+class DeleteNotificationModel {
+  bool? deleteNotificationForUser;
+
+  DeleteNotificationModel({this.deleteNotificationForUser});
+
+  DeleteNotificationModel.fromJson(Map<String, dynamic> json) {
+    deleteNotificationForUser = json['deleteNotificationForUser'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['deleteNotificationForUser'] = deleteNotificationForUser;
     return data;
   }
 }
