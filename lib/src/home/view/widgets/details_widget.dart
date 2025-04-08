@@ -122,25 +122,35 @@ class ProductDetails extends StatelessWidget {
                 content: product.customShippingPolicy!,
               ),
               const SizedBox(height: 10),
-              Text(
-                'Reviews',
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (context) {
-                        return WriteReviewWidget(
-                          product: product,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Reviews',
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: ButtonColor.black,
+                        foregroundColor: ButtonColor.white,
+                      ),
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) {
+                            return WriteReviewWidget(
+                              product: product,
+                            );
+                          },
                         );
                       },
-                    );
-                  },
-                  child: Text("write a review")),
+                      child: Text("Write a review")),
+                ],
+              ),
+
               const SizedBox(height: 10),
               FutureBuilder<GetProductReviewModel?>(
                 future: logic.getReviews(product.id ?? ''),

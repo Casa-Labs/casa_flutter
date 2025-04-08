@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 class StarRatingButton extends StatefulWidget {
   const StarRatingButton({
-    super.key, required this.getreview,
+    super.key,
+    required this.getreview,
   });
   final Function(int review) getreview;
 
@@ -18,6 +19,7 @@ class StarRatingButtonState extends State<StarRatingButton> {
     setState(() {
       _rating = index + 1;
     });
+    widget.getreview(_rating);
   }
 
   @override
