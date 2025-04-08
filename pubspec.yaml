@@ -60,6 +60,8 @@ dependencies:
   in_app_update: ^4.2.3
   persistent_bottom_nav_bar: ^6.2.1
   showcaseview: ^4.0.1
+  url_launcher: ^6.3.1
+
 
 
 
@@ -88,18 +90,18 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/icons/
-    - assets/logos/
     - assets/images/
     - assets/images/email.png
+    - assets/images/size_guide.jpeg
     - assets/images/splash_background.jpeg
     - assets/images/verify.png
+    - assets/logos/
 
 
   fonts:
-    - family: Shafarik
+    - family: Shafarik-Regular
       fonts:
         - asset: fonts/Shafarik-Regular.ttf
-
     - family: times-new-roman
       fonts:
         - asset: fonts/times-new-roman.ttf
