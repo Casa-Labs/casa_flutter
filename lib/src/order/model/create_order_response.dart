@@ -28,7 +28,7 @@ class CreateOrderData {
   String? status;
   ShippingInfo? shippingInfo;
   dynamic paymentInfo;
-  double? totalAmount;
+  int? totalAmount;
   dynamic discountCode;
   String? deliveryType;
   dynamic deliveryInstructions;
@@ -125,7 +125,7 @@ class Items {
 
 class PaymentOrderDetails {
   String? id;
-  double? amount;
+  int? amount;
   String? currency;
   String? status;
   String? orderId;

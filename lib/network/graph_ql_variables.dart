@@ -121,7 +121,7 @@ class GraphQLVariables {
 
   static Map<String, dynamic> createOrderVariables(
     String userId,
-    double totalAmount,
+    int totalAmount,
     String deliveryType,
     String discountCode,
     String deliveryInstructions,

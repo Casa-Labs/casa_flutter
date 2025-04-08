@@ -137,7 +137,14 @@ final GoRouter router = GoRouter(
   errorBuilder: (context, state) {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        context.goNamed(_AppPaths.navigation);
+        if (PreferenceManager.getBool(
+            PreferenceManager.isFirstTime)!) {
+          router.goNamed(RouteNames.navigation,
+              extra: true);
+        }else {
+          router.goNamed(
+              RouteNames.navigation, extra: false);
+        }
       },
     );
     return const Scaffold();
@@ -226,7 +233,13 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.navigation,
       name: RouteNames.navigation,
-      builder: (context, state) => const NavPage(),
+      builder: (context, state) {
+        bool isFirstLaunch = false;
+        if(state.extra != null) {
+          isFirstLaunch = state.extra as bool;
+        }
+        return NavPage(isFirstLaunch: isFirstLaunch);
+      },
     ),
     GoRoute(
       path: _AppPaths.orderDetails,

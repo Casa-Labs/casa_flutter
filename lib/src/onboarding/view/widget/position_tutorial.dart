@@ -30,8 +30,11 @@ class PositionTutorial extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    var height = size.height;
+    var width = size.width;
     return Container(
-      width: Get.width,
+      width: width,
       color: Colors.black.withValues(alpha:0.6),
       child: GestureDetector(
         onTap: onTap,

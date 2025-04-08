@@ -137,7 +137,7 @@ class GraphQLManager {
 
   Future<QueryResult> createOrder(
     String userId,
-    double totalAmount,
+    int totalAmount,
     String deliveryType,
     String discountCode,
     String deliveryInstructions,
