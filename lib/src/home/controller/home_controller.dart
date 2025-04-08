@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:appinio_swiper/appinio_swiper.dart';
+import 'package:casaflutterapp/src/home/model/service/home_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ import '../../../utils/utils.dart';
 import '../model/brand_response_model.dart';
 import '../model/cat_response_model.dart';
 import '../model/home_models.dart';
+import '../model/review_response.dart';
 import '../model/size_respose_model.dart';
 
 class HomeController extends GetxController {
@@ -24,7 +26,7 @@ class HomeController extends GetxController {
   List<Product> products = [];
   List<GetProductSizes> size = [];
   // Convert API sizes to button format
-  List<String> formattedSizes =[];
+  List<String> formattedSizes = [];
   List<BrandData> brand = [];
   List<GetProductCategories> category = [];
   RxBool isLoading = false.obs;
@@ -42,6 +44,7 @@ class HomeController extends GetxController {
   int minValue = 0;
   int maxValue = 0;
   RxInt quantity = 1.obs;
+  RxString selectedSize = "S".obs;
   final ValueNotifier<int> counter = ValueNotifier<int>(1);
   IconData? swipeIcon;
 
@@ -86,7 +89,7 @@ class HomeController extends GetxController {
     super.onInit();
     await fetchProducts({});
     await getBrand();
-    await getSize();
+    // await getSize();
     await getCategory();
   }
 
@@ -163,6 +166,42 @@ class HomeController extends GetxController {
     update();
   }
 
+  selectSize(String size) {
+    selectedSize.value = size;
+    update();
+  }
+
+  List<String> formattedSizesList(Product product) {
+    selectedSize.value = SizeItem.mapSize(product.sizes![0].size!.name!);
+    List<String> sizes = [];
+    for (var i = 0; i < product.sizes!.length; i++) {
+      String formattedSize = SizeItem.mapSize(product.sizes![i].size!.name!);
+      sizes.add(formattedSize);
+    }
+    return sizes;
+  }
+
+  String formatDate(String? dateString) {
+    if (dateString == null) return '';
+    try {
+      final date = DateTime.parse(dateString);
+      final now = DateTime.now();
+      final difference = now.difference(date);
+
+      if (difference.inDays > 0) {
+        return '${difference.inDays}d ago';
+      } else if (difference.inHours > 0) {
+        return '${difference.inHours}h ago';
+      } else if (difference.inMinutes > 0) {
+        return '${difference.inMinutes}m ago';
+      } else {
+        return 'Just now';
+      }
+    } catch (e) {
+      return dateString;
+    }
+  }
+
 // ========== APIs FUNCTIONS ========== //
 
   Future<void> fetchProducts(Map<String, dynamic> map) async {
@@ -237,4 +276,8 @@ class HomeController extends GetxController {
   }
 
   Future<void> addToWishlist() async {}
+
+  Future<GetProductReviewModel?> getReviews(String productId) async {
+    return await HomeService().getReview(productId: productId);
+  }
 }

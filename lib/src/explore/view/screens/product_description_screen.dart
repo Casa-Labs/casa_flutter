@@ -149,12 +149,14 @@ class ProductDescriptionScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   Text(
-                    'Rs ${product.price}',
+                    'Rs ${product.productPrice}',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 20),
                   SelectSizeButton(
                     size: [],
+                    selectedSize: "S",
+                    onSizeSelected: (newSize) {},
                   ),
                   const SizedBox(height: 20),
                   Center(child: QuantitySelectorButton()),

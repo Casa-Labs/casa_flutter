@@ -140,17 +140,22 @@ query GetOrders(\$userId: String!) {
 """;
 
   static const String getProductReviews = """
-query GetProductReviews(\$productId: String!) {
-  getProductReviews(productId: \$productId) {
+query GetProductInteractions(\$productId: String!) {
+  getProductInteractions(productId: \$productId) {
+    id
+    userId
+    user {
+      name
+      profileImage
+    }
+    productId
+    liked
+    disliked
+    viewed
+    rating
     comment
     createdAt
-    disliked
-    liked
-    productId
-    rating
-    userId
     updatedAt
-    viewed
   }
 }
 """;
@@ -163,6 +168,14 @@ query GetProducts(\$params: GetProduct!) {
       mainImage
       name
       price
+      colors {
+        color {
+          id
+          hexCode
+          createdAt
+          name
+        }
+      }
       sizes {
         productId
         sizeId
@@ -171,6 +184,14 @@ query GetProducts(\$params: GetProduct!) {
           name
           createdAt
           updatedAt
+        }
+      }
+      colors {
+        color {
+          id
+          hexCode
+          createdAt
+          name
         }
       }
       description

@@ -3,13 +3,14 @@ import 'package:casaflutterapp/src/home/view/screens/home_screen.dart';
 import 'package:casaflutterapp/src/profile/view/screens/profile_screen.dart';
 import 'package:casaflutterapp/utils/color_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 import '../../../cart/view/screens/cart_screen.dart';
 import '../../../onboarding/view/screens/onboarding_screen.dart';
 import '../../../wishlist/view/screens/wishlist_screen.dart';
 
 class NavPage extends StatefulWidget {
-  const NavPage({super.key, this.isFirstLaunch = true});
+  const NavPage({super.key, this.isFirstLaunch = false});
 
   final bool isFirstLaunch;
 
@@ -71,13 +72,14 @@ class NavPageState extends State<NavPage> {
         child: Stack(
           children: [
             _getScreen(_selectedIndex), // Display the selected page
-            if (tutorialScreenIndex < 14 && !_isFirstLaunch)
+            if (tutorialScreenIndex < 14 && _isFirstLaunch)
               Positioned.fill(
                 child: TutorialScreen(
                   index: tutorialScreenIndex,
                   onTap: changeIndexTutorial,
                 ),
               ),
+
           ],
         ),
       ),
@@ -119,55 +121,6 @@ class NavPageState extends State<NavPage> {
               backgroundColor: BottomNavigationColor.white)
         ],
       ),
-
-      // =========== ERROR ============
-      // This approach will not work as it does not allow Safe area to work
-      // Extra spacing is present at top of persistent bottom bar
-      //     PersistentTabView(
-      //   context,
-      //   screens: _buildScreens(),
-      //   items: <PersistentBottomNavBarItem>[
-      //     PersistentBottomNavBarItem(
-      //         icon: Icon(Icons.home, size: 25),
-      //         inactiveIcon: Icon(Icons.home_outlined, size: 25),
-      //         activeColorPrimary: Colors.black),
-      //     PersistentBottomNavBarItem(
-      //         icon: Icon(Icons.search, size: 25),
-      //         inactiveIcon: Icon(Icons.search_outlined, size: 25),
-      //         activeColorPrimary: Colors.black),
-      //     PersistentBottomNavBarItem(
-      //         icon: Icon(Icons.shopping_cart_rounded, size: 25),
-      //         inactiveIcon: Icon(Icons.shopping_cart_outlined, size: 25),
-      //         activeColorPrimary: Colors.black),
-      //     PersistentBottomNavBarItem(
-      //         icon: Icon(Icons.favorite, size: 25),
-      //         inactiveIcon: Icon(Icons.favorite_border, size: 25),
-      //         activeColorPrimary: Colors.black),
-      //     PersistentBottomNavBarItem(
-      //         icon: Icon(Icons.person, size: 25),
-      //         inactiveIcon: Icon(Icons.person_outline_outlined, size: 25),
-      //         activeColorPrimary: Colors.black),
-      //   ],
-      //   handleAndroidBackButtonPress: true,
-      //   resizeToAvoidBottomInset: true,
-      //   stateManagement: true,
-      //   hideNavigationBarWhenKeyboardAppears: true,
-      //   padding: const EdgeInsets.only(top: 8),
-      //   backgroundColor: Colors.white,
-      //   confineToSafeArea: true,
-      //   navBarHeight: kBottomNavigationBarHeight,
-      //   navBarStyle: NavBarStyle.style12,
-      // ),
     );
   }
-
-  // List<Widget> _buildScreens() {
-  //   return [
-  //     HomeScreen(),
-  //     ExploreScreen(),
-  //     CartScreen(),
-  //     WishlistScreen(),
-  //     ProfileScreen()
-  //   ];
-  // }
 }

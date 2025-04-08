@@ -1,4 +1,3 @@
-import 'package:casaflutterapp/src/auth/view/widgets/auth_button.dart';
 import 'package:casaflutterapp/src/profile/controller/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
@@ -53,11 +52,16 @@ class ShareAppDialog extends StatelessWidget {
               const SizedBox(height: 24),
               Row(
                 children: [
-                  _button("Close", logic, context,() => Navigator.of(context).pop()
-                  ),
+                  _button("Close", logic, context,
+                      () => Navigator.of(context).pop()),
                   SizedBox(width: 10),
-                  _button("Share", logic, context,() => logic.shareApp(
-                      logic.isSelectPlay ? androidAppLink : iosAppLink, appName)),
+                  _button(
+                      "Share",
+                      logic,
+                      context,
+                      () => logic.shareApp(
+                          logic.isSelectPlay ? androidAppLink : iosAppLink,
+                          appName)),
                 ],
               )
             ],
@@ -92,7 +96,8 @@ class ShareAppDialog extends StatelessWidget {
     );
   }
 
-  _button(String label, ProfileController logic, BuildContext context, Function() onPressed) {
+  _button(String label, ProfileController logic, BuildContext context,
+      Function() onPressed) {
     return Expanded(
       child: ElevatedButton(
         onPressed: onPressed,

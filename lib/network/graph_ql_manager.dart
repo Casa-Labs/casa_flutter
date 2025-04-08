@@ -136,25 +136,27 @@ class GraphQLManager {
   }
 
   Future<QueryResult> createOrder(
-      String userId,
-      double totalAmount,
-      String deliveryType,
-      String discountCode,
-      String deliveryInstructions,
-      List<Items> items,
-      PaymentInfo paymentInfo,
-      ShippingInfo shippingInfo) async {
+    String userId,
+    int totalAmount,
+    String deliveryType,
+    String discountCode,
+    String deliveryInstructions,
+    List<Items> items,
+    PaymentInfo paymentInfo,
+    ShippingInfo shippingInfo,
+  ) async {
     return await _clientService.performMutation(
       document: GraphQLMutations.createOrder,
       variables: GraphQLVariables.createOrderVariables(
-          userId,
-          totalAmount,
-          deliveryType,
-          discountCode,
-          deliveryInstructions,
-          items,
-          paymentInfo,
-          shippingInfo),
+        userId,
+        totalAmount,
+        deliveryType,
+        discountCode,
+        deliveryInstructions,
+        items,
+        paymentInfo,
+        shippingInfo,
+      ),
     );
   }
 

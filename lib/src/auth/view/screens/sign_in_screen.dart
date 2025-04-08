@@ -1,15 +1,13 @@
 import 'dart:io';
-
 import 'package:casaflutterapp/src/auth/controller/auth_controller.dart';
 import 'package:casaflutterapp/src/auth/view/widgets/auth_button.dart';
 import 'package:casaflutterapp/src/common/widgets/custom_text_form_field_widget.dart';
 import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../routes/app_routes.dart';
+import '../../../../utils/preference_manager.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
@@ -84,7 +82,14 @@ class SignInScreen extends StatelessWidget {
                                 message: authController.message(),
                               );
                               if (authController.isLoggedIn()) {
-                                router.goNamed(RouteNames.navigation);
+                                if (PreferenceManager.getBool(PreferenceManager.isFirstTime) ?? true) {
+                                  router.goNamed(RouteNames.navigation,
+                                      extra: true);
+                                  await PreferenceManager.setData(PreferenceManager.isFirstTime, false);
+                                }else {
+                                  router.goNamed(
+                                      RouteNames.navigation, extra: false);
+                                }
                               }
                             }
                           },
@@ -117,7 +122,15 @@ class SignInScreen extends StatelessWidget {
                             message: authController.message(),
                           );
                           if (authController.isGoogleLoggedIn()) {
-                            router.goNamed(RouteNames.navigation);
+                            if (PreferenceManager.getBool(
+                                PreferenceManager.isFirstTime)!) {
+                              router.goNamed(RouteNames.navigation,
+                                  extra: true);
+                              await PreferenceManager.setData(PreferenceManager.isFirstTime, false);
+                            }else {
+                              router.goNamed(
+                                  RouteNames.navigation, extra: false);
+                            }
                           }
                         }
                       },

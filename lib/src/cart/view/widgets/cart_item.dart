@@ -36,20 +36,14 @@ class CartItem extends StatelessWidget {
           width: 50,
           padding: EdgeInsets.all(2),
           decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: CColor.circleBoarder,width: 1)
-          ),
+              shape: BoxShape.circle,
+              border: Border.all(color: CColor.circleBoarder, width: 1)),
           child: CircleAvatar(
             maxRadius: 24,
-            backgroundColor:
-            const Color(0xFF002957),
+            backgroundColor: const Color(0xFF002957),
             child: Text(
-              "ZARA"
-                  .substring(0, 4)
-                  .toUpperCase(),
-              style: const TextStyle(
-                  color: TextColor.white,
-                  fontSize: 14),
+              "ZARA".substring(0, 4).toUpperCase(),
+              style: const TextStyle(color: TextColor.white, fontSize: 14),
             ),
           ),
         ),
@@ -65,10 +59,9 @@ class CartItem extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(4),
-                child: Container(
+                child: SizedBox(
                     height: MediaQuery.of(context).size.height * 0.2,
                     width: MediaQuery.of(context).size.width * 0.25,
-                    color: Colors.red,
                     child: Image.network(item.mainImage!, fit: BoxFit.fill)
                     //  Image.asset(
                     //   'assets/images/placeholder.png',
@@ -97,7 +90,7 @@ class CartItem extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "₹${item.price!}",
+                          "₹${item.productPrice!}",
                           // "₹100",
                           style: textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.w700,
@@ -136,7 +129,7 @@ class CartItem extends StatelessWidget {
                         ),
                       ),
                     ),
-                    _buildSizeSelector(textTheme),
+                    _buildSizeSelector(textTheme, item.sizeValue!),
                     const SizedBox(height: 6),
                     CounterWidget(
                       quantity: item.quantity ?? 1,
@@ -174,7 +167,7 @@ class CartItem extends StatelessWidget {
     );
   }
 
-  Widget _buildSizeSelector(TextTheme textTheme) {
+  Widget _buildSizeSelector(TextTheme textTheme, String size) {
     return Container(
       height: 36,
       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -192,7 +185,7 @@ class CartItem extends StatelessWidget {
             ),
           ),
           Text(
-            'M',
+            size,
             style: textTheme.bodySmall?.copyWith(
               color: TextColor.black,
               fontWeight: FontWeight.w500,

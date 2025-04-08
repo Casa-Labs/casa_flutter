@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
             )),
     );
   }
-
+  
   _cardSwiper(
       HomeController logic, BuildContext context, List<Product> products) {
     return RefreshIndicator(

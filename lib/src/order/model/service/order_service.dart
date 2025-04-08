@@ -13,7 +13,7 @@ class OrderService {
 
     final response = await _graphQLManager.createOrder(
       createOrderRequestModel.userId ?? "",
-      createOrderRequestModel.totalAmount ?? 0.0,
+      createOrderRequestModel.totalAmount ?? 0,
       createOrderRequestModel.deliveryType ?? "",
       createOrderRequestModel.discountCode ?? "",
       createOrderRequestModel.deliveryInstructions ?? "",
@@ -22,9 +22,7 @@ class OrderService {
       createOrderRequestModel.shippingInfo ?? ShippingInfo(),
     );
 
-    createOrderResponse = CreateOrderResponse.fromJson(
-      response.data,
-    );
+    createOrderResponse = CreateOrderResponse.fromJson(response.data);
 
     return createOrderResponse;
   }

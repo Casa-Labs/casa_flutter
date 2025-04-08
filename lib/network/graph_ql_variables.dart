@@ -120,18 +120,24 @@ class GraphQLVariables {
   }
 
   static Map<String, dynamic> createOrderVariables(
-      String userId,
-      double totalAmount,
-      String deliveryType,
-      String discountCode,
-      String deliveryInstructions,
-      List<Items> items,
-      PaymentInfo paymentInfo,
-      ShippingInfo shippingInfo) {
+    String userId,
+    int totalAmount,
+    String deliveryType,
+    String discountCode,
+    String deliveryInstructions,
+    List<Items> items,
+    PaymentInfo paymentInfo,
+    ShippingInfo shippingInfo,
+  ) {
     return {
       "totalAmount": totalAmount,
       "deliveryType": deliveryType,
       "shippingInfo": shippingInfo,
+      "deliveryInstructions": deliveryInstructions,
+      "items": items,
+      "paymentInfo": paymentInfo,
+      "userId": userId,
+      "discountCode": discountCode,
     };
   }
 
