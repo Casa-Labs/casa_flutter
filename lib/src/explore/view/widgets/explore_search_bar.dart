@@ -39,6 +39,9 @@ class ExploreSearchBar extends StatelessWidget {
                   borderSide: BorderSide.none,
                 ),
               ),
+              onTap: () {
+                context.pushNamed(RouteNames.searchView);
+              },
             ),
           ),
         ),

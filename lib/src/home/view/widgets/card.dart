@@ -6,6 +6,7 @@ import 'package:casaflutterapp/src/home/view/widgets/details_widget.dart';
 import 'package:casaflutterapp/utils/font.dart';
 import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
@@ -13,8 +14,6 @@ import 'package:share_plus/share_plus.dart';
 // import 'package:share_plus/share_plus.dart';
 
 import '../../../../utils/color_constant.dart';
-import '../../../cart/model/cart_models.dart';
-import '../../../common/widgets/network_image_widget.dart';
 import '../../../order/controller/order_review_controller.dart';
 import '../../../wishlist/controller/wishlist_controller.dart';
 import '../../../wishlist/view/screens/add_to_closet.dart';
@@ -216,6 +215,8 @@ class Cards extends StatelessWidget {
                                               children: [
                                                 IconButton(
                                                   onPressed: () {
+                                                    HapticFeedback
+                                                        .heavyImpact();
                                                     cartLogin.addProductsToCart(
                                                         product,
                                                         homeCtrl.quantity.value,
@@ -230,6 +231,9 @@ class Cards extends StatelessWidget {
                                                 ),
                                                 IconButton(
                                                   onPressed: () {
+                                                    HapticFeedback
+                                                        .heavyImpact();
+
                                                     wishController
                                                         .selectedClosets
                                                         .clear();
@@ -256,6 +260,8 @@ class Cards extends StatelessWidget {
                                                 ),
                                                 IconButton(
                                                   onPressed: () {
+                                                    HapticFeedback
+                                                        .heavyImpact();
                                                     Share.share(
                                                         'Check out the CASA app now');
                                                   },
@@ -268,6 +274,8 @@ class Cards extends StatelessWidget {
                                             ),
                                           ),
                                           BuyNowButton(onPressed: () {
+                                            HapticFeedback.heavyImpact();
+
                                             orderReviewController
                                                 .getHomeProduct(
                                                     product,
