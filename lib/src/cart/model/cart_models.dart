@@ -1,4 +1,6 @@
 // Add items to cart request model //
+import '../../home/model/home_models.dart';
+
 class AddCartRequestModel {
   String userId;
   Map<String, dynamic> item;
@@ -99,6 +101,7 @@ class ProductForCart {
   double? productPrice;
   String? size;
   String? color;
+  Store? store;
   String? mainImage;
   String? description;
   String? sizeValue;
@@ -111,6 +114,7 @@ class ProductForCart {
       this.productPrice,
       this.color,
       this.size,
+        this.store,
       this.mainImage,
       this.description,
       this.sizeValue,
@@ -124,6 +128,9 @@ class ProductForCart {
         : (json['productPrice'] ?? 0).toDouble();
     size = json['size'] ?? "";
     color = json['color'] ?? "";
+    if (store != null) {
+      json['store'] = store?.toJson();
+    }
     mainImage = json['mainImage'] ?? "";
     description = json['description'] ?? "";
     sizeValue = json['sizeValue'] ?? "";
@@ -138,6 +145,9 @@ class ProductForCart {
     data['mainImage'] = mainImage;
     data['size'] = size;
     data['color'] = color;
+    if (store != null) {
+      data['store'] = store!.toJson();
+    }
     data['description'] = description;
     data['sizeValue'] = sizeValue;
     data['quantity'] = quantity;

@@ -57,7 +57,7 @@ class ProductDescriptionScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'ZARA',
+                            product?.store?.name ?? AppStrings.productBrand,
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall

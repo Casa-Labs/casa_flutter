@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.54"
+  app_tutorial:
+    dependency: "direct main"
+    description:
+      name: app_tutorial
+      sha256: "11a44ff06527661f3e9201e2230cc9f7b96f469df9418f0c6b98de247c4e4c36"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.6"
   appinio_swiper:
     dependency: "direct main"
     description:
@@ -752,6 +760,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  showcaseview:
+    dependency: "direct main"
+    description:
+      name: showcaseview
+      sha256: "82e013ac2de1ae92cc6e652badf676606057c8e17aa3afd91e78866c4b4e85b1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.1"
   sign_in_with_apple:
     dependency: "direct main"
     description:

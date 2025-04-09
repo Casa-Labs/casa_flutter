@@ -23,6 +23,7 @@ import '../../model/home_models.dart';
 class Cards extends StatelessWidget {
   final int index;
   final Product product;
+
   const Cards({super.key, required this.index, required this.product});
 
   @override
@@ -152,6 +153,7 @@ class Cards extends StatelessWidget {
                                               height: 50,
                                               width: 50,
                                             )*/
+
                                                 /// Remove this after use above code
                                                 Container(
                                               decoration: BoxDecoration(
@@ -162,18 +164,10 @@ class Cards extends StatelessWidget {
                                               ),
                                               padding: EdgeInsets.all(1.5),
                                               child: CircleAvatar(
-                                                maxRadius: 24,
-                                                backgroundColor:
-                                                    const Color(0xFF002957),
-                                                child: Text(
-                                                  "ZARA"
-                                                      .substring(0, 4)
-                                                      .toUpperCase(),
-                                                  style: const TextStyle(
-                                                      color: TextColor.white,
-                                                      fontSize: 14),
-                                                ),
-                                              ),
+                                                  maxRadius: 24,
+                                                  child: Image.network(product
+                                                          .store?.logo ??
+                                                      AppStrings.productBrand)),
                                             ),
                                           ),
                                           Text(

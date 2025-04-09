@@ -40,11 +40,9 @@ class CartItem extends StatelessWidget {
               border: Border.all(color: CColor.circleBoarder, width: 1)),
           child: CircleAvatar(
             maxRadius: 24,
-            backgroundColor: const Color(0xFF002957),
-            child: Text(
-              "ZARA".substring(0, 4).toUpperCase(),
-              style: const TextStyle(color: TextColor.white, fontSize: 14),
-            ),
+            child: Image.network(item
+                .store?.logo ??
+                AppStrings.productBrand)
           ),
         ),
         SizedBox(height: 15),
@@ -100,7 +98,7 @@ class CartItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Zara',
+                      item.store?.name ?? AppStrings.productBrand,
                       style: textTheme.bodyMedium?.copyWith(
                         color: TextColor.black54,
                       ),

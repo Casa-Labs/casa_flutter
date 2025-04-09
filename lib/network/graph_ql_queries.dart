@@ -168,6 +168,19 @@ query GetProducts(\$params: GetProduct!) {
       mainImage
       name
       price
+      storeId
+      store {
+        id
+        userId
+        name
+        description
+        type
+        logo
+        createdAt
+        updatedAt
+        isDeleted
+        reasonToDelete
+      }
       colors {
         color {
           id
