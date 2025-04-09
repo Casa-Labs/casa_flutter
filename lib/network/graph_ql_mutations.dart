@@ -380,4 +380,16 @@ mutation VerifyPayment(\$paymentId: String!, \$orderId: String!, \$signature: St
   }
 }
 ''';
+
+  static const String deleteAllNotificationsForUser = '''
+mutation DeleteAllNotificationsForUser(\$userId: String!) {
+  deleteAllNotificationsForUser(userId: \$userId)
+}
+''';
+
+  static const String deleteNotificationForUser = '''
+mutation DeleteNotificationForUser(\$id: String!) {
+  deleteNotificationForUser(id: \$id)
+}
+''';
 }

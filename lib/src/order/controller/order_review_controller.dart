@@ -10,6 +10,7 @@ import '../../../utils/preference_manager.dart';
 import '../../../utils/utils.dart';
 import '../../auth/model/auth_models.dart';
 import '../../cart/model/cart_models.dart';
+import '../../home/model/home_models.dart';
 import '../model/create_order.dart';
 
 class OrderReviewController extends GetxController {
@@ -30,6 +31,32 @@ class OrderReviewController extends GetxController {
   RxString message = ''.obs;
 
   // ========== STATES ========== //
+
+  void getHomeProduct(Product product, int quantity, String selectedSize) {
+    String sizeID = "";
+    for (var sizes in product.sizes!) {
+      if (selectedSize == SizeItem.mapSize(sizes.size!.name!)) {
+        sizeID = sizes.size!.id!;
+      }
+    }
+    CartItem homeProduct = CartItem(
+        item: ProductForCart.fromJson({
+          "productId": product.id,
+          "name": product.name,
+          "productPrice": product.price,
+          "mainImage": product.mainImage,
+          "color": product.colors!.first.color!.id,
+          "size": sizeID,
+          "sizeValue": selectedSize,
+          "description": product.description,
+          "quantity": quantity, // Add quantity field
+        }),
+        createdAt: "",
+        id: "",
+        updatedAt: "");
+    getAllProductItem([homeProduct]);
+  }
+
   void getAllProductItem(List<CartItem> cartList) {
     productsList.assignAll(cartList);
     getTotalPrice();
@@ -75,7 +102,7 @@ class OrderReviewController extends GetxController {
       item.productId = product.item?.productId;
       item.quantity = product.item?.quantity;
       item.price = product.item?.productPrice!;
-      item.color  = product.item?.color!;
+      item.color = product.item?.color!;
       item.size = product.item?.size!;
       productItem.add(item);
     }
