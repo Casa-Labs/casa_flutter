@@ -26,7 +26,13 @@ class HomeSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           SizedBox(width: 10),
           Expanded(
-            child: SizedBox(height: 30, child: CustomSearchBar()),
+            child: SizedBox(
+                height: 30,
+                child: CustomSearchBar(
+                  onTap: () {
+                    context.pushNamed(RouteNames.searchView);
+                  },
+                )),
           ),
         ],
       ),

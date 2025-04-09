@@ -17,6 +17,7 @@ import 'package:casaflutterapp/src/profile/view/screens/contact_us_screen.dart';
 import 'package:casaflutterapp/src/profile/view/screens/profile_screen.dart';
 import 'package:casaflutterapp/src/search/view/screens/search_view_screen.dart';
 import 'package:casaflutterapp/utils/preference_manager.dart';
+import 'package:casaflutterapp/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -71,7 +72,7 @@ class _AppPaths {
   static const String myOrders = '/myOrders';
   static const String store = '/store';
   static const String productList = '/productList';
-  static const String productDescription = '/productDescription';
+  static const String productDescription = '/productDescription/:id';
   static const String paymentOptions = '/paymentOptions';
   static const String cart = '/cart';
   static const String orderReview = '/orderReview';
@@ -317,6 +318,7 @@ final GoRouter router = GoRouter(
       path: _AppPaths.productDescription,
       name: RouteNames.productDescription,
       builder: (context, state) {
+        logg.f(state.extra);
         final productId = state.extra as String; // ✅ Retrieve the object
         return ProductDescriptionScreen(id: productId);
       },

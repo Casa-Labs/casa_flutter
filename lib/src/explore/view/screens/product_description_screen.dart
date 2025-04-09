@@ -23,6 +23,8 @@ class ProductDescriptionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO : Terrible logic of relying on explore controller but will fix it later
+
     final exploreCtrl = Get.put(ExploreController());
     return Scaffold(
       appBar: CommonAppBar(

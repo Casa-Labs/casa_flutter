@@ -273,7 +273,7 @@ class ExploreSection extends StatelessWidget {
                               onTap: () {
                                 context.pushNamed(
                                   RouteNames.productDescription,
-                                  // extra: newArrivalProduct,
+                                  pathParameters: {'id': product.id ?? ''},
                                 );
                               },
                               child: Column(
