@@ -115,7 +115,7 @@ class ExploreSection extends StatelessWidget {
                             final brand = exploreCtrl.brands[index];
                             return InkWell(
                               onTap: () {
-                                context.pushNamed(RouteNames.store);
+                                // context.pushNamed(RouteNames.store);
                               },
                               child: Container(
                                 width: 80,
@@ -154,8 +154,12 @@ class ExploreSection extends StatelessWidget {
                                 exploreCtrl.trendingProducts[index];
                             return InkWell(
                               onTap: () {
-                                context
-                                    .pushNamed(RouteNames.productDescription);
+                                context.pushNamed(
+                                  RouteNames.productDescription,
+                                  pathParameters: {
+                                    'id': trendingProduct.id ?? ''
+                                  },
+                                );
                               },
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,7 +226,9 @@ class ExploreSection extends StatelessWidget {
                               onTap: () {
                                 context.pushNamed(
                                   RouteNames.productDescription,
-                                  extra: newArrivalProduct,
+                                  pathParameters: {
+                                    'id': newArrivalProduct.id ?? ''
+                                  },
                                 );
                               },
                               child: Column(
@@ -248,7 +254,6 @@ class ExploreSection extends StatelessWidget {
                     ),
             ],
           ),
-
           // Clothes you might like column
           Column(
             children: [

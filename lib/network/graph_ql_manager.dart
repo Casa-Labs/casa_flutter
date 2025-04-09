@@ -361,7 +361,7 @@ class GraphQLManager {
 
   Future<QueryResult> getProductsById(String productId) async {
     return await _clientService.performQuery(
-      document: GraphQLQueries.getProducts,
+      document: GraphQLQueries.getProductDescription,
       variables: GraphQLVariables.getProductById(productId),
     );
   }

@@ -3,14 +3,16 @@ import 'package:casaflutterapp/src/common/widgets/buttons/buy_now_button.dart';
 import 'package:casaflutterapp/src/common/widgets/common_app_bars.dart';
 import 'package:casaflutterapp/src/common/widgets/custom_image_view.dart';
 import 'package:casaflutterapp/src/explore/controller/explore_controller.dart';
+import 'package:casaflutterapp/src/explore/model/product_by_id_model.dart';
 import 'package:casaflutterapp/utils/color_constant.dart';
 import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../../routes/app_routes.dart';
 import '../../../../utils/padding_size.dart';
-import '../../../cart/model/cart_models.dart';
+import '../../../../utils/utils.dart';
 import '../../../common/widgets/buttons/add_to_cart_button.dart';
 import '../../../common/widgets/buttons/select_size_button.dart';
 import '../widgets/care_composition_tile.dart';
@@ -30,18 +32,22 @@ class ProductDescriptionScreen extends StatelessWidget {
       appBar: CommonAppBar(
         title: '',
       ),
-      body: SafeArea(
-          child: FutureBuilder<CartItem>(
-        future: exploreCtrl.getProductById(id),
+      body: FutureBuilder<GetProductDetails>(
+        future: exploreCtrl.getProductDetailsByIdCall(id),
         builder: (context, snapshot) {
+          logg.d('Snapshot state: ${snapshot.connectionState}');
+          logg.d('Snapshot hasError: ${snapshot.hasError}');
+          logg.d('Snapshot error: ${snapshot.error}');
+          logg.d('Snapshot data: ${snapshot.data}');
+
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return const Center(child: Text("Can't fetch order"));
+            return const Center(child: Text("Can't fetch product details"));
           } else if (!snapshot.hasData || snapshot.data == null) {
-            return const Center(child: Text("No Order available"));
+            return const Center(child: Text("No product details available"));
           } else {
-            var product = snapshot.data!.item;
+            final product = snapshot.data;
             return SingleChildScrollView(
               padding: const EdgeInsets.all(PaddingSize.commonPadding),
               child: Column(
@@ -52,14 +58,17 @@ class ProductDescriptionScreen extends StatelessWidget {
                     spacing: 10,
                     children: [
                       CircleAvatar(
-                        backgroundImage: AssetImage(ImageConstants.avatarLogo),
+                        backgroundImage: CachedNetworkImageProvider(
+                          product?.store?.logo ??
+                              ImageConstants.dummyNetworkPortrait,
+                        ),
                         radius: 25,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'ZARA',
+                            product?.store?.name ?? 'API Error',
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall
@@ -79,7 +88,8 @@ class ProductDescriptionScreen extends StatelessWidget {
                         children: [
                           CachedNetworkImage(
                             scale: 1.82,
-                            imageUrl: product!.mainImage!,
+                            imageUrl: product?.mainImage ??
+                                ImageConstants.dummyNetworkPortrait,
                           ),
                           Positioned(
                             bottom: 10,
@@ -134,7 +144,7 @@ class ProductDescriptionScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    product.name ?? 'NA',
+                    product?.name ?? 'NA',
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium
@@ -142,7 +152,7 @@ class ProductDescriptionScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    product.description ?? 'NA',
+                    product?.description ?? 'NA',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(height: 10),
@@ -151,7 +161,7 @@ class ProductDescriptionScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   Text(
-                    'Rs ${product.productPrice}',
+                    'Rs ${product?.price ?? 'API Error'}',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 20),
@@ -177,7 +187,7 @@ class ProductDescriptionScreen extends StatelessWidget {
             );
           }
         },
-      )),
+      ),
     );
   }
 }

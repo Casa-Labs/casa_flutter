@@ -17,7 +17,6 @@ import 'package:casaflutterapp/src/profile/view/screens/contact_us_screen.dart';
 import 'package:casaflutterapp/src/profile/view/screens/profile_screen.dart';
 import 'package:casaflutterapp/src/search/view/screens/search_view_screen.dart';
 import 'package:casaflutterapp/utils/preference_manager.dart';
-import 'package:casaflutterapp/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -318,8 +317,7 @@ final GoRouter router = GoRouter(
       path: _AppPaths.productDescription,
       name: RouteNames.productDescription,
       builder: (context, state) {
-        logg.f(state.extra);
-        final productId = state.extra as String; // ✅ Retrieve the object
+        final productId = state.pathParameters['id'] as String;
         return ProductDescriptionScreen(id: productId);
       },
     ),

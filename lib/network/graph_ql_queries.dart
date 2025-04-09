@@ -262,6 +262,53 @@ query GetProducts(\$params: GetProduct!) {
 }
 """;
 
+  static const String getProductDescription = """
+query GetProductDetails(\$productId: String!) {
+  getProductDetails(productId: \$productId) {
+    productImages
+      mainImage
+      name
+      price
+      colors {
+        color {
+          id
+          hexCode
+          createdAt
+          name
+        }
+      }
+      sizes {
+        productId
+        sizeId
+        size {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+      }
+      colors {
+        color {
+          id
+          hexCode
+          createdAt
+          name
+        }
+      }
+      description
+      customReturnPolicy
+      customShippingPolicy
+      categoryId
+      id
+     store {
+      id
+      name
+      logo
+    }
+  }
+}
+""";
+
 //   static const String getTrendingProducts = """
 // query GetTrendingProducts(\$page: Int!, \$limit: Int!, \$search: String) {
 //   getTrendingProducts(page: \$page, limit: \$limit, search: \$search) {
@@ -289,9 +336,11 @@ query GetTrendingProducts(\$page: Int!, \$limit: Int!) {
   getTrendingProducts(page: \$page, limit: \$limit) {
     totalCount
     products {
-      name
       mainImage
+      id
+      name
       price
+      description
     }
   }
 }

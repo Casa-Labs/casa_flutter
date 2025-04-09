@@ -2,6 +2,7 @@ import 'package:casaflutterapp/src/cart/model/cart_models.dart';
 import 'package:casaflutterapp/src/explore/model/brands_model.dart';
 import 'package:casaflutterapp/src/explore/model/explore_products_model.dart';
 import 'package:casaflutterapp/src/explore/model/new_arrivals_model.dart';
+import 'package:casaflutterapp/src/explore/model/product_by_id_model.dart';
 import 'package:casaflutterapp/src/explore/model/product_categories_model.dart';
 import 'package:casaflutterapp/src/explore/model/trending_products_model.dart';
 import 'package:get/get.dart';
@@ -77,8 +78,22 @@ class ExploreService {
       final categoriesResponse = CartItem.fromJson(response.data!);
       return categoriesResponse;
     } else {
-      logg.e('Get brands Exception: ${response.exception}');
+      logg.e('Get product by ID Exception: ${response.exception}');
       return CartItem();
+    }
+  }
+
+  Future<GetProductDetails> getProductDetailsById(String productId) async {
+    var response = await GraphQLManager().getProductsById(productId);
+
+    if (!response.hasException && response.data != null) {
+      var responseBody = GetProductByIdResponseModel.fromJson(response.data!);
+      final productDetailsResponse =
+          responseBody.getProductDetails ?? GetProductDetails();
+      return productDetailsResponse;
+    } else {
+      logg.e('Get product details by ID Exception: ${response.exception}');
+      return GetProductDetails();
     }
   }
 
