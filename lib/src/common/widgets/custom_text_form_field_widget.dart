@@ -12,6 +12,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool expands;
   final bool? enabled;
   final int? maxLength;
+  final int? maxLines;
   final TextInputAction? textInputAction;
   final bool obscureText;
   final Color? fillColor;
@@ -32,6 +33,7 @@ class CustomTextFormField extends StatelessWidget {
     this.expands = false,
     this.enabled,
     this.maxLength,
+    this.maxLines,
     this.textInputAction = TextInputAction.unspecified,
     this.obscureText = false,
     this.onChanged,
@@ -54,7 +56,8 @@ class CustomTextFormField extends StatelessWidget {
         controller: controller,
         validator: validator,
         keyboardType: keyboardType,
-        maxLines: obscureText ? 1 : null, // obscure texts can't be multi-lined
+        maxLines:
+            obscureText ? 1 : maxLines, // obscure texts can't be multi-lined
         maxLength: maxLength,
         textAlign: maxLength != null ? TextAlign.center : TextAlign.start,
         textAlignVertical: TextAlignVertical.top,

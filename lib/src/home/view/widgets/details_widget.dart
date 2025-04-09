@@ -13,13 +13,13 @@ import '../../../common/widgets/buttons/add_to_cart_button.dart';
 import '../../../explore/view/widgets/quantity_selector_button.dart';
 import '../../model/home_models.dart';
 import '../../model/review_response.dart';
+import 'write_review_widget.dart';
 
 class ProductDetails extends StatelessWidget {
   final Product product;
   final List<String> size;
 
   const ProductDetails({super.key, required this.product, required this.size});
-
 
   @override
   Widget build(BuildContext context) {
@@ -122,12 +122,35 @@ class ProductDetails extends StatelessWidget {
                 content: product.customShippingPolicy!,
               ),
               const SizedBox(height: 10),
-              Text(
-                'Reviews',
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Reviews',
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: ButtonColor.black,
+                        foregroundColor: ButtonColor.white,
+                      ),
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) {
+                            return WriteReviewWidget(
+                              product: product,
+                            );
+                          },
+                        );
+                      },
+                      child: Text("Write a review")),
+                ],
               ),
+
               const SizedBox(height: 10),
               FutureBuilder<GetProductReviewModel?>(
                 future: logic.getReviews(product.id ?? ''),

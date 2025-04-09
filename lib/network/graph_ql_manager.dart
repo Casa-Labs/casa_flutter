@@ -186,13 +186,13 @@ class GraphQLManager {
   }
 
   Future<QueryResult> registerProductReview(
-      String productId,
-      String userId,
-      bool liked,
-      bool disliked,
-      bool viewed,
-      int rating,
-      String comment) async {
+      {required String productId,
+      required String userId,
+      required bool liked,
+      required bool disliked,
+      required bool viewed,
+      required int rating,
+      required String comment}) async {
     return await _clientService.performMutation(
       document: GraphQLMutations.registerProductReview,
       variables: GraphQLVariables.registerProductReviewVariables(
