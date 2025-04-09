@@ -3,7 +3,7 @@ import 'package:casaflutterapp/src/home/view/screens/home_screen.dart';
 import 'package:casaflutterapp/src/profile/view/screens/profile_screen.dart';
 import 'package:casaflutterapp/utils/color_constant.dart';
 import 'package:flutter/material.dart';
-import 'package:showcaseview/showcaseview.dart';
+import 'package:flutter/services.dart';
 
 import '../../../cart/view/screens/cart_screen.dart';
 import '../../../onboarding/view/screens/onboarding_screen.dart';
@@ -53,6 +53,10 @@ class NavPageState extends State<NavPage> {
 
   // Function to handle bottom navigation item selection
   void _onItemTapped(int index) {
+    if (index == 3) {
+      HapticFeedback.heavyImpact();
+    }
+
     setState(() {
       _selectedIndex = index;
     });
@@ -79,7 +83,6 @@ class NavPageState extends State<NavPage> {
                   onTap: changeIndexTutorial,
                 ),
               ),
-
           ],
         ),
       ),
