@@ -1,10 +1,8 @@
 import 'package:casaflutterapp/src/common/widgets/buttons/select_size_button.dart';
 import 'package:casaflutterapp/src/home/controller/home_controller.dart';
-import 'package:casaflutterapp/src/home/view/screens/all_reviews_screen.dart';
 import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/font.dart';
@@ -107,21 +105,21 @@ class ProductDetails extends StatelessWidget {
               //   },
               // ),
               ProductImageGrid(productImages: product.productImages ?? []),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
               _buildPolicyTile(
                 title: 'RETURN POLICY',
                 isExpanded: logic.isShowReturn,
                 onTap: () => logic.changeReturnPolicy(),
                 content: product.customReturnPolicy!,
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               _buildPolicyTile(
                 title: 'SHIPPING POLICY',
                 isExpanded: logic.isShowShipping,
                 onTap: () => logic.changeShippingPolicy(),
                 content: product.customShippingPolicy!,
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

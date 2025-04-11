@@ -14,16 +14,20 @@ class FilterButtonRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 8,
         children: [
-          IconButton(
-            icon: Icon(Icons.tune_rounded),
-            iconSize: 27,
-            color: IconColor.black,
-            style: IconButton.styleFrom(
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              minimumSize: Size.zero,
+          Padding(
+            padding: const EdgeInsets.only(left: 5),
+            child: IconButton(
+              icon: Icon(Icons.tune_rounded),
+              iconSize: 27,
+              color: IconColor.black,
+              style: IconButton.styleFrom(
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                minimumSize: Size.zero,
+                side: BorderSide(color: ButtonColor.black, width: 1),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              onPressed: () {},
             ),
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            onPressed: () {},
           ),
           FilterChipButton(
             text: 'Brand',
