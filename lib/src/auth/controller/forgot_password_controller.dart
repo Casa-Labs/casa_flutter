@@ -1,8 +1,12 @@
+import 'package:casaflutterapp/src/auth/model/service/auth_service.dart';
 import 'package:casaflutterapp/utils/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ForgotPasswordController extends GetxController {
+  // ========= OBJECTS ============= //
+  final AuthService _authService = AuthService();
+
   // ========= CONTROLLERS ========= //
   final TextEditingController email = TextEditingController();
   final TextEditingController otp1 = TextEditingController();
@@ -45,8 +49,18 @@ class ForgotPasswordController extends GetxController {
       message('Email address is not valid');
       isOtpSent(false);
     } else {
-      message('Otp sent successfully');
-      isOtpSent(true);
+      final requestPasswordResetResponse =
+          await _authService.requestPasswordReset(
+        email: email.text,
+      );
+
+      if (requestPasswordResetResponse != null) {
+        message('Otp sent successfully');
+        isOtpSent(true);
+      } else {
+        message('Invalid user');
+        isOtpSent(false);
+      }
     }
   }
 
@@ -66,6 +80,22 @@ class ForgotPasswordController extends GetxController {
       message('Please enter correct otp');
       isOtpVerified(false);
     } else {
+      final verifyOTPAndUpdatePasswordResponse =
+          await _authService.verifyOTPAndUpdatePassword(
+        email: email.text,
+        otp: '${otp1.text}${otp2.text}${otp3.text}${otp4.text}',
+
+        ///TODO check for newPassword
+        newPassword: '',
+      );
+
+      if (verifyOTPAndUpdatePasswordResponse != null) {
+        message('Otp verified successfully');
+        isOtpVerified(true);
+      } else {
+        message('Invalid otp');
+        isOtpVerified(false);
+      }
       message('Otp verified successfully');
       isOtpVerified(true);
     }

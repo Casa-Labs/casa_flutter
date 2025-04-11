@@ -75,20 +75,22 @@ class SignInScreen extends StatelessWidget {
                           type: AuthButtonType.signIn,
                           isLoading: authController.isLoading(),
                           onPressed: () async {
-
                             await authController.loginUserCall();
                             if (authController.message().isNotEmpty) {
                               showToast(
                                 message: authController.message(),
                               );
                               if (authController.isLoggedIn()) {
-                                if (PreferenceManager.getBool(PreferenceManager.isFirstTime) ?? true) {
+                                if (PreferenceManager.getBool(
+                                        PreferenceManager.isFirstTime) ??
+                                    true) {
                                   router.goNamed(RouteNames.navigation,
                                       extra: true);
-                                  await PreferenceManager.setData(PreferenceManager.isFirstTime, false);
-                                }else {
-                                  router.goNamed(
-                                      RouteNames.navigation, extra: false);
+                                  await PreferenceManager.setData(
+                                      PreferenceManager.isFirstTime, false);
+                                } else {
+                                  router.goNamed(RouteNames.navigation,
+                                      extra: false);
                                 }
                               }
                             }
@@ -121,16 +123,24 @@ class SignInScreen extends StatelessWidget {
                           showToast(
                             message: authController.message(),
                           );
-                          if (authController.isGoogleLoggedIn()) {
-                            if (PreferenceManager.getBool(
-                                PreferenceManager.isFirstTime)!) {
-                              router.goNamed(RouteNames.navigation,
-                                  extra: true);
-                              await PreferenceManager.setData(PreferenceManager.isFirstTime, false);
-                            }else {
-                              router.goNamed(
-                                  RouteNames.navigation, extra: false);
+                          // if registered then navigate to home screen
+                          if (authController.isRegistered()) {
+                            if (authController.isGoogleLoggedIn()) {
+                              if (PreferenceManager.getBool(
+                                  PreferenceManager.isFirstTime)!) {
+                                router.goNamed(RouteNames.navigation,
+                                    extra: true);
+                                await PreferenceManager.setData(
+                                    PreferenceManager.isFirstTime, false);
+                              } else {
+                                router.goNamed(RouteNames.navigation,
+                                    extra: false);
+                              }
                             }
+                          }
+                          // else navigate to Add Preferences Screen
+                          else {
+                            router.pushNamed(RouteNames.personalDetails);
                           }
                         }
                       },
@@ -143,6 +153,30 @@ class SignInScreen extends StatelessWidget {
                             isLoading: authController.isAppleSignInLoading(),
                             onPressed: () async {
                               await authController.signInWithApple();
+                              if (authController.message().isNotEmpty) {
+                                showToast(
+                                  message: authController.message(),
+                                );
+                                // if registered then navigate to home screen
+                                if (authController.isRegistered()) {
+                                  if (authController.isAppleLoggedIn()) {
+                                    if (PreferenceManager.getBool(
+                                        PreferenceManager.isFirstTime)!) {
+                                      router.goNamed(RouteNames.navigation,
+                                          extra: true);
+                                      await PreferenceManager.setData(
+                                          PreferenceManager.isFirstTime, false);
+                                    } else {
+                                      router.goNamed(RouteNames.navigation,
+                                          extra: false);
+                                    }
+                                  }
+                                }
+                                // else navigate to Add Preferences Screen
+                                else {
+                                  router.pushNamed(RouteNames.personalDetails);
+                                }
+                              }
                             },
                           ),
                         )
