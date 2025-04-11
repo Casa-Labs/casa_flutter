@@ -1,4 +1,3 @@
-
 import 'package:casaflutterapp/src/common/widgets/common_app_bars.dart';
 import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
@@ -111,11 +110,14 @@ class WishlistScreen extends StatelessWidget {
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
                                           wishData.name!,
-                                          style: const TextStyle(
-                                            color: TextColor.white,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge
+                                              ?.copyWith(
+                                                color: TextColor.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -123,7 +125,7 @@ class WishlistScreen extends StatelessWidget {
                                 ),
                                 if (wishController.isDeleted.value)
                                   if (wishData.name!.trim().toLowerCase() !=
-                                      AppStrings.defaulttClosetName
+                                      AppStrings.defaultClosetName
                                           .toLowerCase())
                                     Align(
                                       alignment: Alignment.topRight,

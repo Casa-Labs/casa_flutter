@@ -60,7 +60,7 @@ class AppStrings {
   static const String productDescription =
       "Short dress with a sweetheart neckline and adjustable thin straps with tie fastening. Featuring a lining and concealed zip fastening at the back.";
   static const String productPrice = "1000";
-  static const String defaulttClosetName = "All Save";
-  static const String defaultClosetImageUrel =
+  static const String defaultClosetName = "All Saved";
+  static const String defaultClosetImageUrl =
       "https://static.vecteezy.com/system/resources/thumbnails/031/623/946/small_2x/background-for-productgraphy-ai-generated-photo.jpg";
 }

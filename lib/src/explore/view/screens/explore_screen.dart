@@ -94,7 +94,7 @@ class ExploreSection extends StatelessWidget {
     return Obx(
       () => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 25,
+        spacing: 35,
         children: [
           const SizedBox.shrink(),
           Column(
