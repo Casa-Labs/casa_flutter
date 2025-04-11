@@ -125,8 +125,15 @@ class WishlistItemScreen extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                context
-                                    .pushNamed(RouteNames.productDescription);
+                                if (wishlistController
+                                    .isWishItemDeleted.value) {
+                                  wishlistController.wishSelectedtem(index);
+                                } else {
+                                  context.pushNamed(
+                                    RouteNames.productDescription,
+                                    pathParameters: {'id': itemData.id ?? ''},
+                                  );
+                                }
                               },
                               child: Stack(
                                 children: [

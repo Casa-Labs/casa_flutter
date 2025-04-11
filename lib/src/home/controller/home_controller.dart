@@ -47,7 +47,6 @@ class HomeController extends GetxController {
   int currentIndex = 0;
   int minValue = 0;
   int maxValue = 0;
-  RxInt quantity = 1.obs;
   RxString selectedSize = "S".obs;
   final ValueNotifier<int> counter = ValueNotifier<int>(1);
   IconData? swipeIcon;
@@ -178,6 +177,11 @@ class HomeController extends GetxController {
 
   reviewedStarCount(int count) {
     reviewStar.value = count;
+    update();
+  }
+
+  quantityCount(Product prodct, int count) {
+    prodct.quantity = count;
     update();
   }
 

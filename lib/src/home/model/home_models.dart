@@ -167,6 +167,7 @@ class Product {
   String? createdAt;
   String? updatedAt;
   bool? isSelected;
+  int? quantity;
 
   Product(
       {this.id,
@@ -185,7 +186,8 @@ class Product {
       this.isNewArrival,
       this.isTrending,
       this.createdAt,
-      this.updatedAt});
+      this.updatedAt,
+      this.quantity});
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'] ?? "";
@@ -217,6 +219,7 @@ class Product {
     isTrending = json['isTrending'] ?? false;
     createdAt = json['createdAt'] ?? "";
     updatedAt = json['updatedAt'] ?? "";
+    quantity = 1;
   }
 
   Map<String, dynamic> toJson() {
@@ -243,6 +246,7 @@ class Product {
     data['isTrending'] = isTrending;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
+    data['quantity'] = quantity;
     return data;
   }
 }

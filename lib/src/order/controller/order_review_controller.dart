@@ -9,6 +9,7 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../../../utils/preference_manager.dart';
 import '../../../utils/utils.dart';
 import '../../auth/model/auth_models.dart';
+import '../../cart/controller/cart_controller.dart';
 import '../../cart/model/cart_models.dart';
 import '../../home/model/home_models.dart';
 import '../model/create_order.dart';
@@ -18,7 +19,7 @@ class OrderReviewController extends GetxController {
   final OrderService _orderService = OrderService();
 
   // ========= CONTROLLERS ========= //
-
+  CartController cartController = Get.find<CartController>();
   // ========= VARIABLES ========= //
   List<String> savedAddresses = ['Navi Mumbai'];
   RxList<CartItem> productsList = <CartItem>[].obs;
@@ -68,11 +69,19 @@ class OrderReviewController extends GetxController {
   }
 
   void deleteItem(CartItem product) {
+    if (product.id! != "") {
+      cartController.removeItemFromCart(product.id!);
+    }
     productsList.remove(product);
     getTotalPrice();
   }
 
   void deleteAllItem() {
+    if (productsList.length == 1 && productsList.first.id != null) {
+      cartController.removeItemFromCart(productsList.first.id!);
+    } else if (productsList.length > 1) {
+      cartController.removeAllItemFromCart();
+    }
     productsList.clear();
     getTotalPrice();
   }

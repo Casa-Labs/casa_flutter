@@ -71,12 +71,18 @@ class ProductDetails extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 80),
-              Center(child: QuantitySelectorButton()),
+              Center(
+                  child: QuantitySelectorButton(
+                count: product.quantity!,
+                getQuantity: (count) {
+                  logic.quantityCount(product, count);
+                },
+              )),
               const SizedBox(height: 80),
               AddToCartButton(
                 onPressed: () {
                   cartLogin.addProductsToCart(
-                      product, logic.quantity.value, logic.selectedSize.value);
+                      product, product.quantity!, logic.selectedSize.value);
                 },
               ),
               const SizedBox(height: 20),

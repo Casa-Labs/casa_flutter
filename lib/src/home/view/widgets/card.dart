@@ -220,7 +220,7 @@ class Cards extends StatelessWidget {
                                                         .heavyImpact();
                                                     cartLogin.addProductsToCart(
                                                         product,
-                                                        homeCtrl.quantity.value,
+                                                        product.quantity!,
                                                         homeCtrl.selectedSize
                                                             .value);
                                                   },
@@ -280,7 +280,7 @@ class Cards extends StatelessWidget {
                                             orderReviewController
                                                 .getHomeProduct(
                                                     product,
-                                                    homeCtrl.quantity.value,
+                                                    product.quantity!,
                                                     homeCtrl
                                                         .selectedSize.value);
                                             context.pushNamed(

@@ -149,7 +149,7 @@ class CartItem extends StatelessWidget {
                           onPressed: onCartItemDelete,
                         ),
                         CustomPrimaryButton(
-                          button: PrimaryButtons.smallWhiteBG,
+                          button: PrimaryButtons.smallBlackBG,
                           text: "Buy Now",
                           onPressed: onBuyNow,
                         ),
@@ -173,8 +173,8 @@ class CartItem extends StatelessWidget {
       height: 36,
       padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-      ),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: BorderColor.black)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

@@ -171,7 +171,11 @@ class ProductDescriptionScreen extends StatelessWidget {
                     onSizeSelected: (newSize) {},
                   ),
                   const SizedBox(height: 20),
-                  Center(child: QuantitySelectorButton()),
+                  Center(
+                      child: QuantitySelectorButton(
+                    count: 1,
+                    getQuantity: (count) {},
+                  )),
                   const SizedBox(height: 20),
                   AddToCartButton(
                     onPressed: () {
