@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../network/graph_ql_manager.dart';
+import '../../../utils/preference_manager.dart';
 import '../../../utils/utils.dart';
+import '../model/add_review_model.dart';
 import '../model/brand_response_model.dart';
 import '../model/cat_response_model.dart';
 import '../model/home_models.dart';
@@ -19,9 +21,11 @@ class HomeController extends GetxController {
 
   final AppinioSwiperController controller = AppinioSwiperController();
   TextEditingController? searchController = TextEditingController();
+  TextEditingController? reviewController = TextEditingController();
 
   // ========= VARIABLES ========= //
 
+  final userID = PreferenceManager.getString(PreferenceManager.userId);
   bool isDisabled = false;
   List<Product> products = [];
   List<GetProductSizes> size = [];
@@ -47,6 +51,7 @@ class HomeController extends GetxController {
   RxString selectedSize = "S".obs;
   final ValueNotifier<int> counter = ValueNotifier<int>(1);
   IconData? swipeIcon;
+  RxInt reviewStar = 0.obs;
 
   RxString shareMessage = ''.obs;
 
@@ -171,6 +176,11 @@ class HomeController extends GetxController {
     update();
   }
 
+  reviewedStarCount(int count) {
+    reviewStar.value = count;
+    update();
+  }
+
   List<String> formattedSizesList(Product product) {
     selectedSize.value = SizeItem.mapSize(product.sizes![0].size!.name!);
     List<String> sizes = [];
@@ -275,9 +285,38 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> addToWishlist() async {}
-
   Future<GetProductReviewModel?> getReviews(String productId) async {
     return await HomeService().getReview(productId: productId);
+  }
+
+  Future<String> registerProductReview(
+      String productId, int reviewCount, String comment) async {
+    try {
+      if (reviewCount == 0) {
+        return "Please, selete the rating!!";
+      }
+      if (comment.isEmpty) {
+        return "Please, write a review!!";
+      }
+      AddReviewRequestModel addReviewRequestModel = AddReviewRequestModel(
+          productId: productId,
+          userId: userID!,
+          liked: reviewCount >= 3,
+          disliked: reviewCount < 3,
+          viewed: true,
+          rating: reviewCount,
+          comment: comment);
+      var response = await HomeService()
+          .registerProductReview(addReviewRRequestModel: addReviewRequestModel);
+      if (response != null) {
+        getReviews(productId);
+        return "Review add successfully!!";
+      }
+    } catch (e) {
+      logg.e("get error to adding review $e");
+      update();
+      return "Something went wrong, please try again";
+    }
+    return "Something went wrong, please try again";
   }
 }

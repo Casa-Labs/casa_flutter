@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/color_constant.dart';
@@ -48,11 +49,11 @@ class ProductCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(
-                imageURL,
+              CachedNetworkImage(
+                imageUrl: imageURL,
                 fit: BoxFit.cover,
                 width: double.infinity,
-                height: 200,
+                height: 250,
               ),
               const SizedBox(height: 10),
               Padding(

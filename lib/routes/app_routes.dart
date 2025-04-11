@@ -15,6 +15,7 @@ import 'package:casaflutterapp/src/order/view/screens/order_review_screen.dart';
 import 'package:casaflutterapp/src/payment/view/screens/payment_options_screen.dart';
 import 'package:casaflutterapp/src/profile/view/screens/contact_us_screen.dart';
 import 'package:casaflutterapp/src/profile/view/screens/profile_screen.dart';
+import 'package:casaflutterapp/src/search/view/screens/search_view_screen.dart';
 import 'package:casaflutterapp/utils/preference_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -70,11 +71,12 @@ class _AppPaths {
   static const String myOrders = '/myOrders';
   static const String store = '/store';
   static const String productList = '/productList';
-  static const String productDescription = '/productDescription';
+  static const String productDescription = '/productDescription/:id';
   static const String paymentOptions = '/paymentOptions';
   static const String cart = '/cart';
   static const String orderReview = '/orderReview';
   static const String contactUs = '/contactUs';
+  static const String searchView = '/searchView';
 }
 
 // Public: Use these for named navigation
@@ -113,6 +115,7 @@ class RouteNames {
   static const String cart = 'cart';
   static const String orderReview = 'orderReview';
   static const String contactUs = 'contactUs';
+  static const String searchView = 'searchView';
 }
 
 // Central GoRouter instance
@@ -137,7 +140,11 @@ final GoRouter router = GoRouter(
   errorBuilder: (context, state) {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        context.goNamed(_AppPaths.navigation);
+        if (PreferenceManager.getBool(PreferenceManager.isFirstTime)!) {
+          router.goNamed(RouteNames.navigation, extra: true);
+        } else {
+          router.goNamed(RouteNames.navigation, extra: false);
+        }
       },
     );
     return const Scaffold();
@@ -211,7 +218,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.notifications,
       name: RouteNames.notifications,
-      builder: (context, state) => const NotificationsScreen(),
+      builder: (context, state) => NotificationsScreen(),
     ),
     GoRoute(
       path: _AppPaths.location,
@@ -226,7 +233,13 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.navigation,
       name: RouteNames.navigation,
-      builder: (context, state) => const NavPage(),
+      builder: (context, state) {
+        bool isFirstLaunch = false;
+        if (state.extra != null) {
+          isFirstLaunch = state.extra as bool;
+        }
+        return NavPage(isFirstLaunch: isFirstLaunch);
+      },
     ),
     GoRoute(
       path: _AppPaths.orderDetails,
@@ -304,7 +317,7 @@ final GoRouter router = GoRouter(
       path: _AppPaths.productDescription,
       name: RouteNames.productDescription,
       builder: (context, state) {
-        final productId = state.extra as String; // ✅ Retrieve the object
+        final productId = state.pathParameters['id'] as String;
         return ProductDescriptionScreen(id: productId);
       },
     ),
@@ -327,6 +340,11 @@ final GoRouter router = GoRouter(
       path: _AppPaths.contactUs,
       name: RouteNames.contactUs,
       builder: (context, state) => ContactUsScreen(),
+    ),
+    GoRoute(
+      path: _AppPaths.searchView,
+      name: RouteNames.searchView,
+      builder: (context, state) => SearchViewScreen(),
     ),
   ],
 );

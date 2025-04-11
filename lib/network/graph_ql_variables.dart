@@ -121,7 +121,7 @@ class GraphQLVariables {
 
   static Map<String, dynamic> createOrderVariables(
     String userId,
-    double totalAmount,
+    int totalAmount,
     String deliveryType,
     String discountCode,
     String deliveryInstructions,
@@ -261,6 +261,18 @@ class GraphQLVariables {
   static Map<String, dynamic> removeItemFromClothingItem(String itemId) {
     return {
       "itemId": itemId,
+    };
+  }
+
+  static Map<String, dynamic> deleteAllNotificationsForUser(String userId) {
+    return {
+      "userId": userId,
+    };
+  }
+
+  static Map<String, dynamic> deleteNotificationForUser(String id) {
+    return {
+      "id": id,
     };
   }
 

@@ -10,7 +10,7 @@ import '../../controller/cart_controller.dart';
 import '../widgets/cart_item.dart';
 
 class CartScreen extends StatelessWidget {
- const CartScreen({super.key});
+  const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +96,10 @@ class CartScreen extends StatelessWidget {
                           final cartItem = cartController.cartList[index];
                           return InkWell(
                             onTap: () {
-                              context.pushNamed(RouteNames.productDescription,extra: cartItem.id);
+                              context.pushNamed(
+                                RouteNames.productDescription,
+                                pathParameters: {'id': cartItem.id ?? ''},
+                              );
                             },
                             child: CartItem(
                               item: cartItem.item!,

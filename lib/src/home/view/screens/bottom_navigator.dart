@@ -3,13 +3,14 @@ import 'package:casaflutterapp/src/home/view/screens/home_screen.dart';
 import 'package:casaflutterapp/src/profile/view/screens/profile_screen.dart';
 import 'package:casaflutterapp/utils/color_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../cart/view/screens/cart_screen.dart';
 import '../../../onboarding/view/screens/onboarding_screen.dart';
 import '../../../wishlist/view/screens/wishlist_screen.dart';
 
 class NavPage extends StatefulWidget {
-  const NavPage({super.key, this.isFirstLaunch = true});
+  const NavPage({super.key, this.isFirstLaunch = false});
 
   final bool isFirstLaunch;
 
@@ -52,6 +53,10 @@ class NavPageState extends State<NavPage> {
 
   // Function to handle bottom navigation item selection
   void _onItemTapped(int index) {
+    if (index == 3) {
+      HapticFeedback.heavyImpact();
+    }
+
     setState(() {
       _selectedIndex = index;
     });
@@ -71,7 +76,7 @@ class NavPageState extends State<NavPage> {
         child: Stack(
           children: [
             _getScreen(_selectedIndex), // Display the selected page
-            if (tutorialScreenIndex < 14 && !_isFirstLaunch)
+            if (tutorialScreenIndex < 14 && _isFirstLaunch)
               Positioned.fill(
                 child: TutorialScreen(
                   index: tutorialScreenIndex,

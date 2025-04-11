@@ -134,7 +134,9 @@ class ProductForCart {
     mainImage = json['mainImage'] ?? "";
     description = json['description'] ?? "";
     sizeValue = json['sizeValue'] ?? "";
-    quantity = json['quantity'] ?? 1;
+    quantity = json["quantity"] is String
+        ? int.tryParse(json["quantity"]) ?? 0
+        : (json["quantity"] ?? 0);
   }
 
   Map<String, dynamic> toJson() {

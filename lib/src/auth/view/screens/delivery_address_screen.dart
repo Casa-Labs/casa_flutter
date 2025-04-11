@@ -3,6 +3,7 @@ import 'package:casaflutterapp/src/auth/controller/delivery_address_controller.d
 import 'package:casaflutterapp/src/auth/view/widgets/auth_button.dart';
 import 'package:casaflutterapp/src/common/widgets/custom_text_form_field_widget.dart';
 import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
+import 'package:casaflutterapp/utils/preference_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -88,7 +89,8 @@ class DeliveryAddressScreen extends StatelessWidget {
                           );
                           if (deliveryAddressController
                               .isDeliveryAddressSaved()) {
-                            router.goNamed(RouteNames.navigation);
+                              router.goNamed(
+                                  RouteNames.navigation, extra: false);
                           }
                         }
                       },

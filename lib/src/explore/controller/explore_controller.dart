@@ -3,6 +3,8 @@ import 'package:casaflutterapp/src/explore/model/explore_products_model.dart'
     as epm;
 import 'package:casaflutterapp/src/explore/model/new_arrivals_model.dart'
     as nam;
+import 'package:casaflutterapp/src/explore/model/product_by_id_model.dart'
+    as pim;
 import 'package:casaflutterapp/src/explore/model/product_categories_model.dart'
     as pcm;
 import 'package:casaflutterapp/src/explore/model/service/explore_service.dart';
@@ -71,6 +73,11 @@ class ExploreController extends GetxController {
 
   Future<CartItem> getProductById(String productId) async {
     return await ExploreService().getProductById(productId);
+  }
+
+  Future<pim.GetProductDetails> getProductDetailsByIdCall(
+      String productId) async {
+    return await ExploreService().getProductDetailsById(productId);
   }
 
   Future<void> getProductsCall() async {

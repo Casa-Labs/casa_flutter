@@ -137,7 +137,7 @@ class GraphQLManager {
 
   Future<QueryResult> createOrder(
     String userId,
-    double totalAmount,
+    int totalAmount,
     String deliveryType,
     String discountCode,
     String deliveryInstructions,
@@ -186,13 +186,13 @@ class GraphQLManager {
   }
 
   Future<QueryResult> registerProductReview(
-      String productId,
-      String userId,
-      bool liked,
-      bool disliked,
-      bool viewed,
-      int rating,
-      String comment) async {
+      {required String productId,
+      required String userId,
+      required bool liked,
+      required bool disliked,
+      required bool viewed,
+      required int rating,
+      required String comment}) async {
     return await _clientService.performMutation(
       document: GraphQLMutations.registerProductReview,
       variables: GraphQLVariables.registerProductReviewVariables(
@@ -282,6 +282,21 @@ class GraphQLManager {
     );
   }
 
+  Future<QueryResult> deleteAllNotificationsForUser(
+      {required String userId}) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.deleteAllNotificationsForUser,
+      variables: GraphQLVariables.deleteAllNotificationsForUser(userId),
+    );
+  }
+
+  Future<QueryResult> deleteNotificationForUser({required String id}) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.deleteNotificationForUser,
+      variables: GraphQLVariables.deleteNotificationForUser(id),
+    );
+  }
+
   //QUERIES
 
   Future<QueryResult> getNewArrivalProducts(
@@ -337,9 +352,16 @@ class GraphQLManager {
     );
   }
 
+  Future<QueryResult> getProductsForSearch(Map<String, dynamic> params) async {
+    return await _clientService.performQuery(
+      document: GraphQLQueries.getProductsForSearch,
+      variables: GraphQLVariables.getProductsVariables(params),
+    );
+  }
+
   Future<QueryResult> getProductsById(String productId) async {
     return await _clientService.performQuery(
-      document: GraphQLQueries.getProducts,
+      document: GraphQLQueries.getProductDescription,
       variables: GraphQLVariables.getProductById(productId),
     );
   }

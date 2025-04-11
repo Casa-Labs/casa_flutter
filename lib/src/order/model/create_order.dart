@@ -1,5 +1,5 @@
 class CreateOrder {
-  double? totalAmount;
+  int? totalAmount;
   String? deliveryInstructions;
   String? deliveryType;
   ShippingInfo? shippingInfo;

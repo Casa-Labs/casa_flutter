@@ -57,7 +57,7 @@ class Products {
     mainImage = json['mainImage'];
     id = json['id'];
     name = json['name'];
-    price = json['price'].toInt();
+    price = (json['price'] != null) ? json['price'].toDouble() : null;
     description = json['description'];
   }
 
