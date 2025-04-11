@@ -36,9 +36,11 @@ class AuthService {
     final GoogleLoginResponse googleLoginResponse;
 
     final response = await _graphQLManager.singleSignOn(
-      googleLoginRequestModel.email,
-      googleLoginRequestModel.provider,
-      googleLoginRequestModel.providerId,
+      email: googleLoginRequestModel.email,
+      provider: googleLoginRequestModel.provider,
+      providerId: googleLoginRequestModel.providerId,
+      name: googleLoginRequestModel.name,
+      image: googleLoginRequestModel.image,
     );
 
     googleLoginResponse = GoogleLoginResponse.fromJson(
@@ -63,6 +65,49 @@ class AuthService {
     );
 
     return registerUserResponse;
+  }
+
+  Future<VerifyOTPAndSendWelcomeEmailModel?> verifyEmailOtpForRegistration({
+    required String email,
+    required String otp,
+  }) async {
+    final VerifyOTPAndSendWelcomeEmailModel verifyOTPAndSendWelcomeEmailModel;
+
+    final response = await _graphQLManager.verifyEmailOtpForRegistration(
+      email: email,
+      otp: otp,
+    );
+
+    verifyOTPAndSendWelcomeEmailModel =
+        VerifyOTPAndSendWelcomeEmailModel.fromJson(
+      response.data,
+    );
+
+    return verifyOTPAndSendWelcomeEmailModel;
+  }
+
+  Future<String?> requestPasswordReset({
+    required String email,
+  }) async {
+    final response = await _graphQLManager.requestPasswordReset(
+      email: email,
+    );
+
+    return response.data?['requestPasswordReset'];
+  }
+
+  Future<String?> verifyOTPAndUpdatePassword({
+    required String email,
+    required String otp,
+    required String newPassword,
+  }) async {
+    final response = await _graphQLManager.verifyOTPAndUpdatePassword(
+      email: email,
+      otp: otp,
+      newPassword: newPassword,
+    );
+
+    return response.data?['verifyOTPAndUpdatePassword'];
   }
 
   Future<bool?> deleteUser({

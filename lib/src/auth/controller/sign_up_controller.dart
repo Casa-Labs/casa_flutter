@@ -159,8 +159,21 @@ class SignUpController extends GetxController {
         otp2.text.isNotEmpty &&
         otp3.text.isNotEmpty &&
         otp4.text.isNotEmpty) {
-      message('Otp verified successfully');
-      isOtpVerified(true);
+      final verifyEmailResponse =
+          await _authService.verifyEmailOtpForRegistration(
+        email: registeredEmail.text,
+        otp: '${otp1.text}${otp2.text}${otp3.text}${otp4.text}',
+      );
+
+      if (verifyEmailResponse?.verifyOTPAndSendWelcomeEmail != null &&
+          verifyEmailResponse?.verifyOTPAndSendWelcomeEmail?.user?.isVerified ==
+              true) {
+        message('Otp verified successfully');
+        isOtpVerified(true);
+      } else {
+        message('Invalid otp');
+        isOtpVerified(false);
+      }
     }
   }
 }

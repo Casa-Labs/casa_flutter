@@ -18,6 +18,45 @@ class GraphQLManager {
     );
   }
 
+  Future<QueryResult> verifyEmailOtpForRegistration({
+    required String email,
+    required String otp,
+  }) async {
+    return await _clientService.performMutationWithoutToken(
+      document: GraphQLMutations.verifyEmailOtpForRegistration,
+      variables: GraphQLVariables.verifyEmailOtpForRegistration(
+        email,
+        otp,
+      ),
+    );
+  }
+
+  Future<QueryResult> requestPasswordReset({
+    required String email,
+  }) async {
+    return await _clientService.performMutationWithoutToken(
+      document: GraphQLMutations.requestPasswordReset,
+      variables: GraphQLVariables.requestPasswordReset(
+        email,
+      ),
+    );
+  }
+
+  Future<QueryResult> verifyOTPAndUpdatePassword({
+    required String email,
+    required String otp,
+    required String newPassword,
+  }) async {
+    return await _clientService.performMutationWithoutToken(
+      document: GraphQLMutations.verifyOTPAndUpdatePassword,
+      variables: GraphQLVariables.verifyOTPAndUpdatePassword(
+        email,
+        otp,
+        newPassword,
+      ),
+    );
+  }
+
   Future<QueryResult> loginUser(String email, String password) async {
     return await _clientService.performMutationWithoutToken(
       document: GraphQLMutations.loginMutation,
@@ -118,12 +157,22 @@ class GraphQLManager {
     );
   }
 
-  Future<QueryResult> singleSignOn(
-      String email, String provider, String providerId) async {
+  Future<QueryResult> singleSignOn({
+    required String email,
+    required String provider,
+    required String providerId,
+    required String name,
+    required String image,
+  }) async {
     return await _clientService.performMutationWithoutToken(
       document: GraphQLMutations.singleSignOnMutation,
-      variables:
-          GraphQLVariables.singleSignOnVariables(email, provider, providerId),
+      variables: GraphQLVariables.singleSignOnVariables(
+        email,
+        provider,
+        providerId,
+        name,
+        image,
+      ),
     );
   }
 

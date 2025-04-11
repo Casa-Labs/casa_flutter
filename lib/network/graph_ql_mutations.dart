@@ -96,16 +96,50 @@ class GraphQLMutations {
 """;
 
   static const String singleSignOnMutation = """
-  mutation SingleSignOn(\$email: String!, \$provider: AuthProvider!, \$providerId: String!) {
-  SingleSignOn(email: \$email, provider: \$provider, providerId: \$providerId) {
+  mutation SingleSignOn(\$email: String!, \$provider: AuthProvider!, \$providerId: String!, \$name: String!, \$image: String!) {
+  SingleSignOn(email: \$email, provider: \$provider, providerId: \$providerId, name: \$name, image: \$image) {
    token
     user {
       email
       id
+      isRegistered
+      isVerified
+      name
+      image
     }
   }
 }
 """;
+
+  static const String verifyEmailOtpForRegistration = """
+  mutation VerifyOTPAndSendWelcomeEmail(\$email: String!, \$otp: String!) {
+  verifyOTPAndSendWelcomeEmail(email: \$email, otp: \$otp) {
+    isVerified
+    isRegistered
+    isDeleted
+    id
+    email
+    createdAt
+    authProvider
+    name
+    phone
+    profileImage
+    role
+  }
+}
+  """;
+
+  static const String requestPasswordReset = """
+  mutation RequestPasswordReset(\$email: String!) {
+  requestPasswordReset(email: \$email)
+}
+  """;
+
+  static const String verifyOTPAndUpdatePassword = """
+  mutation VerifyOTPAndUpdatePassword(\$email: String!, \$otp: String!, \$newPassword: String!) {
+  verifyOTPAndUpdatePassword(email: \$email, otp: \$otp, newPassword: \$newPassword)
+}
+  """;
 
   static const String addItemToCart = '''
 mutation AddItemToCart(\$item: JSON!, \$userId: String) {
