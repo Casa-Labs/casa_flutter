@@ -24,7 +24,7 @@ class OrderViewItemWidget extends StatelessWidget {
               border: Border.all(color: TextColor.black),
               borderRadius: BorderRadius.circular(50)),
           child: CircleAvatar(
-              maxRadius: 24, child: Image.network(item.store?.logo ?? "")),
+              maxRadius: 24, child: Image.network(item.store?.logo ?? ImageConstants.dummyNetworkPortrait)),
         ),
         const SizedBox(
           height: 10,
@@ -53,7 +53,7 @@ class OrderViewItemWidget extends StatelessWidget {
                         child: SizedBox(
                             height: MediaQuery.of(context).size.height * 0.2,
                             width: MediaQuery.of(context).size.width * 0.25,
-                            child: Image.network(item.mainImage!, fit: BoxFit.fill)
+                            child: Image.network(item.mainImage ?? ImageConstants.dummyNetworkPortrait, fit: BoxFit.fill)
                             //  Image.asset(
                             //   'assets/images/placeholder.png',
                             //   fit: BoxFit.fill,

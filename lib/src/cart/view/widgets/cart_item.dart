@@ -42,7 +42,7 @@ class CartItem extends StatelessWidget {
             maxRadius: 24,
             child: Image.network(item
                 .store?.logo ??
-                AppStrings.productBrand)
+                ImageConstants.dummyNetworkPortrait)
           ),
         ),
         SizedBox(height: 15),
@@ -98,7 +98,7 @@ class CartItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      item.store?.name ?? AppStrings.productBrand,
+                      item.store?.name ?? ImageConstants.dummyNetworkPortrait,
                       style: textTheme.bodyMedium?.copyWith(
                         color: TextColor.black54,
                       ),
