@@ -167,7 +167,7 @@ class Cards extends StatelessWidget {
                                                   maxRadius: 24,
                                                   child: Image.network(product
                                                           .store?.logo ??
-                                                      AppStrings.productBrand)),
+                                                      ImageConstants.dummyNetworkPortrait)),
                                             ),
                                           ),
                                           Text(

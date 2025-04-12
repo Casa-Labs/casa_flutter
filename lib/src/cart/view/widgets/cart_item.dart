@@ -80,7 +80,7 @@ class CartItem extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            item.name!,
+                            item.name ?? "API Error or NA",
                             // "hello",
                             style: textTheme.bodyLarge?.copyWith(
                               fontWeight: FontWeight.w600,
@@ -98,7 +98,7 @@ class CartItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      item.store?.name ?? ImageConstants.dummyNetworkPortrait,
+                      item.store?.name ?? "API Error or NA",
                       style: textTheme.bodyMedium?.copyWith(
                         color: TextColor.black54,
                       ),
