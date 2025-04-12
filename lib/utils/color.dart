@@ -29,4 +29,5 @@ class CColor {
   static const filterColor = Color(0xffD9D9D9);
   static const closeTick = Color(0xffC3C3C3);
   static const circleBoarder = Color(0xff484848);
+  static const cartCircle = Color(0xffD4D4D4);
 }
