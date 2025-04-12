@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:casaflutterapp/src/auth/model/add_user_address_response_model.dart';
 import 'package:casaflutterapp/src/common/payment/razorpay.dart';
 import 'package:casaflutterapp/src/order/model/service/order_service.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
@@ -20,6 +21,7 @@ class OrderReviewController extends GetxController {
 
   // ========= CONTROLLERS ========= //
   CartController cartController = Get.find<CartController>();
+  TextEditingController instructionController = TextEditingController();
   // ========= VARIABLES ========= //
   List<String> savedAddresses = ['Navi Mumbai'];
   RxList<CartItem> productsList = <CartItem>[].obs;
@@ -60,6 +62,7 @@ class OrderReviewController extends GetxController {
 
   void getAllProductItem(List<CartItem> cartList) {
     productsList.assignAll(cartList);
+    instructionController.clear();
     getTotalPrice();
   }
 
@@ -147,6 +150,7 @@ class OrderReviewController extends GetxController {
       totalAmount: total.value.toInt(),
       shippingInfo: shippingInfo,
       deliveryType: 'STANDARD',
+      deliveryInstructions: instructionController.text,
       paymentInfo: PaymentInfo(
         method: "CARD",
         paidAmount: total.value.toInt(),
