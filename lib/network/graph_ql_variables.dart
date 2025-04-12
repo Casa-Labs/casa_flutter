@@ -103,11 +103,48 @@ class GraphQLVariables {
   }
 
   static Map<String, dynamic> singleSignOnVariables(
-      String email, String provider, String providerId) {
+    String email,
+    String provider,
+    String providerId,
+    String name,
+    String image,
+  ) {
     return {
       "email": email,
       "provider": provider,
       "providerId": providerId,
+      "name": name,
+      "image": image,
+    };
+  }
+
+  static Map<String, dynamic> verifyEmailOtpForRegistration(
+    String email,
+    String otp,
+  ) {
+    return {
+      "email": email,
+      "otp": otp,
+    };
+  }
+
+  static Map<String, dynamic> requestPasswordReset(
+    String email,
+  ) {
+    return {
+      "email": email,
+    };
+  }
+
+  static Map<String, dynamic> verifyOTPAndUpdatePassword(
+    String email,
+    String otp,
+    String newPassword,
+  ) {
+    return {
+      "email": email,
+      "otp": otp,
+      "newPassword": newPassword,
     };
   }
 

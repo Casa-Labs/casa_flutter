@@ -214,66 +214,30 @@ class OrderReviewScreen extends StatelessWidget {
               color: ButtonColor.white,
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            "PAY USING",
-                            style: textTheme.bodyMedium?.copyWith(
-                              // fontSize: 14,
-                              color: TextColor.black,
-                            ),
-                          ),
-                          Icon(
-                            Icons.arrow_drop_up,
-                          )
-                        ],
-                      ),
-                      Text(
-                        "Phone Pay",
-                        style: textTheme.bodyMedium?.copyWith(
-                          // fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: TextColor.black,
-                        ),
-                      ),
-                    ],
+              child: Obx(() {
+                return FilledButton(
+                  style: FilledButton.styleFrom(
+                    surfaceTintColor: const Color(0xFF2C9D24),
+                    backgroundColor: const Color(0xFF2C9D24),
                   ),
-                  Obx(() {
-                    return FilledButton(
-                      style: FilledButton.styleFrom(
-                        surfaceTintColor: const Color(0xFF2C9D24),
-                        backgroundColor: const Color(0xFF2C9D24),
-                      ),
-                      onPressed: () async {
-                        // context.pushNamed(RouteNames.paymentOptions);
-                        await orderRiviweCtrl.createOrder();
-                        if (orderRiviweCtrl.message.isNotEmpty) {
-                          showToast(
-                            message: orderRiviweCtrl.message(),
-                          );
-                        }
-                      },
-                      child: Text(
-                        "Pay ₹${orderRiviweCtrl.total}",
-                        style: textTheme.bodyMedium?.copyWith(
-                          // fontSize: 14,
-                          color: TextColor.white,
-                        ),
-                      ),
-                    );
-                  }),
-                ],
-              ),
+                  onPressed: () async {
+                    // context.pushNamed(RouteNames.paymentOptions);
+                    await orderRiviweCtrl.createOrder();
+                    if (orderRiviweCtrl.message.isNotEmpty) {
+                      showToast(
+                        message: orderRiviweCtrl.message(),
+                      );
+                    }
+                  },
+                  child: Text(
+                    "Pay ₹${orderRiviweCtrl.total}",
+                    style: textTheme.bodyMedium?.copyWith(
+                      // fontSize: 14,
+                      color: TextColor.white,
+                    ),
+                  ),
+                );
+              }),
             ),
           ],
         ),

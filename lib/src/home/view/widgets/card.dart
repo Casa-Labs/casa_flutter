@@ -63,6 +63,7 @@ class Cards extends StatelessWidget {
                             ),
                           ),
 
+                          // Positioned Back button
                           Positioned(
                             top: 20,
                             left: 0,
@@ -107,7 +108,7 @@ class Cards extends StatelessWidget {
                               ),
                               child: Container(
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
+                                    horizontal: 7, vertical: 10),
                                 width: MediaQuery.of(context).size.width * 0.91,
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(

@@ -141,7 +141,8 @@ class CartItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
-                          highlightColor: ButtonColor.yellow,
+                          highlightColor:
+                              ButtonColor.black.withValues(alpha: 0.3),
                           icon: Icon(Icons.delete),
                           onPressed: onCartItemDelete,
                         ),

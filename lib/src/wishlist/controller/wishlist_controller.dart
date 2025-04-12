@@ -129,8 +129,8 @@ class WishlistController extends GetxController {
           if (response.getUserClosets!.first.clothingItems!.isEmpty) {
             addItemToCloset(
                 closetId: response.getUserClosets!.first.id.toString(),
-                imageUrl: AppStrings.defaultClosetImageUrel,
-                name: AppStrings.defaulttClosetName);
+                imageUrl: AppStrings.defaultClosetImageUrl,
+                name: AppStrings.defaultClosetName);
           } else {
             getUserClosetList(response.getUserClosets);
             wishlistData(getUserClosetList.first.clothingItems);
