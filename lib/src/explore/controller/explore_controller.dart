@@ -28,7 +28,8 @@ class ExploreController extends GetxController {
       <pcm.GetProductCategories>[].obs;
 
   RxString storeType = 'BRAND'.obs;
-
+  bool isShowReturn = false;
+  bool isShowShipping = false;
   // Pagination - temporary calling 100 items
   RxInt page = 1.obs;
   RxInt limit = 100.obs;
@@ -82,5 +83,15 @@ class ExploreController extends GetxController {
 
   Future<void> getProductsCall() async {
     await ExploreService().getProductsCall();
+  }
+
+  changeShippingPolicy() {
+    isShowShipping = !isShowShipping;
+    update();
+  }
+
+  changeReturnPolicy() {
+    isShowReturn = !isShowReturn;
+    update();
   }
 }

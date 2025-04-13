@@ -1,4 +1,6 @@
 // Add items to cart request model //
+import '../../home/model/home_models.dart';
+
 class AddCartRequestModel {
   String userId;
   Map<String, dynamic> item;
@@ -98,7 +100,9 @@ class ProductForCart {
   String? name;
   double? productPrice;
   String? size;
+  List<Sizes>? sizes;
   String? color;
+  Store? store;
   String? mainImage;
   String? description;
   String? sizeValue;
@@ -111,6 +115,8 @@ class ProductForCart {
       this.productPrice,
       this.color,
       this.size,
+      this.sizes,
+        this.store,
       this.mainImage,
       this.description,
       this.sizeValue,
@@ -123,7 +129,16 @@ class ProductForCart {
         ? (json['productPrice'] as int).toDouble()
         : (json['productPrice'] ?? 0).toDouble();
     size = json['size'] ?? "";
+    if (json['sizes'] != null) {
+      sizes = <Sizes>[];
+      json['sizes'].forEach((v) {
+        sizes!.add(Sizes.fromJson(v));
+      });
+    }
     color = json['color'] ?? "";
+    if (store != null) {
+      json['store'] = store?.toJson();
+    }
     mainImage = json['mainImage'] ?? "";
     description = json['description'] ?? "";
     sizeValue = json['sizeValue'] ?? "";
@@ -139,11 +154,75 @@ class ProductForCart {
     data['productPrice'] = productPrice;
     data['mainImage'] = mainImage;
     data['size'] = size;
+    if (sizes != null) {
+      data['sizes'] = sizes!.map((v) => v.toJson()).toList();
+    }
     data['color'] = color;
+    if (store != null) {
+      data['store'] = store!.toJson();
+    }
     data['description'] = description;
     data['sizeValue'] = sizeValue;
     data['quantity'] = quantity;
     return data;
+  }
+}
+
+class Sizes {
+  CartSizeItem? size;
+
+  Sizes({this.size});
+
+  Sizes.fromJson(Map<String, dynamic> json) {
+    size = json['size'] != null ? CartSizeItem.fromJson(json['size']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (size != null) {
+      data['size'] = size!.toJson();
+    }
+    return data;
+  }
+}
+
+class CartSizeItem {
+  String? id;
+  String? name;
+
+  CartSizeItem({this.id, this.name});
+
+  CartSizeItem.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    return data;
+  }
+
+  static String mapSize(String apiSize) {
+    switch (apiSize.toLowerCase()) {
+      case 'xx-small':
+        return 'XXS';
+      case 'x-small':
+        return 'XS';
+      case 'small':
+        return 'S';
+      case 'medium':
+        return 'M';
+      case 'large':
+        return 'L';
+      case 'x-large':
+        return 'XL';
+      case 'xx-large':
+        return 'XXL';
+      default:
+        return apiSize; // Default fallback
+    }
   }
 }
 

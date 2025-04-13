@@ -1,14 +1,17 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:casaflutterapp/src/auth/model/add_user_address_response_model.dart';
 import 'package:casaflutterapp/src/common/payment/razorpay.dart';
 import 'package:casaflutterapp/src/order/model/service/order_service.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../../../utils/preference_manager.dart';
 import '../../../utils/utils.dart';
 import '../../auth/model/auth_models.dart';
+import '../../cart/controller/cart_controller.dart';
 import '../../cart/model/cart_models.dart';
 import '../../home/model/home_models.dart';
 import '../model/create_order.dart';
@@ -18,7 +21,8 @@ class OrderReviewController extends GetxController {
   final OrderService _orderService = OrderService();
 
   // ========= CONTROLLERS ========= //
-
+  CartController cartController = Get.find<CartController>();
+  TextEditingController instructionController = TextEditingController();
   // ========= VARIABLES ========= //
   List<String> savedAddresses = ['Navi Mumbai'];
   RxList<CartItem> productsList = <CartItem>[].obs;
@@ -29,6 +33,8 @@ class OrderReviewController extends GetxController {
   double deliveryCharge = 34.00;
   double platFormFee = 7.00;
   RxString message = ''.obs;
+  RxBool isBlinking = false.obs;
+  Timer? _blinkingTimer;
 
   // ========== STATES ========== //
 
@@ -59,6 +65,7 @@ class OrderReviewController extends GetxController {
 
   void getAllProductItem(List<CartItem> cartList) {
     productsList.assignAll(cartList);
+    instructionController.clear();
     getTotalPrice();
   }
 
@@ -68,11 +75,19 @@ class OrderReviewController extends GetxController {
   }
 
   void deleteItem(CartItem product) {
+    if (product.id! != "") {
+      cartController.removeItemFromCart(product.id!);
+    }
     productsList.remove(product);
     getTotalPrice();
   }
 
   void deleteAllItem() {
+    if (productsList.length == 1 && productsList.first.id != null) {
+      cartController.removeItemFromCart(productsList.first.id!);
+    } else if (productsList.length > 1) {
+      cartController.removeAllItemFromCart();
+    }
     productsList.clear();
     getTotalPrice();
   }
@@ -138,6 +153,7 @@ class OrderReviewController extends GetxController {
       totalAmount: total.value.toInt(),
       shippingInfo: shippingInfo,
       deliveryType: 'STANDARD',
+      deliveryInstructions: instructionController.text,
       paymentInfo: PaymentInfo(
         method: "CARD",
         paidAmount: total.value.toInt(),
@@ -217,4 +233,18 @@ class OrderReviewController extends GetxController {
       );
     }
   }
+
+  void startBlinking() {
+    if (_blinkingTimer != null && _blinkingTimer!.isActive) return;
+    _blinkingTimer = Timer.periodic(const Duration(milliseconds: 800), (timer) {
+      if (productsList.isEmpty) {
+        timer.cancel();
+        isBlinking.value = false;
+      } else {
+        isBlinking.value = !isBlinking.value;
+      }
+    });
+  }
+
+
 }

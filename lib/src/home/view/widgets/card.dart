@@ -7,6 +7,7 @@ import 'package:casaflutterapp/utils/font.dart';
 import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
@@ -22,6 +23,7 @@ import '../../model/home_models.dart';
 class Cards extends StatelessWidget {
   final int index;
   final Product product;
+
   const Cards({super.key, required this.index, required this.product});
 
   @override
@@ -64,33 +66,30 @@ class Cards extends StatelessWidget {
 
                           // Positioned Back button
                           Positioned(
-                            top: 20,
-                            left: 0,
+                            top: 3,
+                            left:3,
                             child: Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: Material(
                                 elevation: 0,
                                 borderRadius: BorderRadius.circular(70),
                                 surfaceTintColor: Colors.transparent,
-                                color: IconColor.white.withValues(alpha: 0.5),
+                                color: IconColor.white,
                                 child: InkWell(
                                   overlayColor: WidgetStateProperty.all(
                                       Colors.transparent),
                                   splashFactory: NoSplash.splashFactory,
                                   borderRadius: BorderRadius.circular(12),
-                                  onTap: () {} /*logic.controller.unswipe*/,
+                                  onTap:  homeCtrl.controller.unswipe,
                                   child: Container(
                                     width: 45,
                                     height: 45,
+                                    padding: EdgeInsets.all(8),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12),
                                       color: Colors.transparent,
                                     ),
-                                    child: const Icon(
-                                      Icons.undo,
-                                      size: 35,
-                                      color: IconColor.black,
-                                    ),
+                                    child:  SvgPicture.asset(ImageConstants.undo),
                                   ),
                                 ),
                               ),
@@ -113,13 +112,12 @@ class Cards extends StatelessWidget {
                                   gradient: LinearGradient(
                                     colors: [
                                       BackgroundColor.black
-                                          .withValues(alpha: 0.05),
+                                          .withValues(alpha: 0.03),
+                                      BackgroundColor.black
+                                          .withValues(alpha: 0.3),
                                       BackgroundColor.black
                                           .withValues(alpha: 0.5),
-                                      BackgroundColor.black
-                                          .withValues(alpha: 0.7),
                                     ],
-                                    stops: const [0.2, 0.78, 1.0],
                                     begin: Alignment.topCenter,
                                     end: Alignment.bottomCenter,
                                   ),
@@ -152,6 +150,7 @@ class Cards extends StatelessWidget {
                                               height: 50,
                                               width: 50,
                                             )*/
+
                                                 /// Remove this after use above code
                                                 Container(
                                               decoration: BoxDecoration(
@@ -162,18 +161,10 @@ class Cards extends StatelessWidget {
                                               ),
                                               padding: EdgeInsets.all(1.5),
                                               child: CircleAvatar(
-                                                maxRadius: 24,
-                                                backgroundColor:
-                                                    const Color(0xFF002957),
-                                                child: Text(
-                                                  "ZARA"
-                                                      .substring(0, 4)
-                                                      .toUpperCase(),
-                                                  style: const TextStyle(
-                                                      color: TextColor.white,
-                                                      fontSize: 14),
-                                                ),
-                                              ),
+                                                  maxRadius: 24,
+                                                  child: Image.network(product
+                                                          .store?.logo ??
+                                                      ImageConstants.dummyNetworkPortrait)),
                                             ),
                                           ),
                                           Text(
@@ -183,7 +174,7 @@ class Cards extends StatelessWidget {
                                                 .textTheme
                                                 .bodyLarge
                                                 ?.copyWith(
-                                                  fontWeight: FontWeight.w600,
+                                                  fontWeight: FontWeight.w800,
                                                   color: TextColor.white,
                                                 ),
                                           ),
@@ -194,7 +185,7 @@ class Cards extends StatelessWidget {
                                                 .bodyLarge
                                                 ?.copyWith(
                                                     fontFamily: Font.timeNew,
-                                                    fontWeight: FontWeight.w600,
+                                                    fontWeight: FontWeight.w800,
                                                     color: TextColor.white,
                                                     fontSize: 20),
                                           )
@@ -220,9 +211,10 @@ class Cards extends StatelessWidget {
                                                         .heavyImpact();
                                                     cartLogin.addProductsToCart(
                                                         product,
-                                                        homeCtrl.quantity.value,
+                                                        product.quantity!,
                                                         homeCtrl.selectedSize
                                                             .value);
+                                                    homeCtrl.addToCartSwipe();
                                                   },
                                                   icon: Icon(
                                                       Icons
@@ -280,7 +272,7 @@ class Cards extends StatelessWidget {
                                             orderReviewController
                                                 .getHomeProduct(
                                                     product,
-                                                    homeCtrl.quantity.value,
+                                                    product.quantity!,
                                                     homeCtrl
                                                         .selectedSize.value);
                                             context.pushNamed(

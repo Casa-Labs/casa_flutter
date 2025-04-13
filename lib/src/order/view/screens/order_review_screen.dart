@@ -1,11 +1,14 @@
 import 'package:casaflutterapp/src/common/widgets/common_app_bars.dart';
 import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
 import 'package:casaflutterapp/src/order/controller/order_review_controller.dart';
+import 'package:casaflutterapp/src/order/view/widgets/add_instructions_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/padding_size.dart';
+import '../../../../utils/string_constant.dart';
 import '../widgets/expandable_card.dart';
 import '../widgets/order_view_item_widget.dart';
 
@@ -17,6 +20,7 @@ class OrderReviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final orderRiviweCtrl = Get.find<OrderReviewController>();
+    orderRiviweCtrl.startBlinking(); // Starts blinking loop
 
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
@@ -53,26 +57,6 @@ class OrderReviewScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.all(1),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: TextColor.black),
-                            borderRadius: BorderRadius.circular(50)),
-                        child: CircleAvatar(
-                          maxRadius: 24,
-                          backgroundColor: const Color(0xFF002957),
-                          child: Text(
-                            "ZARA".substring(0, 3).toUpperCase(),
-                            style: textTheme.bodyMedium?.copyWith(
-                              color: TextColor.white,
-                              // fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
                       Obx(() {
                         return ListView.separated(
                           padding: const EdgeInsets.all(0),
@@ -160,6 +144,16 @@ class OrderReviewScreen extends StatelessWidget {
                                         ),
                                       ),
                                     ),
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        isScrollControlled: true,
+                                        builder: (context) {
+                                          return AddInstructionsWidget(
+                                          );
+                                        },
+                                      );
+                                    },
                                   ),
                                 ],
                               ),
@@ -231,33 +225,45 @@ class OrderReviewScreen extends StatelessWidget {
             ),
             Container(
               color: ButtonColor.white,
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
               child: Obx(() {
-                return FilledButton(
-                  style: FilledButton.styleFrom(
-                    surfaceTintColor: const Color(0xFF2C9D24),
-                    backgroundColor: const Color(0xFF2C9D24),
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 900),
+                  decoration: BoxDecoration(
+                    color: orderRiviweCtrl.isBlinking.value
+                        ? const Color(0xFF2C9D24)
+                        : Colors.white,
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  onPressed: () async {
-                    // context.pushNamed(RouteNames.paymentOptions);
-                    await orderRiviweCtrl.createOrder();
-                    if (orderRiviweCtrl.message.isNotEmpty) {
-                      showToast(
-                        message: orderRiviweCtrl.message(),
-                      );
-                    }
-                  },
-                  child: Text(
-                    "Pay ₹${orderRiviweCtrl.total}",
-                    style: textTheme.bodyMedium?.copyWith(
-                      // fontSize: 14,
-                      color: TextColor.white,
+                  child: FilledButton(
+                    style: FilledButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      surfaceTintColor: Colors.transparent,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
-                  ),
+                    onPressed: () async {
+                      HapticFeedback.lightImpact(); // Haptic feedback
+                      await orderRiviweCtrl.createOrder();
+                      if (orderRiviweCtrl.message.isNotEmpty) {
+                        showToast(message: orderRiviweCtrl.message());
+                      }
+                    },
+                    child: Text(
+                      "Pay ₹${orderRiviweCtrl.total}",
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: Colors.white/*orderRiviweCtrl.isBlinking.value
+                            ? Colors.white
+                            : const Color(0xFF2C9D24),*/
+                      ),
+                    ),
+                  ).paddingSymmetric(horizontal: 10),
                 );
               }),
             ),
+
+
           ],
         ),
       ),

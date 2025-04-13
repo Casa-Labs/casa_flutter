@@ -9,6 +9,7 @@ import '../../../../utils/color.dart';
 import '../../../common/widgets/buttons/custom_button.dart';
 import '../../controller/cart_controller.dart';
 import '../../model/cart_models.dart';
+import 'cart_size_selector.dart';
 import 'counter_widget.dart';
 
 class CartItem extends StatelessWidget {
@@ -40,11 +41,9 @@ class CartItem extends StatelessWidget {
               border: Border.all(color: CColor.circleBoarder, width: 1)),
           child: CircleAvatar(
             maxRadius: 24,
-            backgroundColor: const Color(0xFF002957),
-            child: Text(
-              "ZARA".substring(0, 4).toUpperCase(),
-              style: const TextStyle(color: TextColor.white, fontSize: 14),
-            ),
+            child: Image.network(item
+                .store?.logo ??
+                ImageConstants.dummyNetworkPortrait)
           ),
         ),
         SizedBox(height: 15),
@@ -82,7 +81,7 @@ class CartItem extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            item.name!,
+                            item.name ?? "API Error or NA",
                             // "hello",
                             style: textTheme.bodyLarge?.copyWith(
                               fontWeight: FontWeight.w600,
@@ -100,7 +99,7 @@ class CartItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Zara',
+                      item.store?.name ?? "API Error or NA",
                       style: textTheme.bodyMedium?.copyWith(
                         color: TextColor.black54,
                       ),
@@ -129,7 +128,15 @@ class CartItem extends StatelessWidget {
                         ),
                       ),
                     ),
-                    _buildSizeSelector(textTheme, item.sizeValue!),
+                    CartSizeSelector(
+                      item: item,
+                      onChanged: (value) {
+                        item.size = value!.size!.id;
+                        item.sizeValue = value.size!.name;
+                      },
+                    ),
+                    // _buildSizeSelector(
+                    //     textTheme, item.sizeValue!, item.sizes!, context),
                     const SizedBox(height: 6),
                     CounterWidget(
                       quantity: item.quantity ?? 1,
@@ -149,7 +156,7 @@ class CartItem extends StatelessWidget {
                           onPressed: onCartItemDelete,
                         ),
                         CustomPrimaryButton(
-                          button: PrimaryButtons.smallWhiteBG,
+                          button: PrimaryButtons.smallBlackBG,
                           text: "Buy Now",
                           onPressed: onBuyNow,
                         ),
@@ -165,40 +172,6 @@ class CartItem extends StatelessWidget {
         Divider(height: 0.5, color: DividerColor.grey),
         const SizedBox(height: 10),
       ],
-    );
-  }
-
-  Widget _buildSizeSelector(TextTheme textTheme, String size) {
-    return Container(
-      height: 36,
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'Size:',
-            style: textTheme.bodySmall?.copyWith(
-              color: TextColor.black,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          Text(
-            size,
-            style: textTheme.bodySmall?.copyWith(
-              color: TextColor.black,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          // IconButton(
-          //   onPressed: () {},
-          //   highlightColor: ButtonColor.transparent,
-          //   icon: const Icon(Icons.keyboard_arrow_down, size: 18),
-          // ),
-        ],
-      ),
     );
   }
 }
