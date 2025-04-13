@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/padding_size.dart';
+import '../../../../utils/string_constant.dart';
 import '../widgets/expandable_card.dart';
 import '../widgets/order_view_item_widget.dart';
 
@@ -54,26 +55,6 @@ class OrderReviewScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.all(1),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: TextColor.black),
-                            borderRadius: BorderRadius.circular(50)),
-                        child: CircleAvatar(
-                          maxRadius: 24,
-                          backgroundColor: const Color(0xFF002957),
-                          child: Text(
-                            "ZARA".substring(0, 3).toUpperCase(),
-                            style: textTheme.bodyMedium?.copyWith(
-                              color: TextColor.white,
-                              // fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
                       Obx(() {
                         return ListView.separated(
                           padding: const EdgeInsets.all(0),

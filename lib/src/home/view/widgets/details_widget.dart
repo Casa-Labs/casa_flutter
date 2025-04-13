@@ -83,6 +83,8 @@ class ProductDetails extends StatelessWidget {
                 onPressed: () {
                   cartLogin.addProductsToCart(
                       product, product.quantity!, logic.selectedSize.value);
+                  logic.addToCartSwipe();
+
                 },
               ),
               const SizedBox(height: 20),

@@ -156,10 +156,11 @@ class Product {
   String? customShippingPolicy;
   double? price;
   String? category;
+  String? storeId;
+  Store? store;
   List<Sizes>? sizes;
   List<ColorsModel>? colors;
   int? stock;
-  String? storeId;
   String? mainImage;
   bool? isNewArrival;
   List<String>? productImages;
@@ -182,6 +183,7 @@ class Product {
       this.productImages,
       this.mainImage,
       this.stock,
+      this.store,
       this.storeId,
       this.isNewArrival,
       this.isTrending,
@@ -192,6 +194,10 @@ class Product {
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'] ?? "";
     name = json['name'] ?? "";
+    store = json['store'] != null ? Store.fromJson(json['store']) : null;
+    if (store != null) {
+      json['store'] = store?.toJson();
+    }
     description = json['description'] ?? "";
     if (json['colors'] != null) {
       colors = <ColorsModel>[];
@@ -231,7 +237,9 @@ class Product {
     data['customShippingPolicy'] = customShippingPolicy;
     data['price'] = price;
     data['category'] = category;
-
+    if (store != null) {
+      data['store'] = store!.toJson();
+    }
     data['productImages'] = productImages;
     data['mainImage'] = mainImage;
     if (sizes != null) {
@@ -329,6 +337,78 @@ class Sizes {
     return data;
   }
 }
+
+class StoreModel {
+  Store? store;
+
+  StoreModel({this.store});
+
+  StoreModel.fromJson(Map<String, dynamic> json) {
+    store = json['store'] != null ? Store.fromJson(json['store']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (store != null) {
+      data['store'] = store!.toJson();
+    }
+    return data;
+  }
+}
+
+class Store {
+  String? id;
+  String? userId;
+  String? name;
+  String? description;
+  String? type;
+  String? logo;
+  String? createdAt;
+  String? updatedAt;
+  bool? isDeleted;
+  String? reasonToDelete;
+
+  Store(
+      {this.id,
+        this.userId,
+        this.name,
+        this.description,
+        this.type,
+        this.logo,
+        this.createdAt,
+        this.updatedAt,
+        this.isDeleted,
+        this.reasonToDelete});
+
+  Store.fromJson(Map<String, dynamic> json) {
+    id = json['id'] ?? "";
+    userId = json['userId'] ?? "";
+    name = json['name'] ?? "";
+    description = json['description'] ?? "";
+    type = json['type'] ?? "";
+    logo = json['logo'] ?? "";
+    createdAt = json['createdAt'] ?? "";
+    updatedAt = json['updatedAt'] ?? "";
+    isDeleted = json['isDeleted'] ?? "";
+    reasonToDelete = json['reasonToDelete'] ?? "";
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['userId'] = userId;
+    data['name'] = name;
+    data['description'] = description;
+    data['type'] = type;
+    data['logo'] = logo;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['isDeleted'] = isDeleted;
+    data['reasonToDelete'] = reasonToDelete;
+    return data;
+  }
+}
+
 
 class SizeItem {
   String? id;

@@ -29,6 +29,7 @@ class HomeController extends GetxController {
   bool isDisabled = false;
   List<Product> products = [];
   List<GetProductSizes> size = [];
+
   // Convert API sizes to button format
   List<String> formattedSizes = [];
   List<BrandData> brand = [];
@@ -103,6 +104,13 @@ class HomeController extends GetxController {
     if (kDebugMode) {
       print('end reached!');
     }
+
+  }
+
+  void addToCartSwipe() {
+    swipeIcon = Icons.add_shopping_cart_outlined;
+    controller.swipeRight();
+    update();
   }
 
   void swipeEnd(int previousIndex, int targetIndex, SwiperActivity activity) {
@@ -119,17 +127,27 @@ class HomeController extends GetxController {
           print('Previous index: $previousIndex, Target index: $targetIndex');
         }
         // Add conditions for swipe directions
-        if (activity.direction == AxisDirection.right) {
-          swipeIcon = Icons.check_rounded; // ✅ Right Swipe
-        } else if (activity.direction == AxisDirection.left) {
-          swipeIcon = Icons.close_rounded; // ❌ Left Swipe
+        if(swipeIcon == Icons.add_shopping_cart_outlined){
+        }else {
+          if (activity.direction == AxisDirection.right) {
+            swipeIcon = Icons.check_rounded; // ✅ Right Swipe
+          } else if (activity.direction == AxisDirection.left) {
+            swipeIcon = Icons.close_rounded; // ❌ Left Swipe
+          }
         }
 
         // Hide the icon after some time
-        Future.delayed(Duration(milliseconds: 500), () {
-          swipeIcon = null;
-          update();
-        });
+        if(swipeIcon == Icons.add_shopping_cart_outlined){
+          Future.delayed(Duration(milliseconds: 800), () {
+            swipeIcon = null;
+            update();
+          });
+        }else {
+          Future.delayed(Duration(milliseconds: 500), () {
+            swipeIcon = null;
+            update();
+          });
+        }
         update();
         break;
 

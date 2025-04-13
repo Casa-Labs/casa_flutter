@@ -45,43 +45,47 @@ class HomeScreen extends StatelessWidget {
             )),
     );
   }
-  
+
   _cardSwiper(
       HomeController logic, BuildContext context, List<Product> products) {
-    return RefreshIndicator(
-      onRefresh: () => logic.fetchProducts({}),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.76,
-              child: AppinioSwiper(
-                loop: true,
-                controller: logic.controller,
-                swipeOptions: const SwipeOptions.only(
-                  left: true,
-                  right: true,
+    return GetBuilder<HomeController>(builder: (logic) {
+      return RefreshIndicator(
+        onRefresh: () => logic.fetchProducts({}),
+        child: Stack(
+          alignment: logic.swipeIcon == Icons.add_shopping_cart_outlined
+              ? Alignment.topCenter
+              : Alignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height * 0.76,
+                child: AppinioSwiper(
+                  loop: true,
+                  controller: logic.controller,
+                  swipeOptions: const SwipeOptions.only(
+                    left: true,
+                    right: true,
+                  ),
+                  backgroundCardCount: 0,
+                  cardCount: products.length,
+                  isDisabled: logic.isDisabled,
+                  onEnd: logic.onEnd,
+                  initialIndex: logic.cardIndex != -1 ? logic.cardIndex : null,
+                  onSwipeEnd: logic.swipeEnd,
+                  cardBuilder: (context, index) {
+                    if (index >= products.length) {
+                      return Center(child: Text('No more cards'));
+                    }
+                    return Cards(index: index, product: products[index]);
+                  },
                 ),
-                backgroundCardCount: 0,
-                cardCount: products.length,
-                isDisabled: logic.isDisabled,
-                onEnd: logic.onEnd,
-                initialIndex: logic.cardIndex != -1 ? logic.cardIndex : null,
-                onSwipeEnd: logic.swipeEnd,
-                cardBuilder: (context, index) {
-                  if (index >= products.length) {
-                    return Center(child: Text('No more cards'));
-                  }
-                  return Cards(index: index, product: products[index]);
-                },
               ),
             ),
-          ),
-          SwipeAnimation(swipeIcon: logic.swipeIcon),
-        ],
-      ),
-    );
+            SwipeAnimation(swipeIcon: logic.swipeIcon),
+          ],
+        ),
+      );
+    });
   }
 }
