@@ -5,10 +5,11 @@ import '../../../../utils/color_constant.dart';
 class CounterWidget extends StatefulWidget {
   const CounterWidget({
     super.key,
-    this.quantity = 1, required this.onQuantityChanged,
+    this.quantity = 1,
+    required this.onQuantityChanged,
   });
 
-   final int quantity;
+  final int quantity;
   final ValueChanged<int> onQuantityChanged;
 
   @override
@@ -16,7 +17,7 @@ class CounterWidget extends StatefulWidget {
 }
 
 class _CounterWidgetState extends State<CounterWidget> {
- late int _quantity;
+  late int _quantity;
 
   @override
   void initState() {
@@ -45,15 +46,15 @@ class _CounterWidgetState extends State<CounterWidget> {
     return Container(
       height: 24,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: ButtonColor.lightGrey,
-      ),
+          borderRadius: BorderRadius.circular(8),
+          color: ButtonColor.white,
+          border: Border.all(color: BorderColor.black)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _buildButton(Icons.remove, _decreaseCount),
-          const VerticalDivider(thickness: 1),
+          const VerticalDivider(thickness: 1, color: DividerColor.grey),
           const Spacer(),
           Text(
             _quantity.toString(),
@@ -62,6 +63,7 @@ class _CounterWidgetState extends State<CounterWidget> {
           const Spacer(),
           const VerticalDivider(
             thickness: 1,
+            color: DividerColor.grey,
           ),
           _buildButton(Icons.add, _increaseCount),
         ],

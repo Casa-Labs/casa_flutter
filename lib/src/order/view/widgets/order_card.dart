@@ -93,7 +93,8 @@ class OrderCard extends StatelessWidget {
                   height: 36,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: const Color(0xFFD9D9D9)),
+                      color: BackgroundColor.white,
+                      border: Border.all(color: BorderColor.black)),
                   child: Row(
                     children: [
                       const SizedBox(
@@ -143,8 +144,10 @@ class OrderCard extends StatelessWidget {
                       height: 24,
                       width: 100,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: const Color(0xFFD9D9D9)),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: BorderColor.black),
+                        color: BackgroundColor.white,
+                      ),
                       child: Center(
                           child: Text(
                         orderItem.quantity.toString(),

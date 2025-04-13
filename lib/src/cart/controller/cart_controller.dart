@@ -67,6 +67,7 @@ class CartController extends GetxController {
       "size": sizeID,
       "sizeValue": selectedSize,
       "description": product.description,
+      "sizes": product.sizes,
       "quantity": quantity, // Add quantity field
       // ...product.toJson(), // Convert product to JSON
       // "quantity": quantity, // Add quantity field

@@ -5,7 +5,8 @@ import '../../../../utils/color_constant.dart';
 enum PrimaryButtons {
   blackBG,
   whiteBG,
-  smallWhiteBG
+  smallWhiteBG,
+  smallBlackBG
 } // add extra button states here
 
 class CustomPrimaryButton extends StatelessWidget {
@@ -18,7 +19,7 @@ class CustomPrimaryButton extends StatelessWidget {
       {super.key,
       required this.button,
       required this.onPressed,
-        this.isLoading = false,
+      this.isLoading = false,
       required this.text});
 
   @override
@@ -45,6 +46,14 @@ class CustomPrimaryButton extends StatelessWidget {
       case PrimaryButtons.smallWhiteBG:
         textColor = ButtonColor.black;
         backgroundColor = ButtonColor.white;
+        size = Size(90, 25);
+        fontSize = 14;
+        borderColor = ButtonColor.black;
+        padding = EdgeInsets.zero;
+        break;
+      case PrimaryButtons.smallBlackBG:
+        textColor = ButtonColor.white;
+        backgroundColor = ButtonColor.black;
         size = Size(90, 25);
         fontSize = 14;
         borderColor = ButtonColor.black;

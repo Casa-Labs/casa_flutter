@@ -98,7 +98,9 @@ class CartScreen extends StatelessWidget {
                             onTap: () {
                               context.pushNamed(
                                 RouteNames.productDescription,
-                                pathParameters: {'id': cartItem.id ?? ''},
+                                pathParameters: {
+                                  'id': cartItem.item!.productId ?? ''
+                                },
                               );
                             },
                             child: CartItem(

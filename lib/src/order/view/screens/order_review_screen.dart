@@ -1,6 +1,7 @@
 import 'package:casaflutterapp/src/common/widgets/common_app_bars.dart';
 import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
 import 'package:casaflutterapp/src/order/controller/order_review_controller.dart';
+import 'package:casaflutterapp/src/order/view/widgets/add_instructions_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -141,6 +142,16 @@ class OrderReviewScreen extends StatelessWidget {
                                         ),
                                       ),
                                     ),
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        isScrollControlled: true,
+                                        builder: (context) {
+                                          return AddInstructionsWidget(
+                                          );
+                                        },
+                                      );
+                                    },
                                   ),
                                 ],
                               ),
