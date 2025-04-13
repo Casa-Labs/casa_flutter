@@ -3,8 +3,9 @@ import 'package:casaflutterapp/src/common/widgets/buttons/buy_now_button.dart';
 import 'package:casaflutterapp/src/common/widgets/common_app_bars.dart';
 import 'package:casaflutterapp/src/common/widgets/custom_image_view.dart';
 import 'package:casaflutterapp/src/explore/controller/explore_controller.dart';
-import 'package:casaflutterapp/src/explore/model/product_by_id_model.dart';
+import 'package:casaflutterapp/src/explore/model/product_by_id_model.dart' as model;
 import 'package:casaflutterapp/utils/color_constant.dart';
+import 'package:casaflutterapp/utils/font.dart';
 import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,7 +33,7 @@ class ProductDescriptionScreen extends StatelessWidget {
       appBar: CommonAppBar(
         title: '',
       ),
-      body: FutureBuilder<GetProductDetails>(
+      body: FutureBuilder<model.GetProductDetails>(
         future: exploreCtrl.getProductDetailsByIdCall(id),
         builder: (context, snapshot) {
           logg.d('Snapshot state: ${snapshot.connectionState}');
@@ -184,6 +185,22 @@ class ProductDescriptionScreen extends StatelessWidget {
                           'Not really until API integrates');
                     },
                   ),
+                  const SizedBox(height: 30),
+
+                  // TODO: This things will be done after getting data from api RETURN POLICY || SHIPPING POLICY || Order review
+                  /*_buildPolicyTile(
+                    title: 'RETURN POLICY',
+                    isExpanded: exploreCtrl.isShowReturn,
+                    onTap: () => exploreCtrl.changeReturnPolicy(),
+                    content: product!.customReturnPolicy!,
+                  ),
+                  const SizedBox(height: 20),
+                  _buildPolicyTile(
+                    title: 'SHIPPING POLICY',
+                    isExpanded: exploreCtrl.isShowShipping,
+                    onTap: () => exploreCtrl.changeShippingPolicy(),
+                    content: product.customShippingPolicy!,
+                  ),*/
                   const SizedBox(height: 40),
                   const CareCompositionTile(),
                 ],
@@ -191,6 +208,60 @@ class ProductDescriptionScreen extends StatelessWidget {
             );
           }
         },
+      ),
+    );
+  }
+
+  Widget _buildPolicyTile({
+    required String title,
+    required bool isExpanded,
+    required VoidCallback onTap,
+    required String content,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(25),
+          border: Border.all(color: Colors.white, width: 1),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Icon(
+                  isExpanded ? Icons.keyboard_arrow_up_rounded : Icons.add,
+                  color: Colors.white,
+                ),
+              ],
+            ).paddingSymmetric(horizontal: 15),
+            if (isExpanded) ...[
+              Divider(color: Colors.white, thickness: 1),
+              Text(
+                content,
+                style: TextStyle(
+                    fontSize: 12.5,
+                    color: TextColor.white,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: Font.gilroy),
+              ).paddingSymmetric(horizontal: 15, vertical: 5),
+            ],
+          ],
+        ),
       ),
     );
   }
