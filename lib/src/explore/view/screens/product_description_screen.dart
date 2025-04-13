@@ -68,7 +68,7 @@ class ProductDescriptionScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            product?.store?.name ?? 'API Error',
+                            product?.store?.name ?? AppStrings.productBrand,
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall
