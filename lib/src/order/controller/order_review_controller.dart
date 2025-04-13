@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:casaflutterapp/src/auth/model/add_user_address_response_model.dart';
@@ -29,6 +30,8 @@ class OrderReviewController extends GetxController {
   double deliveryCharge = 34.00;
   double platFormFee = 7.00;
   RxString message = ''.obs;
+  RxBool isBlinking = false.obs;
+  Timer? _blinkingTimer;
 
   // ========== STATES ========== //
 
@@ -217,4 +220,18 @@ class OrderReviewController extends GetxController {
       );
     }
   }
+
+  void startBlinking() {
+    if (_blinkingTimer != null && _blinkingTimer!.isActive) return;
+    _blinkingTimer = Timer.periodic(const Duration(milliseconds: 800), (timer) {
+      if (productsList.isEmpty) {
+        timer.cancel();
+        isBlinking.value = false;
+      } else {
+        isBlinking.value = !isBlinking.value;
+      }
+    });
+  }
+
+
 }

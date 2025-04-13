@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
+import '../widgets/logout_confim_action_dialog.dart';
 import '../widgets/share_dialog.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -81,8 +82,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Obx(
-                    () => ElevatedButton(
+                  ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: ButtonColor.black,
                         foregroundColor: ButtonColor.white,
@@ -92,31 +92,33 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ),
                       onPressed: () async {
-                        await homeCtrl.deleteUserCall();
-                        if (homeCtrl.message.isNotEmpty) {
-                          showToast(
-                            message: homeCtrl.message(),
-                          );
-                          if (homeCtrl.isUserDeleted()) {
-                            final authController = Get.put(AuthController());
-                            await authController.logOutUser();
-                            authController.clearAllControllers();
-                            router.goNamed(RouteNames.signIn);
-                          }
-                        }
+                        showDialog(
+                          context: context,
+                          builder: (_) => ConfirmActionDialog(
+                            title: "Delete Account",
+                            message:
+                            "Are you sure you want to delete your account? This action cannot be undone.",
+                            confirmText: "Delete",
+                            isLoading: homeCtrl.isUserDeleteProgress,
+                            onConfirm: () async {
+                              await homeCtrl.deleteUserCall();
+                              if (homeCtrl.message.isNotEmpty) {
+                                showToast(
+                                  message: homeCtrl.message(),
+                                );
+                                if (homeCtrl.isUserDeleted()) {
+                                  final authController =
+                                  Get.put(AuthController());
+                                  await authController.logOutUser();
+                                  authController.clearAllControllers();
+                                  router.goNamed(RouteNames.signIn);
+                                }
+                              }
+                            },
+                          ),
+                        );
                       },
-                      child: homeCtrl.isUserDeleteProgress()
-                          ? SizedBox(
-                              height: 20.0,
-                              width: 20.0,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                              ),
-                            )
-                          : Text(
-                              'Delete Account',
-                            ),
-                    ),
+                      child: Text('Delete Account',)
                   ),
                   const SizedBox(height: 50),
                 ],
@@ -132,8 +134,10 @@ class ProfileScreen extends StatelessWidget {
 class ProfileListModel {
   final String title;
   final void Function(BuildContext) onTap;
+
   ProfileListModel({required this.title, required this.onTap});
 }
+
 
 List<ProfileListModel> profileList = [
   ProfileListModel(
@@ -176,10 +180,20 @@ List<ProfileListModel> profileList = [
   ProfileListModel(
     title: 'Logout',
     onTap: (context) async {
-      final authController = Get.put(AuthController());
-      await authController.logOutUser();
-      authController.clearAllControllers();
-      router.goNamed(RouteNames.signIn);
+      showDialog(
+        context: context,
+        builder: (_) => ConfirmActionDialog(
+          title: "Logout",
+          message: "Are you sure you want to logout?",
+          confirmText: "Logout",
+          onConfirm: () async {
+            final authController = Get.put(AuthController());
+            await authController.logOutUser();
+            authController.clearAllControllers();
+            router.goNamed(RouteNames.signIn);
+          },
+        ),
+      );
     },
   ),
 ];
