@@ -7,6 +7,7 @@ import 'package:casaflutterapp/utils/font.dart';
 import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
@@ -65,33 +66,30 @@ class Cards extends StatelessWidget {
 
                           // Positioned Back button
                           Positioned(
-                            top: 20,
-                            left: 0,
+                            top: 3,
+                            left:3,
                             child: Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: Material(
                                 elevation: 0,
                                 borderRadius: BorderRadius.circular(70),
                                 surfaceTintColor: Colors.transparent,
-                                color: IconColor.white.withValues(alpha: 0.5),
+                                color: IconColor.white,
                                 child: InkWell(
                                   overlayColor: WidgetStateProperty.all(
                                       Colors.transparent),
                                   splashFactory: NoSplash.splashFactory,
                                   borderRadius: BorderRadius.circular(12),
-                                  onTap: () {} /*logic.controller.unswipe*/,
+                                  onTap:  homeCtrl.controller.unswipe,
                                   child: Container(
                                     width: 45,
                                     height: 45,
+                                    padding: EdgeInsets.all(8),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12),
                                       color: Colors.transparent,
                                     ),
-                                    child: const Icon(
-                                      Icons.undo,
-                                      size: 35,
-                                      color: IconColor.black,
-                                    ),
+                                    child:  SvgPicture.asset(ImageConstants.undo),
                                   ),
                                 ),
                               ),
@@ -114,13 +112,12 @@ class Cards extends StatelessWidget {
                                   gradient: LinearGradient(
                                     colors: [
                                       BackgroundColor.black
-                                          .withValues(alpha: 0.05),
+                                          .withValues(alpha: 0.03),
+                                      BackgroundColor.black
+                                          .withValues(alpha: 0.3),
                                       BackgroundColor.black
                                           .withValues(alpha: 0.5),
-                                      BackgroundColor.black
-                                          .withValues(alpha: 0.7),
                                     ],
-                                    stops: const [0.2, 0.78, 1.0],
                                     begin: Alignment.topCenter,
                                     end: Alignment.bottomCenter,
                                   ),
@@ -177,7 +174,7 @@ class Cards extends StatelessWidget {
                                                 .textTheme
                                                 .bodyLarge
                                                 ?.copyWith(
-                                                  fontWeight: FontWeight.w600,
+                                                  fontWeight: FontWeight.w800,
                                                   color: TextColor.white,
                                                 ),
                                           ),
@@ -188,7 +185,7 @@ class Cards extends StatelessWidget {
                                                 .bodyLarge
                                                 ?.copyWith(
                                                     fontFamily: Font.timeNew,
-                                                    fontWeight: FontWeight.w600,
+                                                    fontWeight: FontWeight.w800,
                                                     color: TextColor.white,
                                                     fontSize: 20),
                                           )
@@ -217,6 +214,7 @@ class Cards extends StatelessWidget {
                                                         homeCtrl.quantity.value,
                                                         homeCtrl.selectedSize
                                                             .value);
+                                                    homeCtrl.addToCartSwipe();
                                                   },
                                                   icon: Icon(
                                                       Icons
