@@ -61,6 +61,7 @@ dependencies:
   persistent_bottom_nav_bar: ^6.2.1
   showcaseview: ^4.0.1
   app_tutorial: ^1.0.6
+  url_launcher: ^6.3.1
 
 
 dev_dependencies:
