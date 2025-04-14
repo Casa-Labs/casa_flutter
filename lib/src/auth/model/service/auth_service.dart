@@ -67,23 +67,16 @@ class AuthService {
     return registerUserResponse;
   }
 
-  Future<VerifyOTPAndSendWelcomeEmailModel?> verifyEmailOtpForRegistration({
+  Future<String?> verifyRegistrationOTP({
     required String email,
     required String otp,
   }) async {
-    final VerifyOTPAndSendWelcomeEmailModel verifyOTPAndSendWelcomeEmailModel;
-
-    final response = await _graphQLManager.verifyEmailOtpForRegistration(
+    final response = await _graphQLManager.verifyRegistrationOTP(
       email: email,
       otp: otp,
     );
 
-    verifyOTPAndSendWelcomeEmailModel =
-        VerifyOTPAndSendWelcomeEmailModel.fromJson(
-      response.data,
-    );
-
-    return verifyOTPAndSendWelcomeEmailModel;
+    return response.data?['verifyRegistratioOTP'];
   }
 
   Future<String?> requestPasswordReset({
@@ -96,18 +89,38 @@ class AuthService {
     return response.data?['requestPasswordReset'];
   }
 
-  Future<String?> verifyOTPAndUpdatePassword({
+  Future<String?> sendRegistrationOTP({
+    required String email,
+  }) async {
+    final response = await _graphQLManager.sendRegistrationOTP(
+      email: email,
+    );
+
+    return response.data?['sendRegistrationOTP'];
+  }
+
+  Future<String?> verifyOTPForPasswordUpdate({
     required String email,
     required String otp,
-    required String newPassword,
   }) async {
-    final response = await _graphQLManager.verifyOTPAndUpdatePassword(
+    final response = await _graphQLManager.verifyOTPForPasswordUpdate(
       email: email,
       otp: otp,
+    );
+
+    return response.data?['verifyOTPForPasswordUpdate'];
+  }
+
+  Future<String?> updatePasswordAfterVerification({
+    required String email,
+    required String newPassword,
+  }) async {
+    final response = await _graphQLManager.updatePasswordAfterVerification(
+      email: email,
       newPassword: newPassword,
     );
 
-    return response.data?['verifyOTPAndUpdatePassword'];
+    return response.data?['updatePasswordAfterVerification'];
   }
 
   Future<bool?> deleteUser({
@@ -205,6 +218,8 @@ class AuthService {
     required String state,
     required String pinCode,
     required String country,
+    String? landMark,
+    String? tag,
   }) async {
     final AddUserAddressResponseModel addUserAddressResponse;
 
@@ -215,6 +230,8 @@ class AuthService {
       state: state,
       pinCode: pinCode,
       country: country,
+      landmark: landMark,
+      tag: tag,
     );
 
     addUserAddressResponse = AddUserAddressResponseModel.fromJson(
