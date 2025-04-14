@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:casaflutterapp/src/auth/model/auth_models.dart';
 import 'package:casaflutterapp/src/auth/model/service/auth_service.dart';
+import 'package:casaflutterapp/utils/extensions.dart';
 import 'package:casaflutterapp/utils/preference_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -63,6 +64,11 @@ class PersonalDetailsController extends GetxController {
           phone: phoneNumber.text,
         );
         if (userDetailsResponse != null) {
+          // set user details
+          await PreferenceManager.setData(
+            PreferenceManager.userDetails,
+            userDetailsResponse.updateUserDetails?.toJsonString(),
+          );
           isPersonalDetailsSaved(true);
           message('Personal details saved successfully');
           isLoading(false);

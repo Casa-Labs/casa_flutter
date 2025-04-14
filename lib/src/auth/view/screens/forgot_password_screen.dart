@@ -72,19 +72,23 @@ class ForgotPasswordScreen extends StatelessWidget {
                       ],
                     ),
                     Spacer(flex: 1),
-                    AuthButton(
-                      type: AuthButtonType.send,
-                      onPressed: () {
-                        forgotPasswordController.sentOtpCall();
-                        if (forgotPasswordController.message().isNotEmpty) {
-                          showToast(
-                            message: forgotPasswordController.message(),
-                          );
-                          if (forgotPasswordController.isOtpSent()) {
-                            router.pushNamed(RouteNames.verifyEmail);
+                    Obx(
+                      () => AuthButton(
+                        isLoading:
+                            forgotPasswordController.isOtpSendingInProgress(),
+                        type: AuthButtonType.send,
+                        onPressed: () async {
+                          await forgotPasswordController.sentOtpCall();
+                          if (forgotPasswordController.message().isNotEmpty) {
+                            showToast(
+                              message: forgotPasswordController.message(),
+                            );
+                            if (forgotPasswordController.isOtpSent()) {
+                              router.pushNamed(RouteNames.verifyEmail);
+                            }
                           }
-                        }
-                      },
+                        },
+                      ),
                     ),
                     Spacer(flex: 2),
                   ],

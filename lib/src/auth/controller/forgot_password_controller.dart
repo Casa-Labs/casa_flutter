@@ -19,6 +19,9 @@ class ForgotPasswordController extends GetxController {
   RxBool isOtpVerified = false.obs;
   RxBool isOtpObscured = true.obs;
   RxString message = ''.obs;
+  RxBool isOtpSendingInProgress = false.obs;
+  RxBool isOtpVerificationInProgress = false.obs;
+  RxBool isEmailValid = false.obs;
 
   // ========== UI FUNCTIONS ========== //
 
@@ -31,6 +34,9 @@ class ForgotPasswordController extends GetxController {
     isOtpSent(false);
     isOtpVerified(false);
     isOtpObscured(true);
+    isOtpSendingInProgress(false);
+    isOtpVerificationInProgress(false);
+    isEmailValid(false);
     message('');
   }
 
@@ -49,15 +55,18 @@ class ForgotPasswordController extends GetxController {
       message('Email address is not valid');
       isOtpSent(false);
     } else {
+      isOtpSendingInProgress(true);
       final requestPasswordResetResponse =
           await _authService.requestPasswordReset(
         email: email.text,
       );
 
       if (requestPasswordResetResponse != null) {
+        isOtpSendingInProgress(false);
         message('Otp sent successfully');
         isOtpSent(true);
       } else {
+        isOtpSendingInProgress(false);
         message('Invalid user');
         isOtpSent(false);
       }
@@ -80,24 +89,22 @@ class ForgotPasswordController extends GetxController {
       message('Please enter correct otp');
       isOtpVerified(false);
     } else {
+      isOtpVerificationInProgress(true);
       final verifyOTPAndUpdatePasswordResponse =
-          await _authService.verifyOTPAndUpdatePassword(
+          await _authService.verifyOTPForPasswordUpdate(
         email: email.text,
         otp: '${otp1.text}${otp2.text}${otp3.text}${otp4.text}',
-
-        ///TODO check for newPassword
-        newPassword: '',
       );
 
       if (verifyOTPAndUpdatePasswordResponse != null) {
+        isOtpVerificationInProgress(false);
         message('Otp verified successfully');
         isOtpVerified(true);
       } else {
+        isOtpVerificationInProgress(false);
         message('Invalid otp');
         isOtpVerified(false);
       }
-      message('Otp verified successfully');
-      isOtpVerified(true);
     }
   }
 }

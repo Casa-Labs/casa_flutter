@@ -26,10 +26,14 @@ class SignUpController extends GetxController {
   RxBool isRegisteredPasswordObscured = true.obs;
   RxBool isRegisteredRenterPasswordObscured = true.obs;
   RxString message = ''.obs;
-  RxBool isOtpSent = false.obs;
   RxBool isOtpObscured = true.obs;
-  RxBool isOtpVerified = false.obs;
   RxBool isEmailValid = false.obs;
+  RxBool isOtpSendingInProgress = false.obs;
+  RxBool isOtpSent = false.obs;
+  RxBool isOtpVerificationInProgress = false.obs;
+  RxBool isOtpVerified = false.obs;
+  RxBool isRegistrationInProgress = false.obs;
+  RxBool isRegistrationCompleted = false.obs;
 
 // ========== UI FUNCTIONS ========== //
 
@@ -50,6 +54,10 @@ class SignUpController extends GetxController {
     isOtpObscured(true);
     isOtpVerified(false);
     isEmailValid(false);
+    isOtpSendingInProgress(false);
+    isOtpVerificationInProgress(false);
+    isRegistrationInProgress(false);
+    isRegistrationCompleted(false);
   }
 
   @override
@@ -58,7 +66,7 @@ class SignUpController extends GetxController {
     super.onReady();
   }
 
-  Future<void> registerUserCall() async {
+  Future<void> sentOtpForRegistration() async {
     if (registeredEmail.text.isEmpty) {
       message('Enter email address');
       isUserRegistered(false);
@@ -81,38 +89,83 @@ class SignUpController extends GetxController {
     } else if (registeredPassword.text != registeredRenterPassword.text) {
       message('Entered password and Re-entered password are not same');
       isUserRegistered(false);
-    } else if (!isOtpVerified()) {
-      message('Verify otp');
-      isUserRegistered(false);
     } else {
-      LoginRequestModel loginRequestModel = LoginRequestModel(
-        username: registeredEmail.text,
-        password: registeredPassword.text,
+      isOtpSendingInProgress(true);
+      final sendRegistrationOTPResponse =
+          await _authService.sendRegistrationOTP(
+        email: registeredEmail.text,
       );
 
-      final loginResponse = await _authService.registerUser(
-        loginRequestModel: loginRequestModel,
-      );
-
-      if (loginResponse?.register != null) {
-        // set token to storage
-        await PreferenceManager.setData(
-          PreferenceManager.token,
-          loginResponse?.register?.token,
-        );
-        // set user details
-        await PreferenceManager.setData(
-          PreferenceManager.userDetails,
-          loginResponse?.register?.user?.toJsonString(),
-        );
-        // set only user id
-        await PreferenceManager.setData(
-          PreferenceManager.userId,
-          loginResponse?.register?.user?.id.toString(),
-        );
-        message('User registered successfully');
-        isUserRegistered(true);
+      if (sendRegistrationOTPResponse != null) {
+        isOtpSendingInProgress(false);
+        message('OTP sent to entered email id');
+        isOtpSent(true);
+      } else {
+        isOtpSendingInProgress(false);
+        message('Something went wrong...');
+        isOtpSent(false);
       }
+    }
+  }
+
+  Future<void> verifyOtpCall() async {
+    if (otp1.text.isNotEmpty &&
+        otp2.text.isNotEmpty &&
+        otp3.text.isNotEmpty &&
+        otp4.text.isNotEmpty) {
+      isOtpVerificationInProgress(true);
+      final verifyRegistrationOTPResponse =
+          await _authService.verifyRegistrationOTP(
+        email: registeredEmail.text,
+        otp: '${otp1.text}${otp2.text}${otp3.text}${otp4.text}',
+      );
+
+      if (verifyRegistrationOTPResponse != null) {
+        isOtpVerificationInProgress(false);
+        message('OTP verified successfully');
+        isOtpVerified(true);
+      } else {
+        isOtpVerificationInProgress(false);
+        message('Invalid or expired otp');
+        isOtpVerified(false);
+      }
+    }
+  }
+
+  Future<void> registerUserCall() async {
+    isRegistrationInProgress(true);
+    LoginRequestModel loginRequestModel = LoginRequestModel(
+      username: registeredEmail.text,
+      password: registeredPassword.text,
+    );
+
+    final registerUserResponse = await _authService.registerUser(
+      loginRequestModel: loginRequestModel,
+    );
+
+    if (registerUserResponse?.register != null) {
+      // set token to storage
+      await PreferenceManager.setData(
+        PreferenceManager.token,
+        registerUserResponse?.register?.token,
+      );
+      // set user details
+      await PreferenceManager.setData(
+        PreferenceManager.userDetails,
+        registerUserResponse?.register?.user?.toJsonString(),
+      );
+      // set only user id
+      await PreferenceManager.setData(
+        PreferenceManager.userId,
+        registerUserResponse?.register?.user?.id.toString(),
+      );
+      isRegistrationInProgress(false);
+      message('Few more steps and you are ready...');
+      isRegistrationCompleted(true);
+    } else {
+      isRegistrationInProgress(false);
+      message('Something went wrong...');
+      isRegistrationCompleted(false);
     }
   }
 
@@ -146,34 +199,6 @@ class SignUpController extends GetxController {
       isOtpObscured(false);
     } else {
       isOtpObscured(true);
-    }
-  }
-
-  Future<void> sendOtp() async {
-    message('Otp sent to entered email id');
-    isOtpSent(true);
-  }
-
-  Future<void> verifyOtpCall() async {
-    if (otp1.text.isNotEmpty &&
-        otp2.text.isNotEmpty &&
-        otp3.text.isNotEmpty &&
-        otp4.text.isNotEmpty) {
-      final verifyEmailResponse =
-          await _authService.verifyEmailOtpForRegistration(
-        email: registeredEmail.text,
-        otp: '${otp1.text}${otp2.text}${otp3.text}${otp4.text}',
-      );
-
-      if (verifyEmailResponse?.verifyOTPAndSendWelcomeEmail != null &&
-          verifyEmailResponse?.verifyOTPAndSendWelcomeEmail?.user?.isVerified ==
-              true) {
-        message('Otp verified successfully');
-        isOtpVerified(true);
-      } else {
-        message('Invalid otp');
-        isOtpVerified(false);
-      }
     }
   }
 }

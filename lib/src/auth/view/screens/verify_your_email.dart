@@ -157,19 +157,28 @@ class VerifyYourEmail extends StatelessWidget {
               SizedBox(height: 50),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: AuthButton(
-                  type: AuthButtonType.verify,
-                  onPressed: () {
-                    forgotPasswordController.verifyOtpCall();
-                    if (forgotPasswordController.message().isNotEmpty) {
-                      showToast(
-                        message: forgotPasswordController.message(),
-                      );
-                      if (forgotPasswordController.isOtpVerified()) {
-                        router.pushNamed(RouteNames.changePassword);
+                child: Obx(
+                  () => AuthButton(
+                    isLoading:
+                        forgotPasswordController.isOtpVerificationInProgress(),
+                    type: AuthButtonType.verify,
+                    onPressed: () async {
+                      await forgotPasswordController.verifyOtpCall();
+                      if (forgotPasswordController.message().isNotEmpty) {
+                        showToast(
+                          message: forgotPasswordController.message(),
+                        );
+                        if (forgotPasswordController.isOtpVerified()) {
+                          router.pushNamed(
+                            RouteNames.changePassword,
+                            pathParameters: {
+                              'email': forgotPasswordController.email.text
+                            },
+                          );
+                        }
                       }
-                    }
-                  },
+                    },
+                  ),
                 ),
               ),
             ],
