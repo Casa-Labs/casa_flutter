@@ -3,26 +3,31 @@ import 'package:casaflutterapp/src/common/widgets/buttons/buy_now_button.dart';
 import 'package:casaflutterapp/src/common/widgets/common_app_bars.dart';
 import 'package:casaflutterapp/src/common/widgets/custom_image_view.dart';
 import 'package:casaflutterapp/src/explore/controller/explore_controller.dart';
-import 'package:casaflutterapp/src/explore/model/product_by_id_model.dart' as model;
+import 'package:casaflutterapp/src/explore/controller/product_description_controller.dart';
+import 'package:casaflutterapp/src/explore/model/product_by_id_model.dart'
+    as model;
+import 'package:casaflutterapp/src/explore/view/widgets/divider_title.dart';
+import 'package:casaflutterapp/src/explore/view/widgets/product_card.dart';
 import 'package:casaflutterapp/utils/color_constant.dart';
 import 'package:casaflutterapp/utils/font.dart';
 import 'package:casaflutterapp/utils/string_constant.dart';
+import 'package:casaflutterapp/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../routes/app_routes.dart';
 import '../../../../utils/padding_size.dart';
-import '../../../../utils/utils.dart';
 import '../../../common/widgets/buttons/add_to_cart_button.dart';
 import '../../../common/widgets/buttons/select_size_button.dart';
-import '../widgets/care_composition_tile.dart';
 import '../widgets/quantity_selector_button.dart';
 
 class ProductDescriptionScreen extends StatelessWidget {
   final String id;
 
-  const ProductDescriptionScreen({super.key, required this.id});
+  ProductDescriptionScreen({super.key, required this.id});
+
+  final productDescriptionCtrl = Get.put(ProductDescriptionController());
 
   @override
   Widget build(BuildContext context) {
@@ -36,174 +41,264 @@ class ProductDescriptionScreen extends StatelessWidget {
       body: FutureBuilder<model.GetProductDetails>(
         future: exploreCtrl.getProductDetailsByIdCall(id),
         builder: (context, snapshot) {
-          logg.d('Snapshot state: ${snapshot.connectionState}');
-          logg.d('Snapshot hasError: ${snapshot.hasError}');
-          logg.d('Snapshot error: ${snapshot.error}');
-          logg.d('Snapshot data: ${snapshot.data}');
-
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
+            logg.e(snapshot.error);
             return const Center(child: Text("Can't fetch product details"));
           } else if (!snapshot.hasData || snapshot.data == null) {
             return const Center(child: Text("No product details available"));
           } else {
             final product = snapshot.data;
-            return SingleChildScrollView(
-              padding: const EdgeInsets.all(PaddingSize.commonPadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    spacing: 10,
-                    children: [
-                      CircleAvatar(
-                        backgroundImage: CachedNetworkImageProvider(
-                          product?.store?.logo ??
-                              ImageConstants.dummyNetworkPortrait,
-                        ),
-                        radius: 25,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            product?.store?.name ?? AppStrings.productBrand,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall
-                                ?.copyWith(fontWeight: FontWeight.w600),
-                          ),
-                          Text('Visit store',
-                              style: Theme.of(context).textTheme.bodySmall),
-                        ],
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Center(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Stack(
-                        children: [
-                          CachedNetworkImage(
-                            scale: 1.82,
-                            imageUrl: product?.mainImage ??
+            return Obx(
+              () => NotificationListener<ScrollNotification>(
+                onNotification: (ScrollNotification scrollInfo) {
+                  if (scrollInfo.metrics.pixels >=
+                          scrollInfo.metrics.maxScrollExtent - 100 &&
+                      !exploreCtrl.relatedProductsIsLoadingMore.value &&
+                      exploreCtrl.relatedProductsHasMore.value) {
+                    logg.d("Fetching more products...");
+                    productDescriptionCtrl.getRelatedProductsCall();
+                  }
+                  return true;
+                },
+                child: ListView(
+                  padding: const EdgeInsets.all(PaddingSize.commonPadding),
+                  controller: productDescriptionCtrl.scrollController,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      spacing: 10,
+                      children: [
+                        CircleAvatar(
+                          backgroundImage: CachedNetworkImageProvider(
+                            product?.store?.logo ??
                                 ImageConstants.dummyNetworkPortrait,
                           ),
-                          Positioned(
-                            bottom: 10,
-                            right: 10,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                IconButton(
-                                  onPressed: () {
-                                    context.pushNamed(RouteNames.cart);
-                                  },
-                                  icon: const Icon(
-                                      Icons.add_shopping_cart_outlined),
-                                  color: IconColor.white,
-                                  padding: EdgeInsets.zero,
-                                  constraints: BoxConstraints(),
-                                ),
-                                BuyNowButton(
-                                  onPressed: () {
-                                    context.pushNamed(RouteNames.orderReview);
-                                  },
-                                ),
-                              ],
+                          radius: 30,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              product?.store?.name ?? AppStrings.productBrand,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall
+                                  ?.copyWith(fontWeight: FontWeight.w600),
                             ),
-                          ),
-                        ],
-                      ),
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                textStyle:
+                                    Theme.of(context).textTheme.bodyMedium,
+                                padding: EdgeInsets.only(right: 10, bottom: 10),
+                                minimumSize: Size.zero,
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              onPressed: () {
+                                context.pushNamed(
+                                  RouteNames.store,
+                                  pathParameters: {
+                                    'id': product?.store?.id ?? ''
+                                  },
+                                );
+                              },
+                              child: const Text('Visit store'),
+                            ),
+                          ],
+                        )
+                      ],
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: CustomImageView(
-                          image: ImageConstants.send,
-                          height: 24,
+                    const SizedBox(height: 20),
+                    Center(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Stack(
+                          children: [
+                            CachedNetworkImage(
+                              scale: 1.82,
+                              imageUrl: product?.mainImage ??
+                                  ImageConstants.dummyNetworkPortrait,
+                            ),
+                            Positioned(
+                              bottom: 10,
+                              right: 10,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      context.pushNamed(RouteNames.cart);
+                                    },
+                                    icon: const Icon(
+                                        Icons.add_shopping_cart_outlined),
+                                    color: IconColor.white,
+                                    padding: EdgeInsets.zero,
+                                    constraints: BoxConstraints(),
+                                  ),
+                                  BuyNowButton(
+                                    onPressed: () {
+                                      context.pushNamed(RouteNames.orderReview);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      IconButton(
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        IconButton(
                           onPressed: () {},
                           icon: CustomImageView(
-                            image: ImageConstants.chat,
+                            image: ImageConstants.send,
                             height: 24,
-                          )),
-                      Spacer(),
-                      InkWell(
-                        child: Icon(Icons.bookmark_border),
-                        onTap: () {},
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    product?.name ?? 'NA',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(fontWeight: FontWeight.w600, fontSize: 20),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    product?.description ?? 'NA',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    '',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  Text(
-                    'Rs ${product?.price ?? 'API Error'}',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const SizedBox(height: 20),
-                  SelectSizeButton(
-                    size: [],
-                    selectedSize: "S",
-                    onSizeSelected: (newSize) {},
-                  ),
-                  const SizedBox(height: 20),
-                  Center(
-                      child: QuantitySelectorButton(
-                    count: 1,
-                    getQuantity: (count) {},
-                  )),
-                  const SizedBox(height: 20),
-                  AddToCartButton(
-                    onPressed: () {
-                      // Get.to(() => const PaymentOptionsScreen());
-                      Get.snackbar('Item added to cart successfully',
-                          'Not really until API integrates');
-                    },
-                  ),
-                  const SizedBox(height: 30),
+                          ),
+                        ),
+                        IconButton(
+                            onPressed: () {},
+                            icon: CustomImageView(
+                              image: ImageConstants.chat,
+                              height: 24,
+                            )),
+                        Spacer(),
+                        InkWell(
+                          child: Icon(Icons.bookmark_border),
+                          onTap: () {},
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      product?.name ?? 'NA',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(fontWeight: FontWeight.w600, fontSize: 20),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      product?.description ?? 'NA',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      '',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    Text(
+                      'Rs ${product?.price ?? 'API Error'}',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const SizedBox(height: 20),
+                    SelectSizeButton(
+                      size: [],
+                      selectedSize: "S",
+                      onSizeSelected: (newSize) {},
+                    ),
+                    const SizedBox(height: 20),
+                    Center(
+                        child: QuantitySelectorButton(
+                      count: 1,
+                      getQuantity: (count) {},
+                    )),
+                    const SizedBox(height: 20),
+                    AddToCartButton(
+                      onPressed: () {
+                        // Get.to(() => const PaymentOptionsScreen());
+                        Get.snackbar('Item added to cart successfully',
+                            'Not really until API integrates');
+                      },
+                    ),
+                    const SizedBox(height: 30),
 
-                  // TODO: This things will be done after getting data from api RETURN POLICY || SHIPPING POLICY || Order review
-                  /*_buildPolicyTile(
-                    title: 'RETURN POLICY',
-                    isExpanded: exploreCtrl.isShowReturn,
-                    onTap: () => exploreCtrl.changeReturnPolicy(),
-                    content: product!.customReturnPolicy!,
-                  ),
-                  const SizedBox(height: 20),
-                  _buildPolicyTile(
-                    title: 'SHIPPING POLICY',
-                    isExpanded: exploreCtrl.isShowShipping,
-                    onTap: () => exploreCtrl.changeShippingPolicy(),
-                    content: product.customShippingPolicy!,
-                  ),*/
-                  const SizedBox(height: 40),
-                  const CareCompositionTile(),
-                ],
+                    // TODO: This things will be done after getting data from api RETURN POLICY || SHIPPING POLICY || Order review
+                    /*_buildPolicyTile(
+                        title: 'RETURN POLICY',
+                        isExpanded: exploreCtrl.isShowReturn,
+                        onTap: () => exploreCtrl.changeReturnPolicy(),
+                        content: product!.customReturnPolicy!,
+                      ),
+                      const SizedBox(height: 20),
+                      _buildPolicyTile(
+                        title: 'SHIPPING POLICY',
+                        isExpanded: exploreCtrl.isShowShipping,
+                        onTap: () => exploreCtrl.changeShippingPolicy(),
+                        content: product.customShippingPolicy!,
+                      ),*/
+                    // Related Grid View
+                    Column(
+                      children: [
+                        DividerTitle(text: 'RELATED'),
+                        const SizedBox(height: 25),
+                        productDescriptionCtrl.relatedProducts.isEmpty
+                            ? Text('No related clothes found',
+                                style: Theme.of(context).textTheme.bodyLarge)
+                            : Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Obx(() => Column(
+                                      children: [
+                                        GridView.builder(
+                                          shrinkWrap: true,
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          gridDelegate:
+                                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 2,
+                                                  crossAxisSpacing: 20,
+                                                  childAspectRatio: 0.48,
+                                                  mainAxisSpacing: 15),
+                                          itemCount: productDescriptionCtrl
+                                              .relatedProducts.length,
+                                          itemBuilder: (context, index) {
+                                            final product =
+                                                productDescriptionCtrl
+                                                    .relatedProducts[index];
+                                            return ProductCard(
+                                              name:
+                                                  product?.name ?? 'API Error',
+                                              price: product?.price ?? 0.0,
+                                              imageURL: product?.mainImage ??
+                                                  ImageConstants
+                                                      .dummyNetworkPortrait,
+                                              wishlistOnPressed: () {
+                                                // TODO: Implement add to closet
+                                              },
+                                              onTap: () {
+                                                context.pushNamed(
+                                                  RouteNames.productDescription,
+                                                  pathParameters: {
+                                                    'id': product?.id ?? ''
+                                                  },
+                                                );
+                                              },
+                                            );
+                                          },
+                                        ),
+                                        Obx(() => productDescriptionCtrl
+                                                .relatedProductsIsLoadingMore
+                                                .value
+                                            ? Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 20),
+                                                child: Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                ),
+                                              )
+                                            : const SizedBox.shrink()),
+                                      ],
+                                    )),
+                              ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             );
           }

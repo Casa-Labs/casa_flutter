@@ -22,7 +22,7 @@ class GetProductDetails {
   List<String>? productImages;
   String? mainImage;
   String? name;
-  int? price;
+  double? price;
   List<Colors>? colors;
   List<Sizes>? sizes;
   String? description;
@@ -52,7 +52,9 @@ class GetProductDetails {
         : null;
     mainImage = json['mainImage'];
     name = json['name'];
-    price = json['price'];
+    price = (json['price'] is int)
+        ? (json['price'] as int).toDouble()
+        : json['price'];
     if (json['colors'] != null) {
       colors = <Colors>[];
       json['colors'].forEach((v) {
