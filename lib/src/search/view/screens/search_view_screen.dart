@@ -39,20 +39,19 @@ class SearchViewScreen extends StatelessWidget {
                         const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             crossAxisSpacing: 8,
-                            childAspectRatio: 0.54,
+                            childAspectRatio: 0.49,
                             mainAxisSpacing: 15),
                     itemCount: searchViewCtrl.productsList.length,
                     itemBuilder: (context, index) {
                       final product = searchViewCtrl.productsList[index];
                       return ProductCard(
                         name: product.name ?? 'API Error',
-                        description: product.description ?? 'API Error',
                         price: product.price ?? 0.0,
-                        offerTag: '',
                         imageURL: product.mainImage ??
                             ImageConstants.dummyNetworkPortrait,
-                        index: index,
-                        wishlistIcon: Icon(Icons.bookmark_border),
+                        wishlistOnPressed: () {
+                          // TODO : Implement add to closet
+                        },
                         onTap: () {
                           context.pushNamed(
                             RouteNames.productDescription,

@@ -48,7 +48,6 @@ class Data {
   String? name;
   String? description;
   String? categoryId;
-  String? category;
   double? price;
   int? stock;
   bool? isNewArrival;
@@ -73,7 +72,6 @@ class Data {
       this.name,
       this.description,
       this.categoryId,
-      this.category,
       this.price,
       this.stock,
       this.isNewArrival,
@@ -98,7 +96,6 @@ class Data {
     name = json['name'];
     description = json['description'];
     categoryId = json['categoryId'];
-    category = json['category'];
     price = json['price'] != null ? (json['price'] as num).toDouble() : 0.0;
     stock = json['stock'];
     isNewArrival = json['isNewArrival'];
@@ -132,7 +129,6 @@ class Data {
     data['name'] = name;
     data['description'] = description;
     data['categoryId'] = categoryId;
-    data['category'] = category;
     data['price'] = price;
     data['stock'] = stock;
     data['isNewArrival'] = isNewArrival;
