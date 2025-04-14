@@ -97,8 +97,14 @@ class ExploreService {
     }
   }
 
-  Future<void> getProductsCall() async {
-    var response = await GraphQLManager().getProductsForExplore({});
+  Future<void> getProducts({
+    required int page,
+    required int limit,
+  }) async {
+    var response = await GraphQLManager().getProductsForExplore({
+      "page": page,
+      "pageSize": limit,
+    });
 
     if (!response.hasException && response.data != null) {
       final productsResponse = ExploreGetProductsModel.fromJson(response.data!);

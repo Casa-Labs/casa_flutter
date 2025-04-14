@@ -44,18 +44,28 @@ class GetProducts {
 class Data {
   String? mainImage;
   String? id;
+  String? name;
+  double? price;
 
-  Data({this.mainImage, this.id});
+  Data({this.mainImage, this.id, this.name, this.price});
 
   Data.fromJson(Map<String, dynamic> json) {
     mainImage = json['mainImage'];
     id = json['id'];
+    name = json['name'];
+    price = (json['price'] is int)
+        ? (json['price'] as int).toDouble()
+        : (json['price'] is double)
+            ? json['price']
+            : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['mainImage'] = mainImage;
     data['id'] = id;
+    data['name'] = name;
+    data['price'] = price;
     return data;
   }
 }
