@@ -3,7 +3,6 @@ import 'package:casaflutterapp/src/auth/controller/delivery_address_controller.d
 import 'package:casaflutterapp/src/auth/view/widgets/auth_button.dart';
 import 'package:casaflutterapp/src/common/widgets/custom_text_form_field_widget.dart';
 import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
-import 'package:casaflutterapp/utils/preference_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -57,6 +56,11 @@ class DeliveryAddressScreen extends StatelessWidget {
                       controller: deliveryAddressController.streetAddress,
                     ),
                     SizedBox(height: 20),
+                    Text('Landmark'),
+                    CustomTextFormField(
+                      controller: deliveryAddressController.landMark,
+                    ),
+                    SizedBox(height: 20),
                     Text('City'),
                     CustomTextFormField(
                       controller: deliveryAddressController.city,
@@ -70,6 +74,11 @@ class DeliveryAddressScreen extends StatelessWidget {
                     Text('ZIP Code'),
                     CustomTextFormField(
                       controller: deliveryAddressController.zipCode,
+                    ),
+                    SizedBox(height: 20),
+                    Text('Country'),
+                    CustomTextFormField(
+                      controller: deliveryAddressController.country,
                     ),
                     SizedBox(height: 30),
                   ],
@@ -89,8 +98,7 @@ class DeliveryAddressScreen extends StatelessWidget {
                           );
                           if (deliveryAddressController
                               .isDeliveryAddressSaved()) {
-                              router.goNamed(
-                                  RouteNames.navigation, extra: false);
+                            router.goNamed(RouteNames.navigation, extra: false);
                           }
                         }
                       },

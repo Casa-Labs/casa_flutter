@@ -26,23 +26,27 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: BackgroundColor.white,
       appBar: HomeSearchAppBar(),
-      body: Obx(() => homeCtrl.isLoading.value
-          ? Center(
-              child: CircularProgressIndicator(color: BorderColor.black),
-            )
-          : SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  FilterButtonRow(),
-                  SizedBox(height: 5),
-                  homeCtrl.products.isNotEmpty
-                      ? _cardSwiper(homeCtrl, context, homeCtrl.products)
-                      : Center(child: Text('No products found')),
-                ],
+      body: Obx(
+        () => homeCtrl.isLoading.value
+            ? Center(
+                child: CircularProgressIndicator(color: BorderColor.black),
+              )
+            : SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    FilterButtonRow(),
+                    SizedBox(height: 5),
+                    homeCtrl.products.isNotEmpty
+                        ? _cardSwiper(homeCtrl, context, homeCtrl.products)
+                        : Center(
+                            child: Text('No products found'),
+                          ),
+                  ],
+                ),
               ),
-            )),
+      ),
     );
   }
 

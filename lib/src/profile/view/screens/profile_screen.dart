@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:casaflutterapp/routes/app_routes.dart';
 import 'package:casaflutterapp/src/auth/controller/auth_controller.dart';
 import 'package:casaflutterapp/src/common/widgets/common_app_bars.dart';
@@ -5,11 +7,13 @@ import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
 import 'package:casaflutterapp/src/profile/controller/profile_controller.dart';
 import 'package:casaflutterapp/utils/color_constant.dart';
 import 'package:casaflutterapp/utils/padding_size.dart';
+import 'package:casaflutterapp/utils/preference_manager.dart';
 import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../auth/model/auth_models.dart';
 import '../widgets/logout_confim_action_dialog.dart';
 import '../widgets/share_dialog.dart';
 
@@ -97,7 +101,7 @@ class ProfileScreen extends StatelessWidget {
                           builder: (_) => ConfirmActionDialog(
                             title: "Delete Account",
                             message:
-                            "Are you sure you want to delete your account? This action cannot be undone.",
+                                "Are you sure you want to delete your account? This action cannot be undone.",
                             confirmText: "Delete",
                             isLoading: homeCtrl.isUserDeleteProgress,
                             onConfirm: () async {
@@ -108,7 +112,7 @@ class ProfileScreen extends StatelessWidget {
                                 );
                                 if (homeCtrl.isUserDeleted()) {
                                   final authController =
-                                  Get.put(AuthController());
+                                      Get.put(AuthController());
                                   await authController.logOutUser();
                                   authController.clearAllControllers();
                                   router.goNamed(RouteNames.signIn);
@@ -118,8 +122,9 @@ class ProfileScreen extends StatelessWidget {
                           ),
                         );
                       },
-                      child: Text('Delete Account',)
-                  ),
+                      child: Text(
+                        'Delete Account',
+                      )),
                   const SizedBox(height: 50),
                 ],
               );
@@ -137,7 +142,6 @@ class ProfileListModel {
 
   ProfileListModel({required this.title, required this.onTap});
 }
-
 
 List<ProfileListModel> profileList = [
   ProfileListModel(
@@ -175,7 +179,21 @@ List<ProfileListModel> profileList = [
   ),
   ProfileListModel(
     title: 'Change Password',
-    onTap: (context) => context.pushNamed(RouteNames.changePassword),
+    onTap: (context) {
+      // get user details
+      final userDetailsData = PreferenceManager.getString(
+        PreferenceManager.userDetails,
+      );
+      var userDetailsMap = <String, dynamic>{};
+      if (userDetailsData != null) {
+        userDetailsMap = json.decode(userDetailsData.trim());
+      }
+      final userDetails = User.fromJson(userDetailsMap);
+      context.pushNamed(
+        RouteNames.changePassword,
+        pathParameters: {'email': userDetails.email ?? ''},
+      );
+    },
   ),
   ProfileListModel(
     title: 'Logout',

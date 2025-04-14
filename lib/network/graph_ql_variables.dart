@@ -90,6 +90,7 @@ class GraphQLVariables {
     String pinCode,
     String country,
     String? landmark,
+    String? tag,
   ) {
     return {
       "userId": userId,
@@ -99,6 +100,7 @@ class GraphQLVariables {
       "pincode": pinCode,
       "country": country,
       "landmark": landmark,
+      "tag": tag,
     };
   }
 
@@ -118,7 +120,7 @@ class GraphQLVariables {
     };
   }
 
-  static Map<String, dynamic> verifyEmailOtpForRegistration(
+  static Map<String, dynamic> verifyRegistrationOTP(
     String email,
     String otp,
   ) {
@@ -136,14 +138,30 @@ class GraphQLVariables {
     };
   }
 
-  static Map<String, dynamic> verifyOTPAndUpdatePassword(
+  static Map<String, dynamic> sendRegistrationOTP(
+    String email,
+  ) {
+    return {
+      "email": email,
+    };
+  }
+
+  static Map<String, dynamic> verifyOTPForPasswordUpdate(
     String email,
     String otp,
-    String newPassword,
   ) {
     return {
       "email": email,
       "otp": otp,
+    };
+  }
+
+  static Map<String, dynamic> updatePasswordAfterVerification(
+    String email,
+    String newPassword,
+  ) {
+    return {
+      "email": email,
       "newPassword": newPassword,
     };
   }

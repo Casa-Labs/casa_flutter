@@ -49,6 +49,10 @@ class GraphQLMutations {
     name
     email
     phone
+    role
+    isRegistered
+    isVerified
+    isDeleted
   }
 }
 """;
@@ -81,16 +85,18 @@ class GraphQLMutations {
 """;
 
   static const String addUserAddress = """
-  mutation AddUserAddress(\$userId: String!, \$address: String!, \$city: String!, \$state: String!, \$pincode: String!,\$landmark: String, \$country: String!) {
-  addUserAddress(userId: \$userId, address: \$address, city: \$city, state: \$state, pincode: \$pincode,landmark: \$landmark, country: \$country) {
+  mutation AddOrUpdateUserAddress(\$userId: String!, \$address: String!, \$city: String!, \$state: String!, \$pincode: String!, \$country: String!, \$landmark: String, \$tag: String) {
+  addUserAddress(userId: \$userId, address: \$address, city: \$city, state: \$state, pincode: \$pincode, country: \$country, landmark: \$landmark, tag: \$tag) {
     id
     userId
     address
-    landmark
     city
-    state
-    pincode
     country
+    createdAt
+    landmark
+    pincode
+    state
+    tag
   }
 }
 """;
@@ -111,21 +117,9 @@ class GraphQLMutations {
 }
 """;
 
-  static const String verifyEmailOtpForRegistration = """
-  mutation VerifyOTPAndSendWelcomeEmail(\$email: String!, \$otp: String!) {
-  verifyOTPAndSendWelcomeEmail(email: \$email, otp: \$otp) {
-    isVerified
-    isRegistered
-    isDeleted
-    id
-    email
-    createdAt
-    authProvider
-    name
-    phone
-    profileImage
-    role
-  }
+  static const String verifyRegistrationOTP = """
+  mutation VerifyRegistratioOTP(\$email: String!, \$otp: String!) {
+  verifyRegistratioOTP(email: \$email, otp: \$otp) 
 }
   """;
 
@@ -135,9 +129,21 @@ class GraphQLMutations {
 }
   """;
 
-  static const String verifyOTPAndUpdatePassword = """
-  mutation VerifyOTPAndUpdatePassword(\$email: String!, \$otp: String!, \$newPassword: String!) {
-  verifyOTPAndUpdatePassword(email: \$email, otp: \$otp, newPassword: \$newPassword)
+  static const String sendRegistrationOTP = """
+  mutation SendRegistrationOTP(\$email: String!) {
+  sendRegistrationOTP(email: \$email)
+}
+  """;
+
+  static const String verifyOTPForPasswordUpdate = """
+  mutation VerifyOTPForPasswordUpdate(\$email: String!, \$otp: String!) {
+  verifyOTPForPasswordUpdate(email: \$email, otp: \$otp)
+}
+  """;
+
+  static const String updatePasswordAfterVerification = """
+  mutation UpdatePasswordAfterVerification(\$email: String!, \$newPassword: String!) {
+  updatePasswordAfterVerification(email: \$email, newPassword: \$newPassword)
 }
   """;
 

@@ -18,13 +18,13 @@ class GraphQLManager {
     );
   }
 
-  Future<QueryResult> verifyEmailOtpForRegistration({
+  Future<QueryResult> verifyRegistrationOTP({
     required String email,
     required String otp,
   }) async {
     return await _clientService.performMutationWithoutToken(
-      document: GraphQLMutations.verifyEmailOtpForRegistration,
-      variables: GraphQLVariables.verifyEmailOtpForRegistration(
+      document: GraphQLMutations.verifyRegistrationOTP,
+      variables: GraphQLVariables.verifyRegistrationOTP(
         email,
         otp,
       ),
@@ -42,16 +42,38 @@ class GraphQLManager {
     );
   }
 
-  Future<QueryResult> verifyOTPAndUpdatePassword({
+  Future<QueryResult> sendRegistrationOTP({
+    required String email,
+  }) async {
+    return await _clientService.performMutationWithoutToken(
+      document: GraphQLMutations.sendRegistrationOTP,
+      variables: GraphQLVariables.sendRegistrationOTP(
+        email,
+      ),
+    );
+  }
+
+  Future<QueryResult> verifyOTPForPasswordUpdate({
     required String email,
     required String otp,
+  }) async {
+    return await _clientService.performMutationWithoutToken(
+      document: GraphQLMutations.verifyOTPForPasswordUpdate,
+      variables: GraphQLVariables.verifyOTPForPasswordUpdate(
+        email,
+        otp,
+      ),
+    );
+  }
+
+  Future<QueryResult> updatePasswordAfterVerification({
+    required String email,
     required String newPassword,
   }) async {
     return await _clientService.performMutationWithoutToken(
-      document: GraphQLMutations.verifyOTPAndUpdatePassword,
-      variables: GraphQLVariables.verifyOTPAndUpdatePassword(
+      document: GraphQLMutations.updatePasswordAfterVerification,
+      variables: GraphQLVariables.updatePasswordAfterVerification(
         email,
-        otp,
         newPassword,
       ),
     );
@@ -142,6 +164,7 @@ class GraphQLManager {
     required String pinCode,
     required String country,
     String? landmark,
+    String? tag,
   }) async {
     return await _clientService.performMutation(
       document: GraphQLMutations.addUserAddress,
@@ -153,6 +176,7 @@ class GraphQLManager {
         pinCode,
         country,
         landmark,
+        tag,
       ),
     );
   }

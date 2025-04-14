@@ -13,9 +13,11 @@ class DeliveryAddressController extends GetxController {
 
   // ========= CONTROLLERS ========= //
   final TextEditingController streetAddress = TextEditingController();
+  final TextEditingController landMark = TextEditingController();
   final TextEditingController city = TextEditingController();
   final TextEditingController state = TextEditingController();
   final TextEditingController zipCode = TextEditingController();
+  final TextEditingController country = TextEditingController();
 
   // ========= VARIABLES ========= //
   RxString message = ''.obs;
@@ -48,6 +50,8 @@ class DeliveryAddressController extends GetxController {
       message('Enter state');
     } else if (zipCode.text.isEmpty) {
       message('Enter zip-code');
+    } else if (country.text.isEmpty) {
+      message('Enter country');
     } else {
       isLoading(true);
 
@@ -64,14 +68,13 @@ class DeliveryAddressController extends GetxController {
         final deliveryAddressResponse = await _authService.addUserAddress(
           userId: userDetails.id ?? '',
           address: streetAddress.text,
+          landMark: landMark.text,
           city: city.text,
           state: state.text,
           pinCode: zipCode.text,
-          country: 'India',
+          country: country.text,
         );
         if (deliveryAddressResponse != null) {
-          isDeliveryAddressSaved(true);
-          message('Delivery address details saved successfully');
           PreferenceManager.setData(
             PreferenceManager.userAddressDetails,
             deliveryAddressResponse.addUserAddress?.toJsonString(),
@@ -81,6 +84,8 @@ class DeliveryAddressController extends GetxController {
               "${userAddress!.address}, ${userAddress.landmark}, ${userAddress.city}, ${userAddress.state}, ${userAddress.pincode}, ${userAddress.country}";
           PreferenceManager.setData(PreferenceManager.keyAddress, fullAddress);
           isLoading(false);
+          isDeliveryAddressSaved(true);
+          message('Delivery address details saved successfully');
         } else {
           isLoading(false);
         }

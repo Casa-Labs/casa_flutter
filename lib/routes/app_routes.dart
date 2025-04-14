@@ -53,7 +53,7 @@ class _AppPaths {
   static const String deliveryAddress = '/deliveryAddress';
   static const String forgotPassword = '/forgotPassword';
   static const String verifyEmail = '/verifyEmail';
-  static const String changePassword = '/changePassword';
+  static const String changePassword = '/changePassword/:email';
   static const String home = '/home';
   static const String notifications = '/notifications';
   static const String location = '/location';
@@ -208,7 +208,12 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.changePassword,
       name: RouteNames.changePassword,
-      builder: (context, state) => ChangePasswordScreen(),
+      builder: (context, state) {
+        final email = state.pathParameters['email'] ?? '';
+        return ChangePasswordScreen(
+          email: email,
+        );
+      },
     ),
     GoRoute(
       path: _AppPaths.home,

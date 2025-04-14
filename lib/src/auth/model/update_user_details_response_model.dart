@@ -26,6 +26,10 @@ class UpdateUserDetails {
   String? name;
   String? email;
   String? phone;
+  String? role;
+  bool? isDeleted;
+  bool? isRegistered;
+  bool? isVerified;
 
   UpdateUserDetails({
     this.id,
@@ -33,6 +37,10 @@ class UpdateUserDetails {
     this.name,
     this.email,
     this.phone,
+    this.role,
+    this.isDeleted,
+    this.isRegistered,
+    this.isVerified,
   });
 
   UpdateUserDetails.fromJson(Map<String, dynamic> json) {
@@ -41,6 +49,10 @@ class UpdateUserDetails {
     name = json['name'];
     email = json['email'];
     phone = json['phone'];
+    role = json['role'];
+    isDeleted = json['isDeleted'];
+    isRegistered = json['isRegistered'];
+    isVerified = json['isVerified'];
   }
 
   Map<String, dynamic> toJson() {
@@ -50,6 +62,10 @@ class UpdateUserDetails {
     data['name'] = name;
     data['email'] = email;
     data['phone'] = phone;
+    data['role'] = role;
+    data['isDeleted'] = isDeleted;
+    data['isRegistered'] = isRegistered;
+    data['isVerified'] = isVerified;
     return data;
   }
 }
