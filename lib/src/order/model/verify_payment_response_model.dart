@@ -74,7 +74,12 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    amount = json['amount'];
+    amount = (json['amount'] is int)
+        ? (json['amount'] as int).toDouble()
+        : (json['amount'] is double)
+        ? json['amount']
+        : null;
+
     currency = json['currency'];
     status = json['status'];
     orderId = json['orderId'];
