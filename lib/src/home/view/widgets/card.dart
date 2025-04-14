@@ -58,7 +58,9 @@ class Cards extends StatelessWidget {
                               child: ClipRRect(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(18)),
-                                child: Image.network(product.mainImage!,
+                                child: Image.network(
+                                    product.mainImage ??
+                                        ImageConstants.dummyNetworkPortrait,
                                     fit: BoxFit.fill),
                               ),
                             ),
@@ -67,7 +69,7 @@ class Cards extends StatelessWidget {
                           // Positioned Back button
                           Positioned(
                             top: 3,
-                            left:3,
+                            left: 3,
                             child: Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: Material(
@@ -80,7 +82,7 @@ class Cards extends StatelessWidget {
                                       Colors.transparent),
                                   splashFactory: NoSplash.splashFactory,
                                   borderRadius: BorderRadius.circular(12),
-                                  onTap:  homeCtrl.controller.unswipe,
+                                  onTap: homeCtrl.controller.unswipe,
                                   child: Container(
                                     width: 45,
                                     height: 45,
@@ -89,7 +91,8 @@ class Cards extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(12),
                                       color: Colors.transparent,
                                     ),
-                                    child:  SvgPicture.asset(ImageConstants.undo),
+                                    child:
+                                        SvgPicture.asset(ImageConstants.undo),
                                   ),
                                 ),
                               ),
@@ -164,7 +167,8 @@ class Cards extends StatelessWidget {
                                                   maxRadius: 24,
                                                   child: Image.network(product
                                                           .store?.logo ??
-                                                      ImageConstants.dummyNetworkPortrait)),
+                                                      ImageConstants
+                                                          .dummyNetworkPortrait)),
                                             ),
                                           ),
                                           Text(
