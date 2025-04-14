@@ -224,6 +224,8 @@ class OrderReviewController extends GetxController {
         verifyPaymentResponse.verifyPayment?.success == true &&
         (verifyPaymentResponse.errorMessage ?? '').isEmpty) {
       //showToast(message: 'Payment is successful.');
+      // TODO fix navigation
+      // deleteAllItem();
       message('Order placed successfully');
     } else {
       //showToast(message: verifyPaymentResponse?.errorMessage ?? '');
@@ -245,6 +247,4 @@ class OrderReviewController extends GetxController {
       }
     });
   }
-
-
 }
