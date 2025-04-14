@@ -69,7 +69,7 @@ class _AppPaths {
   static const String profile = '/profile';
   static const String development = '/development';
   static const String myOrders = '/myOrders';
-  static const String store = '/store';
+  static const String store = '/store/:id';
   static const String productList = '/productList';
   static const String productDescription = '/productDescription/:id';
   static const String paymentOptions = '/paymentOptions';
@@ -311,7 +311,12 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.store,
       name: RouteNames.store,
-      builder: (context, state) => StoreScreen(),
+      builder: (context, state) {
+        final storeId = state.pathParameters['id'] as String;
+        return StoreScreen(
+          id: storeId,
+        );
+      },
     ),
     GoRoute(
       path: _AppPaths.productList,

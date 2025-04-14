@@ -384,6 +384,15 @@ class GraphQLVariables {
     };
   }
 
+  static Map<String, dynamic> getStoreInventoryVariables(
+      {required int page, required int limit, required String storeId}) {
+    return {
+      "page": page,
+      "limit": limit,
+      "storeId": storeId,
+    };
+  }
+
   static Map<String, dynamic> getUserVariables(String getUserId) {
     return {
       "getUserId": getUserId,

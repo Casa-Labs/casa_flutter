@@ -223,9 +223,11 @@ query GetProducts(\$params: GetProduct!) {
   static const String getProductsForExplore = """
 query GetProducts(\$params: GetProduct!) {
   getProducts(params: \$params) {
-   data {
+    data {
       mainImage
       id
+      name
+      price
     }
   }
 }
@@ -354,6 +356,23 @@ query GetTrendingProducts(\$page: Int!, \$limit: Int!) {
       name
       price
       description
+    }
+  }
+}
+""";
+
+  static const String getStoreInventory = """
+query GetStoreInventory(\$storeId: String!, \$page: Int, \$limit: Int) {
+  getStoreInventory(storeId: \$storeId, page: \$page, limit: \$limit) {
+    product {
+      mainImage
+      name
+      id
+      price
+      store {
+        name
+        logo
+      }
     }
   }
 }

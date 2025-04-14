@@ -425,6 +425,13 @@ class GraphQLManager {
     );
   }
 
+  Future<QueryResult> getRelatedProducts(Map<String, dynamic> params) async {
+    return await _clientService.performQuery(
+      document: GraphQLQueries.getProductsForExplore,
+      variables: GraphQLVariables.getProductsVariables(params),
+    );
+  }
+
   Future<QueryResult> getProductsForSearch(Map<String, dynamic> params) async {
     return await _clientService.performQuery(
       document: GraphQLQueries.getProductsForSearch,
@@ -466,6 +473,15 @@ class GraphQLManager {
       document: GraphQLQueries.getTrendingProducts,
       variables:
           GraphQLVariables.getTrendingProductsVariables(page, limit, search),
+    );
+  }
+
+  Future<QueryResult> getStoreInventoryById(
+      {required int page, required int limit, required String storeId}) async {
+    return await _clientService.performQuery(
+      document: GraphQLQueries.getStoreInventory,
+      variables: GraphQLVariables.getStoreInventoryVariables(
+          page: page, limit: limit, storeId: storeId),
     );
   }
 

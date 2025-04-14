@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:casaflutterapp/routes/app_routes.dart';
 import 'package:casaflutterapp/src/explore/view/widgets/divider_title.dart';
 import 'package:casaflutterapp/src/explore/view/widgets/explore_search_bar.dart';
+import 'package:casaflutterapp/src/explore/view/widgets/product_card.dart';
+import 'package:casaflutterapp/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -19,63 +21,88 @@ class ExploreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: RefreshIndicator(
-          onRefresh: exploreCtrl.onRefresh,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                ExploreSearchBar(),
-                const Divider(),
-                Row(
+        body: Obx(
+          () => RefreshIndicator(
+            onRefresh: exploreCtrl.onRefresh,
+            child: NotificationListener<ScrollNotification>(
+              onNotification: (ScrollNotification scrollInfo) {
+                if (scrollInfo.metrics.pixels >=
+                        scrollInfo.metrics.maxScrollExtent - 100 &&
+                    !exploreCtrl.relatedProductsIsLoadingMore.value &&
+                    exploreCtrl.relatedProductsHasMore.value) {
+                  logg.d("Fetching more products...");
+                  exploreCtrl.getProductsCall();
+                }
+                return true;
+              },
+              child: SingleChildScrollView(
+                child: Column(
                   children: [
-                    const SizedBox(width: 20),
-                    Expanded(
-                      flex: 5,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                    ExploreSearchBar(),
+                    const Divider(),
+                    Row(
+                      children: [
+                        const SizedBox(width: 20),
+                        Expanded(
+                          flex: 5,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              backgroundColor:
+                                  exploreCtrl.selectedIndex.value == 0
+                                      ? TabBarColor.black
+                                      : TabBarColor.white,
+                              foregroundColor:
+                                  exploreCtrl.selectedIndex.value == 0
+                                      ? TabBarColor.white
+                                      : TabBarColor.black,
+                            ),
+                            child: Text('MEN'),
+                            onPressed: () async {
+                              if (exploreCtrl.selectedIndex.value == 0) return;
+
+                              exploreCtrl.selectedIndex.value = 0;
+                              exploreCtrl.clothesYouMightLike.clear();
+                              await exploreCtrl.getProductsCall(
+                                  isInitialLoad: true);
+                            },
                           ),
-                          backgroundColor: exploreCtrl.selectedIndex.value == 0
-                              ? TabBarColor.black
-                              : TabBarColor.white,
-                          foregroundColor: exploreCtrl.selectedIndex.value == 0
-                              ? TabBarColor.white
-                              : TabBarColor.black,
                         ),
-                        child: Text('MEN'),
-                        onPressed: () {
-                          exploreCtrl.selectedIndex.value = 0;
-                        },
-                      ),
-                    ),
-                    const Spacer(),
-                    Expanded(
-                      flex: 5,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                        const Spacer(),
+                        Expanded(
+                          flex: 5,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              backgroundColor:
+                                  exploreCtrl.selectedIndex.value == 1
+                                      ? TabBarColor.black
+                                      : TabBarColor.white,
+                              foregroundColor:
+                                  exploreCtrl.selectedIndex.value == 1
+                                      ? TabBarColor.white
+                                      : TabBarColor.black,
+                            ),
+                            child: Text('WOMEN'),
+                            onPressed: () async {
+                              if (exploreCtrl.selectedIndex.value == 1) return;
+                              exploreCtrl.selectedIndex.value = 1;
+                              await exploreCtrl.getProductsCall(
+                                  isInitialLoad: true);
+                            },
                           ),
-                          backgroundColor: exploreCtrl.selectedIndex.value == 1
-                              ? TabBarColor.black
-                              : TabBarColor.white,
-                          foregroundColor: exploreCtrl.selectedIndex.value == 1
-                              ? TabBarColor.white
-                              : TabBarColor.black,
                         ),
-                        child: Text('WOMEN'),
-                        onPressed: () async {
-                          exploreCtrl.selectedIndex.value = 1;
-                          await exploreCtrl.getTrendingNowProductsCall();
-                        },
-                      ),
+                        const SizedBox(width: 20),
+                      ],
                     ),
-                    const SizedBox(width: 20),
+                    ExploreSection(),
                   ],
                 ),
-                ExploreSection(),
-              ],
+              ),
             ),
           ),
         ),
@@ -115,7 +142,10 @@ class ExploreSection extends StatelessWidget {
                             final brand = exploreCtrl.brands[index];
                             return InkWell(
                               onTap: () {
-                                // context.pushNamed(RouteNames.store);
+                                context.pushNamed(
+                                  RouteNames.store,
+                                  pathParameters: {'id': brand.id ?? ''},
+                                );
                               },
                               child: Container(
                                 width: 80,
@@ -165,7 +195,7 @@ class ExploreSection extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    height: 130,
+                                    height: 135,
                                     width: 100,
                                     margin: EdgeInsets.only(right: 20),
                                     decoration: BoxDecoration(
@@ -184,6 +214,8 @@ class ExploreSection extends StatelessWidget {
                                     width: 100,
                                     child: Text(
                                       trendingProduct.name ?? 'NA',
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
                                       style:
                                           Theme.of(context).textTheme.bodySmall,
                                     ),
@@ -257,9 +289,7 @@ class ExploreSection extends StatelessWidget {
           // Clothes you might like column
           Column(
             children: [
-              DividerTitle(
-                text: 'Clothes you might like',
-              ),
+              DividerTitle(text: 'YOU MIGHT LIKE'),
               exploreCtrl.clothesYouMightLike.isEmpty
                   ? Text('No Clothes you might like Found',
                       style: Theme.of(context).textTheme.bodyLarge)
@@ -278,7 +308,7 @@ class ExploreSection extends StatelessWidget {
                               onTap: () {
                                 context.pushNamed(
                                   RouteNames.productDescription,
-                                  pathParameters: {'id': product.id ?? ''},
+                                  pathParameters: {'id': product?.id ?? ''},
                                 );
                               },
                               child: Column(
@@ -291,7 +321,7 @@ class ExploreSection extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       image: DecorationImage(
                                           image: CachedNetworkImageProvider(
-                                              product.mainImage ??
+                                              product?.mainImage ??
                                                   ImageConstants
                                                       .dummyNetworkPortrait),
                                           fit: BoxFit.cover),
@@ -307,6 +337,65 @@ class ExploreSection extends StatelessWidget {
           ),
 
           // Related Grid View
+          Column(
+            children: [
+              DividerTitle(text: 'RELATED'),
+              const SizedBox(height: 25),
+              exploreCtrl.clothesYouMightLike.isEmpty
+                  ? Text('No related clothes found',
+                      style: Theme.of(context).textTheme.bodyLarge)
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Obx(() => Column(
+                            children: [
+                              GridView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: 20,
+                                        childAspectRatio: 0.48,
+                                        mainAxisSpacing: 15),
+                                itemCount:
+                                    exploreCtrl.clothesYouMightLike.length,
+                                itemBuilder: (context, index) {
+                                  final product =
+                                      exploreCtrl.clothesYouMightLike[index];
+                                  return ProductCard(
+                                    name: product?.name ?? 'API Error',
+                                    price: product?.price ?? 0.0,
+                                    imageURL: product?.mainImage ??
+                                        ImageConstants.dummyNetworkPortrait,
+                                    wishlistOnPressed: () {
+                                      // TODO: Implement add to closet
+                                    },
+                                    onTap: () {
+                                      context.pushNamed(
+                                        RouteNames.productDescription,
+                                        pathParameters: {
+                                          'id': product?.id ?? ''
+                                        },
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                              Obx(() =>
+                                  exploreCtrl.relatedProductsIsLoadingMore.value
+                                      ? Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 20),
+                                          child: Center(
+                                            child: CircularProgressIndicator(),
+                                          ),
+                                        )
+                                      : const SizedBox.shrink()),
+                            ],
+                          )),
+                    ),
+            ],
+          ),
         ],
       ),
     );
