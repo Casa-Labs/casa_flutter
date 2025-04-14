@@ -73,7 +73,7 @@ class CartSizeSelector extends StatelessWidget {
             );
           }).toList();
         },
-        items: item.sizes!.map((item) {
+        items: item.sizes?.map((item) {
           return DropdownMenuItem<Sizes>(
             value: item,
             child: Center(

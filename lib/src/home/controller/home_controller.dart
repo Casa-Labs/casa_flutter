@@ -138,7 +138,7 @@ class HomeController extends GetxController {
 
         // Hide the icon after some time
         if(swipeIcon == Icons.add_shopping_cart_outlined){
-          Future.delayed(Duration(milliseconds: 800), () {
+          Future.delayed(Duration(milliseconds: 900), () {
             swipeIcon = null;
             update();
           });

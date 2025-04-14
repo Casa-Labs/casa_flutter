@@ -2,6 +2,7 @@ import 'package:casaflutterapp/src/cart/model/cart_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../../utils/color.dart';
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/string_constant.dart';
 
@@ -18,13 +19,23 @@ class OrderViewItemWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          padding: const EdgeInsets.all(1),
+       Container(
+          height: 50,
+          width: 50,
+          padding: EdgeInsets.all(2),
           decoration: BoxDecoration(
-              border: Border.all(color: TextColor.black),
-              borderRadius: BorderRadius.circular(50)),
-          child: CircleAvatar(
-              maxRadius: 24, child: Image.network(item.store?.logo ?? ImageConstants.dummyNetworkPortrait)),
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                  image: NetworkImage(
+                      item.store?.logo ?? ImageConstants.dummyNetworkPortrait),
+                  fit: BoxFit.fill),
+              border: Border.all(color: CColor.circleBoarder, width: 1)),
+          // child: CircleAvatar(
+          //   maxRadius: 24,
+          //   child: Image.network(item
+          //       .store?.logo ??
+          //       ImageConstants.dummyNetworkPortrait)
+          // ),
         ),
         const SizedBox(
           height: 10,

@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/padding_size.dart';
-import '../../../../utils/string_constant.dart';
+import '../widgets/change_address.dart';
 import '../widgets/expandable_card.dart';
 import '../widgets/order_view_item_widget.dart';
 
@@ -149,8 +149,7 @@ class OrderReviewScreen extends StatelessWidget {
                                         context: context,
                                         isScrollControlled: true,
                                         builder: (context) {
-                                          return AddInstructionsWidget(
-                                          );
+                                          return AddInstructionsWidget();
                                         },
                                       );
                                     },
@@ -216,6 +215,37 @@ class OrderReviewScreen extends StatelessWidget {
                         orderController: orderRiviweCtrl,
                       ),
                       const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                          color: ButtonColor.white,
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 5),
+                          child: FilledButton(
+                            style: FilledButton.styleFrom(
+                              backgroundColor: Colors.black,
+                              surfaceTintColor: Colors.transparent,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 14),
+                            ),
+                            onPressed: ()  {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return ChangeAddress();
+                                },
+                              );
+                            },
+                            child: Text(
+                              "Change address",
+                              style: textTheme.bodyMedium
+                                  ?.copyWith(color: Colors.white),
+                            ),
+                          ).paddingSymmetric(horizontal: 10)),
+                      const SizedBox(
                         height: 50,
                       ),
                     ],
@@ -226,7 +256,8 @@ class OrderReviewScreen extends StatelessWidget {
             Container(
               color: ButtonColor.white,
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
               child: Obx(() {
                 return AnimatedContainer(
                   duration: const Duration(milliseconds: 900),
@@ -253,17 +284,16 @@ class OrderReviewScreen extends StatelessWidget {
                     child: Text(
                       "Pay ₹${orderRiviweCtrl.total}",
                       style: textTheme.bodyMedium?.copyWith(
-                        color: Colors.white/*orderRiviweCtrl.isBlinking.value
+                          color: Colors
+                              .white /*orderRiviweCtrl.isBlinking.value
                             ? Colors.white
                             : const Color(0xFF2C9D24),*/
-                      ),
+                          ),
                     ),
                   ).paddingSymmetric(horizontal: 10),
                 );
               }),
             ),
-
-
           ],
         ),
       ),

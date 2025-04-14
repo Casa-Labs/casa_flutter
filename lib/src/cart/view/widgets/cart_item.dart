@@ -4,7 +4,9 @@ import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../routes/app_routes.dart';
 import '../../../../utils/color.dart';
 import '../../../common/widgets/buttons/custom_button.dart';
 import '../../controller/cart_controller.dart';
@@ -32,18 +34,27 @@ class CartItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Container(
-          height: 50,
-          width: 50,
-          padding: EdgeInsets.all(2),
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: CColor.circleBoarder, width: 1)),
-          child: CircleAvatar(
-            maxRadius: 24,
-            child: Image.network(item
-                .store?.logo ??
-                ImageConstants.dummyNetworkPortrait)
+        InkWell(
+          onTap: () {
+            context.pushNamed(RouteNames.store);
+          },
+          child: Container(
+            height: 50,
+            width: 50,
+            padding: EdgeInsets.all(2),
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                    image: NetworkImage(
+                        item.store?.logo ?? ImageConstants.dummyNetworkPortrait),
+                    fit: BoxFit.fill),
+                border: Border.all(color: CColor.circleBoarder, width: 1)),
+            // child: CircleAvatar(
+            //   maxRadius: 24,
+            //   child: Image.network(item
+            //       .store?.logo ??
+            //       ImageConstants.dummyNetworkPortrait)
+            // ),
           ),
         ),
         SizedBox(height: 15),
@@ -51,22 +62,32 @@ class CartItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Card(
-              elevation: 2,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.2,
-                    width: MediaQuery.of(context).size.width * 0.25,
-                    child: Image.network(item.mainImage!, fit: BoxFit.fill)
-                    //  Image.asset(
-                    //   'assets/images/placeholder.png',
-                    //   fit: BoxFit.fill,
-                    // ),
-                    ),
+            InkWell(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onTap: () {
+                context.pushNamed(
+                  RouteNames.productDescription,
+                  pathParameters: {'id': item.productId ?? ''},
+                );
+              },
+              child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(4),
+                  child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      width: MediaQuery.of(context).size.width * 0.25,
+                      child: Image.network(item.mainImage ?? ImageConstants.dummyNetworkPortrait, fit: BoxFit.fill)
+                      //  Image.asset(
+                      //   'assets/images/placeholder.png',
+                      //   fit: BoxFit.fill,
+                      // ),
+                      ),
+                ),
               ),
             ),
             Expanded(
@@ -104,15 +125,15 @@ class CartItem extends StatelessWidget {
                         color: TextColor.black54,
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) => SizeGuideDialog(),
-                        );
-                      },
-                      child: Align(
-                        alignment: AlignmentDirectional.centerEnd,
+                    Align(
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: InkWell(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => SizeGuideDialog(),
+                          );
+                        },
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [

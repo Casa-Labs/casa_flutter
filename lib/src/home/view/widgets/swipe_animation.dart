@@ -21,7 +21,9 @@ class SwipeAnimation extends StatelessWidget {
           return ScaleTransition(scale: animation, child: child);
         },
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30,vertical: swipeIcon == Icons.add_shopping_cart_outlined ? 20 : 0),
+          padding: EdgeInsets.symmetric(
+              horizontal: 30,
+              vertical: swipeIcon == Icons.add_shopping_cart_outlined ? 20 : 0),
           child: /*Icon(
               swipeIcon,
               key: ValueKey(swipeIcon),
@@ -38,15 +40,17 @@ class SwipeAnimation extends StatelessWidget {
                     : swipeIcon == Icons.check_rounded
                         ? IconColor.black
                         : CColor.closeTick,
-            child: Icon(
-              swipeIcon,
-              color: swipeIcon == Icons.add_shopping_cart_outlined
-                  ? Colors.black
-                  : swipeIcon == Icons.check_rounded
-                      ? CColor.closeTick
-                      : CColor.black,
-              size:swipeIcon == Icons.add_shopping_cart_outlined ? 80 : 55,
-            ),
+            child: swipeIcon == Icons.add_shopping_cart_outlined
+                ? Image.asset("assets/images/ecommerce.png",height: 175)
+                : Icon(
+                    swipeIcon,
+                    color: swipeIcon == Icons.add_shopping_cart_outlined
+                        ? Colors.black
+                        : swipeIcon == Icons.check_rounded
+                            ? CColor.closeTick
+                            : CColor.black,
+                    size: 55,
+                  ),
           ),
         ),
       ),

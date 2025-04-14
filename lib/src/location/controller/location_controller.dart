@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:casaflutterapp/src/location/model/service/location_service.dart';
+import 'package:casaflutterapp/utils/extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -107,6 +108,10 @@ class LocationController extends GetxController {
         );
         if (deliveryAddressResponse!.addUserAddress != null) {
           var userAddress = deliveryAddressResponse.addUserAddress;
+          PreferenceManager.setData(
+            PreferenceManager.userAddressDetails,
+            userAddress?.toJsonString(),
+          );
           String fullAddress = "${userAddress!.address}, ${userAddress.landmark}, ${userAddress.city}, ${userAddress.state}, ${userAddress.pincode}, ${userAddress.country}";
           PreferenceManager.setData(PreferenceManager.keyAddress, fullAddress);
           isDeliveryAddressSaved(true);
