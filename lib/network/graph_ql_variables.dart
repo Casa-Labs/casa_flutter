@@ -166,6 +166,16 @@ class GraphQLVariables {
     };
   }
 
+  static Map<String, dynamic> updatePasswordWithinApp(
+    String email,
+    String newPassword,
+  ) {
+    return {
+      "email": email,
+      "newPassword": newPassword,
+    };
+  }
+
   static Map<String, dynamic> addItemToCartVariables(
       String userId, Map<String, dynamic> item) {
     return {

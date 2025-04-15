@@ -53,7 +53,8 @@ class _AppPaths {
   static const String deliveryAddress = '/deliveryAddress';
   static const String forgotPassword = '/forgotPassword';
   static const String verifyEmail = '/verifyEmail';
-  static const String changePassword = '/changePassword/:email';
+  static const String changePassword =
+      '/changePassword/:email/:isFromWithinApp';
   static const String home = '/home';
   static const String notifications = '/notifications';
   static const String location = '/location';
@@ -210,8 +211,11 @@ final GoRouter router = GoRouter(
       name: RouteNames.changePassword,
       builder: (context, state) {
         final email = state.pathParameters['email'] ?? '';
+        final isFromWithinApp =
+            bool.parse(state.pathParameters['isFromWithinApp'] ?? '');
         return ChangePasswordScreen(
           email: email,
+          isFromWithinApp: isFromWithinApp,
         );
       },
     ),

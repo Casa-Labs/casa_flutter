@@ -81,16 +81,20 @@ class SignInScreen extends StatelessWidget {
                                 message: authController.message(),
                               );
                               if (authController.isLoggedIn()) {
-                                if (PreferenceManager.getBool(
-                                        PreferenceManager.isFirstTime) ??
-                                    true) {
-                                  router.goNamed(RouteNames.navigation,
-                                      extra: true);
-                                  await PreferenceManager.setData(
-                                      PreferenceManager.isFirstTime, false);
+                                if (authController.isRegistered()) {
+                                  if (PreferenceManager.getBool(
+                                          PreferenceManager.isFirstTime) ??
+                                      true) {
+                                    router.goNamed(RouteNames.navigation,
+                                        extra: true);
+                                    await PreferenceManager.setData(
+                                        PreferenceManager.isFirstTime, false);
+                                  } else {
+                                    router.goNamed(RouteNames.navigation,
+                                        extra: false);
+                                  }
                                 } else {
-                                  router.goNamed(RouteNames.navigation,
-                                      extra: false);
+                                  router.goNamed(RouteNames.personalDetails);
                                 }
                               }
                             }

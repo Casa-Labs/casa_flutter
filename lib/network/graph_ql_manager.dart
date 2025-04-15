@@ -79,6 +79,19 @@ class GraphQLManager {
     );
   }
 
+  Future<QueryResult> updatePasswordWithinApp({
+    required String email,
+    required String newPassword,
+  }) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.updatePasswordWithinApp,
+      variables: GraphQLVariables.updatePasswordWithinApp(
+        email,
+        newPassword,
+      ),
+    );
+  }
+
   Future<QueryResult> loginUser(String email, String password) async {
     return await _clientService.performMutationWithoutToken(
       document: GraphQLMutations.loginMutation,

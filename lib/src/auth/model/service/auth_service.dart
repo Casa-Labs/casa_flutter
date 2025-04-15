@@ -123,6 +123,18 @@ class AuthService {
     return response.data?['updatePasswordAfterVerification'];
   }
 
+  Future<String?> updatePasswordWithinApp({
+    required String email,
+    required String newPassword,
+  }) async {
+    final response = await _graphQLManager.updatePasswordWithinApp(
+      email: email,
+      newPassword: newPassword,
+    );
+
+    return response.data?['updatePasswordWithinApp'];
+  }
+
   Future<bool?> deleteUser({
     required String userId,
   }) async {

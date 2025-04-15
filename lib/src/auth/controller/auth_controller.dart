@@ -100,8 +100,15 @@ class AuthController extends GetxController {
           PreferenceManager.userId,
           loginResponse?.login?.user?.id.toString(),
         );
-        message('User logged in successfully');
-        isLoggedIn(true);
+        if (loginResponse?.login?.user?.isRegistered ?? false) {
+          isRegistered(true);
+          message('User logged in successfully');
+          isLoggedIn(true);
+        } else {
+          isRegistered(false);
+          message('Please update preferences');
+          isLoggedIn(true);
+        }
       } else {
         message(loginResponse?.errorMessage);
         isLoading(false);
