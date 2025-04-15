@@ -182,7 +182,7 @@ class Cards extends StatelessWidget {
                                                 ),
                                           ),
                                           Text(
-                                            '₹ ${AppStrings.productPrice}',
+                                            '₹ ${product.price}',
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyLarge
