@@ -251,8 +251,8 @@ final GoRouter router = GoRouter(
       name: RouteNames.orderDetails,
       builder: (context, state) {
         final Map<String, dynamic> args = state.extra as Map<String, dynamic>;
-        final OrderedItems selectedItem = args["selectedItem"];
-        final OrderModel orderData = args["orderData"];
+        final Items selectedItem = args["selectedItem"];
+        final CustomerOrders orderData = args["orderData"];
 
         return OrderDetails(orderItem: selectedItem, orderData: orderData);
       },
@@ -261,8 +261,7 @@ final GoRouter router = GoRouter(
       path: _AppPaths.trackShipment,
       name: RouteNames.trackShipment,
       builder: (context, state) {
-        final orderItem = state.extra as OrderedItems?;
-        return TrackShipment(orderItem: orderItem!);
+        return TrackShipment();
       },
     ),
     GoRoute(
