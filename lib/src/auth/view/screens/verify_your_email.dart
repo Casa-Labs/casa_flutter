@@ -172,7 +172,8 @@ class VerifyYourEmail extends StatelessWidget {
                           router.pushNamed(
                             RouteNames.changePassword,
                             pathParameters: {
-                              'email': forgotPasswordController.email.text
+                              'email': forgotPasswordController.email.text,
+                              'isFromWithinApp': 'false',
                             },
                           );
                         }

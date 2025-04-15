@@ -191,7 +191,10 @@ List<ProfileListModel> profileList = [
       final userDetails = User.fromJson(userDetailsMap);
       context.pushNamed(
         RouteNames.changePassword,
-        pathParameters: {'email': userDetails.email ?? ''},
+        pathParameters: {
+          'email': userDetails.email ?? '',
+          'isFromWithinApp': 'true',
+        },
       );
     },
   ),

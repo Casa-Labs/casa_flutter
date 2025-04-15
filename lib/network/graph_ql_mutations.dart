@@ -147,6 +147,12 @@ class GraphQLMutations {
 }
   """;
 
+  static const String updatePasswordWithinApp = """
+  mutation UpdatePasswordWithinApp(\$email: String!, \$newPassword: String!) {
+  updatePasswordWithinApp(email: \$email, newPassword: \$newPassword)
+}
+  """;
+
   static const String addItemToCart = '''
 mutation AddItemToCart(\$item: JSON!, \$userId: String) {
   addItemToCart(item: \$item, userId: \$userId) {

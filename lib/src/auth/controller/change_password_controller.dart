@@ -3,11 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChangePasswordController extends GetxController {
-  final String email;
-  ChangePasswordController({
-    required this.email,
-  });
-
   // ========= OBJECTS ============= //
   final AuthService _authService = AuthService();
 
@@ -41,7 +36,10 @@ class ChangePasswordController extends GetxController {
   }
 
 // ========== APIs FUNCTIONS ========== //
-  Future<void> changePassword() async {
+  Future<void> changePassword({
+    required String email,
+    required bool isFromWithinApp,
+  }) async {
     if (newPassword.text.isEmpty) {
       message('Please enter new password');
       isPasswordChanged(false);
@@ -61,13 +59,21 @@ class ChangePasswordController extends GetxController {
     } else {
       isPasswordChangeInProgress(true);
 
-      final updatePasswordAfterVerificationResponse =
-          await _authService.updatePasswordAfterVerification(
-        email: email,
-        newPassword: newPassword.text,
-      );
+      final String? changePasswordResponse;
+      if (isFromWithinApp) {
+        changePasswordResponse = await _authService.updatePasswordWithinApp(
+          email: email,
+          newPassword: newPassword.text,
+        );
+      } else {
+        changePasswordResponse =
+            await _authService.updatePasswordAfterVerification(
+          email: email,
+          newPassword: newPassword.text,
+        );
+      }
 
-      if (updatePasswordAfterVerificationResponse != null) {
+      if (changePasswordResponse != null) {
         isPasswordChangeInProgress(false);
         message('Password updated successfully');
         isPasswordChanged(true);

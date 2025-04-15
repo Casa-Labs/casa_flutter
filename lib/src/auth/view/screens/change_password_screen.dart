@@ -10,15 +10,15 @@ import '../widgets/auth_button.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
   final String email;
+  final bool isFromWithinApp;
   ChangePasswordScreen({
     super.key,
     required this.email,
+    required this.isFromWithinApp,
   });
 
-  late final changePasswordController = Get.put(
-    ChangePasswordController(
-      email: email,
-    ),
+  final changePasswordController = Get.put(
+    ChangePasswordController(),
   );
 
   @override
@@ -124,13 +124,20 @@ class ChangePasswordScreen extends StatelessWidget {
                             .isPasswordChangeInProgress(),
                         type: AuthButtonType.save,
                         onPressed: () async {
-                          await changePasswordController.changePassword();
+                          await changePasswordController.changePassword(
+                            email: email,
+                            isFromWithinApp: isFromWithinApp,
+                          );
                           if (changePasswordController.message().isNotEmpty) {
                             showToast(
                               message: changePasswordController.message(),
                             );
                             if (changePasswordController.isPasswordChanged()) {
-                              router.goNamed(RouteNames.signIn);
+                              if (isFromWithinApp && context.mounted) {
+                                Navigator.of(context).maybePop();
+                              } else {
+                                router.goNamed(RouteNames.signIn);
+                              }
                             }
                           }
                         },
