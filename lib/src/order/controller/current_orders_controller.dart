@@ -9,12 +9,12 @@ class CurrentOrdersController extends GetxController {
   final manager = GraphQLManager();
   final userID = PreferenceManager.getString(PreferenceManager.userId);
 
-  Future<List<OrderModel>> fetchProducts() async {
+  Future<List<CustomerOrders>> fetchProducts() async {
     try {
-      List<OrderModel> orderList = [];
+      List<CustomerOrders> orderList = [];
       var response = await manager.getOrders(userID!);
-      List<dynamic> data = response.data?['myOrders'] ?? [];
-       orderList = data.map((json) => OrderModel.fromJson(json)).toList();
+      List<CustomerOrders> data = response.data?['customerOrders'] ?? [];
+       orderList = data.map((json) => CustomerOrders.fromJson(response.data!)).toList();
       return orderList;
     } catch (e) {
       return [];

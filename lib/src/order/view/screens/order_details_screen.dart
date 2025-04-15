@@ -12,8 +12,8 @@ import '../widgets/order_card.dart';
 import '../widgets/view_button.dart';
 
 class OrderDetails extends StatelessWidget {
-  final OrderedItems orderItem;
-  final OrderModel orderData;
+  final Items orderItem;
+  final CustomerOrders orderData;
 
   const OrderDetails(
       {super.key, required this.orderItem, required this.orderData});
@@ -83,6 +83,7 @@ class OrderDetails extends StatelessWidget {
                   overlayColor: WidgetStateProperty.all(Colors.transparent),
                   splashFactory: NoSplash.splashFactory,
                   onTap: () {
+                    // TODO : It will be uncomment after TrackShipment data will get
                     //context.pushNamed(RouteNames.trackShipment);
                   },
                   child: Container(
@@ -133,13 +134,13 @@ class OrderDetails extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(formatDateToYYYY(orderData.orderDate!),
+                        Text(formatDateToYYYY(orderData.createdAt!),
                             style: textTheme.bodyMedium),
                         SizedBox(height: 3),
                         Text('201-2293837-209', style: textTheme.bodyMedium),
                         SizedBox(height: 3),
                         Text(
-                            'Rs.${orderData.orderTotal!} (${orderItem.quantity} items)',
+                            'Rs.${orderData.totalAmount!} (${orderItem.quantity} items)',
                             style: textTheme.bodyMedium),
                       ],
                     )
@@ -187,10 +188,10 @@ class OrderDetails extends StatelessWidget {
                     style: textTheme.bodyLarge
                         ?.copyWith(fontWeight: FontWeight.w600)),
                 const SizedBox(height: 8),
-                Text(orderData.shippingAddress!.name!,
+                Text(orderData.shippingInfo?.address??'Api error',
                     style: textTheme.bodyMedium),
                 Text(
-                    "${orderData.shippingAddress!.name}, ${orderData.shippingAddress!.city} - ${orderData.shippingAddress!.pincode}",
+                    "${orderData.shippingInfo!.name??'Api error'}, ${orderData.shippingInfo!.city??'Api error'} - ${orderData.shippingInfo!.pincode??'Api error'}",
                     style: textTheme.bodyMedium),
                 const SizedBox(height: 12),
                 const Divider(),
@@ -198,7 +199,8 @@ class OrderDetails extends StatelessWidget {
                     style: textTheme.bodyLarge
                         ?.copyWith(fontWeight: FontWeight.w600)),
                 const SizedBox(height: 8),
-                _orderSummary(context,orderData.orderSummary!)
+                // TODO : Need to make a dynamic
+                _orderSummary(context)
               ],
             ),
           ),
@@ -206,7 +208,7 @@ class OrderDetails extends StatelessWidget {
       ),
     );
   }
-  _orderSummary(BuildContext context, OrderSummary orderSummary) {
+  _orderSummary(BuildContext context, ) {
     return Column(
       children: [
         Row(
@@ -217,7 +219,7 @@ class OrderDetails extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Text(
-              "\$${orderSummary.itemsPrice}",
+              "0",
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
@@ -230,7 +232,7 @@ class OrderDetails extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Text(
-              "\$${orderSummary.postage}",
+              "0",
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
@@ -243,7 +245,7 @@ class OrderDetails extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Text(
-              "\$${orderSummary.totalBeforeTax}",
+              "0",
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
@@ -256,7 +258,7 @@ class OrderDetails extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Text(
-              "\$${orderSummary.tax}",
+              "0",
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
@@ -293,7 +295,7 @@ class OrderDetails extends StatelessWidget {
                   ?.copyWith(/* fontSize: 14 */ fontWeight: FontWeight.w600),
             ),
             Text(
-              "\$${orderSummary.orderTotal}",
+              "0",
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium

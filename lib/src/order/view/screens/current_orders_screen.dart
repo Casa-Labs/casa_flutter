@@ -20,7 +20,7 @@ class CurrentOrdersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    late Future<List<OrderModel>> orderFuture = ordersController.fetchProducts();
+    late Future<List<CustomerOrders>> orderFuture = ordersController.fetchProducts();
     return Scaffold(
       backgroundColor: BackgroundColor.white,
       appBar: CommonAppBar(
@@ -45,16 +45,16 @@ class CurrentOrdersScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: PaddingSize.commonPadding, vertical: 10),
                       child: ListView.builder(
-                        itemCount: orderItem![0].orderedItems!.length,
+                        itemCount: orderItem?.length,
                         shrinkWrap: true,
                         itemBuilder: (BuildContext context, int index) {
-                          var item=orderItem[0].orderedItems![index];
-                          var orderStatus = orderItem[0].status; // Get order status from API
+                          var item=orderItem?[index];
+                          var orderStatus = item?.status; // Get order status from API
                           //var trackingSteps = getOrderTrackingSteps(orderStatus!);
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              OrderCard(orderItem: item),
+                              OrderCard(orderItem: item!.items![index]),
                               SizedBox(height: 20),
                               Text(
                                 "Delivery by CASA",
@@ -67,7 +67,7 @@ class CurrentOrdersScreen extends StatelessWidget {
                                     ),
                               ),
                               Text(
-                                "Tracking Id :182736223993",
+                                "Tracking Id :${item.id!}",
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodySmall
@@ -88,7 +88,7 @@ class CurrentOrdersScreen extends StatelessWidget {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      "Order number #${orderItem[0].orderNumber}",
+                                      "Order number #${item.id}",
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodySmall
@@ -104,7 +104,7 @@ class CurrentOrdersScreen extends StatelessWidget {
                                         RouteNames.orderDetails,
                                         extra: {
                                           "selectedItem": item,
-                                          "orderData": orderItem[0],
+                                          "orderData": item,
                                         },
                                       );
                                     },

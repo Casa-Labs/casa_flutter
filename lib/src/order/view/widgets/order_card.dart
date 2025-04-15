@@ -1,10 +1,11 @@
 import 'package:casaflutterapp/src/order/model/order_models.dart';
+import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/color_constant.dart';
 
 class OrderCard extends StatelessWidget {
-  final OrderedItems orderItem;
+  final Items orderItem;
 
   const OrderCard({super.key, required this.orderItem});
 
@@ -24,9 +25,9 @@ class OrderCard extends StatelessWidget {
             child: SizedBox(
               height: 120,
               width: 100,
-              child: orderItem.image != null
+              child: orderItem.product?.mainImage != null
                   ? Image.network(
-                      orderItem.image!,
+                      orderItem.product!.mainImage??ImageConstants.dummyNetworkPortrait,
                       fit: BoxFit.cover,
                       filterQuality: FilterQuality.medium,
                       cacheWidth: 200, // Limit image size
@@ -66,7 +67,7 @@ class OrderCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      orderItem.itemName!,
+                      orderItem.product?.name??'Api error',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
@@ -82,7 +83,7 @@ class OrderCard extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  orderItem.brandName!,
+                  "orderItem.product.!",
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontSize: 16,
                         color: TextColor.black54,

@@ -10,9 +10,9 @@ import '../widgets/order_tracker.dart';
 import '../widgets/view_button.dart';
 
 class TrackShipment extends StatelessWidget {
-  final OrderedItems orderItem;
 
-  const TrackShipment({super.key, required this.orderItem});
+
+  const TrackShipment({super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class TrackShipment extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  OrderCard(orderItem: orderItem,),
+                  //OrderCard(orderItem: orderItem,),
                   SizedBox(height: 10),
                   Text(
                     "Order packed",
