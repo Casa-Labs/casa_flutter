@@ -3,7 +3,6 @@ import 'package:casaflutterapp/routes/app_routes.dart';
 import 'package:casaflutterapp/src/explore/view/widgets/divider_title.dart';
 import 'package:casaflutterapp/src/explore/view/widgets/explore_search_bar.dart';
 import 'package:casaflutterapp/src/explore/view/widgets/product_card.dart';
-import 'package:casaflutterapp/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -25,16 +24,18 @@ class ExploreScreen extends StatelessWidget {
           () => RefreshIndicator(
             onRefresh: exploreCtrl.onRefresh,
             child: NotificationListener<ScrollNotification>(
-              onNotification: (ScrollNotification scrollInfo) {
-                if (scrollInfo.metrics.pixels >=
-                        scrollInfo.metrics.maxScrollExtent - 100 &&
-                    !exploreCtrl.relatedProductsIsLoadingMore.value &&
-                    exploreCtrl.relatedProductsHasMore.value) {
-                  logg.d("Fetching more products...");
-                  exploreCtrl.getProductsCall();
-                }
-                return true;
-              },
+              // TODO : Add back the pagination later by uncommenting below logic
+
+              // onNotification: (ScrollNotification scrollInfo) {
+              //   if (scrollInfo.metrics.pixels >=
+              //           scrollInfo.metrics.maxScrollExtent - 100 &&
+              //       !exploreCtrl.relatedProductsIsLoadingMore.value &&
+              //       exploreCtrl.relatedProductsHasMore.value) {
+              //     logg.d("Fetching more products...");
+              //     exploreCtrl.getProductsCall();
+              //   }
+              //   return true;
+              // },
               child: SingleChildScrollView(
                 child: Column(
                   children: [
