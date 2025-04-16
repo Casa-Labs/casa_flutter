@@ -1,4 +1,5 @@
 import 'package:casaflutterapp/src/cart/view/widgets/size_guide_dialog.dart';
+import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
 import 'package:casaflutterapp/utils/color_constant.dart';
 import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
@@ -45,8 +46,8 @@ class CartItem extends StatelessWidget {
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                    image: NetworkImage(
-                        item.store?.logo ?? ImageConstants.dummyNetworkPortrait),
+                    image: NetworkImage(item.store?.logo ??
+                        ImageConstants.dummyNetworkPortrait),
                     fit: BoxFit.fill),
                 border: Border.all(color: CColor.circleBoarder, width: 1)),
             // child: CircleAvatar(
@@ -66,10 +67,14 @@ class CartItem extends StatelessWidget {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () {
-                context.pushNamed(
-                  RouteNames.productDescription,
-                  pathParameters: {'id': item.productId ?? ''},
-                );
+                if (item.store?.id != null) {
+                  context.pushNamed(
+                    RouteNames.productDescription,
+                    pathParameters: {'id': item.store?.id ?? ''},
+                  );
+                } else {
+                  showToast(message: 'API Error, Store ID not found');
+                }
               },
               child: Card(
                 elevation: 2,
@@ -81,7 +86,9 @@ class CartItem extends StatelessWidget {
                   child: SizedBox(
                       height: MediaQuery.of(context).size.height * 0.2,
                       width: MediaQuery.of(context).size.width * 0.25,
-                      child: Image.network(item.mainImage ?? ImageConstants.dummyNetworkPortrait, fit: BoxFit.fill)
+                      child: Image.network(
+                          item.mainImage ?? ImageConstants.dummyNetworkPortrait,
+                          fit: BoxFit.fill)
                       //  Image.asset(
                       //   'assets/images/placeholder.png',
                       //   fit: BoxFit.fill,

@@ -55,16 +55,18 @@ class ProductDescriptionScreen extends StatelessWidget {
             final product = snapshot.data;
             return Obx(
               () => NotificationListener<ScrollNotification>(
-                onNotification: (ScrollNotification scrollInfo) {
-                  if (scrollInfo.metrics.pixels >=
-                          scrollInfo.metrics.maxScrollExtent - 100 &&
-                      !exploreCtrl.relatedProductsIsLoadingMore.value &&
-                      exploreCtrl.relatedProductsHasMore.value) {
-                    logg.d("Fetching more products...");
-                    productDescriptionCtrl.getRelatedProductsCall();
-                  }
-                  return true;
-                },
+                // TODO : Add back the pagination later by uncommenting below logic
+
+                // onNotification: (ScrollNotification scrollInfo) {
+                //   if (scrollInfo.metrics.pixels >=
+                //           scrollInfo.metrics.maxScrollExtent - 100 &&
+                //       !exploreCtrl.relatedProductsIsLoadingMore.value &&
+                //       exploreCtrl.relatedProductsHasMore.value) {
+                //     logg.d("Fetching more products...");
+                //     productDescriptionCtrl.getRelatedProductsCall();
+                //   }
+                //   return true;
+                // },
                 child: ListView(
                   padding: const EdgeInsets.all(PaddingSize.commonPadding),
                   controller: productDescriptionCtrl.scrollController,
@@ -219,27 +221,28 @@ class ProductDescriptionScreen extends StatelessWidget {
                     const SizedBox(height: 30),
 
                     _buildPolicyTile(
-                        title: 'RETURN POLICY',
-                        isExpanded: exploreCtrl.isShowReturn,
-                        onTap: () => exploreCtrl.changeReturnPolicy(),
-                        content: product!.customReturnPolicy??'Api Error',
-                      ),
-                      const SizedBox(height: 20),
-                      _buildPolicyTile(
-                        title: 'SHIPPING POLICY',
-                        isExpanded: exploreCtrl.isShowShipping,
-                        onTap: () => exploreCtrl.changeShippingPolicy(),
-                        content: product.customShippingPolicy??'Api Error',
-                      ),
+                      title: 'RETURN POLICY',
+                      isExpanded: exploreCtrl.isShowReturn,
+                      onTap: () => exploreCtrl.changeReturnPolicy(),
+                      content: product!.customReturnPolicy ?? 'Api Error',
+                    ),
+                    const SizedBox(height: 20),
+                    _buildPolicyTile(
+                      title: 'SHIPPING POLICY',
+                      isExpanded: exploreCtrl.isShowShipping,
+                      onTap: () => exploreCtrl.changeShippingPolicy(),
+                      content: product.customShippingPolicy ?? 'Api Error',
+                    ),
                     const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           'Reviews',
-                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                         ),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -264,15 +267,19 @@ class ProductDescriptionScreen extends StatelessWidget {
                     FutureBuilder<GetProductReviewModel?>(
                       future: homeController.getReviews(product.id ?? ''),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return const Center(child: CircularProgressIndicator());
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
                         }
 
                         if (snapshot.hasError) {
-                          return Text('Error loading reviews: ${snapshot.error}');
+                          return Text(
+                              'Error loading reviews: ${snapshot.error}');
                         }
 
-                        final reviews = snapshot.data?.getProductInteractions ?? [];
+                        final reviews =
+                            snapshot.data?.getProductInteractions ?? [];
 
                         if (reviews.isEmpty) {
                           return const Text('No reviews yet');
@@ -283,32 +290,37 @@ class ProductDescriptionScreen extends StatelessWidget {
                             ListView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: reviews.length > 2 ? 2 : reviews.length,
+                              itemCount:
+                                  reviews.length > 2 ? 2 : reviews.length,
                               itemBuilder: (context, index) {
                                 final review = reviews[index];
                                 return Padding(
                                   padding: const EdgeInsets.only(bottom: 15),
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Container(
                                         padding: const EdgeInsets.all(1),
                                         decoration: BoxDecoration(
-                                            border:
-                                            Border.all(color: ButtonColor.black),
-                                            borderRadius: BorderRadius.circular(50)),
+                                            border: Border.all(
+                                                color: ButtonColor.black),
+                                            borderRadius:
+                                                BorderRadius.circular(50)),
                                         child: CircleAvatar(
                                           maxRadius: 28,
-                                          backgroundColor: const Color(0xFF002957),
+                                          backgroundColor:
+                                              const Color(0xFF002957),
                                           child: Text(
                                             review.user?.name
-                                                ?.substring(0, 1)
-                                                .toUpperCase() ??
+                                                    ?.substring(0, 1)
+                                                    .toUpperCase() ??
                                                 "U",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium!
-                                                .copyWith(color: TextColor.white),
+                                                .copyWith(
+                                                    color: TextColor.white),
                                           ),
                                         ),
                                       ),
@@ -316,7 +328,7 @@ class ProductDescriptionScreen extends StatelessWidget {
                                       Expanded(
                                         child: Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               review.user?.name ?? 'Anonymous',
@@ -324,20 +336,21 @@ class ProductDescriptionScreen extends StatelessWidget {
                                                   .textTheme
                                                   .bodyLarge!
                                                   .copyWith(
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                             ),
                                             const SizedBox(height: 5),
                                             Row(
                                               children: [
                                                 ...List.generate(
                                                   5,
-                                                      (i) => Icon(
+                                                  (i) => Icon(
                                                     Icons.star,
                                                     size: 16,
-                                                    color: i < (review.rating ?? 0)
-                                                        ? Colors.black
-                                                        : Colors.grey,
+                                                    color:
+                                                        i < (review.rating ?? 0)
+                                                            ? Colors.black
+                                                            : Colors.grey,
                                                   ),
                                                 ),
                                                 const SizedBox(width: 10),
@@ -347,12 +360,12 @@ class ProductDescriptionScreen extends StatelessWidget {
                                                       .textTheme
                                                       .bodyMedium!
                                                       .copyWith(
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
                                                 ),
                                               ],
                                             ),
-
                                           ],
                                         ),
                                       ),
@@ -361,7 +374,6 @@ class ProductDescriptionScreen extends StatelessWidget {
                                 );
                               },
                             ),
-
                           ],
                         );
                       },
@@ -469,7 +481,7 @@ class ProductDescriptionScreen extends StatelessWidget {
               children: [
                 SizedBox(),
                 Text(
-                  title??'Api Error',
+                  title ?? 'Api Error',
                   style: const TextStyle(
                     fontSize: 14,
                     color: Colors.white,

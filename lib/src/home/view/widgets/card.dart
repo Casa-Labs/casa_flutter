@@ -143,7 +143,12 @@ class Cards extends StatelessWidget {
                                             splashFactory:
                                                 NoSplash.splashFactory,
                                             onTap: () {
-                                              // context.pushNamed(RouteNames.store);
+                                              context.pushNamed(
+                                                RouteNames.store,
+                                                pathParameters: {
+                                                  'id': product.store?.id ?? ''
+                                                },
+                                              );
                                             },
 
                                             /// Need to add dummy image preview image
