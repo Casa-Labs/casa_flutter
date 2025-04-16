@@ -1,12 +1,22 @@
-import 'package:casaflutterapp/src/order/model/order_models.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/color_constant.dart';
 
 class OrderCard extends StatelessWidget {
-  final OrderedItems orderItem;
+  final String imageUrl;
+  final String name;
+  final String price;
+  final String brandName;
+  final String quantity;
 
-  const OrderCard({super.key, required this.orderItem});
+  const OrderCard({
+    super.key,
+    required this.imageUrl,
+    required this.name,
+    required this.price,
+    required this.brandName,
+    required this.quantity,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,38 +32,32 @@ class OrderCard extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(4),
             child: SizedBox(
-              height: 120,
-              width: 100,
-              child: orderItem.image != null
-                  ? Image.network(
-                      orderItem.image!,
-                      fit: BoxFit.cover,
-                      filterQuality: FilterQuality.medium,
-                      cacheWidth: 200, // Limit image size
-                      cacheHeight: 240, // Limit image size
-                      errorBuilder: (context, error, stackTrace) {
-                        return Image.asset(
-                          'assets/images/placeholder.png',
-                          fit: BoxFit.cover,
-                        );
-                      },
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                : null,
-                          ),
-                        );
-                      },
-                    )
-                  : Image.asset(
+                height: 120,
+                width: 100,
+                child: Image.network(
+                  imageUrl,
+                  fit: BoxFit.cover,
+                  filterQuality: FilterQuality.medium,
+                  cacheWidth: 200, // Limit image size
+                  cacheHeight: 240, // Limit image size
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
                       'assets/images/placeholder.png',
                       fit: BoxFit.cover,
-                    ),
-            ),
+                    );
+                  },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                            : null,
+                      ),
+                    );
+                  },
+                )),
           ),
         ),
         Expanded(
@@ -66,14 +70,14 @@ class OrderCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      orderItem.itemName!,
+                      name,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
                           ),
                     ),
                     Text(
-                      '\$${orderItem.price}',
+                      '\$$price',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
@@ -82,7 +86,7 @@ class OrderCard extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  orderItem.brandName!,
+                  brandName,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontSize: 16,
                         color: TextColor.black54,
@@ -150,7 +154,7 @@ class OrderCard extends StatelessWidget {
                       ),
                       child: Center(
                           child: Text(
-                        orderItem.quantity.toString(),
+                        quantity,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               fontWeight: FontWeight.w300,
                             ),

@@ -1,308 +1,310 @@
-import 'package:casaflutterapp/src/order/model/order_models.dart';
-import 'package:casaflutterapp/utils/color.dart';
-import 'package:casaflutterapp/utils/color_constant.dart';
-import 'package:casaflutterapp/utils/utils.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+//
+// import 'package:casaflutterapp/utils/color.dart';
+// import 'package:casaflutterapp/utils/color_constant.dart';
+// import 'package:casaflutterapp/utils/utils.dart';
+// import 'package:flutter/material.dart';
+// import 'package:go_router/go_router.dart';
+//
+// import '../../../../routes/app_routes.dart';
+// import '../../../../utils/padding_size.dart';
+// import '../../../common/widgets/app_bar.dart';
+// import '../widgets/order_card.dart';
+// import '../widgets/view_button.dart';
+//
 
-import '../../../../routes/app_routes.dart';
-import '../../../../utils/padding_size.dart';
-import '../../../common/widgets/app_bar.dart';
-import '../widgets/order_card.dart';
-import '../widgets/view_button.dart';
-
-class OrderDetails extends StatelessWidget {
-  final OrderedItems orderItem;
-  final OrderModel orderData;
-
-  const OrderDetails(
-      {super.key, required this.orderItem, required this.orderData});
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
-    return Scaffold(
-      backgroundColor: BackgroundColor.white,
-      appBar: CustomAppbar(
-        title: 'Order details',
-        isLeadingBack: true,
-        isLeading: false,
-        isFilter: false,
-        isNotification: false,
-        isSupport: true,
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: PaddingSize.commonPadding, vertical: 10),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Shipment details",
-                    style: textTheme.bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.w600)),
-                Text("Tracking Id: ${orderData.id}",
-                    style: textTheme.bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.w600)),
-                SizedBox(height: 10),
-                OrderCard(orderItem: orderItem),
-                SizedBox(height: 10),
-                Text("Order packed",
-                    style: textTheme.bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.w600)),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Delivery date: ',
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: TextColor.black),
-                      ),
-                      TextSpan(
-                        text: "", // Use the actual date from orderData
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: TextColor.green),
-                      ),
-                    ],
-                  ),
-                ),
-                Text("Vendor: Zara Mumbai",
-                    style: textTheme.bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.w600)),
-                Text("Qty: ${orderItem.quantity}",
-                    style: textTheme.bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.w600)),
-                SizedBox(height: 15),
-                InkWell(
-                  overlayColor: WidgetStateProperty.all(Colors.transparent),
-                  splashFactory: NoSplash.splashFactory,
-                  onTap: () {
-                    //context.pushNamed(RouteNames.trackShipment);
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: CColor.borderColor, width: 2),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text('Track shipment',
-                            style: textTheme.bodyMedium
-                                ?.copyWith(fontWeight: FontWeight.w500)),
-                        Icon(Icons.arrow_forward_ios_rounded, size: 15),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Text("Order Details",
-                    style: textTheme.bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.w700)),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Order Date',
-                              style: textTheme.bodyMedium
-                                  ?.copyWith(fontWeight: FontWeight.w600)),
-                          SizedBox(height: 3),
-                          Text('Order #',
-                              style: textTheme.bodyMedium
-                                  ?.copyWith(fontWeight: FontWeight.w600)),
-                          SizedBox(height: 3),
-                          Text('Order total',
-                              style: textTheme.bodyMedium
-                                  ?.copyWith(fontWeight: FontWeight.w600)),
-                        ],
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(formatDateToYYYY(orderData.orderDate!),
-                            style: textTheme.bodyMedium),
-                        SizedBox(height: 3),
-                        Text('201-2293837-209', style: textTheme.bodyMedium),
-                        SizedBox(height: 3),
-                        Text(
-                            'Rs.${orderData.orderTotal!} (${orderItem.quantity} items)',
-                            style: textTheme.bodyMedium),
-                      ],
-                    )
-                  ],
-                ),
-                const Divider(height: 20),
-                SmallButton(
-                  onPressed: () {
-                    context.pushNamed(RouteNames.orderDetails);
-                  },
-                  text: 'Download invoice',
-                ),
-                const Divider(),
-                Text("Payment Information",
-                    style: textTheme.bodyLarge
-                        ?.copyWith(fontWeight: FontWeight.w700)),
-                const SizedBox(height: 10),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: CColor.borderColor, width: 2),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Payment Method',
-                              style: textTheme.bodyMedium
-                                  ?.copyWith(fontWeight: FontWeight.bold)),
-                          Text('Visa ending com 7834',
-                              style: textTheme.bodyMedium
-                                  ?.copyWith(fontWeight: FontWeight.w600)),
-                        ],
-                      ),
-                      Icon(Icons.chevron_right),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 12),
-                const Divider(),
-                Text("Shipping Address",
-                    style: textTheme.bodyLarge
-                        ?.copyWith(fontWeight: FontWeight.w600)),
-                const SizedBox(height: 8),
-                Text(orderData.shippingAddress!.name!,
-                    style: textTheme.bodyMedium),
-                Text(
-                    "${orderData.shippingAddress!.name}, ${orderData.shippingAddress!.city} - ${orderData.shippingAddress!.pincode}",
-                    style: textTheme.bodyMedium),
-                const SizedBox(height: 12),
-                const Divider(),
-                Text("Order Summary",
-                    style: textTheme.bodyLarge
-                        ?.copyWith(fontWeight: FontWeight.w600)),
-                const SizedBox(height: 8),
-                _orderSummary(context,orderData.orderSummary!)
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-  _orderSummary(BuildContext context, OrderSummary orderSummary) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Items:",
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            Text(
-              "\$${orderSummary.itemsPrice}",
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Postage and Packing:",
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            Text(
-              "\$${orderSummary.postage}",
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Total Before Tax:",
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            Text(
-              "\$${orderSummary.totalBeforeTax}",
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Tax:",
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            Text(
-              "\$${orderSummary.tax}",
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Total:",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(fontWeight: FontWeight.w600),
-            ),
-            Text(
-              "\$768.00",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
-        const SizedBox(height: 8),
-        const Divider(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Order Total:",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(/* fontSize: 14 */ fontWeight: FontWeight.w600),
-            ),
-            Text(
-              "\$${orderSummary.orderTotal}",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(/* fontSize: 14, */ fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
+// TODO : Uncomment this later when API data available
+// class OrderDetails extends StatelessWidget {
+//   final OrderedItems orderItem;
+//   final OrderModel orderData;
+//
+//   const OrderDetails(
+//       {super.key, required this.orderItem, required this.orderData});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final textTheme = Theme.of(context).textTheme;
+//
+//     return Scaffold(
+//       backgroundColor: BackgroundColor.white,
+//       appBar: CustomAppbar(
+//         title: 'Order details',
+//         isLeadingBack: true,
+//         isLeading: false,
+//         isFilter: false,
+//         isNotification: false,
+//         isSupport: true,
+//       ),
+//       body: SafeArea(
+//         child: Padding(
+//           padding: const EdgeInsets.symmetric(
+//               horizontal: PaddingSize.commonPadding, vertical: 10),
+//           child: SingleChildScrollView(
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Text("Shipment details",
+//                     style: textTheme.bodyMedium
+//                         ?.copyWith(fontWeight: FontWeight.w600)),
+//                 Text("Tracking Id: ${orderData.id}",
+//                     style: textTheme.bodyMedium
+//                         ?.copyWith(fontWeight: FontWeight.w600)),
+//                 SizedBox(height: 10),
+//                 OrderCard(orderItem: orderItem),
+//                 SizedBox(height: 10),
+//                 Text("Order packed",
+//                     style: textTheme.bodyMedium
+//                         ?.copyWith(fontWeight: FontWeight.w600)),
+//                 RichText(
+//                   text: TextSpan(
+//                     children: [
+//                       TextSpan(
+//                         text: 'Delivery date: ',
+//                         style: TextStyle(
+//                             fontSize: 14,
+//                             fontWeight: FontWeight.w500,
+//                             color: TextColor.black),
+//                       ),
+//                       TextSpan(
+//                         text: "", // Use the actual date from orderData
+//                         style: TextStyle(
+//                             fontSize: 14,
+//                             fontWeight: FontWeight.w500,
+//                             color: TextColor.green),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//                 Text("Vendor: Zara Mumbai",
+//                     style: textTheme.bodyMedium
+//                         ?.copyWith(fontWeight: FontWeight.w600)),
+//                 Text("Qty: ${orderItem.quantity}",
+//                     style: textTheme.bodyMedium
+//                         ?.copyWith(fontWeight: FontWeight.w600)),
+//                 SizedBox(height: 15),
+//                 InkWell(
+//                   overlayColor: WidgetStateProperty.all(Colors.transparent),
+//                   splashFactory: NoSplash.splashFactory,
+//                   onTap: () {
+//                     //context.pushNamed(RouteNames.trackShipment);
+//                   },
+//                   child: Container(
+//                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+//                     decoration: BoxDecoration(
+//                       border: Border.all(color: CColor.borderColor, width: 2),
+//                       borderRadius: BorderRadius.circular(10),
+//                     ),
+//                     child: Row(
+//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                       crossAxisAlignment: CrossAxisAlignment.center,
+//                       children: [
+//                         Text('Track shipment',
+//                             style: textTheme.bodyMedium
+//                                 ?.copyWith(fontWeight: FontWeight.w500)),
+//                         Icon(Icons.arrow_forward_ios_rounded, size: 15),
+//                       ],
+//                     ),
+//                   ),
+//                 ),
+//                 const SizedBox(height: 12),
+//                 Text("Order Details",
+//                     style: textTheme.bodyMedium
+//                         ?.copyWith(fontWeight: FontWeight.w700)),
+//                 const SizedBox(height: 8),
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.start,
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: [
+//                     Expanded(
+//                       child: Column(
+//                         crossAxisAlignment: CrossAxisAlignment.start,
+//                         children: [
+//                           Text('Order Date',
+//                               style: textTheme.bodyMedium
+//                                   ?.copyWith(fontWeight: FontWeight.w600)),
+//                           SizedBox(height: 3),
+//                           Text('Order #',
+//                               style: textTheme.bodyMedium
+//                                   ?.copyWith(fontWeight: FontWeight.w600)),
+//                           SizedBox(height: 3),
+//                           Text('Order total',
+//                               style: textTheme.bodyMedium
+//                                   ?.copyWith(fontWeight: FontWeight.w600)),
+//                         ],
+//                       ),
+//                     ),
+//                     Column(
+//                       crossAxisAlignment: CrossAxisAlignment.start,
+//                       children: [
+//                         Text(formatDateToYYYY(orderData.orderDate!),
+//                             style: textTheme.bodyMedium),
+//                         SizedBox(height: 3),
+//                         Text('201-2293837-209', style: textTheme.bodyMedium),
+//                         SizedBox(height: 3),
+//                         Text(
+//                             'Rs.${orderData.orderTotal!} (${orderItem.quantity} items)',
+//                             style: textTheme.bodyMedium),
+//                       ],
+//                     )
+//                   ],
+//                 ),
+//                 const Divider(height: 20),
+//                 SmallButton(
+//                   onPressed: () {
+//                     context.pushNamed(RouteNames.orderDetails);
+//                   },
+//                   text: 'Download invoice',
+//                 ),
+//                 const Divider(),
+//                 Text("Payment Information",
+//                     style: textTheme.bodyLarge
+//                         ?.copyWith(fontWeight: FontWeight.w700)),
+//                 const SizedBox(height: 10),
+//                 Container(
+//                   padding: EdgeInsets.all(10),
+//                   decoration: BoxDecoration(
+//                     border: Border.all(color: CColor.borderColor, width: 2),
+//                     borderRadius: BorderRadius.circular(10),
+//                   ),
+//                   child: Row(
+//                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                     children: [
+//                       Column(
+//                         crossAxisAlignment: CrossAxisAlignment.start,
+//                         children: [
+//                           Text('Payment Method',
+//                               style: textTheme.bodyMedium
+//                                   ?.copyWith(fontWeight: FontWeight.bold)),
+//                           Text('Visa ending com 7834',
+//                               style: textTheme.bodyMedium
+//                                   ?.copyWith(fontWeight: FontWeight.w600)),
+//                         ],
+//                       ),
+//                       Icon(Icons.chevron_right),
+//                     ],
+//                   ),
+//                 ),
+//                 const SizedBox(height: 12),
+//                 const Divider(),
+//                 Text("Shipping Address",
+//                     style: textTheme.bodyLarge
+//                         ?.copyWith(fontWeight: FontWeight.w600)),
+//                 const SizedBox(height: 8),
+//                 Text(orderData.shippingAddress!.name!,
+//                     style: textTheme.bodyMedium),
+//                 Text(
+//                     "${orderData.shippingAddress!.name}, ${orderData.shippingAddress!.city} - ${orderData.shippingAddress!.pincode}",
+//                     style: textTheme.bodyMedium),
+//                 const SizedBox(height: 12),
+//                 const Divider(),
+//                 Text("Order Summary",
+//                     style: textTheme.bodyLarge
+//                         ?.copyWith(fontWeight: FontWeight.w600)),
+//                 const SizedBox(height: 8),
+//                 _orderSummary(context,orderData.orderSummary!)
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+//   _orderSummary(BuildContext context, OrderSummary orderSummary) {
+//     return Column(
+//       children: [
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             Text(
+//               "Items:",
+//               style: Theme.of(context).textTheme.bodyMedium,
+//             ),
+//             Text(
+//               "\$${orderSummary.itemsPrice}",
+//               style: Theme.of(context).textTheme.bodyMedium,
+//             ),
+//           ],
+//         ),
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             Text(
+//               "Postage and Packing:",
+//               style: Theme.of(context).textTheme.bodyMedium,
+//             ),
+//             Text(
+//               "\$${orderSummary.postage}",
+//               style: Theme.of(context).textTheme.bodyMedium,
+//             ),
+//           ],
+//         ),
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             Text(
+//               "Total Before Tax:",
+//               style: Theme.of(context).textTheme.bodyMedium,
+//             ),
+//             Text(
+//               "\$${orderSummary.totalBeforeTax}",
+//               style: Theme.of(context).textTheme.bodyMedium,
+//             ),
+//           ],
+//         ),
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             Text(
+//               "Tax:",
+//               style: Theme.of(context).textTheme.bodyMedium,
+//             ),
+//             Text(
+//               "\$${orderSummary.tax}",
+//               style: Theme.of(context).textTheme.bodyMedium,
+//             ),
+//           ],
+//         ),
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             Text(
+//               "Total:",
+//               style: Theme.of(context)
+//                   .textTheme
+//                   .bodyMedium
+//                   ?.copyWith(fontWeight: FontWeight.w600),
+//             ),
+//             Text(
+//               "\$768.00",
+//               style: Theme.of(context)
+//                   .textTheme
+//                   .bodyMedium
+//                   ?.copyWith(fontWeight: FontWeight.w600),
+//             ),
+//           ],
+//         ),
+//         const SizedBox(height: 8),
+//         const Divider(),
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             Text(
+//               "Order Total:",
+//               style: Theme.of(context)
+//                   .textTheme
+//                   .bodyMedium
+//                   ?.copyWith(/* fontSize: 14 */ fontWeight: FontWeight.w600),
+//             ),
+//             Text(
+//               "\$${orderSummary.orderTotal}",
+//               style: Theme.of(context)
+//                   .textTheme
+//                   .bodyMedium
+//                   ?.copyWith(/* fontSize: 14, */ fontWeight: FontWeight.w600),
+//             ),
+//           ],
+//         ),
+//       ],
+//     );
+//   }
+// }
+//

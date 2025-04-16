@@ -9,7 +9,6 @@ import 'package:casaflutterapp/src/cart/view/screens/cart_screen.dart';
 import 'package:casaflutterapp/src/common/widgets/development_screen.dart';
 import 'package:casaflutterapp/src/explore/view/screens/products_list_screen.dart';
 import 'package:casaflutterapp/src/explore/view/screens/store_screen.dart';
-import 'package:casaflutterapp/src/order/model/order_models.dart';
 import 'package:casaflutterapp/src/order/view/screens/current_orders_screen.dart';
 import 'package:casaflutterapp/src/order/view/screens/order_review_screen.dart';
 import 'package:casaflutterapp/src/payment/view/screens/payment_options_screen.dart';
@@ -32,8 +31,6 @@ import '../src/home/view/screens/bottom_navigator.dart';
 import '../src/home/view/screens/home_screen.dart';
 import '../src/location/view/screens/location_screen.dart';
 import '../src/notifications/view/screens/notifications_screen.dart';
-import '../src/order/view/screens/order_details_screen.dart';
-import '../src/order/view/screens/track_shipment.dart';
 import '../src/search/view/screens/search_screen.dart';
 import '../src/splash/view/screens/splash_screen.dart';
 import '../src/wishlist/view/screens/create_closet_screen.dart';
@@ -250,25 +247,28 @@ final GoRouter router = GoRouter(
         return NavPage(isFirstLaunch: isFirstLaunch);
       },
     ),
-    GoRoute(
-      path: _AppPaths.orderDetails,
-      name: RouteNames.orderDetails,
-      builder: (context, state) {
-        final Map<String, dynamic> args = state.extra as Map<String, dynamic>;
-        final OrderedItems selectedItem = args["selectedItem"];
-        final OrderModel orderData = args["orderData"];
 
-        return OrderDetails(orderItem: selectedItem, orderData: orderData);
-      },
-    ),
-    GoRoute(
-      path: _AppPaths.trackShipment,
-      name: RouteNames.trackShipment,
-      builder: (context, state) {
-        final orderItem = state.extra as OrderedItems?;
-        return TrackShipment(orderItem: orderItem!);
-      },
-    ),
+    // TODO : Uncomment later but avoid passing the object as it may change from the API
+
+    // GoRoute(
+    //   path: _AppPaths.orderDetails,
+    //   name: RouteNames.orderDetails,
+    //   builder: (context, state) {
+    //     final Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+    //     final OrderedItems selectedItem = args["selectedItem"];
+    //     final OrderModel orderData = args["orderData"];
+    //
+    //     return OrderDetails(orderItem: selectedItem, orderData: orderData);
+    //   },
+    // ),
+    // GoRoute(
+    //   path: _AppPaths.trackShipment,
+    //   name: RouteNames.trackShipment,
+    //   builder: (context, state) {
+    //     final orderItem = state.extra as OrderedItems?;
+    //     return TrackShipment(orderItem: orderItem!);
+    //   },
+    // ),
     GoRoute(
       path: _AppPaths.wishlist,
       name: RouteNames.wishlist,
