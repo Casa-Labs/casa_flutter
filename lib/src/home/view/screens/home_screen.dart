@@ -54,7 +54,12 @@ class HomeScreen extends StatelessWidget {
       HomeController logic, BuildContext context, List<Product> products) {
     return GetBuilder<HomeController>(builder: (logic) {
       return RefreshIndicator(
-        onRefresh: () => logic.fetchProducts({}),
+        onRefresh: () => logic.fetchProducts(
+          {
+            "pageSize": logic.pageSize,
+            "page": 1,
+          },
+        ),
         child: Stack(
           alignment: logic.swipeIcon == Icons.add_shopping_cart_outlined
               ? Alignment.topCenter

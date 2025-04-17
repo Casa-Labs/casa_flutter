@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:casaflutterapp/src/home/model/service/home_service.dart';
 import 'package:flutter/foundation.dart';
@@ -48,6 +46,8 @@ class HomeController extends GetxController {
   int currentIndex = 0;
   int minValue = 0;
   int maxValue = 0;
+  int pageSize = 10;
+  int currentPage = 1;
   RxString selectedSize = "S".obs;
   final ValueNotifier<int> counter = ValueNotifier<int>(1);
   IconData? swipeIcon;
@@ -92,7 +92,12 @@ class HomeController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    await fetchProducts({});
+    await fetchProducts(
+      {
+        "pageSize": pageSize,
+        "page": currentPage,
+      },
+    );
     await getBrand();
     // await getSize();
     await getCategory();
@@ -104,7 +109,6 @@ class HomeController extends GetxController {
     if (kDebugMode) {
       print('end reached!');
     }
-
   }
 
   void addToCartSwipe() {
@@ -113,13 +117,26 @@ class HomeController extends GetxController {
     update();
   }
 
-  void swipeEnd(int previousIndex, int targetIndex, SwiperActivity activity) {
+  void swipeEnd(
+      int previousIndex, int targetIndex, SwiperActivity activity) async {
     cardIndex = targetIndex;
     // price.value = reactiveProducts[targetIndex].price!;
     // title.value = reactiveProducts[targetIndex].title!;
     // id.value = reactiveProducts[targetIndex].id!;
     currentIndex = targetIndex;
     counter.value = 1;
+
+    // fetch more records for pagination in advance
+    if (currentIndex >= products.length - 2) {
+      currentPage = currentPage + 1;
+      await fetchProducts(
+        {
+          "pageSize": pageSize,
+          "page": currentPage,
+        },
+      );
+    }
+
     switch (activity) {
       case Swipe():
         if (kDebugMode) {
@@ -127,8 +144,8 @@ class HomeController extends GetxController {
           print('Previous index: $previousIndex, Target index: $targetIndex');
         }
         // Add conditions for swipe directions
-        if(swipeIcon == Icons.add_shopping_cart_outlined){
-        }else {
+        if (swipeIcon == Icons.add_shopping_cart_outlined) {
+        } else {
           if (activity.direction == AxisDirection.right) {
             swipeIcon = Icons.check_rounded; // ✅ Right Swipe
           } else if (activity.direction == AxisDirection.left) {
@@ -137,12 +154,12 @@ class HomeController extends GetxController {
         }
 
         // Hide the icon after some time
-        if(swipeIcon == Icons.add_shopping_cart_outlined){
+        if (swipeIcon == Icons.add_shopping_cart_outlined) {
           Future.delayed(Duration(milliseconds: 900), () {
             swipeIcon = null;
             update();
           });
-        }else {
+        } else {
           Future.delayed(Duration(milliseconds: 500), () {
             swipeIcon = null;
             update();
@@ -240,10 +257,16 @@ class HomeController extends GetxController {
     try {
       isLoading.value = true;
       update();
+
       var response = await manager.getProducts(map);
-      var getProductList = GetProductData.fromJson(response.data!);
-      products = getProductList.getProducts!.data ?? [];
-      products.shuffle(Random());
+      var getProductList = GetProductData.fromJson(response.data);
+      if (products.isEmpty) {
+        products = getProductList.getProducts?.data ?? [];
+      } else {
+        products.addAll(getProductList.getProducts?.data ?? []);
+      }
+
+      //products.shuffle(Random());
       isLoading.value = false;
       update();
     } catch (e) {

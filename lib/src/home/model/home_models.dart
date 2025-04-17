@@ -101,9 +101,9 @@ class GetProductData {
 
   GetProductData({this.getProducts});
 
-  GetProductData.fromJson(Map<String, dynamic> json) {
-    getProducts = json['getProducts'] != null
-        ? GetProducts.fromJson(json['getProducts'])
+  GetProductData.fromJson(Map<String, dynamic>? json) {
+    getProducts = json?['getProducts'] != null
+        ? GetProducts.fromJson(json?['getProducts'])
         : null;
   }
 
@@ -370,15 +370,15 @@ class Store {
 
   Store(
       {this.id,
-        this.userId,
-        this.name,
-        this.description,
-        this.type,
-        this.logo,
-        this.createdAt,
-        this.updatedAt,
-        this.isDeleted,
-        this.reasonToDelete});
+      this.userId,
+      this.name,
+      this.description,
+      this.type,
+      this.logo,
+      this.createdAt,
+      this.updatedAt,
+      this.isDeleted,
+      this.reasonToDelete});
 
   Store.fromJson(Map<String, dynamic> json) {
     id = json['id'] ?? "";
@@ -408,7 +408,6 @@ class Store {
     return data;
   }
 }
-
 
 class SizeItem {
   String? id;
