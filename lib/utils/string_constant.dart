@@ -31,6 +31,19 @@ class IconConstants {
   static String cartIcon = 'assets/icons/search.svg';
   static String wishlistIcon = 'assets/icons/search.svg';
   static String profileIcon = 'assets/icons/search.svg';
+  static String home = 'assets/icons/home.png';
+  static String homeSelected = 'assets/icons/home_selected.png';
+  static String search = 'assets/icons/search.png';
+  static String searchSelected = 'assets/icons/search_selected.png';
+  static String cart = 'assets/icons/cart.png';
+  static String cartSelected = 'assets/icons/cart_selected.png';
+  static String heart = 'assets/icons/heart.png';
+  static String heartSelected = 'assets/icons/heart_selected.png';
+  static String profile = 'assets/icons/profile.png';
+  static String profileSelected = 'assets/icons/profile_selected.png';
+  static String cartAdd = 'assets/icons/cart_add.png';
+  static String bookMark = 'assets/icons/book_mark.png';
+  static String forward = 'assets/icons/forward.png';
 }
 
 class AppStrings {
