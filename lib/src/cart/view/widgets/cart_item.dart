@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../routes/app_routes.dart';
-import '../../../../utils/color.dart';
 import '../../../common/widgets/buttons/custom_button.dart';
 import '../../controller/cart_controller.dart';
 import '../../model/cart_models.dart';
@@ -37,25 +36,28 @@ class CartItem extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            context.pushNamed(RouteNames.store);
+            if (item.store?.id != null) {
+              context.pushNamed(
+                RouteNames.store,
+                pathParameters: {'id': item.store?.id ?? ''},
+              );
+            } else {
+              showToast(message: 'API Error, Store ID not found');
+            }
           },
           child: Container(
-            height: 50,
-            width: 50,
-            padding: EdgeInsets.all(2),
             decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                    image: NetworkImage(item.store?.logo ??
-                        ImageConstants.dummyNetworkPortrait),
-                    fit: BoxFit.fill),
-                border: Border.all(color: CColor.circleBoarder, width: 1)),
-            // child: CircleAvatar(
-            //   maxRadius: 24,
-            //   child: Image.network(item
-            //       .store?.logo ??
-            //       ImageConstants.dummyNetworkPortrait)
-            // ),
+              border: Border.all(color: Colors.black, width: 2),
+              shape: BoxShape.circle,
+            ),
+            padding: EdgeInsets.all(1.5),
+            child: CircleAvatar(
+                maxRadius: 24,
+                child: Image.network(item.store != null &&
+                        item.store!.logo != null &&
+                        item.store!.logo!.isNotEmpty
+                    ? item.store!.logo!
+                    : ImageConstants.dummyNetworkPortrait)),
           ),
         ),
         SizedBox(height: 15),
@@ -67,13 +69,13 @@ class CartItem extends StatelessWidget {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () {
-                if (item.store?.id != null) {
+                if (item.productId != null) {
                   context.pushNamed(
                     RouteNames.productDescription,
-                    pathParameters: {'id': item.store?.id ?? ''},
+                    pathParameters: {'id': item.productId ?? ''},
                   );
                 } else {
-                  showToast(message: 'API Error, Store ID not found');
+                  showToast(message: 'API Error, Product ID not found');
                 }
               },
               child: Card(

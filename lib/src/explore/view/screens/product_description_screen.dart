@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:casaflutterapp/src/common/widgets/buttons/buy_now_button.dart';
 import 'package:casaflutterapp/src/common/widgets/common_app_bars.dart';
-import 'package:casaflutterapp/src/common/widgets/custom_image_view.dart';
 import 'package:casaflutterapp/src/explore/controller/explore_controller.dart';
 import 'package:casaflutterapp/src/explore/controller/product_description_controller.dart';
 import 'package:casaflutterapp/src/explore/model/product_by_id_model.dart'
@@ -13,15 +12,21 @@ import 'package:casaflutterapp/utils/font.dart';
 import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:casaflutterapp/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../../routes/app_routes.dart';
 import '../../../../utils/padding_size.dart';
+import '../../../cart/controller/cart_controller.dart';
 import '../../../common/widgets/buttons/add_to_cart_button.dart';
 import '../../../common/widgets/buttons/select_size_button.dart';
 import '../../../home/controller/home_controller.dart';
 import '../../../home/model/review_response.dart';
+import '../../../order/controller/order_review_controller.dart';
+import '../../../wishlist/controller/wishlist_controller.dart';
+import '../../../wishlist/view/screens/add_to_closet.dart';
 import '../widgets/product_write_review_widget.dart';
 import '../widgets/quantity_selector_button.dart';
 
@@ -32,6 +37,9 @@ class ProductDescriptionScreen extends StatelessWidget {
 
   final productDescriptionCtrl = Get.put(ProductDescriptionController());
   final homeController = Get.find<HomeController>();
+  final cartController = Get.find<CartController>();
+  final orderReviewController = Get.find<OrderReviewController>();
+  final wishController = Get.find<WishlistController>();
   @override
   Widget build(BuildContext context) {
     // TODO : Terrible logic of relying on explore controller but will fix it later
@@ -130,22 +138,75 @@ class ProductDescriptionScreen extends StatelessWidget {
                               right: 10,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
+                                spacing: 10,
                                 children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      context.pushNamed(RouteNames.cart);
-                                    },
-                                    icon: const Icon(
-                                        Icons.add_shopping_cart_outlined),
-                                    color: IconColor.white,
-                                    padding: EdgeInsets.zero,
-                                    constraints: BoxConstraints(),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 12),
+                                    child: Column(
+                                      spacing: 10,
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {
+                                            HapticFeedback.heavyImpact();
+
+                                            cartController.addProductsToCart(
+                                                productDescriptionCtrl
+                                                    .getProductData(product!),
+                                                product.quantity!,
+                                                product.sizeValue!);
+                                          },
+                                          icon: Icon(
+                                              Icons.add_shopping_cart_outlined,
+                                              color: IconColor.white,
+                                              size: 30),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            HapticFeedback.heavyImpact();
+                                            wishController.selectedClosets
+                                                .clear();
+                                            showModalBottomSheet(
+                                              context: context,
+                                              isScrollControlled: true,
+                                              builder: (context) {
+                                                return AddToCloset(
+                                                  imageUrl: product
+                                                          ?.mainImage ??
+                                                      ImageConstants
+                                                          .dummyNetworkPortrait,
+                                                  itemId:
+                                                      product!.id.toString(),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          icon: Icon(
+                                            Icons.bookmark_border_rounded,
+                                            color: IconColor.white,
+                                            size: 30,
+                                          ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            HapticFeedback.heavyImpact();
+                                            Share.share(
+                                                'Check out the CASA app now');
+                                          },
+                                          icon: Icon(Icons.share_rounded,
+                                              color: IconColor.white, size: 30),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  BuyNowButton(
-                                    onPressed: () {
-                                      context.pushNamed(RouteNames.orderReview);
-                                    },
-                                  ),
+                                  BuyNowButton(onPressed: () {
+                                    HapticFeedback.heavyImpact();
+                                    orderReviewController.getHomeProduct(
+                                        productDescriptionCtrl
+                                            .getProductData(product!),
+                                        product.quantity!,
+                                        product.sizeValue!);
+                                    context.pushNamed(RouteNames.orderReview);
+                                  }),
                                 ],
                               ),
                             ),
@@ -153,29 +214,29 @@ class ProductDescriptionScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: CustomImageView(
-                            image: ImageConstants.send,
-                            height: 24,
-                          ),
-                        ),
-                        IconButton(
-                            onPressed: () {},
-                            icon: CustomImageView(
-                              image: ImageConstants.chat,
-                              height: 24,
-                            )),
-                        Spacer(),
-                        InkWell(
-                          child: Icon(Icons.bookmark_border),
-                          onTap: () {},
-                        ),
-                      ],
-                    ),
+                    // const SizedBox(height: 20),
+                    // Row(
+                    //   children: [
+                    //     IconButton(
+                    //       onPressed: () {},
+                    //       icon: CustomImageView(
+                    //         image: ImageConstants.send,
+                    //         height: 24,
+                    //       ),
+                    //     ),
+                    //     IconButton(
+                    //         onPressed: () {},
+                    //         icon: CustomImageView(
+                    //           image: ImageConstants.chat,
+                    //           height: 24,
+                    //         )),
+                    //     Spacer(),
+                    //     InkWell(
+                    //       child: Icon(Icons.bookmark_border),
+                    //       onTap: () {},
+                    //     ),
+                    //   ],
+                    // ),
                     const SizedBox(height: 10),
                     Text(
                       product?.name ?? 'NA',
@@ -199,23 +260,41 @@ class ProductDescriptionScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const SizedBox(height: 20),
-                    SelectSizeButton(
-                      size: [],
-                      selectedSize: "S",
-                      onSizeSelected: (newSize) {},
+                    GetBuilder<ProductDescriptionController>(
+                      builder: (controller) {
+                        return SelectSizeButton(
+                          size: controller.formattedSizesList(product!),
+                          selectedSize: product.sizeValue!,
+                          onSizeSelected: (newSize) {
+                            controller.selectSize(
+                                product, newSize); // calls update()
+                          },
+                        );
+                      },
                     ),
                     const SizedBox(height: 20),
-                    Center(
-                        child: QuantitySelectorButton(
-                      count: 1,
-                      getQuantity: (count) {},
-                    )),
+                    GetBuilder<ProductDescriptionController>(
+                      builder: (controller) {
+                        return Center(
+                          child: QuantitySelectorButton(
+                            count: product!.quantity!,
+                            getQuantity: (count) {
+                              controller.quantityCount(
+                                  product, count); // calls update()
+                            },
+                          ),
+                        );
+                      },
+                    ),
                     const SizedBox(height: 20),
                     AddToCartButton(
                       onPressed: () {
-                        // Get.to(() => const PaymentOptionsScreen());
-                        Get.snackbar('Item added to cart successfully',
-                            'Not really until API integrates');
+                        HapticFeedback.heavyImpact();
+
+                        cartController.addProductsToCart(
+                            productDescriptionCtrl.getProductData(product!),
+                            product.quantity!,
+                            product.sizeValue!);
                       },
                     ),
                     const SizedBox(height: 30),

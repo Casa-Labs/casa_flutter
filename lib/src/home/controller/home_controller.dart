@@ -49,6 +49,7 @@ class HomeController extends GetxController {
   int minValue = 0;
   int maxValue = 0;
   RxString selectedSize = "S".obs;
+  String itemIdForSize = "";
   final ValueNotifier<int> counter = ValueNotifier<int>(1);
   IconData? swipeIcon;
   RxInt reviewStar = 0.obs;
@@ -104,12 +105,13 @@ class HomeController extends GetxController {
     if (kDebugMode) {
       print('end reached!');
     }
-
   }
 
   void addToCartSwipe() {
     swipeIcon = Icons.add_shopping_cart_outlined;
-    controller.swipeRight();
+    Future.delayed(Duration(milliseconds: 400), () {
+      controller.swipeRight();
+    });
     update();
   }
 
@@ -127,8 +129,8 @@ class HomeController extends GetxController {
           print('Previous index: $previousIndex, Target index: $targetIndex');
         }
         // Add conditions for swipe directions
-        if(swipeIcon == Icons.add_shopping_cart_outlined){
-        }else {
+        if (swipeIcon == Icons.add_shopping_cart_outlined) {
+        } else {
           if (activity.direction == AxisDirection.right) {
             swipeIcon = Icons.check_rounded; // ✅ Right Swipe
           } else if (activity.direction == AxisDirection.left) {
@@ -137,12 +139,12 @@ class HomeController extends GetxController {
         }
 
         // Hide the icon after some time
-        if(swipeIcon == Icons.add_shopping_cart_outlined){
+        if (swipeIcon == Icons.add_shopping_cart_outlined) {
           Future.delayed(Duration(milliseconds: 900), () {
             swipeIcon = null;
             update();
           });
-        }else {
+        } else {
           Future.delayed(Duration(milliseconds: 500), () {
             swipeIcon = null;
             update();
@@ -203,11 +205,16 @@ class HomeController extends GetxController {
     update();
   }
 
-  List<String> formattedSizesList(Product product) {
-    selectedSize.value = SizeItem.mapSize(product.sizes![0].size!.name!);
+  List<String> formattedSizesList() {
+    if (itemIdForSize != products[cardIndex].id) {
+      selectedSize.value =
+          SizeItem.mapSize(products[cardIndex].sizes![0].size!.name!);
+      itemIdForSize = products[cardIndex].id!;
+    }
     List<String> sizes = [];
-    for (var i = 0; i < product.sizes!.length; i++) {
-      String formattedSize = SizeItem.mapSize(product.sizes![i].size!.name!);
+    for (var i = 0; i < products[cardIndex].sizes!.length; i++) {
+      String formattedSize =
+          SizeItem.mapSize(products[cardIndex].sizes![i].size!.name!);
       sizes.add(formattedSize);
     }
     return sizes;

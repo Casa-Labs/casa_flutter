@@ -31,6 +31,8 @@ class GetProductDetails {
   String? categoryId;
   String? id;
   Store? store;
+  int? quantity;
+  String? sizeValue;
 
   GetProductDetails(
       {this.productImages,
@@ -44,7 +46,9 @@ class GetProductDetails {
       this.customShippingPolicy,
       this.categoryId,
       this.id,
-      this.store});
+      this.store,
+      this.quantity,
+      this.sizeValue});
 
   GetProductDetails.fromJson(Map<String, dynamic> json) {
     productImages = json['productImages'] != null
@@ -73,6 +77,8 @@ class GetProductDetails {
     categoryId = json['categoryId'];
     id = json['id'];
     store = json['store'] != null ? Store.fromJson(json['store']) : null;
+    quantity = 1;
+    sizeValue = "S";
   }
 
   Map<String, dynamic> toJson() {
@@ -95,6 +101,8 @@ class GetProductDetails {
     if (store != null) {
       data['store'] = store!.toJson();
     }
+    data['quantity'] = quantity;
+    data['sizeValue'] = sizeValue;
     return data;
   }
 }

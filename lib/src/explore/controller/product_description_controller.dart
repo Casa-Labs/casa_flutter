@@ -1,8 +1,11 @@
 import 'package:casaflutterapp/network/graph_ql_manager.dart';
+import 'package:casaflutterapp/src/explore/model/product_by_id_model.dart'
+    as model;
 import 'package:casaflutterapp/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../home/model/home_models.dart' as home;
 import '../model/explore_products_model.dart' as epm;
 
 class ProductDescriptionController extends GetxController {
@@ -46,6 +49,65 @@ class ProductDescriptionController extends GetxController {
   }
 
   // ========== UI FUNCTIONS ========== //
+
+  home.Product getProductData(model.GetProductDetails getProductDet) {
+    List<home.Sizes> sizes = [];
+    List<home.ColorsModel> colors = [];
+    if (getProductDet.sizes != null) {
+      for (var size in getProductDet.sizes!) {
+        sizes.add(home.Sizes(
+            size: home.SizeItem(
+          id: size.size!.id,
+          name: size.size!.name,
+        )));
+      }
+    }
+
+    if (getProductDet.colors != null) {
+      for (var color in getProductDet.colors!) {
+        colors.add(home.ColorsModel(
+            color: home.ColorData(
+          id: color.color!.id,
+          createdAt: color.color!.createdAt,
+          hexCode: color.color!.hexCode,
+          name: color.color!.name,
+        )));
+      }
+    }
+    return home.Product(
+        id: getProductDet.id,
+        name: getProductDet.name,
+        price: getProductDet.price,
+        sizes: sizes,
+        colors: colors,
+        store: home.Store(
+            id: getProductDet.store!.id,
+            logo: getProductDet.store!.logo,
+            name: getProductDet.store!.name),
+        mainImage: getProductDet.mainImage,
+        description: getProductDet.description,
+        quantity: getProductDet.quantity);
+  }
+
+  List<String> formattedSizesList(model.GetProductDetails getProductDet) {
+    List<String> sizes = [];
+    for (var i = 0; i < getProductDet.sizes!.length; i++) {
+      String formattedSize =
+          home.SizeItem.mapSize(getProductDet.sizes![i].size!.name!);
+      sizes.add(formattedSize);
+    }
+    return sizes;
+  }
+
+  selectSize(model.GetProductDetails product, String size) {
+    product.sizeValue = size;
+    update();
+  }
+
+  quantityCount(model.GetProductDetails product, int count) {
+    product.quantity = count;
+    update();
+  }
 
   // ========== APIs FUNCTIONS ========== //
 
