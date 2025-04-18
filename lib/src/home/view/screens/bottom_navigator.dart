@@ -2,6 +2,7 @@ import 'package:casaflutterapp/src/explore/view/screens/explore_screen.dart';
 import 'package:casaflutterapp/src/home/view/screens/home_screen.dart';
 import 'package:casaflutterapp/src/profile/view/screens/profile_screen.dart';
 import 'package:casaflutterapp/utils/color_constant.dart';
+import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -98,30 +99,75 @@ class NavPageState extends State<NavPage> {
         // Handle item tap
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined, size: 25),
-              activeIcon: Icon(Icons.home, size: 25),
-              label: '',
-              backgroundColor: BottomNavigationColor.white),
+            icon: Image.asset(
+              IconConstants.home,
+              height: 28.0,
+              width: 28.0,
+            ),
+            activeIcon: Image.asset(
+              IconConstants.homeSelected,
+              height: 28.0,
+              width: 28.0,
+            ),
+            label: '',
+            backgroundColor: BottomNavigationColor.white,
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.search_outlined, size: 25),
-              activeIcon: Icon(Icons.search, size: 25),
-              label: '',
-              backgroundColor: BottomNavigationColor.white),
+            icon: Image.asset(
+              IconConstants.search,
+              height: 28.0,
+              width: 28.0,
+            ),
+            activeIcon: Image.asset(
+              IconConstants.searchSelected,
+              height: 28.0,
+              width: 28.0,
+            ),
+            label: '',
+            backgroundColor: BottomNavigationColor.white,
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart_outlined, size: 25),
-              activeIcon: Icon(Icons.shopping_cart_rounded, size: 25),
-              label: '',
-              backgroundColor: BottomNavigationColor.white),
+            icon: Image.asset(
+              IconConstants.cart,
+              height: 28.0,
+              width: 28.0,
+            ),
+            activeIcon: Image.asset(
+              IconConstants.cartSelected,
+              height: 28.0,
+              width: 28.0,
+            ),
+            label: '',
+            backgroundColor: BottomNavigationColor.white,
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border, size: 25),
-              activeIcon: Icon(Icons.favorite, size: 25),
-              label: '',
-              backgroundColor: BottomNavigationColor.white),
+            icon: Image.asset(
+              IconConstants.heart,
+              height: 28.0,
+              width: 28.0,
+            ),
+            activeIcon: Image.asset(
+              IconConstants.heartSelected,
+              height: 28.0,
+              width: 28.0,
+            ),
+            label: '',
+            backgroundColor: BottomNavigationColor.white,
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline_outlined, size: 25),
-              activeIcon: Icon(Icons.person, size: 25),
-              label: '',
-              backgroundColor: BottomNavigationColor.white)
+            icon: Image.asset(
+              IconConstants.profile,
+              height: 28.0,
+              width: 28.0,
+            ),
+            activeIcon: Image.asset(
+              IconConstants.profileSelected,
+              height: 28.0,
+              width: 28.0,
+            ),
+            label: '',
+            backgroundColor: BottomNavigationColor.white,
+          )
         ],
       ),
     );
