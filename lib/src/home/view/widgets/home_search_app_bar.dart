@@ -4,6 +4,8 @@ import 'package:casaflutterapp/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../explore/view/widgets/reusable_dropdown.dart';
+
 class HomeSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeSearchAppBar({
     super.key,
@@ -20,9 +22,30 @@ class HomeSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Row(
         children: [
           SizedBox(width: 5),
-          Text(
-            'CASA',
-            style: Theme.of(context).textTheme.headlineMedium,
+          SizedBox(
+            width: MediaQuery.sizeOf(context).width * 0.2,
+            child: ReusableDropdown(
+              items: const [
+                'Brands',
+                'Thrift',
+              ],
+              hint: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Row(
+                  children: [
+                    Text(
+                      'CASA',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                  ],
+                ),
+              ),
+              width: MediaQuery.sizeOf(context).width * 0.4,
+              mode: DropdownMode.single,
+              fullSize: false,
+              onSelected: (selectedItems) {},
+              label: '',
+            ),
           ),
           SizedBox(width: 10),
           Expanded(

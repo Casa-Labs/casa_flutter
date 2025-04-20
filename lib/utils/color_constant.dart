@@ -79,6 +79,8 @@ class TabBarColor {
 
 class DropdownColor {
   static const Color transparent = Colors.transparent;
+  static const Color black = Color(0xFF0C0C0C);
+  static const Color black69 = Color(0x69727272);
 }
 
 class BottomNavigationColor {
