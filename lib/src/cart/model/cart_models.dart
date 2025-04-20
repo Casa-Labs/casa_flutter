@@ -116,7 +116,7 @@ class ProductForCart {
       this.color,
       this.size,
       this.sizes,
-        this.store,
+      this.store,
       this.mainImage,
       this.description,
       this.sizeValue,
@@ -136,9 +136,7 @@ class ProductForCart {
       });
     }
     color = json['color'] ?? "";
-    if (store != null) {
-      json['store'] = store?.toJson();
-    }
+    store = json['store'] != null ? Store.fromJson(json['store']) : null;
     mainImage = json['mainImage'] ?? "";
     description = json['description'] ?? "";
     sizeValue = json['sizeValue'] ?? "";
