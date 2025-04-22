@@ -101,6 +101,7 @@ class Cards extends StatelessWidget {
                           Positioned(
                             bottom: 0,
                             left: 0,
+                            right: 0,
                             child: ClipRRect(
                               borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(20),
@@ -109,7 +110,6 @@ class Cards extends StatelessWidget {
                               child: Container(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 7, vertical: 10),
-                                width: MediaQuery.of(context).size.width * 0.91,
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
@@ -170,8 +170,14 @@ class Cards extends StatelessWidget {
                                               child: CircleAvatar(
                                                   maxRadius: 24,
                                                   child: Image.network(product
-                                                          .store?.logo ??
-                                                      ImageConstants
+                                                                  .store !=
+                                                              null &&
+                                                          product.store!.logo !=
+                                                              null &&
+                                                          product.store!.logo!
+                                                              .isNotEmpty
+                                                      ? product.store!.logo!
+                                                      : ImageConstants
                                                           .dummyNetworkPortrait)),
                                             ),
                                           ),
@@ -298,7 +304,7 @@ class Cards extends StatelessWidget {
                       ),
                       ProductDetails(
                           product: product,
-                          size: homeCtrl.formattedSizesList(product))
+                          size: homeCtrl.formattedSizesList())
                     ],
                   ),
                 ),

@@ -195,9 +195,6 @@ class Product {
     id = json['id'] ?? "";
     name = json['name'] ?? "";
     store = json['store'] != null ? Store.fromJson(json['store']) : null;
-    if (store != null) {
-      json['store'] = store?.toJson();
-    }
     description = json['description'] ?? "";
     if (json['colors'] != null) {
       colors = <ColorsModel>[];
@@ -370,15 +367,15 @@ class Store {
 
   Store(
       {this.id,
-        this.userId,
-        this.name,
-        this.description,
-        this.type,
-        this.logo,
-        this.createdAt,
-        this.updatedAt,
-        this.isDeleted,
-        this.reasonToDelete});
+      this.userId,
+      this.name,
+      this.description,
+      this.type,
+      this.logo,
+      this.createdAt,
+      this.updatedAt,
+      this.isDeleted,
+      this.reasonToDelete});
 
   Store.fromJson(Map<String, dynamic> json) {
     id = json['id'] ?? "";
@@ -389,7 +386,7 @@ class Store {
     logo = json['logo'] ?? "";
     createdAt = json['createdAt'] ?? "";
     updatedAt = json['updatedAt'] ?? "";
-    isDeleted = json['isDeleted'] ?? "";
+    isDeleted = json['isDeleted'] ?? false;
     reasonToDelete = json['reasonToDelete'] ?? "";
   }
 
@@ -408,7 +405,6 @@ class Store {
     return data;
   }
 }
-
 
 class SizeItem {
   String? id;
@@ -429,7 +425,9 @@ class SizeItem {
   }
 
   static String mapSize(String apiSize) {
-    switch (apiSize.toLowerCase()) {
+    // To remove "/" From Sizes
+    final cleanedSize = apiSize.split('/').first.trim().toLowerCase();
+    switch (cleanedSize) {
       case 'xx-small':
         return 'XXS';
       case 'x-small':
@@ -445,7 +443,7 @@ class SizeItem {
       case 'xx-large':
         return 'XXL';
       default:
-        return apiSize; // Default fallback
+        return cleanedSize.toUpperCase(); // Default fallback
     }
   }
 }
