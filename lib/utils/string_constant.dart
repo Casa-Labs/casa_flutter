@@ -17,13 +17,21 @@ class ImageConstants {
   static String undo = 'assets/icons/undo.svg';
   static String email = 'assets/images/email.png';
   static String verify = 'assets/images/verify.png';
-  static String mondayLogo = 'assets/logos/monday_logo.png';
-  static String tuesdayLogo = 'assets/logos/tuseday_logo.png';
-  static String wednesdayLogo = 'assets/logos/wednesday_logo.png';
-  static String thursdayLogo = 'assets/logos/thursday_logo.png';
-  static String fridayLogo = 'assets/logos/friday_logo.png';
-  static String saturdayLogo = 'assets/logos/saturday_logo.png';
-  static String sundayLogo = 'assets/logos/sunday_logo.png';
+  static String logoTwo = 'assets/splash/logo_two.png';
+  static String logoFour = 'assets/splash/logo_four.png';
+  static String logoSix = 'assets/splash/logo_six.png';
+  static String logoFive = 'assets/splash/logo_five.png';
+  static String logoOne = 'assets/splash/logo_one.png';
+  static String logoThree = 'assets/splash/logo_three.png';
+  static String logoEight = 'assets/splash/logo_eight.png';
+  static String logoNine = 'assets/splash/logo_nine.png';
+  static String logoTen = 'assets/splash/logo_ten.png';
+  static String logoEleven = 'assets/splash/logo_eleven.png';
+  static String logoTwelve = 'assets/splash/logo_twelve.png';
+  static String logoThirteen = 'assets/splash/logo_thirteen.png';
+  static String logoFourteen = 'assets/splash/logo_fourteen.png';
+  static String logoFifteen = 'assets/splash/logo_fifteen.png';
+  static String logoSeven = 'assets/splash/logo_seven.png';
 }
 
 class IconConstants {
