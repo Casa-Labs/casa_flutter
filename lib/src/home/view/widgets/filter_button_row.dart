@@ -50,16 +50,77 @@ class FilterButtonRow extends StatelessWidget {
             },
           ),
           FilterChipButton(
-            text: 'Product',
+            text: 'Category',
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => FilterSelectionDialog(
+                  showTabs: false, // Toggle Men/Women tab visibility
+                  categories: [
+                    "XXS",
+                    "XS",
+                    "S",
+                    "M",
+                    "L",
+                    "XL",
+                    "XXL",
+                    "XXXL",
+                  ],
+                  onClear: () => print("Clear pressed"),
+                  onDone: () => print("Done pressed"),
+                ),
+              );
+            },
           ),
           FilterChipButton(
             text: 'Color',
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => FilterSelectionDialog(
+                  showTabs: false, // Toggle Men/Women tab visibility
+                  categories: [
+                    "XXS",
+                    "XS",
+                    "S",
+                    "M",
+                    "L",
+                    "XL",
+                    "XXL",
+                    "XXXL",
+                  ],
+                  onClear: () => print("Clear pressed"),
+                  onDone: () => print("Done pressed"),
+                ),
+              );
+            },
           ),
           FilterChipButton(
             text: 'Price',
+            onPressed: () {},
           ),
           FilterChipButton(
             text: 'Size',
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => FilterSelectionDialog(
+                  showTabs: false, // Toggle Men/Women tab visibility
+                  categories: [
+                    "XXS",
+                    "XS",
+                    "S",
+                    "M",
+                    "L",
+                    "XL",
+                    "XXL",
+                    "XXXL",
+                  ],
+                  onClear: () => print("Clear pressed"),
+                  onDone: () => print("Done pressed"),
+                ),
+              );
+            },
           ),
         ],
       ),

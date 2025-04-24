@@ -1,6 +1,7 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:casaflutterapp/src/home/controller/home_controller.dart';
 import 'package:casaflutterapp/src/home/view/widgets/card.dart';
+import 'package:casaflutterapp/src/home/view/widgets/filter_button_row.dart';
 import 'package:casaflutterapp/src/home/view/widgets/home_search_app_bar.dart';
 import 'package:casaflutterapp/src/home/view/widgets/swipe_animation.dart';
 import 'package:casaflutterapp/utils/color_constant.dart';
@@ -35,8 +36,7 @@ class HomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // TODO : Add back filter button row later
-                    // FilterButtonRow(),
+                    FilterButtonRow(),
                     SizedBox(height: 5),
                     homeCtrl.products.isNotEmpty
                         ? _cardSwiper(homeCtrl, context, homeCtrl.products)
