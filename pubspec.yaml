@@ -95,6 +95,7 @@ flutter:
     - assets/images/size_guide.jpeg
     - assets/images/splash_background.jpeg
     - assets/images/verify.png
+    - assets/tutorial_image/
     - assets/splash/
 
 

@@ -22,7 +22,6 @@ class NavPage extends StatefulWidget {
 class NavPageState extends State<NavPage> {
   bool _isFirstLaunch = true; // Variable to track first launch
   int _selectedIndex = 0; // Track the selected index of the BottomNavigationBar
-  int tutorialScreenIndex = 0;
 
   // IMP : Flutter will create the widgets list eagerly resulting in controller
   // initialization without navigation when bottom navbar is created,
@@ -63,29 +62,17 @@ class NavPageState extends State<NavPage> {
     });
   }
 
-  void changeIndexTutorial() {
-    setState(() {
-      tutorialScreenIndex += 1;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BackgroundColor.white,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            _getScreen(_selectedIndex), // Display the selected page
-            if (tutorialScreenIndex < 14 && _isFirstLaunch)
-              Positioned.fill(
-                child: TutorialScreen(
-                  index: tutorialScreenIndex,
-                  onTap: changeIndexTutorial,
-                ),
-              ),
-          ],
-        ),
+      body: Stack(
+        children: [
+          _getScreen(_selectedIndex), // Display the selected page
+          TutorialScreen(
+            isFirstTime: true,
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
