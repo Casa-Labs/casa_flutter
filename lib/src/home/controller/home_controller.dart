@@ -56,36 +56,6 @@ class HomeController extends GetxController {
 
   RxString shareMessage = ''.obs;
 
-  // final List<ProductModelFilter> brandFilter = [
-  //   ProductModelFilter(leading: 'Z', title: 'Zara'),
-  //   ProductModelFilter(leading: 'H', title: 'H&M'),
-  //   ProductModelFilter(leading: 'G', title: 'Gap'),
-  //   ProductModelFilter(leading: 'C', title: 'CASA'),
-  //   ProductModelFilter(leading: 'T', title: 'Tommy hilfiger')
-  // ];
-  // final List<ProductModelFilter> productFilter = [
-  //   ProductModelFilter(leading: '', title: 'Topwear'),
-  //   ProductModelFilter(leading: '', title: 'Shirt'),
-  //   ProductModelFilter(leading: '', title: 'Sweatshirt'),
-  //   ProductModelFilter(leading: '', title: 'T- shirt'),
-  //   ProductModelFilter(leading: '', title: 'Hoodie')
-  // ];
-  // final List<ProductModelFilter> colorFilter = [
-  //   ProductModelFilter(leading: '', title: 'Black'),
-  //   ProductModelFilter(leading: '', title: 'Brown'),
-  //   ProductModelFilter(leading: '', title: 'Green'),
-  //   ProductModelFilter(leading: '', title: 'Denim'),
-  //   ProductModelFilter(leading: '', title: 'Zebra print')
-  // ];
-  // final List<ProductModelFilter> sizedFilter = [
-  //   ProductModelFilter(leading: '', title: 'XXS'),
-  //   ProductModelFilter(leading: '', title: 'XS'),
-  //   ProductModelFilter(leading: '', title: 'S'),
-  //   ProductModelFilter(leading: '', title: 'M'),
-  //   ProductModelFilter(leading: '', title: 'L'),
-  //   ProductModelFilter(leading: '', title: 'XL'),
-  //   ProductModelFilter(leading: '', title: 'XXL')
-  // ];
   final manager = GraphQLManager();
 
   // ========== STATES ========== //
@@ -301,7 +271,7 @@ class HomeController extends GetxController {
       isLoading.value = true;
       update();
       var response = await manager.getBrands(
-          limit: 5, page: 1, search: "", storeType: "BRAND");
+          limit: 100, page: 1, search: "", storeType: "BRAND");
       var brandList = GetBrandData.fromJson(response.data!);
       brand = brandList.getBrands!.data ?? [];
       logg.d('brand data ------ >>>>> $brandList');
@@ -322,10 +292,10 @@ class HomeController extends GetxController {
       String productId, int reviewCount, String comment) async {
     try {
       if (reviewCount == 0) {
-        return "Please, selete the rating!!";
+        return "Please, select the rating.";
       }
       if (comment.isEmpty) {
-        return "Please, write a review!!";
+        return "Please, write a review.";
       }
       AddReviewRequestModel addReviewRequestModel = AddReviewRequestModel(
           productId: productId,
@@ -339,13 +309,13 @@ class HomeController extends GetxController {
           .registerProductReview(addReviewRRequestModel: addReviewRequestModel);
       if (response != null) {
         getReviews(productId);
-        return "Review add successfully!!";
+        return "Review add successfully.";
       }
     } catch (e) {
       logg.e("get error to adding review $e");
       update();
-      return "Something went wrong, please try again";
+      return "Something went wrong, please try again.";
     }
-    return "Something went wrong, please try again";
+    return "Something went wrong, please try again.";
   }
 }

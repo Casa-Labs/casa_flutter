@@ -5,6 +5,7 @@ import 'package:casaflutterapp/src/home/view/widgets/filter_button_row.dart';
 import 'package:casaflutterapp/src/home/view/widgets/home_search_app_bar.dart';
 import 'package:casaflutterapp/src/home/view/widgets/swipe_animation.dart';
 import 'package:casaflutterapp/utils/color_constant.dart';
+import 'package:casaflutterapp/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -36,7 +37,45 @@ class HomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    FilterButtonRow(),
+                    FilterButtonRow(
+                      filters: [
+                        FilterButtonModel(
+                          title: 'Brand',
+                          list:
+                              homeCtrl.brand.map((item) => item.name!).toList(),
+                          onClear: () {
+                            logg.i("Brand selection cleared");
+                          },
+                          onDone: (selectedName) {
+                            final brandId = homeCtrl.brand
+                                .firstWhereOrNull((e) => e.name == selectedName)
+                                ?.id;
+                            logg.i("Selected brand ID: $brandId");
+
+                            if (brandId != null) {
+                              homeCtrl.fetchProducts({"storeId": brandId});
+                            }
+                          },
+                        ),
+
+                        // FilterButtonModel(
+                        //   title: 'Product',
+                        //   list: homeCtrl.category
+                        //       .map((item) => item.name!)
+                        //       .toList(),
+                        //   // onClear: () => clearBrandSelection(),
+                        //   // onDone: () => applyBrandSelection(),
+                        //   onClear: () {
+                        //     logg.e('clearing category selection');
+                        //     context.pop();
+                        //   },
+                        //   onDone: () {
+                        //     logg.e('Category selection done');
+                        //     context.pop();
+                        //   },
+                        // ),
+                      ],
+                    ),
                     SizedBox(height: 5),
                     homeCtrl.products.isNotEmpty
                         ? _cardSwiper(homeCtrl, context, homeCtrl.products)
