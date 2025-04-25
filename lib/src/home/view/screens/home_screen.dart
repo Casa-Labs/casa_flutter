@@ -63,7 +63,7 @@ class HomeScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.76,
+                height: MediaQuery.of(context).size.height * 0.84,
                 child: AppinioSwiper(
                   loop: true,
                   controller: logic.controller,

@@ -30,6 +30,8 @@ class GraphQLMutations {
       phone
       role
       updatedAt
+      isRegistered
+      isVerified
     }
   }
 }
@@ -97,6 +99,24 @@ class GraphQLMutations {
     pincode
     state
     tag
+  }
+}
+""";
+
+  static const String updateUserAddress = """
+  mutation UpdateUserAddress(\$id: String!, \$address: String!, \$city: String!, \$state: String!, \$pincode: String!, \$country: String!, \$landmark: String, \$tag: String) {
+  updateUserAddress(id: \$id, address: \$address, city: \$city, state: \$state, pincode: \$pincode, country: \$country, landmark: \$landmark, tag: \$tag) {
+    id
+    userId
+    tag
+    address
+    landmark
+    city
+    state
+    pincode
+    country
+    createdAt
+    updatedAt
   }
 }
 """;
@@ -438,4 +458,10 @@ mutation DeleteNotificationForUser(\$id: String!) {
   deleteNotificationForUser(id: \$id)
 }
 ''';
+
+  static const String deleteUserAddress = """
+mutation DeleteUserAddress(\$deleteUserAddressId: String!) {
+  deleteUserAddress(id: \$deleteUserAddressId)
+}
+""";
 }

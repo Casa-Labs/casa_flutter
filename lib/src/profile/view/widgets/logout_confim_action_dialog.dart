@@ -16,7 +16,6 @@ class ConfirmActionDialog extends StatelessWidget {
     required this.confirmText,
     required this.onConfirm,
     this.isLoading,
-
   });
 
   @override
@@ -48,7 +47,7 @@ class ConfirmActionDialog extends StatelessWidget {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: () => Navigator.of(context).pop(false),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
@@ -62,24 +61,24 @@ class ConfirmActionDialog extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 Expanded(
-                  child: Obx(() => ElevatedButton(
-                    onPressed: localLoading.value ? null : onConfirm,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      foregroundColor: Colors.white,
-                    ),
-                    child: localLoading.value
-                        ? const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
-                    )
-                        : Text(confirmText),
-                  ))),
-
+                    child: Obx(() => ElevatedButton(
+                          onPressed: localLoading.value ? null : onConfirm,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            foregroundColor: Colors.white,
+                          ),
+                          child: localLoading.value
+                              ? const SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                      color: Colors.white, strokeWidth: 2),
+                                )
+                              : Text(confirmText),
+                        ))),
               ],
             )
           ],

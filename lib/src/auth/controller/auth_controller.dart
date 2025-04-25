@@ -295,6 +295,12 @@ class AuthController extends GetxController {
       PreferenceManager.userId,
       '',
     );
+
+    // clear user address details
+    await PreferenceManager.setData(
+      PreferenceManager.userAddressDetails,
+      '',
+    );
   }
 }
 

@@ -28,12 +28,16 @@ class OrderViewItemWidget extends StatelessWidget {
           ),
           padding: EdgeInsets.all(1.5),
           child: CircleAvatar(
-              maxRadius: 24,
-              child: Image.network(item.store != null &&
+            maxRadius: 24,
+            backgroundColor: Colors.transparent,
+            child: Image.network(
+              item.store != null &&
                       item.store!.logo != null &&
                       item.store!.logo!.isNotEmpty
                   ? item.store!.logo!
-                  : ImageConstants.dummyNetworkPortrait)),
+                  : ImageConstants.dummyNetworkPortrait,
+            ),
+          ),
         ),
         const SizedBox(
           height: 10,

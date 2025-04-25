@@ -29,6 +29,7 @@ class AddUserAddress {
   String? state;
   String? pincode;
   String? country;
+  String? tag;
 
   AddUserAddress({
     this.id,
@@ -39,6 +40,7 @@ class AddUserAddress {
     this.state,
     this.pincode,
     this.country,
+    this.tag,
   });
 
   AddUserAddress.fromJson(Map<String, dynamic> json) {
@@ -50,6 +52,7 @@ class AddUserAddress {
     state = json['state'];
     pincode = json['pincode'];
     country = json['country'];
+    tag = json['tag'];
   }
 
   Map<String, dynamic> toJson() {
@@ -62,6 +65,7 @@ class AddUserAddress {
     data['state'] = state;
     data['pincode'] = pincode;
     data['country'] = country;
+    data['tag'] = tag;
     return data;
   }
 }
