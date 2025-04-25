@@ -70,7 +70,7 @@ class NavPageState extends State<NavPage> {
         children: [
           _getScreen(_selectedIndex), // Display the selected page
           TutorialScreen(
-            isFirstTime: true,
+            isFirstTime: _isFirstLaunch,
           ),
         ],
       ),
