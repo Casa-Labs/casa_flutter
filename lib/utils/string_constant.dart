@@ -52,6 +52,8 @@ class IconConstants {
   static String cartAdd = 'assets/icons/cart_add.png';
   static String bookMark = 'assets/icons/book_mark.png';
   static String forward = 'assets/icons/forward.png';
+  static String notifications = 'assets/icons/notification.png';
+  static String settings = 'assets/icons/settings.png';
 }
 
 class AppStrings {

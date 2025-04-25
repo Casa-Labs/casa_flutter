@@ -53,7 +53,7 @@ class Cards extends StatelessWidget {
                           Align(
                             alignment: Alignment.center,
                             child: SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.74,
+                              height: MediaQuery.of(context).size.height * 0.80,
                               child: ClipRRect(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(18)),
@@ -168,17 +168,18 @@ class Cards extends StatelessWidget {
                                               ),
                                               padding: EdgeInsets.all(1.5),
                                               child: CircleAvatar(
-                                                  maxRadius: 24,
-                                                  child: Image.network(product
-                                                                  .store !=
-                                                              null &&
-                                                          product.store!.logo !=
-                                                              null &&
-                                                          product.store!.logo!
-                                                              .isNotEmpty
-                                                      ? product.store!.logo!
+                                                maxRadius: 24,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                child: Image.network(
+                                                  (product.store?.logo ?? '')
+                                                          .isNotEmpty
+                                                      ? product.store?.logo ??
+                                                          ''
                                                       : ImageConstants
-                                                          .dummyNetworkPortrait)),
+                                                          .dummyNetworkPortrait,
+                                                ),
+                                              ),
                                             ),
                                           ),
                                           Text(
@@ -303,8 +304,7 @@ class Cards extends StatelessWidget {
                         ],
                       ),
                       ProductDetails(
-                          product: product,
-                          size: homeCtrl.formattedSizesList())
+                          product: product, size: homeCtrl.formattedSizesList())
                     ],
                   ),
                 ),

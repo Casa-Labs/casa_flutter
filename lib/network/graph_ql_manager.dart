@@ -194,6 +194,31 @@ class GraphQLManager {
     );
   }
 
+  Future<QueryResult> updateUserAddress({
+    required String id,
+    required String address,
+    required String city,
+    required String state,
+    required String pinCode,
+    required String country,
+    String? landmark,
+    String? tag,
+  }) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.updateUserAddress,
+      variables: GraphQLVariables.updateUserAddressVariables(
+        id,
+        address,
+        city,
+        state,
+        pinCode,
+        country,
+        landmark,
+        tag,
+      ),
+    );
+  }
+
   Future<QueryResult> singleSignOn({
     required String email,
     required String provider,
@@ -498,10 +523,23 @@ class GraphQLManager {
     );
   }
 
-  Future<QueryResult> getUser(String getUserId) async {
+  Future<QueryResult> getUser({
+    required String userId,
+  }) async {
     return await _clientService.performQuery(
       document: GraphQLQueries.getUser,
-      variables: GraphQLVariables.getUserVariables(getUserId),
+      variables: GraphQLVariables.getUserVariables(userId),
+    );
+  }
+
+  Future<QueryResult> deleteUserAddress({
+    required String addressId,
+  }) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.deleteUserAddress,
+      variables: GraphQLVariables.deleteUserAddressVariables(
+        addressId,
+      ),
     );
   }
 
