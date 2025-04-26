@@ -57,6 +57,114 @@ class HomeScreen extends StatelessWidget {
                             }
                           },
                         ),
+                        FilterButtonModel(
+                          title: 'Product',
+                          list: homeCtrl.category
+                              .map((item) => item.name!)
+                              .toList(),
+                          onClear: () {
+                            logg.i("Category selection cleared");
+                          },
+                          onDone: (selectedName) {
+                            final category = homeCtrl.category
+                                .firstWhereOrNull((e) => e.name == selectedName)
+                                ?.id;
+                            logg.i("Selected category ID: $category");
+
+                            if (category != null) {
+                              homeCtrl.fetchProducts({"categoryId": category});
+                            }
+                          },
+                        ),
+                        FilterButtonModel(
+                          title: 'Colors',
+                          list: [
+                            'Red',
+                            'Blue',
+                            'Green',
+                            'Black',
+                            'White',
+                            'NA'
+                          ],
+                          onClear: () {
+                            logg.i("Color selection cleared");
+                          },
+                          onDone: (selectedName) {
+                            // final category = homeCtrl.category
+                            //     .firstWhereOrNull((e) => e.name == selectedName)
+                            //     ?.id;
+                            // logg.i("Selected category ID: $category");
+
+                            final selectedColor = selectedName;
+
+                            if (selectedColor != null) {
+                              homeCtrl.fetchProducts({
+                                "productColor": [selectedColor]
+                              });
+                            }
+                          },
+                        ),
+                        FilterButtonModel(
+                          title: 'Size',
+                          list: [
+                            'X-Small',
+                            'Small',
+                            'Medium',
+                            'Large',
+                            'X-Large',
+                            'M',
+                            'XL',
+                            'S',
+                            'L',
+                            'Default Title',
+                            'S / M',
+                            'S / L',
+                            'M / S',
+                            'M / M',
+                            'L / M',
+                            'M / L',
+                            'L / L',
+                            'L / S',
+                            'S / S',
+                            'XS',
+                            'XS / S',
+                            'XS / XS',
+                            'XS / M',
+                            'S / XS',
+                            'XS / L',
+                            'M / XS',
+                            'L / XS',
+                            'Ivory / L',
+                            'Black / XS',
+                            'Black / S',
+                            'Black / M',
+                            'Navy / XS',
+                            'Black / L',
+                            'Navy / S',
+                            'Ivory / XS',
+                            'Navy / M',
+                            'Ivory / S',
+                            'Navy / L',
+                            'Ivory / M'
+                          ],
+                          onClear: () {
+                            logg.i("size selection cleared");
+                          },
+                          onDone: (selectedName) {
+                            // final category = homeCtrl.category
+                            //     .firstWhereOrNull((e) => e.name == selectedName)
+                            //     ?.id;
+                            // logg.i("Selected sizey ID: $category");
+
+                            final selectedSize = selectedName;
+
+                            if (selectedSize != null) {
+                              homeCtrl.fetchProducts({
+                                "productSize": [selectedSize]
+                              });
+                            }
+                          },
+                        ),
 
                         // FilterButtonModel(
                         //   title: 'Product',
