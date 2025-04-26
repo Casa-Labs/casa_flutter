@@ -1,5 +1,4 @@
 import 'package:casaflutterapp/src/auth/view/screens/body_type_preferences_screen.dart';
-import 'package:casaflutterapp/src/auth/view/screens/delivery_address_screen.dart';
 import 'package:casaflutterapp/src/auth/view/screens/fit_preferences_screen.dart';
 import 'package:casaflutterapp/src/auth/view/screens/personal_details_screen.dart';
 import 'package:casaflutterapp/src/auth/view/screens/sign_up_screen.dart';
@@ -9,6 +8,8 @@ import 'package:casaflutterapp/src/cart/view/screens/cart_screen.dart';
 import 'package:casaflutterapp/src/common/widgets/development_screen.dart';
 import 'package:casaflutterapp/src/explore/view/screens/products_list_screen.dart';
 import 'package:casaflutterapp/src/explore/view/screens/store_screen.dart';
+import 'package:casaflutterapp/src/location/model/get_user_response_model.dart';
+import 'package:casaflutterapp/src/location/view/screens/addresses_list.dart';
 import 'package:casaflutterapp/src/order/view/screens/current_orders_screen.dart';
 import 'package:casaflutterapp/src/order/view/screens/order_review_screen.dart';
 import 'package:casaflutterapp/src/payment/view/screens/payment_options_screen.dart';
@@ -47,14 +48,13 @@ class _AppPaths {
   static const String stylePreferences = '/stylePreferences';
   static const String bodyTypePreferences = '/bodyTypePreferences';
   static const String fitPreferences = '/fitPreferences';
-  static const String deliveryAddress = '/deliveryAddress';
   static const String forgotPassword = '/forgotPassword';
   static const String verifyEmail = '/verifyEmail';
   static const String changePassword =
       '/changePassword/:email/:isFromWithinApp';
   static const String home = '/home';
   static const String notifications = '/notifications';
-  static const String location = '/location';
+  static const String location = '/location/:isEdit';
   static const String faq = '/faq';
   static const String navigation = '/navigation';
   static const String orderDetails = '/orderDetails';
@@ -75,6 +75,7 @@ class _AppPaths {
   static const String orderReview = '/orderReview';
   static const String contactUs = '/contactUs';
   static const String searchView = '/searchView';
+  static const String addressList = '/addressList';
 }
 
 // Public: Use these for named navigation
@@ -89,7 +90,6 @@ class RouteNames {
   static const String stylePreferences = 'stylePreferences';
   static const String bodyTypePreferences = 'bodyTypePreferences';
   static const String fitPreferences = 'fitPreferences';
-  static const String deliveryAddress = 'deliveryAddress';
   static const String home = 'home';
   static const String notifications = 'notifications';
   static const String location = 'location';
@@ -114,6 +114,7 @@ class RouteNames {
   static const String orderReview = 'orderReview';
   static const String contactUs = 'contactUs';
   static const String searchView = 'searchView';
+  static const String addressList = 'addressList';
 }
 
 // Central GoRouter instance
@@ -189,11 +190,6 @@ final GoRouter router = GoRouter(
       builder: (context, state) => FitPreferencesScreen(),
     ),
     GoRoute(
-      path: _AppPaths.deliveryAddress,
-      name: RouteNames.deliveryAddress,
-      builder: (context, state) => DeliveryAddressScreen(),
-    ),
-    GoRoute(
       path: _AppPaths.forgotPassword,
       name: RouteNames.forgotPassword,
       builder: (context, state) => ForgotPasswordScreen(),
@@ -229,7 +225,17 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.location,
       name: RouteNames.location,
-      builder: (context, state) => LocationScreen(),
+      builder: (context, state) {
+        Addresses? address;
+        if (state.extra != null) {
+          address = state.extra as Addresses;
+        }
+        final isEdit = bool.parse(state.pathParameters['isEdit'] ?? '');
+        return LocationScreen(
+          addresses: address,
+          isEdit: isEdit,
+        );
+      },
     ),
     GoRoute(
       path: _AppPaths.faq,
@@ -359,6 +365,11 @@ final GoRouter router = GoRouter(
       path: _AppPaths.searchView,
       name: RouteNames.searchView,
       builder: (context, state) => SearchViewScreen(),
+    ),
+    GoRoute(
+      path: _AppPaths.addressList,
+      name: RouteNames.addressList,
+      builder: (context, state) => AddressesList(),
     ),
   ],
 );

@@ -35,6 +35,29 @@ query GetNewArrivalProducts(\$page: Int!, \$limit: Int!) {
 }
 """;
 
+  static const String getUser = """
+query GetUser(\$getUserId: String!) {
+  getUser(id: \$getUserId) {
+    addresses {
+      address
+      city
+      country
+      createdAt
+      landmark
+      id
+      pincode
+      state
+      tag
+      updatedAt
+      userId
+    }
+    name
+    email
+    id
+  }
+}
+""";
+
   static const String getCategory = """
 query GetProductCategories {
   getProductCategories {
@@ -364,19 +387,6 @@ query GetStoreInventory(\$storeId: String!, \$page: Int, \$limit: Int) {
         logo
       }
     }
-  }
-}
-""";
-
-  static const String getUser = """
-query GetUser(\$getUserId: String!) {
-  getUser(id: \$getUserId) {
-    authProvider
-    createdAt
-    email
-    id
-    role
-    updatedAt
   }
 }
 """;

@@ -1,6 +1,7 @@
 import 'package:casaflutterapp/routes/app_routes.dart';
 import 'package:casaflutterapp/src/common/widgets/textfields.dart';
 import 'package:casaflutterapp/utils/color_constant.dart';
+import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -64,7 +65,11 @@ class HomeSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () {
             context.pushNamed(RouteNames.notifications);
           },
-          icon: Icon(Icons.notifications_outlined),
+          icon: Image.asset(
+            IconConstants.notifications,
+            width: 28.0,
+            height: 28.0,
+          ),
           iconSize: 25,
           color: IconColor.black,
           style: IconButton.styleFrom(
@@ -77,7 +82,11 @@ class HomeSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () {
             context.pushNamed(RouteNames.search);
           },
-          icon: Icon(Icons.tune_rounded),
+          icon: Image.asset(
+            IconConstants.settings,
+            width: 28.0,
+            height: 28.0,
+          ),
           iconSize: 25,
           color: IconColor.black,
           style: IconButton.styleFrom(

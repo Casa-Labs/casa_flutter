@@ -104,6 +104,28 @@ class GraphQLVariables {
     };
   }
 
+  static Map<String, dynamic> updateUserAddressVariables(
+    String id,
+    String address,
+    String city,
+    String state,
+    String pinCode,
+    String country,
+    String? landmark,
+    String? tag,
+  ) {
+    return {
+      "id": id,
+      "address": address,
+      "city": city,
+      "state": state,
+      "pincode": pinCode,
+      "country": country,
+      "landmark": landmark,
+      "tag": tag,
+    };
+  }
+
   static Map<String, dynamic> singleSignOnVariables(
     String email,
     String provider,
@@ -352,6 +374,12 @@ class GraphQLVariables {
     };
   }
 
+  static Map<String, dynamic> getUser(String userId) {
+    return {
+      "getUserId": userId,
+    };
+  }
+
   static Map<String, dynamic> getOrderReturnsVariables(
       String userId, String orderId) {
     return {
@@ -403,9 +431,15 @@ class GraphQLVariables {
     };
   }
 
-  static Map<String, dynamic> getUserVariables(String getUserId) {
+  static Map<String, dynamic> getUserVariables(String userId) {
     return {
-      "getUserId": getUserId,
+      "getUserId": userId,
+    };
+  }
+
+  static Map<String, dynamic> deleteUserAddressVariables(String addressId) {
+    return {
+      "deleteUserAddressId": addressId,
     };
   }
 
