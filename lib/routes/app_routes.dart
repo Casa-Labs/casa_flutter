@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:casaflutterapp/src/auth/view/screens/body_type_preferences_screen.dart';
 import 'package:casaflutterapp/src/auth/view/screens/fit_preferences_screen.dart';
 import 'package:casaflutterapp/src/auth/view/screens/personal_details_screen.dart';
@@ -20,6 +22,7 @@ import 'package:casaflutterapp/utils/preference_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../src/auth/model/auth_models.dart';
 import '../src/auth/view/screens/change_password_screen.dart';
 import '../src/auth/view/screens/forgot_password_screen.dart';
 import '../src/auth/view/screens/sign_in_screen.dart';
@@ -123,13 +126,28 @@ final GoRouter router = GoRouter(
   redirect: (context, state) {
     bool isLoggedIn = false;
     final token = PreferenceManager.getString(PreferenceManager.token);
+
+    // get user details
+    final userDetailsData = PreferenceManager.getString(
+      PreferenceManager.userDetails,
+    );
+    var userDetailsMap = <String, dynamic>{};
+    if ((userDetailsData ?? '').isNotEmpty) {
+      userDetailsMap = json.decode((userDetailsData ?? '').trim());
+    }
+    final userDetails = User.fromJson(userDetailsMap);
+
     if (token != null && token.isNotEmpty) {
       isLoggedIn = true;
     }
     final isLoggingIn = state.fullPath == _AppPaths.signIn;
 
     if (isLoggedIn && isLoggingIn) {
-      return _AppPaths.navigation;
+      if (userDetails.isRegistered ?? false) {
+        return _AppPaths.navigation;
+      } else {
+        return _AppPaths.personalDetails;
+      }
     }
 
     return null;

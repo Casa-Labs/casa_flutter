@@ -22,7 +22,6 @@ import '../model/create_order.dart';
 class OrderReviewController extends GetxController {
   // ========= OBJECTS ============= //
   final OrderService _orderService = OrderService();
-  final LocationService _locationService = LocationService();
 
   // ========= CONTROLLERS ========= //
   CartController cartController = Get.find<CartController>();
@@ -116,39 +115,6 @@ class OrderReviewController extends GetxController {
   }
 
   // ========== APIs FUNCTIONS ========== //
-  Future<void> checkForAddress() async {
-    // get user details
-    final userDetailsData = PreferenceManager.getString(
-      PreferenceManager.userDetails,
-    );
-    var userDetailsMap = <String, dynamic>{};
-    if (userDetailsData != null) {
-      userDetailsMap = json.decode(userDetailsData.trim());
-    }
-    final userDetails = User.fromJson(userDetailsMap);
-    if (userDetails.id != null) {
-      final getUserResponse = await _locationService.getUser(
-        userId: userDetails.id ?? '',
-      );
-      if (getUserResponse != null &&
-          (getUserResponse.getUser?.addresses ?? []).isNotEmpty) {
-        isDeliveryAddressAdded(true);
-      } else {
-        isDeliveryAddressAdded(false);
-        message('Please add delivery address, then continue...');
-      }
-      // get user address details
-      /*  final userAddressDetails =
-          PreferenceManager.getString(PreferenceManager.userAddressDetails);
-      if ((userAddressDetails ?? '').isEmpty) {
-        isDeliveryAddressAdded(false);
-        message('Please add delivery address, then continue...');
-      } else {
-        isDeliveryAddressAdded(true);
-      }*/
-    }
-  }
-
   Future<void> createOrder({
     required Addresses address,
     required VoidCallback onPaymentSuccess,
