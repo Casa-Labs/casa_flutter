@@ -48,7 +48,7 @@ class Products {
   String? mainImage;
   String? id;
   String? name;
-  int? price;
+  double? price;
   String? description;
 
   Products({this.mainImage, this.id, this.name, this.price, this.description});
@@ -57,7 +57,7 @@ class Products {
     mainImage = json['mainImage'];
     id = json['id'];
     name = json['name'];
-    price = json['price'];
+    price = (json['price'] != null) ? json['price'].toDouble() : null;
     description = json['description'];
   }
 

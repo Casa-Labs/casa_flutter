@@ -1,9 +1,10 @@
 import 'package:casaflutterapp/routes/app_routes.dart';
 import 'package:casaflutterapp/src/common/widgets/common_app_bars.dart';
 import 'package:casaflutterapp/src/order/controller/order_review_controller.dart';
+import 'package:casaflutterapp/src/order/view/widgets/add_instructions_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/padding_size.dart';
@@ -11,13 +12,15 @@ import '../widgets/expandable_card.dart';
 import '../widgets/order_view_item_widget.dart';
 
 class OrderReviewScreen extends StatelessWidget {
-  const OrderReviewScreen({
+  OrderReviewScreen({
     super.key,
   });
 
+  final orderReviewController = Get.find<OrderReviewController>();
+
   @override
   Widget build(BuildContext context) {
-    final orderRiviweCtrl = Get.find<OrderReviewController>();
+    orderReviewController.startBlinking(); // Starts blinking loop
 
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
@@ -29,7 +32,7 @@ class OrderReviewScreen extends StatelessWidget {
             overlayColor: WidgetStateProperty.all(ButtonColor.transparent),
             splashFactory: NoSplash.splashFactory,
             onTap: () {
-              orderRiviweCtrl.deleteAllItem();
+              orderReviewController.deleteAllItem();
             },
             child: Container(
               alignment: Alignment.center,
@@ -54,38 +57,19 @@ class OrderReviewScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.all(1),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: TextColor.black),
-                            borderRadius: BorderRadius.circular(50)),
-                        child: CircleAvatar(
-                          maxRadius: 24,
-                          backgroundColor: const Color(0xFF002957),
-                          child: Text(
-                            "ZARA".substring(0, 3).toUpperCase(),
-                            style: textTheme.bodyMedium?.copyWith(
-                              color: TextColor.white,
-                              // fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Obx(() {
-                        return ListView.separated(
+                      Obx(
+                        () => ListView.separated(
                           padding: const EdgeInsets.all(0),
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: orderRiviweCtrl.productsList.length,
+                          itemCount: orderReviewController.productsList.length,
                           itemBuilder: (context, index) {
-                            var product = orderRiviweCtrl.productsList[index];
+                            var product =
+                                orderReviewController.productsList[index];
                             return OrderViewItemWidget(
                               item: product.item!,
                               onorderItemDelete: () {
-                                orderRiviweCtrl.deleteItem(product);
+                                orderReviewController.deleteItem(product);
                               },
                             );
                           },
@@ -94,8 +78,8 @@ class OrderReviewScreen extends StatelessWidget {
                               height: 20,
                             );
                           },
-                        );
-                      }),
+                        ),
+                      ),
                       const SizedBox(
                         height: 30,
                       ),
@@ -161,6 +145,15 @@ class OrderReviewScreen extends StatelessWidget {
                                         ),
                                       ),
                                     ),
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        isScrollControlled: true,
+                                        builder: (context) {
+                                          return AddInstructionsWidget();
+                                        },
+                                      );
+                                    },
                                   ),
                                 ],
                               ),
@@ -201,11 +194,6 @@ class OrderReviewScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  // Image.asset(
-                                  //   "assets/images/order_review_1.png",
-                                  //   height: 104,
-                                  //   width: 70,
-                                  // )
                                   Icon(Icons.filter_frames_outlined),
                                 ],
                               ),
@@ -220,10 +208,7 @@ class OrderReviewScreen extends StatelessWidget {
                         height: 10,
                       ),
                       ExpandableCard(
-                        orderController: orderRiviweCtrl,
-                      ),
-                      const SizedBox(
-                        height: 50,
+                        orderController: orderReviewController,
                       ),
                     ],
                   ),
@@ -232,61 +217,37 @@ class OrderReviewScreen extends StatelessWidget {
             ),
             Container(
               color: ButtonColor.white,
+              width: double.infinity,
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            "PAY USING",
-                            style: textTheme.bodyMedium?.copyWith(
-                              // fontSize: 14,
-                              color: TextColor.black,
-                            ),
-                          ),
-                          Icon(
-                            Icons.arrow_drop_up,
-                          )
-                        ],
-                      ),
-                      Text(
-                        "Phone Pay",
-                        style: textTheme.bodyMedium?.copyWith(
-                          // fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: TextColor.black,
-                        ),
-                      ),
-                    ],
+              child: Obx(
+                () => AnimatedContainer(
+                  duration: const Duration(milliseconds: 900),
+                  decoration: BoxDecoration(
+                    color: orderReviewController.isBlinking.value
+                        ? const Color(0xFF2C9D24)
+                        : Colors.white,
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  Obx(() {
-                    return FilledButton(
-                      style: FilledButton.styleFrom(
-                        surfaceTintColor: const Color(0xFF2C9D24),
-                        backgroundColor: const Color(0xFF2C9D24),
+                  child: FilledButton(
+                    style: FilledButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      surfaceTintColor: Colors.transparent,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    onPressed: () async {
+                      HapticFeedback.lightImpact();
+                      router.pushNamed(RouteNames.addressList);
+                    },
+                    child: Text(
+                      "Pay ₹${orderReviewController.total}",
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: Colors.white,
                       ),
-                      onPressed: () {
-                        context.pushNamed(RouteNames.paymentOptions);
-                      },
-                      child: Text(
-                        "Pay ₹${orderRiviweCtrl.total}",
-                        style: textTheme.bodyMedium?.copyWith(
-                          // fontSize: 14,
-                          color: TextColor.white,
-                        ),
-                      ),
-                    );
-                  }),
-                ],
+                    ),
+                  ).paddingSymmetric(horizontal: 10),
+                ),
               ),
             ),
           ],

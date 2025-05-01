@@ -3,26 +3,23 @@ import 'package:flutter/material.dart';
 import '../../../../utils/color_constant.dart';
 
 class QuantitySelectorButton extends StatefulWidget {
-  const QuantitySelectorButton({super.key});
+  const QuantitySelectorButton(
+      {super.key, required this.getQuantity, required this.count});
+  final Function(int count) getQuantity;
+  final int count;
 
   @override
   State<QuantitySelectorButton> createState() => _QuantitySelectorButtonState();
 }
 
 class _QuantitySelectorButtonState extends State<QuantitySelectorButton> {
-  int count = 1;
-
   void _increaseCount() {
-    setState(() {
-      count++;
-    });
+    widget.getQuantity(widget.count + 1);
   }
 
   void _decreaseCount() {
-    if (count > 1) {
-      setState(() {
-        count--;
-      });
+    if (widget.count > 1) {
+      widget.getQuantity(widget.count - 1);
     }
   }
 
@@ -51,7 +48,7 @@ class _QuantitySelectorButtonState extends State<QuantitySelectorButton> {
             borderRadius: BorderRadius.circular(40),
           ),
           child: Text(
-            count.toString(),
+            widget.count.toString(),
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),

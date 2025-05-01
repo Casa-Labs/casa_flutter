@@ -21,6 +21,7 @@ class WishlistController extends GetxController {
 
   // ========= VARIABLES ========= //
   final userID = PreferenceManager.getString(PreferenceManager.userId);
+  final RxSet<String> selectedClosets = <String>{}.obs;
   RxList<ClothingItems> wishlistData = <ClothingItems>[].obs;
   RxList<GetUserClosets> getUserClosetList = <GetUserClosets>[].obs;
   RxList<SaveItem> wishItemList = <SaveItem>[].obs;
@@ -94,7 +95,7 @@ class WishlistController extends GetxController {
       }
     }
     getSavedItemsToCloset(clothingItemId: wishItemList[0].clothingItem!.id!);
-    showToast(message: "All products deleted successfully!!");
+    showToast(message: "All Item removed from wishlist!!");
   }
 
   void wishSelectedtem(int index) {
@@ -128,8 +129,8 @@ class WishlistController extends GetxController {
           if (response.getUserClosets!.first.clothingItems!.isEmpty) {
             addItemToCloset(
                 closetId: response.getUserClosets!.first.id.toString(),
-                imageUrl: AppStrings.defaultClosetImageUrel,
-                name: AppStrings.defaulttClosetName);
+                imageUrl: AppStrings.defaultClosetImageUrl,
+                name: AppStrings.defaultClosetName);
           } else {
             getUserClosetList(response.getUserClosets);
             wishlistData(getUserClosetList.first.clothingItems);
@@ -157,6 +158,9 @@ class WishlistController extends GetxController {
     var response = await _wishlistService.addItemToCloset(
         addBoardRequestModel: addBoardRequestModel);
     logg.d("get Data ====> $response");
+    showToast(
+      message: "Closet creted successfully!!",
+    );
     getUserClosets();
   }
 
@@ -169,6 +173,9 @@ class WishlistController extends GetxController {
     );
     var response = await _wishlistService.saveItemToCloset(
         saveItemToClosetRequestModel: saveItemToClosetRequestModel);
+    showToast(
+      message: "Item added to wishlist!!",
+    );
     logg.d("get Data save item ====> $response");
     getUserClosets();
   }
@@ -214,7 +221,7 @@ class WishlistController extends GetxController {
         response.removeItemFromClothingItem! &&
         !isMultiple) {
       getSavedItemsToCloset(clothingItemId: wishItemList[0].clothingItem!.id!);
-      showToast(message: "Product deleted successfully!!");
+      showToast(message: "Item removed from wishlist!!");
     }
     logg.d("get Delete save item ====> $response");
   }
@@ -226,7 +233,7 @@ class WishlistController extends GetxController {
     'https://t3.ftcdn.net/jpg/08/52/51/04/360_F_852510478_KdKJ1xGmlHICE8TD3QM68W6m7m1E7fHT.jpg',
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcL3kn1Z7tCYhQa-vOaLHwHTPIT81-uLoDBw&s',
     'https://media.istockphoto.com/id/833727890/photo/wooden-table-background.jpg?s=170667a&w=0&k=20&c=X0T-EH3_hWKTTVOrEYxPWpFWHUzKD3VkMMAyOrmh8ac=',
-    'https://static.vecteezy.com/system/resources/thumbnails/037/814/719/small_2x/ai-generated-autumn-leaves-com-the-forest-nature-background-photo.jpg',
+    'https://rukminim2.flixcart.com/image/850/1000/jjbqufk0/poster/r/h/h/large-vlnature00091a-natural-scene-of-mountain-near-lake-vinyl-original-imaeh9vdnj9xxfau.jpeg?q=90&crop=false',
     'https://static.vecteezy.com/system/resources/thumbnails/036/226/872/small_2x/ai-generated-nature-landscapes-background-free-photo.jpg',
     'https://images.unsplash.com/photo-1593642532973-d31b6557fa68',
     'https://t3.ftcdn.net/jpg/05/54/02/68/360_F_554026892_UsZG4Tm3GPUV6fxzlpvV0qOOe9KKYvCj.jpg',

@@ -1,4 +1,6 @@
 // Add items to cart request model //
+import '../../home/model/home_models.dart';
+
 class AddCartRequestModel {
   String userId;
   Map<String, dynamic> item;
@@ -94,78 +96,131 @@ class CartItem {
 
 // This model shows items which add com the cart //
 class ProductForCart {
-  String? id;
+  String? productId;
   String? name;
-  String? description;
-  double? price;
-  String? category;
-  // List<String>? size;
-  int? stock;
-  String? storeId;
+  double? productPrice;
+  String? size;
+  List<Sizes>? sizes;
+  String? color;
+  Store? store;
   String? mainImage;
-  bool? isNewArrival;
-  List<String>? productImages;
-  bool? isTrending;
-  String? createdAt;
-  String? updatedAt;
+  String? description;
+  String? sizeValue;
   bool? isSelected;
   int? quantity;
 
   ProductForCart(
-      {this.id,
+      {this.productId,
       this.name,
-      this.description,
-      this.price,
-      this.category,
-      // this.size,
-      this.productImages,
+      this.productPrice,
+      this.color,
+      this.size,
+      this.sizes,
+      this.store,
       this.mainImage,
-      this.stock,
-      this.storeId,
-      this.isNewArrival,
-      this.isTrending,
-      this.createdAt,
-      this.updatedAt,
+      this.description,
+      this.sizeValue,
       this.quantity});
 
   ProductForCart.fromJson(Map<String, dynamic> json) {
-    id = json['id'] ?? "";
+    productId = json['productId'] ?? "";
     name = json['name'] ?? "";
-    description = json['description'] ?? "";
-    price = json['price'] is int
-        ? (json['price'] as int).toDouble()
-        : (json['price'] ?? 0).toDouble();
-    category = json['category'] ?? "";
+    productPrice = json['productPrice'] is int
+        ? (json['productPrice'] as int).toDouble()
+        : (json['productPrice'] ?? 0).toDouble();
+    size = json['size'] ?? "";
+    if (json['sizes'] != null) {
+      sizes = <Sizes>[];
+      json['sizes'].forEach((v) {
+        sizes!.add(Sizes.fromJson(v));
+      });
+    }
+    color = json['color'] ?? "";
+    store = json['store'] != null ? Store.fromJson(json['store']) : null;
     mainImage = json['mainImage'] ?? "";
-    // size = json['sizes'] ?? [];
-    productImages = json['productImages'].cast<String>() ?? [];
-    stock = json['stock'] ?? 0;
-    storeId = json['storeId'] ?? "";
-    isNewArrival = json['isNewArrival'] ?? false;
-    isTrending = json['isTrending'] ?? false;
-    createdAt = json['createdAt'] ?? "";
-    updatedAt = json['updatedAt'] ?? "";
-    quantity = json['quantity'] ?? 1;
+    description = json['description'] ?? "";
+    sizeValue = json['sizeValue'] ?? "";
+    quantity = json["quantity"] is String
+        ? int.tryParse(json["quantity"]) ?? 0
+        : (json["quantity"] ?? 0);
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['productId'] = productId;
+    data['name'] = name;
+    data['productPrice'] = productPrice;
+    data['mainImage'] = mainImage;
+    data['size'] = size;
+    if (sizes != null) {
+      data['sizes'] = sizes!.map((v) => v.toJson()).toList();
+    }
+    data['color'] = color;
+    if (store != null) {
+      data['store'] = store!.toJson();
+    }
+    data['description'] = description;
+    data['sizeValue'] = sizeValue;
+    data['quantity'] = quantity;
+    return data;
+  }
+}
+
+class Sizes {
+  CartSizeItem? size;
+
+  Sizes({this.size});
+
+  Sizes.fromJson(Map<String, dynamic> json) {
+    size = json['size'] != null ? CartSizeItem.fromJson(json['size']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (size != null) {
+      data['size'] = size!.toJson();
+    }
+    return data;
+  }
+}
+
+class CartSizeItem {
+  String? id;
+  String? name;
+
+  CartSizeItem({this.id, this.name});
+
+  CartSizeItem.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['name'] = name;
-    data['description'] = description;
-    data['price'] = price;
-    data['category'] = category;
-    data['productImages'] = productImages;
-    data['mainImage'] = mainImage;
-    // data['sizes'] = size;
-    data['stock'] = stock;
-    data['storeId'] = storeId;
-    data['isNewArrival'] = isNewArrival;
-    data['isTrending'] = isTrending;
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
-    data['quantity'] = quantity;
     return data;
+  }
+
+  static String mapSize(String apiSize) {
+    switch (apiSize.toLowerCase()) {
+      case 'xx-small':
+        return 'XXS';
+      case 'x-small':
+        return 'XS';
+      case 'small':
+        return 'S';
+      case 'medium':
+        return 'M';
+      case 'large':
+        return 'L';
+      case 'x-large':
+        return 'XL';
+      case 'xx-large':
+        return 'XXL';
+      default:
+        return apiSize; // Default fallback
+    }
   }
 }
 

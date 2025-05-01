@@ -1,8 +1,12 @@
+import 'package:casaflutterapp/src/auth/model/service/auth_service.dart';
 import 'package:casaflutterapp/utils/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ForgotPasswordController extends GetxController {
+  // ========= OBJECTS ============= //
+  final AuthService _authService = AuthService();
+
   // ========= CONTROLLERS ========= //
   final TextEditingController email = TextEditingController();
   final TextEditingController otp1 = TextEditingController();
@@ -15,6 +19,9 @@ class ForgotPasswordController extends GetxController {
   RxBool isOtpVerified = false.obs;
   RxBool isOtpObscured = true.obs;
   RxString message = ''.obs;
+  RxBool isOtpSendingInProgress = false.obs;
+  RxBool isOtpVerificationInProgress = false.obs;
+  RxBool isEmailValid = false.obs;
 
   // ========== UI FUNCTIONS ========== //
 
@@ -27,6 +34,9 @@ class ForgotPasswordController extends GetxController {
     isOtpSent(false);
     isOtpVerified(false);
     isOtpObscured(true);
+    isOtpSendingInProgress(false);
+    isOtpVerificationInProgress(false);
+    isEmailValid(false);
     message('');
   }
 
@@ -45,8 +55,21 @@ class ForgotPasswordController extends GetxController {
       message('Email address is not valid');
       isOtpSent(false);
     } else {
-      message('Otp sent successfully');
-      isOtpSent(true);
+      isOtpSendingInProgress(true);
+      final requestPasswordResetResponse =
+          await _authService.requestPasswordReset(
+        email: email.text,
+      );
+
+      if (requestPasswordResetResponse != null) {
+        isOtpSendingInProgress(false);
+        message('Otp sent successfully');
+        isOtpSent(true);
+      } else {
+        isOtpSendingInProgress(false);
+        message('Invalid user');
+        isOtpSent(false);
+      }
     }
   }
 
@@ -66,8 +89,22 @@ class ForgotPasswordController extends GetxController {
       message('Please enter correct otp');
       isOtpVerified(false);
     } else {
-      message('Otp verified successfully');
-      isOtpVerified(true);
+      isOtpVerificationInProgress(true);
+      final verifyOTPAndUpdatePasswordResponse =
+          await _authService.verifyOTPForPasswordUpdate(
+        email: email.text,
+        otp: '${otp1.text}${otp2.text}${otp3.text}${otp4.text}',
+      );
+
+      if (verifyOTPAndUpdatePasswordResponse != null) {
+        isOtpVerificationInProgress(false);
+        message('Otp verified successfully');
+        isOtpVerified(true);
+      } else {
+        isOtpVerificationInProgress(false);
+        message('Invalid otp');
+        isOtpVerified(false);
+      }
     }
   }
 }

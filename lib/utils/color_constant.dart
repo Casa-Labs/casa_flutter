@@ -40,7 +40,8 @@ class BorderColor {
 }
 
 class BackgroundColor {
-  static const Color white = Color(0xffFCFDFF);
+  static const Color white = Color(0xffFFFFFF);
+  static const Color black = Color(0xff000000);
 }
 
 class BottomNavbarColor {
@@ -54,8 +55,6 @@ class ErrorColor {
 class DividerColor {
   static const Color grey = Color(0xffCCCCCC);
 }
-
-class Carousel {}
 
 class ProgressIndicatorColor {
   static const Color black = Color(0xff000000);
@@ -80,6 +79,8 @@ class TabBarColor {
 
 class DropdownColor {
   static const Color transparent = Colors.transparent;
+  static const Color black = Color(0xFF0C0C0C);
+  static const Color black69 = Color(0x69727272);
 }
 
 class BottomNavigationColor {

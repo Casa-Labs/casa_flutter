@@ -152,11 +152,15 @@ class Product {
   String? id;
   String? name;
   String? description;
+  String? customReturnPolicy;
+  String? customShippingPolicy;
   double? price;
   String? category;
-  // List<String>? size;
-  int? stock;
   String? storeId;
+  Store? store;
+  List<Sizes>? sizes;
+  List<ColorsModel>? colors;
+  int? stock;
   String? mainImage;
   bool? isNewArrival;
   List<String>? productImages;
@@ -164,33 +168,53 @@ class Product {
   String? createdAt;
   String? updatedAt;
   bool? isSelected;
+  int? quantity;
 
   Product(
       {this.id,
       this.name,
       this.description,
+      this.customReturnPolicy,
+      this.customShippingPolicy,
       this.price,
       this.category,
-      // this.size,
+      this.sizes,
+      this.colors,
       this.productImages,
       this.mainImage,
       this.stock,
+      this.store,
       this.storeId,
       this.isNewArrival,
       this.isTrending,
       this.createdAt,
-      this.updatedAt});
+      this.updatedAt,
+      this.quantity});
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'] ?? "";
     name = json['name'] ?? "";
+    store = json['store'] != null ? Store.fromJson(json['store']) : null;
     description = json['description'] ?? "";
+    if (json['colors'] != null) {
+      colors = <ColorsModel>[];
+      json['colors'].forEach((v) {
+        colors!.add(ColorsModel.fromJson(v));
+      });
+    }
+    customReturnPolicy = json['customReturnPolicy'] ?? "No Policy Found";
+    customShippingPolicy = json['customShippingPolicy'] ?? "No Policy Found";
     price = json['price'] is int
         ? (json['price'] as int).toDouble()
         : (json['price'] ?? 0).toDouble();
     category = json['category'] ?? "";
     mainImage = json['mainImage'] ?? "";
-    // size = json['sizes'] ?? [];
+    if (json['sizes'] != null) {
+      sizes = <Sizes>[];
+      json['sizes'].forEach((v) {
+        sizes!.add(Sizes.fromJson(v));
+      });
+    }
     productImages = json['productImages'].cast<String>() ?? [];
     stock = json['stock'] ?? 0;
     storeId = json['storeId'] ?? "";
@@ -198,6 +222,7 @@ class Product {
     isTrending = json['isTrending'] ?? false;
     createdAt = json['createdAt'] ?? "";
     updatedAt = json['updatedAt'] ?? "";
+    quantity = 1;
   }
 
   Map<String, dynamic> toJson() {
@@ -205,17 +230,28 @@ class Product {
     data['id'] = id;
     data['name'] = name;
     data['description'] = description;
+    data['customReturnPolicy'] = customReturnPolicy;
+    data['customShippingPolicy'] = customShippingPolicy;
     data['price'] = price;
     data['category'] = category;
+    if (store != null) {
+      data['store'] = store!.toJson();
+    }
     data['productImages'] = productImages;
     data['mainImage'] = mainImage;
-    // data['sizes'] = size;
+    if (sizes != null) {
+      data['sizes'] = sizes!.map((v) => v.toJson()).toList();
+    }
+    if (colors != null) {
+      data['colors'] = colors!.map((v) => v.toJson()).toList();
+    }
     data['stock'] = stock;
     data['storeId'] = storeId;
     data['isNewArrival'] = isNewArrival;
     data['isTrending'] = isTrending;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
+    data['quantity'] = quantity;
     return data;
   }
 }
@@ -227,4 +263,187 @@ class ProductModelFilter {
   bool isTabView = false;
 
   ProductModelFilter({this.leading, this.title});
+}
+
+class ColorsModel {
+  String? productId;
+  String? colorId;
+  ColorData? color;
+
+  ColorsModel({this.productId, this.colorId, this.color});
+
+  ColorsModel.fromJson(Map<String, dynamic> json) {
+    productId = json['productId'];
+    colorId = json['colorId'];
+    color = json['color'] != null ? ColorData.fromJson(json['color']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['productId'] = productId;
+    data['colorId'] = colorId;
+    if (color != null) {
+      data['color'] = color!.toJson();
+    }
+    return data;
+  }
+}
+
+class ColorData {
+  String? id;
+  String? name;
+  String? hexCode;
+  String? createdAt;
+  String? updatedAt;
+
+  ColorData({this.id, this.name, this.hexCode, this.createdAt, this.updatedAt});
+
+  ColorData.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    hexCode = json['hexCode'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['hexCode'] = hexCode;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    return data;
+  }
+}
+
+class Sizes {
+  SizeItem? size;
+
+  Sizes({this.size});
+
+  Sizes.fromJson(Map<String, dynamic> json) {
+    size = json['size'] != null ? SizeItem.fromJson(json['size']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (size != null) {
+      data['size'] = size!.toJson();
+    }
+    return data;
+  }
+}
+
+class StoreModel {
+  Store? store;
+
+  StoreModel({this.store});
+
+  StoreModel.fromJson(Map<String, dynamic> json) {
+    store = json['store'] != null ? Store.fromJson(json['store']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (store != null) {
+      data['store'] = store!.toJson();
+    }
+    return data;
+  }
+}
+
+class Store {
+  String? id;
+  String? userId;
+  String? name;
+  String? description;
+  String? type;
+  String? logo;
+  String? createdAt;
+  String? updatedAt;
+  bool? isDeleted;
+  String? reasonToDelete;
+
+  Store(
+      {this.id,
+      this.userId,
+      this.name,
+      this.description,
+      this.type,
+      this.logo,
+      this.createdAt,
+      this.updatedAt,
+      this.isDeleted,
+      this.reasonToDelete});
+
+  Store.fromJson(Map<String, dynamic> json) {
+    id = json['id'] ?? "";
+    userId = json['userId'] ?? "";
+    name = json['name'] ?? "";
+    description = json['description'] ?? "";
+    type = json['type'] ?? "";
+    logo = json['logo'] ?? "";
+    createdAt = json['createdAt'] ?? "";
+    updatedAt = json['updatedAt'] ?? "";
+    isDeleted = json['isDeleted'] ?? false;
+    reasonToDelete = json['reasonToDelete'] ?? "";
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['userId'] = userId;
+    data['name'] = name;
+    data['description'] = description;
+    data['type'] = type;
+    data['logo'] = logo;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['isDeleted'] = isDeleted;
+    data['reasonToDelete'] = reasonToDelete;
+    return data;
+  }
+}
+
+class SizeItem {
+  String? id;
+  String? name;
+
+  SizeItem({this.id, this.name});
+
+  SizeItem.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    return data;
+  }
+
+  static String mapSize(String apiSize) {
+    // To remove "/" From Sizes
+    final cleanedSize = apiSize.split('/').first.trim().toLowerCase();
+    switch (cleanedSize) {
+      case 'xx-small':
+        return 'XXS';
+      case 'x-small':
+        return 'XS';
+      case 'small':
+        return 'S';
+      case 'medium':
+        return 'M';
+      case 'large':
+        return 'L';
+      case 'x-large':
+        return 'XL';
+      case 'xx-large':
+        return 'XXL';
+      default:
+        return cleanedSize.toUpperCase(); // Default fallback
+    }
+  }
 }

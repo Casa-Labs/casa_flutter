@@ -3,7 +3,6 @@ import '../../../../utils/utils.dart';
 import '../notifications_models.dart';
 
 class NotificationsService {
-
   final GraphQLManager _graphQLManager = GraphQLManager();
 
   Future<NotificationModel> getNotification(String userID) async {
@@ -16,6 +15,38 @@ class NotificationsService {
     } catch (e) {
       logg.e('get error to fetch notifications data $e');
       return NotificationModel();
+    }
+  }
+
+  Future<DeleteAllNotificationsModel> deleteAllNotificationsForUser(
+      String userId) async {
+    DeleteAllNotificationsModel deleteAllNotificationsResponse;
+    try {
+      var response =
+          await _graphQLManager.deleteAllNotificationsForUser(userId: userId);
+      deleteAllNotificationsResponse =
+          DeleteAllNotificationsModel.fromJson(response.data!);
+      logg.d('hello i deleted all notifications ------ >>>>> ');
+      return deleteAllNotificationsResponse;
+    } catch (e) {
+      logg.e('get error to deleted all notifications data $e');
+      return DeleteAllNotificationsModel();
+    }
+  }
+
+  Future<DeleteNotificationModel> deleteNotificationForUser(
+      String notificationId) async {
+    DeleteNotificationModel deleteNotificationResponse;
+    try {
+      var response =
+          await _graphQLManager.deleteNotificationForUser(id: notificationId);
+      deleteNotificationResponse =
+          DeleteNotificationModel.fromJson(response.data!);
+      logg.d('hello i deleted all notifications ------ >>>>> ');
+      return deleteNotificationResponse;
+    } catch (e) {
+      logg.e('get error to deleted all notifications data $e');
+      return DeleteNotificationModel();
     }
   }
 }

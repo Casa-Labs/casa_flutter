@@ -1,3 +1,5 @@
+import '../src/order/model/create_order.dart';
+
 class GraphQLVariables {
   //MUTATION
   static Map<String, dynamic> loginVariables(String email, String password) {
@@ -88,6 +90,7 @@ class GraphQLVariables {
     String pinCode,
     String country,
     String? landmark,
+    String? tag,
   ) {
     return {
       "userId": userId,
@@ -97,15 +100,101 @@ class GraphQLVariables {
       "pincode": pinCode,
       "country": country,
       "landmark": landmark,
+      "tag": tag,
+    };
+  }
+
+  static Map<String, dynamic> updateUserAddressVariables(
+    String id,
+    String address,
+    String city,
+    String state,
+    String pinCode,
+    String country,
+    String? landmark,
+    String? tag,
+  ) {
+    return {
+      "id": id,
+      "address": address,
+      "city": city,
+      "state": state,
+      "pincode": pinCode,
+      "country": country,
+      "landmark": landmark,
+      "tag": tag,
     };
   }
 
   static Map<String, dynamic> singleSignOnVariables(
-      String email, String provider, String providerId) {
+    String email,
+    String provider,
+    String providerId,
+    String name,
+    String image,
+  ) {
     return {
       "email": email,
       "provider": provider,
       "providerId": providerId,
+      "name": name,
+      "image": image,
+    };
+  }
+
+  static Map<String, dynamic> verifyRegistrationOTP(
+    String email,
+    String otp,
+  ) {
+    return {
+      "email": email,
+      "otp": otp,
+    };
+  }
+
+  static Map<String, dynamic> requestPasswordReset(
+    String email,
+  ) {
+    return {
+      "email": email,
+    };
+  }
+
+  static Map<String, dynamic> sendRegistrationOTP(
+    String email,
+  ) {
+    return {
+      "email": email,
+    };
+  }
+
+  static Map<String, dynamic> verifyOTPForPasswordUpdate(
+    String email,
+    String otp,
+  ) {
+    return {
+      "email": email,
+      "otp": otp,
+    };
+  }
+
+  static Map<String, dynamic> updatePasswordAfterVerification(
+    String email,
+    String newPassword,
+  ) {
+    return {
+      "email": email,
+      "newPassword": newPassword,
+    };
+  }
+
+  static Map<String, dynamic> updatePasswordWithinApp(
+    String email,
+    String newPassword,
+  ) {
+    return {
+      "email": email,
+      "newPassword": newPassword,
     };
   }
 
@@ -118,17 +207,24 @@ class GraphQLVariables {
   }
 
   static Map<String, dynamic> createOrderVariables(
-      String productId,
-      double total,
-      String userId,
-      Map<String, dynamic> orderedProductDetails,
-      Map<String, dynamic> shippingInfo) {
+    String userId,
+    int totalAmount,
+    String deliveryType,
+    String discountCode,
+    String deliveryInstructions,
+    List<Items> items,
+    PaymentInfo paymentInfo,
+    ShippingInfo shippingInfo,
+  ) {
     return {
-      "productId": productId,
-      "total": total,
-      "userId": userId,
-      "orderedProductDetails": orderedProductDetails,
+      "totalAmount": totalAmount,
+      "deliveryType": deliveryType,
       "shippingInfo": shippingInfo,
+      "deliveryInstructions": deliveryInstructions,
+      "items": items,
+      "paymentInfo": paymentInfo,
+      "userId": userId,
+      "discountCode": discountCode,
     };
   }
 
@@ -255,6 +351,18 @@ class GraphQLVariables {
     };
   }
 
+  static Map<String, dynamic> deleteAllNotificationsForUser(String userId) {
+    return {
+      "userId": userId,
+    };
+  }
+
+  static Map<String, dynamic> deleteNotificationForUser(String id) {
+    return {
+      "id": id,
+    };
+  }
+
   //QUERIES
 
   static Map<String, dynamic> getNewArrivalProductsVariables(
@@ -263,6 +371,12 @@ class GraphQLVariables {
       "page": page,
       "limit": limit,
       "search": search,
+    };
+  }
+
+  static Map<String, dynamic> getUser(String userId) {
+    return {
+      "getUserId": userId,
     };
   }
 
@@ -286,6 +400,12 @@ class GraphQLVariables {
     };
   }
 
+  static Map<String, dynamic> getProductById(String productId) {
+    return {
+      "productId": productId,
+    };
+  }
+
   static Map<String, dynamic> getProductsVariables(
       Map<String, dynamic> params) {
     return {
@@ -302,9 +422,24 @@ class GraphQLVariables {
     };
   }
 
-  static Map<String, dynamic> getUserVariables(String getUserId) {
+  static Map<String, dynamic> getStoreInventoryVariables(
+      {required int page, required int limit, required String storeId}) {
     return {
-      "getUserId": getUserId,
+      "page": page,
+      "limit": limit,
+      "storeId": storeId,
+    };
+  }
+
+  static Map<String, dynamic> getUserVariables(String userId) {
+    return {
+      "getUserId": userId,
+    };
+  }
+
+  static Map<String, dynamic> deleteUserAddressVariables(String addressId) {
+    return {
+      "deleteUserAddressId": addressId,
     };
   }
 
@@ -340,6 +475,18 @@ class GraphQLVariables {
     return {
       "userId": userId,
       "clothingItemId": clothingItemId,
+    };
+  }
+
+  static Map<String, dynamic> verifyPayment(
+    String paymentId,
+    String orderId,
+    String signature,
+  ) {
+    return {
+      "paymentId": paymentId,
+      "orderId": orderId,
+      "signature": signature,
     };
   }
 }

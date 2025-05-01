@@ -14,11 +14,15 @@ class GoogleLoginRequestModel {
   String email;
   String provider;
   String providerId;
+  String name;
+  String image;
 
   GoogleLoginRequestModel({
     required this.email,
     required this.provider,
     required this.providerId,
+    required this.name,
+    required this.image,
   });
 }
 
@@ -76,6 +80,9 @@ class User {
   String? phone;
   String? role;
   String? updatedAt;
+  String? profileImage;
+  bool? isRegistered;
+  bool? isVerified;
 
   User({
     this.authProvider,
@@ -86,6 +93,9 @@ class User {
     this.phone,
     this.role,
     this.updatedAt,
+    this.profileImage,
+    this.isRegistered,
+    this.isVerified,
   });
 
   User.fromJson(Map<String, dynamic>? json) {
@@ -97,6 +107,9 @@ class User {
     phone = json?['phone'];
     role = json?['role'];
     updatedAt = json?['updatedAt'];
+    profileImage = json?['profileImage'];
+    isRegistered = json?['isRegistered'];
+    isVerified = json?['isVerified'];
   }
 
   Map<String, dynamic> toJson() {
@@ -109,6 +122,9 @@ class User {
     data['phone'] = phone;
     data['role'] = role;
     data['updatedAt'] = updatedAt;
+    data['profileImage'] = profileImage;
+    data['isRegistered'] = isRegistered;
+    data['isVerified'] = isVerified;
     return data;
   }
 }
@@ -137,18 +153,20 @@ class RegisterUserResponseModel {
 class GoogleLoginResponse {
   SingleSignOn? singleSignOn;
 
-  GoogleLoginResponse({this.singleSignOn});
+  GoogleLoginResponse({
+    this.singleSignOn,
+  });
 
   GoogleLoginResponse.fromJson(Map<String, dynamic> json) {
     singleSignOn = json['SingleSignOn'] != null
-        ? new SingleSignOn.fromJson(json['SingleSignOn'])
+        ? SingleSignOn.fromJson(json['SingleSignOn'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.singleSignOn != null) {
-      data['SingleSignOn'] = this.singleSignOn!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (singleSignOn != null) {
+      data['SingleSignOn'] = singleSignOn!.toJson();
     }
     return data;
   }
@@ -158,18 +176,21 @@ class SingleSignOn {
   String? token;
   User? user;
 
-  SingleSignOn({this.token, this.user});
+  SingleSignOn({
+    this.token,
+    this.user,
+  });
 
   SingleSignOn.fromJson(Map<String, dynamic> json) {
     token = json['token'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['token'] = this.token;
-    if (this.user != null) {
-      data['user'] = this.user!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['token'] = token;
+    if (user != null) {
+      data['user'] = user!.toJson();
     }
     return data;
   }
@@ -179,7 +200,10 @@ class GoogleUser {
   String? email;
   String? id;
 
-  GoogleUser({this.email, this.id});
+  GoogleUser({
+    this.email,
+    this.id,
+  });
 
   GoogleUser.fromJson(Map<String, dynamic> json) {
     email = json['email'];
@@ -187,9 +211,9 @@ class GoogleUser {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['email'] = this.email;
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['email'] = email;
+    data['id'] = id;
     return data;
   }
 }

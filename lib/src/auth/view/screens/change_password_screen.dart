@@ -9,7 +9,13 @@ import '../../../common/widgets/custom_text_form_field_widget.dart';
 import '../widgets/auth_button.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
-  ChangePasswordScreen({super.key});
+  final String email;
+  final bool isFromWithinApp;
+  ChangePasswordScreen({
+    super.key,
+    required this.email,
+    required this.isFromWithinApp,
+  });
 
   final changePasswordController = Get.put(
     ChangePasswordController(),
@@ -112,19 +118,30 @@ class ChangePasswordScreen extends StatelessWidget {
                       ],
                     ),
                     Spacer(),
-                    AuthButton(
-                      type: AuthButtonType.save,
-                      onPressed: () async {
-                        changePasswordController.changePassword();
-                        if (changePasswordController.message().isNotEmpty) {
-                          showToast(
-                            message: changePasswordController.message(),
+                    Obx(
+                      () => AuthButton(
+                        isLoading: changePasswordController
+                            .isPasswordChangeInProgress(),
+                        type: AuthButtonType.save,
+                        onPressed: () async {
+                          await changePasswordController.changePassword(
+                            email: email,
+                            isFromWithinApp: isFromWithinApp,
                           );
-                          if (changePasswordController.isPasswordChanged()) {
-                            router.goNamed(RouteNames.signIn);
+                          if (changePasswordController.message().isNotEmpty) {
+                            showToast(
+                              message: changePasswordController.message(),
+                            );
+                            if (changePasswordController.isPasswordChanged()) {
+                              if (isFromWithinApp && context.mounted) {
+                                Navigator.of(context).maybePop();
+                              } else {
+                                router.goNamed(RouteNames.signIn);
+                              }
+                            }
                           }
-                        }
-                      },
+                        },
+                      ),
                     ),
                     Spacer(flex: 2),
                   ],

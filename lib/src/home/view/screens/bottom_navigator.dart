@@ -2,14 +2,16 @@ import 'package:casaflutterapp/src/explore/view/screens/explore_screen.dart';
 import 'package:casaflutterapp/src/home/view/screens/home_screen.dart';
 import 'package:casaflutterapp/src/profile/view/screens/profile_screen.dart';
 import 'package:casaflutterapp/utils/color_constant.dart';
+import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../cart/view/screens/cart_screen.dart';
 import '../../../onboarding/view/screens/onboarding_screen.dart';
 import '../../../wishlist/view/screens/wishlist_screen.dart';
 
 class NavPage extends StatefulWidget {
-  const NavPage({super.key, this.isFirstLaunch = true});
+  const NavPage({super.key, this.isFirstLaunch = false});
 
   final bool isFirstLaunch;
 
@@ -20,7 +22,6 @@ class NavPage extends StatefulWidget {
 class NavPageState extends State<NavPage> {
   bool _isFirstLaunch = true; // Variable to track first launch
   int _selectedIndex = 0; // Track the selected index of the BottomNavigationBar
-  int tutorialScreenIndex = 0;
 
   // IMP : Flutter will create the widgets list eagerly resulting in controller
   // initialization without navigation when bottom navbar is created,
@@ -52,14 +53,12 @@ class NavPageState extends State<NavPage> {
 
   // Function to handle bottom navigation item selection
   void _onItemTapped(int index) {
+    if (index == 3) {
+      HapticFeedback.heavyImpact();
+    }
+
     setState(() {
       _selectedIndex = index;
-    });
-  }
-
-  void changeIndexTutorial() {
-    setState(() {
-      tutorialScreenIndex += 1;
     });
   }
 
@@ -67,57 +66,99 @@ class NavPageState extends State<NavPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BackgroundColor.white,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            _getScreen(_selectedIndex), // Display the selected page
-            if (tutorialScreenIndex < 14 && !_isFirstLaunch)
-              Positioned.fill(
-                child: TutorialScreen(
-                  index: tutorialScreenIndex,
-                  onTap: changeIndexTutorial,
-                ),
+      body: Stack(
+        children: [
+          _getScreen(_selectedIndex), // Display the selected page
+          TutorialScreen(
+            isFirstTime: _isFirstLaunch,
+          ),
+        ],
+      ),
+      bottomNavigationBar: MediaQuery(
+        data: MediaQuery.of(context).removePadding(removeBottom: true),
+        child: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          backgroundColor: BottomNavigationColor.white,
+          elevation: 0,
+          fixedColor: BottomNavigationColor.black,
+          onTap: _onItemTapped,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          type: BottomNavigationBarType.fixed,
+          // Handle item tap
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                IconConstants.home,
+                height: 26.0,
+                width: 26.0,
               ),
+              activeIcon: Image.asset(
+                IconConstants.homeSelected,
+                height: 26.0,
+                width: 26.0,
+              ),
+              label: '',
+              backgroundColor: BottomNavigationColor.white,
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                IconConstants.search,
+                height: 32.0,
+                width: 32.0,
+              ),
+              activeIcon: Image.asset(
+                IconConstants.searchSelected,
+                height: 32.0,
+                width: 32.0,
+              ),
+              label: '',
+              backgroundColor: BottomNavigationColor.white,
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                IconConstants.cart,
+                height: 32.0,
+                width: 32.0,
+              ),
+              activeIcon: Image.asset(
+                IconConstants.cartSelected,
+                height: 32.0,
+                width: 32.0,
+              ),
+              label: '',
+              backgroundColor: BottomNavigationColor.white,
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                IconConstants.heart,
+                height: 32.0,
+                width: 32.0,
+              ),
+              activeIcon: Image.asset(
+                IconConstants.heartSelected,
+                height: 28.0,
+                width: 28.0,
+              ),
+              label: '',
+              backgroundColor: BottomNavigationColor.white,
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                IconConstants.profile,
+                height: 28.0,
+                width: 28.0,
+              ),
+              activeIcon: Image.asset(
+                IconConstants.profileSelected,
+                height: 28.0,
+                width: 28.0,
+              ),
+              label: '',
+              backgroundColor: BottomNavigationColor.white,
+            )
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        backgroundColor: BottomNavigationColor.white,
-        elevation: 0,
-        fixedColor: BottomNavigationColor.black,
-        onTap: _onItemTapped,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        type: BottomNavigationBarType.fixed,
-        // Handle item tap
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined, size: 30),
-              activeIcon: Icon(Icons.home, size: 30),
-              label: '',
-              backgroundColor: BottomNavigationColor.white),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.search_outlined, size: 30),
-              activeIcon: Icon(Icons.search, size: 30),
-              label: '',
-              backgroundColor: BottomNavigationColor.white),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart_outlined, size: 30),
-              activeIcon: Icon(Icons.shopping_cart_rounded, size: 30),
-              label: '',
-              backgroundColor: BottomNavigationColor.white),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border, size: 30),
-              activeIcon: Icon(Icons.favorite, size: 30),
-              label: '',
-              backgroundColor: BottomNavigationColor.white),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline_outlined, size: 30),
-              activeIcon: Icon(Icons.person, size: 30),
-              label: '',
-              backgroundColor: BottomNavigationColor.white)
-        ],
       ),
     );
   }

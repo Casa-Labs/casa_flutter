@@ -70,7 +70,8 @@ class FitPreferencesScreen extends StatelessWidget {
                           );
                           if (fitPreferencesController
                               .isFitPreferencesSaved()) {
-                            router.goNamed(RouteNames.deliveryAddress);
+                            //router.goNamed(RouteNames.deliveryAddress);
+                            router.goNamed(RouteNames.navigation, extra: false);
                           }
                         }
                       },

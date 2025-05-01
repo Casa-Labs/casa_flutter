@@ -30,6 +30,8 @@ class GraphQLMutations {
       phone
       role
       updatedAt
+      isRegistered
+      isVerified
     }
   }
 }
@@ -49,6 +51,10 @@ class GraphQLMutations {
     name
     email
     phone
+    role
+    isRegistered
+    isVerified
+    isDeleted
   }
 }
 """;
@@ -81,31 +87,91 @@ class GraphQLMutations {
 """;
 
   static const String addUserAddress = """
-  mutation AddUserAddress(\$userId: String!, \$address: String!, \$city: String!, \$state: String!, \$pincode: String!,\$landmark: String, \$country: String!) {
-  addUserAddress(userId: \$userId, address: \$address, city: \$city, state: \$state, pincode: \$pincode,landmark: \$landmark, country: \$country) {
+  mutation AddOrUpdateUserAddress(\$userId: String!, \$address: String!, \$city: String!, \$state: String!, \$pincode: String!, \$country: String!, \$landmark: String, \$tag: String) {
+  addUserAddress(userId: \$userId, address: \$address, city: \$city, state: \$state, pincode: \$pincode, country: \$country, landmark: \$landmark, tag: \$tag) {
     id
     userId
+    address
+    city
+    country
+    createdAt
+    landmark
+    pincode
+    state
+    tag
+  }
+}
+""";
+
+  static const String updateUserAddress = """
+  mutation UpdateUserAddress(\$id: String!, \$address: String!, \$city: String!, \$state: String!, \$pincode: String!, \$country: String!, \$landmark: String, \$tag: String) {
+  updateUserAddress(id: \$id, address: \$address, city: \$city, state: \$state, pincode: \$pincode, country: \$country, landmark: \$landmark, tag: \$tag) {
+    id
+    userId
+    tag
     address
     landmark
     city
     state
     pincode
     country
+    createdAt
+    updatedAt
   }
 }
 """;
 
   static const String singleSignOnMutation = """
-  mutation SingleSignOn(\$email: String!, \$provider: AuthProvider!, \$providerId: String!) {
-  SingleSignOn(email: \$email, provider: \$provider, providerId: \$providerId) {
+  mutation SingleSignOn(\$email: String!, \$provider: AuthProvider!, \$providerId: String!, \$name: String!, \$image: String!) {
+  SingleSignOn(email: \$email, provider: \$provider, providerId: \$providerId, name: \$name, image: \$image) {
    token
     user {
       email
       id
+      isRegistered
+      isVerified
+      name
+      image
     }
   }
 }
 """;
+
+  static const String verifyRegistrationOTP = """
+  mutation VerifyRegistratioOTP(\$email: String!, \$otp: String!) {
+  verifyRegistratioOTP(email: \$email, otp: \$otp) 
+}
+  """;
+
+  static const String requestPasswordReset = """
+  mutation RequestPasswordReset(\$email: String!) {
+  requestPasswordReset(email: \$email)
+}
+  """;
+
+  static const String sendRegistrationOTP = """
+  mutation SendRegistrationOTP(\$email: String!) {
+  sendRegistrationOTP(email: \$email)
+}
+  """;
+
+  static const String verifyOTPForPasswordUpdate = """
+  mutation VerifyOTPForPasswordUpdate(\$email: String!, \$otp: String!) {
+  verifyOTPForPasswordUpdate(email: \$email, otp: \$otp)
+}
+  """;
+
+  static const String updatePasswordAfterVerification = """
+  mutation UpdatePasswordAfterVerification(\$email: String!, \$newPassword: String!) {
+  updatePasswordAfterVerification(email: \$email, newPassword: \$newPassword)
+}
+  """;
+
+  static const String updatePasswordWithinApp = """
+  mutation UpdatePasswordWithinApp(\$email: String!, \$newPassword: String!) {
+  updatePasswordWithinApp(email: \$email, newPassword: \$newPassword)
+}
+  """;
 
   static const String addItemToCart = '''
 mutation AddItemToCart(\$item: JSON!, \$userId: String) {
@@ -120,16 +186,55 @@ mutation AddItemToCart(\$item: JSON!, \$userId: String) {
 ''';
 
   static const String createOrder = '''
-mutation CreateOrder(\$productId: String!, \$total: Float!, \$userId: String, \$orderedProductDetails: JSON, \$shippingInfo: JSON) {
-  createOrder(productId: \$productId, total: \$total, userId: \$userId, orderedProductDetails: \$orderedProductDetails, shippingInfo: \$shippingInfo) {
-    createdAt
+mutation CreateOrder(\$totalAmount: Float!, \$deliveryType: String!, \$shippingInfo: JSON!, \$items: [JSON!]!, \$userId: ID!, \$paymentInfo: JSON, \$deliveryInstructions: String, \$discountCode: String) {
+  createOrder(totalAmount: \$totalAmount, deliveryType: \$deliveryType, shippingInfo: \$shippingInfo, items: \$items, userId: \$userId, paymentInfo: \$paymentInfo, deliveryInstructions: \$deliveryInstructions, discountCode: \$discountCode) {
     id
-    orderedProductDetails
-    productId
-    shippingInfo
-    total
-    updatedAt
     userId
+    status
+    shippingInfo
+    paymentInfo
+    totalAmount
+    discountCode
+    deliveryType
+    deliveryInstructions
+    items {
+      id
+      productId
+      product {
+        name
+        price
+        isNewArrival
+        isTrending
+        isDeleted
+        gender
+        stock
+        createdAt
+        description
+        customReturnPolicy
+        customShippingPolicy
+        id
+        mainImage
+        productImages
+        storeId
+      }
+      quantity
+      price
+      total
+    }
+    createdAt
+    updatedAt
+    paymentOrderDetails {
+      id
+      amount
+      currency
+      status
+      orderId
+      paymentId
+      createdAt
+      updatedAt
+      razorpayOrderId
+      userId
+    }
   }
 }
 ''';
@@ -322,4 +427,41 @@ mutation RemoveItemFromClothingItem(\$itemId: ID!) {
   removeItemFromClothingItem(itemId: \$itemId)
 }
 ''';
+
+  static const String verifyPayment = '''
+mutation VerifyPayment(\$paymentId: String!, \$orderId: String!, \$signature: String!) {
+  verifyPayment(paymentId: \$paymentId, orderId: \$orderId, signature: \$signature) {
+    success
+    message
+    data {
+      id
+      amount
+      currency
+      status
+      orderId
+      paymentId
+      createdAt
+      updatedAt
+    }
+  }
+}
+''';
+
+  static const String deleteAllNotificationsForUser = '''
+mutation DeleteAllNotificationsForUser(\$userId: String!) {
+  deleteAllNotificationsForUser(userId: \$userId)
+}
+''';
+
+  static const String deleteNotificationForUser = '''
+mutation DeleteNotificationForUser(\$id: String!) {
+  deleteNotificationForUser(id: \$id)
+}
+''';
+
+  static const String deleteUserAddress = """
+mutation DeleteUserAddress(\$deleteUserAddressId: String!) {
+  deleteUserAddress(id: \$deleteUserAddressId)
+}
+""";
 }

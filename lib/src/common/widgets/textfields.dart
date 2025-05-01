@@ -175,22 +175,13 @@ class CustomSearchBar extends StatelessWidget {
       textInputAction: TextInputAction.next,
       cursorColor: TextFieldColor.black,
       controller: controller,
-      style: TextStyle(
-        fontFamily: Font.gilroy,
-        color: TextFieldColor.black,
-        fontWeight: FontWeight.w500,
-        fontSize: 12,
-      ),
       decoration: InputDecoration(
         prefixIcon: InkWell(
           borderRadius: BorderRadius.circular(30),
           onTap: () {
             onFieldSubmitted?.call(controller!.text);
           },
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Icon(Icons.search_rounded, size: 22),
-          ),
+          child: Icon(Icons.search_rounded, size: 15),
         ),
         counterStyle: TextStyle(
             fontFamily: Font.gilroy,
@@ -199,7 +190,7 @@ class CustomSearchBar extends StatelessWidget {
             fontSize: 12),
         filled: true,
         fillColor: TextFieldColor.white,
-        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        contentPadding: EdgeInsets.symmetric(horizontal: 10),
         hintText: hintText,
         isDense: true,
         hintStyle: TextStyle(

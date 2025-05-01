@@ -35,6 +35,29 @@ query GetNewArrivalProducts(\$page: Int!, \$limit: Int!) {
 }
 """;
 
+  static const String getUser = """
+query GetUser(\$getUserId: String!) {
+  getUser(id: \$getUserId) {
+    addresses {
+      address
+      city
+      country
+      createdAt
+      landmark
+      id
+      pincode
+      state
+      tag
+      updatedAt
+      userId
+    }
+    name
+    email
+    id
+  }
+}
+""";
+
   static const String getCategory = """
 query GetProductCategories {
   getProductCategories {
@@ -103,54 +126,49 @@ query GetOrderReturns(\$userId: String!, \$orderId: String!) {
 """;
 
   static const String getOrders = """
-query GetOrders(\$userId: String!) {
-  myOrders(userId: \$userId) {
-    id
-    orderDate
-    status
-    orderNumber
-    orderTotal
-    invoiceUrl
-    shippingAddress {
-      city
-      name
-      pincode
-    }
-    orderedItems {
-      itemName
-      brandName
-      image
-      quantity
+query CustomerOrders(\$userId: ID!) {
+  customerOrders(userId: \$userId) {
+    items {
+      id
       price
+      productId
+      quantity
+      total
+      product {
+        mainImage
+        name
+        store {
+          name
+        }
+      }
     }
-    paymentInfo {
-      method
-      totalPaid
-      transactionId
-    }
-    orderSummary {
-      itemsPrice
-      postage
-      tax
-      totalBeforeTax
-      orderTotal
-    }
+    id
+    totalAmount
+    createdAt
+    shippingInfo
+    paymentInfo
+    status
   }
 }
 """;
 
   static const String getProductReviews = """
-query GetProductReviews(\$productId: String!) {
-  getProductReviews(productId: \$productId) {
+query GetProductInteractions(\$productId: String!) {
+  getProductInteractions(productId: \$productId) {
+    id
+    userId
+    user {
+      name
+      profileImage
+    }
+    productId
+    liked
+    disliked
+    viewed
+    rating
     comment
     createdAt
-    disliked
-    liked
-    productId
-    rating
-    userId
     updatedAt
-    viewed
   }
 }
 """;
@@ -163,6 +181,27 @@ query GetProducts(\$params: GetProduct!) {
       mainImage
       name
       price
+      storeId
+      store {
+        id
+        userId
+        name
+        description
+        type
+        logo
+        createdAt
+        updatedAt
+        isDeleted
+        reasonToDelete
+      }
+      colors {
+        color {
+          id
+          hexCode
+          createdAt
+          name
+        }
+      }
       sizes {
         productId
         sizeId
@@ -171,6 +210,14 @@ query GetProducts(\$params: GetProduct!) {
           name
           createdAt
           updatedAt
+        }
+      }
+      colors {
+        color {
+          id
+          hexCode
+          createdAt
+          name
         }
       }
       description
@@ -182,6 +229,110 @@ query GetProducts(\$params: GetProduct!) {
     total
     currentPage
     totalPages
+  }
+}
+""";
+
+  static const String getProductsForExplore = """
+query GetProducts(\$params: GetProduct!) {
+  getProducts(params: \$params) {
+    data {
+      mainImage
+      id
+      name
+      price
+    }
+  }
+}
+""";
+
+  static const String getProductsForSearch = """
+query GetProducts(\$params: GetProduct!) {
+  getProducts(params: \$params) {
+    data {
+      id
+      storeId
+      store {
+        logo
+        name
+        id
+      }
+      name
+      description
+      categoryId
+      category {
+        id
+        name
+      }
+      price
+      stock
+      isNewArrival
+      isTrending
+      trendingScore
+      variants
+      sizes {
+        size {
+          name
+          id
+        }
+      }
+      createdAt
+      updatedAt
+      isDeleted
+      reasonToDelete
+      gender
+      customReturnPolicy
+      customShippingPolicy
+      productImages
+      mainImage
+    }
+  }
+}
+""";
+
+  static const String getProductDescription = """
+query GetProductDetails(\$productId: String!) {
+  getProductDetails(productId: \$productId) {
+    productImages
+      mainImage
+      name
+      price
+      colors {
+        color {
+          id
+          hexCode
+          createdAt
+          name
+        }
+      }
+      sizes {
+        productId
+        sizeId
+        size {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+      }
+      colors {
+        color {
+          id
+          hexCode
+          createdAt
+          name
+        }
+      }
+      description
+      customReturnPolicy
+      customShippingPolicy
+      categoryId
+      id
+     store {
+      id
+      name
+      logo
+    }
   }
 }
 """;
@@ -213,23 +364,29 @@ query GetTrendingProducts(\$page: Int!, \$limit: Int!) {
   getTrendingProducts(page: \$page, limit: \$limit) {
     totalCount
     products {
+      mainImage
+      id
       name
       price
-      productImages
+      description
     }
   }
 }
 """;
 
-  static const String getUser = """
-query GetUser(\$getUserId: String!) {
-  getUser(id: \$getUserId) {
-    authProvider
-    createdAt
-    email
-    id
-    role
-    updatedAt
+  static const String getStoreInventory = """
+query GetStoreInventory(\$storeId: String!, \$page: Int, \$limit: Int) {
+  getStoreInventory(storeId: \$storeId, page: \$page, limit: \$limit) {
+    product {
+      mainImage
+      name
+      id
+      price
+      store {
+        name
+        logo
+      }
+    }
   }
 }
 """;

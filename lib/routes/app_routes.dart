@@ -1,5 +1,4 @@
 import 'package:casaflutterapp/src/auth/view/screens/body_type_preferences_screen.dart';
-import 'package:casaflutterapp/src/auth/view/screens/delivery_address_screen.dart';
 import 'package:casaflutterapp/src/auth/view/screens/fit_preferences_screen.dart';
 import 'package:casaflutterapp/src/auth/view/screens/personal_details_screen.dart';
 import 'package:casaflutterapp/src/auth/view/screens/sign_up_screen.dart';
@@ -7,14 +6,16 @@ import 'package:casaflutterapp/src/auth/view/screens/style_preferences_screen.da
 import 'package:casaflutterapp/src/auth/view/screens/verify_your_email.dart';
 import 'package:casaflutterapp/src/cart/view/screens/cart_screen.dart';
 import 'package:casaflutterapp/src/common/widgets/development_screen.dart';
-import 'package:casaflutterapp/src/explore/model/new_arrivals_model.dart' as nam;
 import 'package:casaflutterapp/src/explore/view/screens/products_list_screen.dart';
 import 'package:casaflutterapp/src/explore/view/screens/store_screen.dart';
-import 'package:casaflutterapp/src/order/model/order_models.dart';
+import 'package:casaflutterapp/src/location/model/get_user_response_model.dart';
+import 'package:casaflutterapp/src/location/view/screens/addresses_list.dart';
 import 'package:casaflutterapp/src/order/view/screens/current_orders_screen.dart';
 import 'package:casaflutterapp/src/order/view/screens/order_review_screen.dart';
 import 'package:casaflutterapp/src/payment/view/screens/payment_options_screen.dart';
+import 'package:casaflutterapp/src/profile/view/screens/contact_us_screen.dart';
 import 'package:casaflutterapp/src/profile/view/screens/profile_screen.dart';
+import 'package:casaflutterapp/src/search/view/screens/search_view_screen.dart';
 import 'package:casaflutterapp/utils/preference_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -31,8 +32,6 @@ import '../src/home/view/screens/bottom_navigator.dart';
 import '../src/home/view/screens/home_screen.dart';
 import '../src/location/view/screens/location_screen.dart';
 import '../src/notifications/view/screens/notifications_screen.dart';
-import '../src/order/view/screens/order_details_screen.dart';
-import '../src/order/view/screens/track_shipment.dart';
 import '../src/search/view/screens/search_screen.dart';
 import '../src/splash/view/screens/splash_screen.dart';
 import '../src/wishlist/view/screens/create_closet_screen.dart';
@@ -49,13 +48,13 @@ class _AppPaths {
   static const String stylePreferences = '/stylePreferences';
   static const String bodyTypePreferences = '/bodyTypePreferences';
   static const String fitPreferences = '/fitPreferences';
-  static const String deliveryAddress = '/deliveryAddress';
   static const String forgotPassword = '/forgotPassword';
   static const String verifyEmail = '/verifyEmail';
-  static const String changePassword = '/changePassword';
+  static const String changePassword =
+      '/changePassword/:email/:isFromWithinApp';
   static const String home = '/home';
   static const String notifications = '/notifications';
-  static const String location = '/location';
+  static const String location = '/location/:isEdit';
   static const String faq = '/faq';
   static const String navigation = '/navigation';
   static const String orderDetails = '/orderDetails';
@@ -68,12 +67,15 @@ class _AppPaths {
   static const String profile = '/profile';
   static const String development = '/development';
   static const String myOrders = '/myOrders';
-  static const String store = '/store';
+  static const String store = '/store/:id';
   static const String productList = '/productList';
-  static const String productDescription = '/productDescription';
+  static const String productDescription = '/productDescription/:id';
   static const String paymentOptions = '/paymentOptions';
   static const String cart = '/cart';
   static const String orderReview = '/orderReview';
+  static const String contactUs = '/contactUs';
+  static const String searchView = '/searchView';
+  static const String addressList = '/addressList';
 }
 
 // Public: Use these for named navigation
@@ -88,7 +90,6 @@ class RouteNames {
   static const String stylePreferences = 'stylePreferences';
   static const String bodyTypePreferences = 'bodyTypePreferences';
   static const String fitPreferences = 'fitPreferences';
-  static const String deliveryAddress = 'deliveryAddress';
   static const String home = 'home';
   static const String notifications = 'notifications';
   static const String location = 'location';
@@ -111,6 +112,9 @@ class RouteNames {
   static const String paymentOptions = 'paymentOptions';
   static const String cart = 'cart';
   static const String orderReview = 'orderReview';
+  static const String contactUs = 'contactUs';
+  static const String searchView = 'searchView';
+  static const String addressList = 'addressList';
 }
 
 // Central GoRouter instance
@@ -135,7 +139,11 @@ final GoRouter router = GoRouter(
   errorBuilder: (context, state) {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        context.goNamed(_AppPaths.navigation);
+        if (PreferenceManager.getBool(PreferenceManager.isFirstTime)!) {
+          router.goNamed(RouteNames.navigation, extra: true);
+        } else {
+          router.goNamed(RouteNames.navigation, extra: false);
+        }
       },
     );
     return const Scaffold();
@@ -182,11 +190,6 @@ final GoRouter router = GoRouter(
       builder: (context, state) => FitPreferencesScreen(),
     ),
     GoRoute(
-      path: _AppPaths.deliveryAddress,
-      name: RouteNames.deliveryAddress,
-      builder: (context, state) => DeliveryAddressScreen(),
-    ),
-    GoRoute(
       path: _AppPaths.forgotPassword,
       name: RouteNames.forgotPassword,
       builder: (context, state) => ForgotPasswordScreen(),
@@ -199,7 +202,15 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.changePassword,
       name: RouteNames.changePassword,
-      builder: (context, state) => ChangePasswordScreen(),
+      builder: (context, state) {
+        final email = state.pathParameters['email'] ?? '';
+        final isFromWithinApp =
+            bool.parse(state.pathParameters['isFromWithinApp'] ?? '');
+        return ChangePasswordScreen(
+          email: email,
+          isFromWithinApp: isFromWithinApp,
+        );
+      },
     ),
     GoRoute(
       path: _AppPaths.home,
@@ -209,12 +220,22 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.notifications,
       name: RouteNames.notifications,
-      builder: (context, state) => const NotificationsScreen(),
+      builder: (context, state) => NotificationsScreen(),
     ),
     GoRoute(
       path: _AppPaths.location,
       name: RouteNames.location,
-      builder: (context, state) => LocationScreen(),
+      builder: (context, state) {
+        Addresses? address;
+        if (state.extra != null) {
+          address = state.extra as Addresses;
+        }
+        final isEdit = bool.parse(state.pathParameters['isEdit'] ?? '');
+        return LocationScreen(
+          addresses: address,
+          isEdit: isEdit,
+        );
+      },
     ),
     GoRoute(
       path: _AppPaths.faq,
@@ -224,28 +245,36 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.navigation,
       name: RouteNames.navigation,
-      builder: (context, state) => const NavPage(),
-    ),
-    GoRoute(
-      path: _AppPaths.orderDetails,
-      name: RouteNames.orderDetails,
       builder: (context, state) {
-        final Map<String, dynamic> args = state.extra as Map<String, dynamic>;
-        final OrderedItems selectedItem = args["selectedItem"];
-        final OrderModel orderData = args["orderData"];
-
-        return OrderDetails(orderItem: selectedItem, orderData: orderData);
-      },
-    ),
-    GoRoute(
-      path: _AppPaths.trackShipment,
-      name: RouteNames.trackShipment,
-      builder: (context, state) {
-        final orderItem = state.extra as OrderedItems?;
-        return TrackShipment(orderItem: orderItem!);
+        bool isFirstLaunch = false;
+        if (state.extra != null) {
+          isFirstLaunch = state.extra as bool;
+        }
+        return NavPage(isFirstLaunch: isFirstLaunch);
       },
     ),
 
+    // TODO : Uncomment later but avoid passing the object as it may change from the API
+
+    // GoRoute(
+    //   path: _AppPaths.orderDetails,
+    //   name: RouteNames.orderDetails,
+    //   builder: (context, state) {
+    //     final Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+    //     final OrderedItems selectedItem = args["selectedItem"];
+    //     final OrderModel orderData = args["orderData"];
+    //
+    //     return OrderDetails(orderItem: selectedItem, orderData: orderData);
+    //   },
+    // ),
+    // GoRoute(
+    //   path: _AppPaths.trackShipment,
+    //   name: RouteNames.trackShipment,
+    //   builder: (context, state) {
+    //     final orderItem = state.extra as OrderedItems?;
+    //     return TrackShipment(orderItem: orderItem!);
+    //   },
+    // ),
     GoRoute(
       path: _AppPaths.wishlist,
       name: RouteNames.wishlist,
@@ -292,7 +321,12 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: _AppPaths.store,
       name: RouteNames.store,
-      builder: (context, state) => StoreScreen(),
+      builder: (context, state) {
+        final storeId = state.pathParameters['id'] as String;
+        return StoreScreen(
+          id: storeId,
+        );
+      },
     ),
     GoRoute(
       path: _AppPaths.productList,
@@ -303,8 +337,8 @@ final GoRouter router = GoRouter(
       path: _AppPaths.productDescription,
       name: RouteNames.productDescription,
       builder: (context, state) {
-        final product = state.extra as nam.Products; // ✅ Retrieve the object
-        return ProductDescriptionScreen(product: product);
+        final productId = state.pathParameters['id'] as String;
+        return ProductDescriptionScreen(id: productId);
       },
     ),
     GoRoute(
@@ -321,6 +355,21 @@ final GoRouter router = GoRouter(
       path: _AppPaths.orderReview,
       name: RouteNames.orderReview,
       builder: (context, state) => OrderReviewScreen(),
+    ),
+    GoRoute(
+      path: _AppPaths.contactUs,
+      name: RouteNames.contactUs,
+      builder: (context, state) => ContactUsScreen(),
+    ),
+    GoRoute(
+      path: _AppPaths.searchView,
+      name: RouteNames.searchView,
+      builder: (context, state) => SearchViewScreen(),
+    ),
+    GoRoute(
+      path: _AppPaths.addressList,
+      name: RouteNames.addressList,
+      builder: (context, state) => AddressesList(),
     ),
   ],
 );

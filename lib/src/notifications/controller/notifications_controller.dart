@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 
 import '../../../utils/preference_manager.dart';
 import '../../auth/model/auth_models.dart';
+import '../../common/widgets/show_toast.dart';
 import '../model/notifications_models.dart';
 
 class NotificationsController extends GetxController {
-
   // ========= CONTROLLERS ========= //
 
   // ========= VARIABLES ========= //
@@ -16,19 +16,19 @@ class NotificationsController extends GetxController {
   List<NotificationByUser> notificationList = <NotificationByUser>[];
   final NotificationsService _notificationsService = NotificationsService();
   RxBool isLoading = false.obs;
-
+  var _userId = "";
   // ========== LIFECYCLE FUNCTIONS ========== //
 
   @override
   void onInit() {
     super.onInit();
-    var loginData = User.fromJson(jsonDecode(PreferenceManager.getString(PreferenceManager.userDetails)!));
-    var userId = loginData.id ?? "";
-    getNotificationData(userId);
+    var loginData = User.fromJson(jsonDecode(
+        PreferenceManager.getString(PreferenceManager.userDetails)!));
+    _userId = loginData.id ?? "";
+    getNotificationData(_userId);
   }
 
   // ========== UI FUNCTIONS ========== //
-
 
   void removeNotification(int index, bool isNew) {
     notificationList.removeAt(index);
@@ -40,15 +40,51 @@ class NotificationsController extends GetxController {
 
   // ========== APIs FUNCTIONS ========== //
 
-    Future<void> getNotificationData(String userID) async {
+  Future<void> getNotificationData(String userID) async {
     /// get notification data from server
-      isLoading(true);
+    isLoading(true);
+    update();
+    _notificationsService.getNotification(userID).then((value) {
+      notificationList = value.notificationByUser!;
+      isLoading(false);
       update();
-      _notificationsService.getNotification(userID).then((value) {
-        notificationList = value.notificationByUser!;
-        isLoading(false);
-        update();
-      });
-    }
+    });
+  }
 
+  Future<void> deleteAllNotificationsForUser() async {
+    /// delete all notification data from server
+    update();
+    _notificationsService.deleteAllNotificationsForUser(_userId).then((value) {
+      if (value.deleteAllNotificationsForUser != null) {
+        showToast(
+          message: value.deleteAllNotificationsForUser!,
+        );
+        getNotificationData(_userId);
+      } else {
+        showToast(
+          message: "Something went wrong, please try again",
+        );
+      }
+    });
+  }
+
+  Future<void> deleteNotificationForUser(String notificationId) async {
+    /// delete notification data from server
+    update();
+    _notificationsService
+        .deleteNotificationForUser(notificationId)
+        .then((value) {
+      if (value.deleteNotificationForUser != null &&
+          value.deleteNotificationForUser!) {
+        showToast(
+          message: "Notification deleted successfully",
+        );
+        getNotificationData(_userId);
+      } else {
+        showToast(
+          message: "Something went wrong, please try again",
+        );
+      }
+    });
+  }
 }

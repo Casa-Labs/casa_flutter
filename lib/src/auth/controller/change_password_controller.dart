@@ -1,7 +1,11 @@
+import 'package:casaflutterapp/src/auth/model/service/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChangePasswordController extends GetxController {
+  // ========= OBJECTS ============= //
+  final AuthService _authService = AuthService();
+
   // ========= CONTROLLERS ========= //
   final TextEditingController newPassword = TextEditingController();
   final TextEditingController confirmPassword = TextEditingController();
@@ -11,6 +15,7 @@ class ChangePasswordController extends GetxController {
   RxBool isNewPasswordObscured = true.obs;
   RxBool isConfirmPasswordObscured = true.obs;
   RxString message = ''.obs;
+  RxBool isPasswordChangeInProgress = false.obs;
 
   // ========== UI FUNCTIONS ========== //
 
@@ -21,6 +26,7 @@ class ChangePasswordController extends GetxController {
     isPasswordChanged(false);
     isNewPasswordObscured(true);
     isConfirmPasswordObscured(true);
+    isPasswordChangeInProgress(false);
   }
 
   @override
@@ -30,7 +36,10 @@ class ChangePasswordController extends GetxController {
   }
 
 // ========== APIs FUNCTIONS ========== //
-  Future<void> changePassword() async {
+  Future<void> changePassword({
+    required String email,
+    required bool isFromWithinApp,
+  }) async {
     if (newPassword.text.isEmpty) {
       message('Please enter new password');
       isPasswordChanged(false);
@@ -48,8 +57,31 @@ class ChangePasswordController extends GetxController {
       message('New password and confirm password are not same');
       isPasswordChanged(false);
     } else {
-      message('Password changes successfully');
-      isPasswordChanged(true);
+      isPasswordChangeInProgress(true);
+
+      final String? changePasswordResponse;
+      if (isFromWithinApp) {
+        changePasswordResponse = await _authService.updatePasswordWithinApp(
+          email: email,
+          newPassword: newPassword.text,
+        );
+      } else {
+        changePasswordResponse =
+            await _authService.updatePasswordAfterVerification(
+          email: email,
+          newPassword: newPassword.text,
+        );
+      }
+
+      if (changePasswordResponse != null) {
+        isPasswordChangeInProgress(false);
+        message('Password updated successfully');
+        isPasswordChanged(true);
+      } else {
+        isPasswordChangeInProgress(false);
+        message('Password not updated');
+        isPasswordChanged(false);
+      }
     }
   }
 

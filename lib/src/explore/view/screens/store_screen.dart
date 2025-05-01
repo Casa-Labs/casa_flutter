@@ -1,96 +1,94 @@
 import 'package:casaflutterapp/routes/app_routes.dart';
-import 'package:casaflutterapp/src/explore/controller/explore_controller.dart';
-import 'package:casaflutterapp/src/wishlist/view/widgets/icons_widget.dart';
-import 'package:casaflutterapp/utils/color_constant.dart';
+import 'package:casaflutterapp/src/explore/controller/store_controller.dart';
+import 'package:casaflutterapp/src/explore/model/store_model.dart';
+import 'package:casaflutterapp/src/explore/view/widgets/banner_image.dart';
 import 'package:casaflutterapp/utils/padding_size.dart';
 import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../common/widgets/filter_row.dart';
 import '../widgets/product_card.dart';
 
 class StoreScreen extends StatelessWidget {
-  const StoreScreen({super.key});
+  final String id;
+
+  StoreScreen({super.key, required this.id});
+
+  final storeCtrl = Get.put(StoreController());
 
   @override
   Widget build(BuildContext context) {
-    final exploreCtrl = Get.find<ExploreController>();
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            BannerImage(),
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding),
-                child: Column(
-                  children: [
-                    FilterRow(
-                      brandList: exploreCtrl.brandFilter,colorList: exploreCtrl.colorFilter,productList: exploreCtrl.productFilter,sizedList: exploreCtrl.sizedFilter,
+        child: FutureBuilder<GetStoreInventoryResponseModel>(
+          future: storeCtrl.getStoreInventoryByIdCall(storeId: id),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return const Center(child: Text("Can't fetch store details"));
+            } else if (!snapshot.hasData || snapshot.data == null) {
+              return const Center(child: Text("No store details available"));
+            } else {
+              final productList = snapshot.data?.getStoreInventory ?? [];
+              return Column(
+                children: [
+                  BannerImage(
+                    imageUrl: productList.first.product?.store?.logo ??
+                        ImageConstants.dummyNetworkPortrait,
+                  ),
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: PaddingSize.commonPadding),
+                      child: Column(
+                        children: [
+                          // FilterRow(
+                          //   brandList: exploreCtrl.brandFilter,colorList: exploreCtrl.colorFilter,productList: exploreCtrl.productFilter,sizedList: exploreCtrl.sizedFilter,
+                          // ),
+                          const SizedBox(height: 20),
+                          Expanded(
+                            child: GridView.builder(
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: 20,
+                                        childAspectRatio: 0.47,
+                                        mainAxisSpacing: 15),
+                                itemCount: productList.length,
+                                itemBuilder: (context, index) {
+                                  final product = productList[index].product;
+
+                                  return ProductCard(
+                                    name: product?.name ?? 'API Error',
+                                    price: product?.price ?? 0.0,
+                                    imageURL: product?.mainImage ??
+                                        ImageConstants.dummyNetworkPortrait,
+                                    wishlistOnPressed: () {
+                                      // TODO : Implement add to closet
+                                    },
+                                    onTap: () {
+                                      context.pushNamed(
+                                        RouteNames.productDescription,
+                                        pathParameters: {
+                                          'id': product?.id ?? ''
+                                        },
+                                      );
+                                    },
+                                  );
+                                }),
+                          ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: 20),
-                    Expanded(
-                      child: GridView.builder(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 8,
-                                  childAspectRatio: 0.54,
-                                  mainAxisSpacing: 15),
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return ProductCard(
-                              name: 'Viscose Long Coat',
-                              description: 'Long coat with a lapel collar',
-                              price: 1000,
-                              offerTag: '',
-                              imageURL: ImageConstants.placeholderProduct,
-                              index: index,
-                              wishlistIcon: Icon(Icons.bookmark_border),
-                              onTap: () {
-                                context
-                                    .pushNamed(RouteNames.productDescription);
-                              },
-                            );
-                          }),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+                  ),
+                ],
+              );
+            }
+          },
         ),
       ),
-    );
-  }
-}
-
-class BannerImage extends StatelessWidget {
-  const BannerImage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SizedBox(
-          width: double.maxFinite,
-          child: Image.asset(
-            ImageConstants.zaraBanner,
-            fit: BoxFit.cover,
-          ),
-        ),
-
-        IconsWidget(
-          onTap: () {
-            context.pop();
-          },
-          icon: Icons.arrow_back_ios_new,
-          backColor: IconColor.white,
-          iconColor: IconColor.black,
-        ).paddingAll(10),
-      ],
     );
   }
 }

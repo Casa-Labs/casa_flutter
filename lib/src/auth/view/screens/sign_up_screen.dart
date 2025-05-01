@@ -1,5 +1,6 @@
 import 'package:casaflutterapp/src/auth/controller/sign_up_controller.dart';
-import 'package:casaflutterapp/src/common/widgets/show_toast.dart' show showToast;
+import 'package:casaflutterapp/src/common/widgets/show_toast.dart'
+    show showToast;
 import 'package:casaflutterapp/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -120,10 +121,10 @@ class SignUpScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 25.0),
                         child: ElevatedButton(
                           onPressed: signUpController.isEmailValid()
-                              ? () {
-                                  signUpController.sendOtp();
-                                  if (signUpController.isOtpSent() &&
-                                      signUpController.message.isNotEmpty) {
+                              ? () async {
+                                  await signUpController
+                                      .sentOtpForRegistration();
+                                  if (signUpController.message().isNotEmpty) {
                                     showToast(
                                       message: signUpController.message(),
                                     );
@@ -139,11 +140,17 @@ class SignUpScreen extends StatelessWidget {
                               width: 0.5,
                             ),
                           ),
-                          child: Text(
-                            !signUpController.isOtpSent()
-                                ? 'Send OTP'
-                                : 'Resend Code',
-                          ),
+                          child: signUpController.isOtpSendingInProgress()
+                              ? SizedBox(
+                                  height: 20.0,
+                                  width: 20.0,
+                                  child: CircularProgressIndicator(),
+                                )
+                              : Text(
+                                  !signUpController.isOtpSent()
+                                      ? 'Send OTP'
+                                      : 'Resend Code',
+                                ),
                         ),
                       ),
                     ),
@@ -224,12 +231,14 @@ class SignUpScreen extends StatelessWidget {
                                     obscureText:
                                         signUpController.isOtpObscured(),
                                     enabled: !signUpController.isOtpVerified(),
-                                    onChanged: (value) {
+                                    onChanged: (value) async {
                                       if (value.isEmpty) {
                                         FocusScope.of(context).previousFocus();
                                       } else {
-                                        signUpController.verifyOtpCall();
-                                        if (signUpController.isOtpVerified()) {
+                                        await signUpController.verifyOtpCall();
+                                        if (signUpController
+                                            .message()
+                                            .isNotEmpty) {
                                           showToast(
                                             message: signUpController.message(),
                                           );
@@ -251,6 +260,13 @@ class SignUpScreen extends StatelessWidget {
                                         .onSecondaryContainer,
                                   ),
                                 ),
+                                if (signUpController
+                                    .isOtpVerificationInProgress())
+                                  SizedBox(
+                                    height: 20.0,
+                                    width: 20.0,
+                                    child: CircularProgressIndicator(),
+                                  ),
                                 if (signUpController.isOtpVerified())
                                   Image.asset(
                                     ImageConstants.verify,
@@ -295,14 +311,17 @@ class SignUpScreen extends StatelessWidget {
                     SizedBox(height: 20),
                     AuthButton(
                       type: AuthButtonType.signUp,
-                      onPressed: signUpController.checkboxValue()
+                      isLoading: signUpController.isRegistrationInProgress(),
+                      onPressed: (signUpController.checkboxValue() &&
+                              signUpController.isOtpVerified())
                           ? () async {
                               await signUpController.registerUserCall();
                               if (signUpController.message().isNotEmpty) {
                                 showToast(
                                   message: signUpController.message(),
                                 );
-                                if (signUpController.isUserRegistered()) {
+                                if (signUpController
+                                    .isRegistrationCompleted()) {
                                   signUpController.clearAllControllers();
                                   router.pushNamed(RouteNames.personalDetails);
                                 }

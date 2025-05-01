@@ -80,10 +80,13 @@ class ExpandableCard extends StatelessWidget {
                       SizedBox(height: 10),
                       Text('Item Total: ₹${orderController.itemtotal}',
                           style: Theme.of(context).textTheme.bodyMedium),
+                      SizedBox(height: 5),
                       Text('Delivery Fee: ₹${orderController.deliveryCharge}',
                           style: Theme.of(context).textTheme.bodyMedium),
+                      SizedBox(height: 5),
                       Text('Platform Fee: ₹${orderController.platFormFee}',
                           style: Theme.of(context).textTheme.bodyMedium),
+                      SizedBox(height: 5),
                       Text(
                           'GST and Restaurant Charges: ₹${orderController.gst}',
                           style: Theme.of(context).textTheme.bodyMedium),

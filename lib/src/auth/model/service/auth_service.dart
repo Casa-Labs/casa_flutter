@@ -36,9 +36,11 @@ class AuthService {
     final GoogleLoginResponse googleLoginResponse;
 
     final response = await _graphQLManager.singleSignOn(
-      googleLoginRequestModel.email,
-      googleLoginRequestModel.provider,
-      googleLoginRequestModel.providerId,
+      email: googleLoginRequestModel.email,
+      provider: googleLoginRequestModel.provider,
+      providerId: googleLoginRequestModel.providerId,
+      name: googleLoginRequestModel.name,
+      image: googleLoginRequestModel.image,
     );
 
     googleLoginResponse = GoogleLoginResponse.fromJson(
@@ -63,6 +65,74 @@ class AuthService {
     );
 
     return registerUserResponse;
+  }
+
+  Future<String?> verifyRegistrationOTP({
+    required String email,
+    required String otp,
+  }) async {
+    final response = await _graphQLManager.verifyRegistrationOTP(
+      email: email,
+      otp: otp,
+    );
+
+    return response.data?['verifyRegistratioOTP'];
+  }
+
+  Future<String?> requestPasswordReset({
+    required String email,
+  }) async {
+    final response = await _graphQLManager.requestPasswordReset(
+      email: email,
+    );
+
+    return response.data?['requestPasswordReset'];
+  }
+
+  Future<String?> sendRegistrationOTP({
+    required String email,
+  }) async {
+    final response = await _graphQLManager.sendRegistrationOTP(
+      email: email,
+    );
+
+    return response.data?['sendRegistrationOTP'];
+  }
+
+  Future<String?> verifyOTPForPasswordUpdate({
+    required String email,
+    required String otp,
+  }) async {
+    final response = await _graphQLManager.verifyOTPForPasswordUpdate(
+      email: email,
+      otp: otp,
+    );
+
+    return response.data?['verifyOTPForPasswordUpdate'];
+  }
+
+  Future<String?> updatePasswordAfterVerification({
+    required String email,
+    required String newPassword,
+  }) async {
+    final response = await _graphQLManager.updatePasswordAfterVerification(
+      email: email,
+      newPassword: newPassword,
+    );
+
+    return response.data?['updatePasswordAfterVerification'];
+  }
+
+  Future<String?> updatePasswordWithinApp({
+    required String email,
+    required String newPassword,
+  }) async {
+    final response = await _graphQLManager.updatePasswordWithinApp(
+      email: email,
+      newPassword: newPassword,
+    );
+
+    return response.data?['updatePasswordWithinApp'];
   }
 
   Future<bool?> deleteUser({
@@ -160,6 +230,8 @@ class AuthService {
     required String state,
     required String pinCode,
     required String country,
+    String? landMark,
+    String? tag,
   }) async {
     final AddUserAddressResponseModel addUserAddressResponse;
 
@@ -170,6 +242,8 @@ class AuthService {
       state: state,
       pinCode: pinCode,
       country: country,
+      landmark: landMark,
+      tag: tag,
     );
 
     addUserAddressResponse = AddUserAddressResponseModel.fromJson(

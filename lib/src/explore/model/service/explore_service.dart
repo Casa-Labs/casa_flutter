@@ -1,5 +1,8 @@
+import 'package:casaflutterapp/src/cart/model/cart_models.dart';
 import 'package:casaflutterapp/src/explore/model/brands_model.dart';
+import 'package:casaflutterapp/src/explore/model/explore_products_model.dart';
 import 'package:casaflutterapp/src/explore/model/new_arrivals_model.dart';
+import 'package:casaflutterapp/src/explore/model/product_by_id_model.dart';
 import 'package:casaflutterapp/src/explore/model/product_categories_model.dart';
 import 'package:casaflutterapp/src/explore/model/trending_products_model.dart';
 import 'package:get/get.dart';
@@ -65,6 +68,50 @@ class ExploreService {
           .assignAll(categoriesResponse.getProductCategories ?? []);
     } else {
       logg.e('Get brands Exception: ${response.exception}');
+    }
+  }
+
+  Future<CartItem> getProductById(String productId) async {
+    var response = await GraphQLManager().getProductsById(productId);
+
+    if (!response.hasException && response.data != null) {
+      final categoriesResponse = CartItem.fromJson(response.data!);
+      return categoriesResponse;
+    } else {
+      logg.e('Get product by ID Exception: ${response.exception}');
+      return CartItem();
+    }
+  }
+
+  Future<GetProductDetails> getProductDetailsById(String productId) async {
+    var response = await GraphQLManager().getProductsById(productId);
+
+    if (!response.hasException && response.data != null) {
+      var responseBody = GetProductByIdResponseModel.fromJson(response.data!);
+      final productDetailsResponse =
+          responseBody.getProductDetails ?? GetProductDetails();
+      return productDetailsResponse;
+    } else {
+      logg.e('Get product details by ID Exception: ${response.exception}');
+      return GetProductDetails();
+    }
+  }
+
+  Future<void> getProducts({
+    required int page,
+    required int limit,
+  }) async {
+    var response = await GraphQLManager().getProductsForExplore({
+      "page": page,
+      "pageSize": limit,
+    });
+
+    if (!response.hasException && response.data != null) {
+      final productsResponse = ExploreGetProductsModel.fromJson(response.data!);
+      exploreCtrl.clothesYouMightLike
+          .assignAll(productsResponse.getProducts?.data ?? []);
+    } else {
+      logg.e('Get clothes you might like Exception: ${response.exception}');
     }
   }
 }

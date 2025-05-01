@@ -1,10 +1,11 @@
 // graphql_manager.dart
-
 import 'package:casaflutterapp/network/graph_ql_mutations.dart';
 import 'package:casaflutterapp/network/graph_ql_queries.dart';
 import 'package:casaflutterapp/network/graph_ql_variables.dart';
 import 'package:casaflutterapp/network/graphql_client.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+
+import '../src/order/model/create_order.dart';
 
 class GraphQLManager {
   final GraphQLClientService _clientService = GraphQLClientService();
@@ -14,6 +15,80 @@ class GraphQLManager {
     return await _clientService.performMutationWithoutToken(
       document: GraphQLMutations.registerMutation,
       variables: GraphQLVariables.registerVariables(email, password),
+    );
+  }
+
+  Future<QueryResult> verifyRegistrationOTP({
+    required String email,
+    required String otp,
+  }) async {
+    return await _clientService.performMutationWithoutToken(
+      document: GraphQLMutations.verifyRegistrationOTP,
+      variables: GraphQLVariables.verifyRegistrationOTP(
+        email,
+        otp,
+      ),
+    );
+  }
+
+  Future<QueryResult> requestPasswordReset({
+    required String email,
+  }) async {
+    return await _clientService.performMutationWithoutToken(
+      document: GraphQLMutations.requestPasswordReset,
+      variables: GraphQLVariables.requestPasswordReset(
+        email,
+      ),
+    );
+  }
+
+  Future<QueryResult> sendRegistrationOTP({
+    required String email,
+  }) async {
+    return await _clientService.performMutationWithoutToken(
+      document: GraphQLMutations.sendRegistrationOTP,
+      variables: GraphQLVariables.sendRegistrationOTP(
+        email,
+      ),
+    );
+  }
+
+  Future<QueryResult> verifyOTPForPasswordUpdate({
+    required String email,
+    required String otp,
+  }) async {
+    return await _clientService.performMutationWithoutToken(
+      document: GraphQLMutations.verifyOTPForPasswordUpdate,
+      variables: GraphQLVariables.verifyOTPForPasswordUpdate(
+        email,
+        otp,
+      ),
+    );
+  }
+
+  Future<QueryResult> updatePasswordAfterVerification({
+    required String email,
+    required String newPassword,
+  }) async {
+    return await _clientService.performMutationWithoutToken(
+      document: GraphQLMutations.updatePasswordAfterVerification,
+      variables: GraphQLVariables.updatePasswordAfterVerification(
+        email,
+        newPassword,
+      ),
+    );
+  }
+
+  Future<QueryResult> updatePasswordWithinApp({
+    required String email,
+    required String newPassword,
+  }) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.updatePasswordWithinApp,
+      variables: GraphQLVariables.updatePasswordWithinApp(
+        email,
+        newPassword,
+      ),
     );
   }
 
@@ -102,6 +177,7 @@ class GraphQLManager {
     required String pinCode,
     required String country,
     String? landmark,
+    String? tag,
   }) async {
     return await _clientService.performMutation(
       document: GraphQLMutations.addUserAddress,
@@ -113,16 +189,52 @@ class GraphQLManager {
         pinCode,
         country,
         landmark,
+        tag,
       ),
     );
   }
 
-  Future<QueryResult> singleSignOn(
-      String email, String provider, String providerId) async {
+  Future<QueryResult> updateUserAddress({
+    required String id,
+    required String address,
+    required String city,
+    required String state,
+    required String pinCode,
+    required String country,
+    String? landmark,
+    String? tag,
+  }) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.updateUserAddress,
+      variables: GraphQLVariables.updateUserAddressVariables(
+        id,
+        address,
+        city,
+        state,
+        pinCode,
+        country,
+        landmark,
+        tag,
+      ),
+    );
+  }
+
+  Future<QueryResult> singleSignOn({
+    required String email,
+    required String provider,
+    required String providerId,
+    required String name,
+    required String image,
+  }) async {
     return await _clientService.performMutationWithoutToken(
       document: GraphQLMutations.singleSignOnMutation,
-      variables:
-          GraphQLVariables.singleSignOnVariables(email, provider, providerId),
+      variables: GraphQLVariables.singleSignOnVariables(
+        email,
+        provider,
+        providerId,
+        name,
+        image,
+      ),
     );
   }
 
@@ -135,15 +247,27 @@ class GraphQLManager {
   }
 
   Future<QueryResult> createOrder(
-      String productId,
-      double total,
-      String userId,
-      Map<String, dynamic> orderedProductDetails,
-      Map<String, dynamic> shippingInfo) async {
+    String userId,
+    int totalAmount,
+    String deliveryType,
+    String discountCode,
+    String deliveryInstructions,
+    List<Items> items,
+    PaymentInfo paymentInfo,
+    ShippingInfo shippingInfo,
+  ) async {
     return await _clientService.performMutation(
       document: GraphQLMutations.createOrder,
       variables: GraphQLVariables.createOrderVariables(
-          productId, total, userId, orderedProductDetails, shippingInfo),
+        userId,
+        totalAmount,
+        deliveryType,
+        discountCode,
+        deliveryInstructions,
+        items,
+        paymentInfo,
+        shippingInfo,
+      ),
     );
   }
 
@@ -173,13 +297,13 @@ class GraphQLManager {
   }
 
   Future<QueryResult> registerProductReview(
-      String productId,
-      String userId,
-      bool liked,
-      bool disliked,
-      bool viewed,
-      int rating,
-      String comment) async {
+      {required String productId,
+      required String userId,
+      required bool liked,
+      required bool disliked,
+      required bool viewed,
+      required int rating,
+      required String comment}) async {
     return await _clientService.performMutation(
       document: GraphQLMutations.registerProductReview,
       variables: GraphQLVariables.registerProductReviewVariables(
@@ -269,6 +393,21 @@ class GraphQLManager {
     );
   }
 
+  Future<QueryResult> deleteAllNotificationsForUser(
+      {required String userId}) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.deleteAllNotificationsForUser,
+      variables: GraphQLVariables.deleteAllNotificationsForUser(userId),
+    );
+  }
+
+  Future<QueryResult> deleteNotificationForUser({required String id}) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.deleteNotificationForUser,
+      variables: GraphQLVariables.deleteNotificationForUser(id),
+    );
+  }
+
   //QUERIES
 
   Future<QueryResult> getNewArrivalProducts(
@@ -317,6 +456,34 @@ class GraphQLManager {
     );
   }
 
+  Future<QueryResult> getProductsForExplore(Map<String, dynamic> params) async {
+    return await _clientService.performQuery(
+      document: GraphQLQueries.getProductsForExplore,
+      variables: GraphQLVariables.getProductsVariables(params),
+    );
+  }
+
+  Future<QueryResult> getRelatedProducts(Map<String, dynamic> params) async {
+    return await _clientService.performQuery(
+      document: GraphQLQueries.getProductsForExplore,
+      variables: GraphQLVariables.getProductsVariables(params),
+    );
+  }
+
+  Future<QueryResult> getProductsForSearch(Map<String, dynamic> params) async {
+    return await _clientService.performQuery(
+      document: GraphQLQueries.getProductsForSearch,
+      variables: GraphQLVariables.getProductsVariables(params),
+    );
+  }
+
+  Future<QueryResult> getProductsById(String productId) async {
+    return await _clientService.performQuery(
+      document: GraphQLQueries.getProductDescription,
+      variables: GraphQLVariables.getProductById(productId),
+    );
+  }
+
   Future<QueryResult> getBrands(
       {int? limit, int? page, String? search, String? storeType}) async {
     return await _clientService.performQuery(
@@ -347,10 +514,32 @@ class GraphQLManager {
     );
   }
 
-  Future<QueryResult> getUser(String getUserId) async {
+  Future<QueryResult> getStoreInventoryById(
+      {required int page, required int limit, required String storeId}) async {
+    return await _clientService.performQuery(
+      document: GraphQLQueries.getStoreInventory,
+      variables: GraphQLVariables.getStoreInventoryVariables(
+          page: page, limit: limit, storeId: storeId),
+    );
+  }
+
+  Future<QueryResult> getUser({
+    required String userId,
+  }) async {
     return await _clientService.performQuery(
       document: GraphQLQueries.getUser,
-      variables: GraphQLVariables.getUserVariables(getUserId),
+      variables: GraphQLVariables.getUserVariables(userId),
+    );
+  }
+
+  Future<QueryResult> deleteUserAddress({
+    required String addressId,
+  }) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.deleteUserAddress,
+      variables: GraphQLVariables.deleteUserAddressVariables(
+        addressId,
+      ),
     );
   }
 
@@ -387,6 +576,21 @@ class GraphQLManager {
     return await _clientService.performQuery(
       document: GraphQLQueries.getSavedItemsToCloset,
       variables: GraphQLVariables.getSavedItemsToCloset(userId, clothingItemId),
+    );
+  }
+
+  Future<QueryResult> verifyPayment({
+    required String paymentId,
+    required String orderId,
+    required String signature,
+  }) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.verifyPayment,
+      variables: GraphQLVariables.verifyPayment(
+        paymentId,
+        orderId,
+        signature,
+      ),
     );
   }
 }

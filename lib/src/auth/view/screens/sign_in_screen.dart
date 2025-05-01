@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:casaflutterapp/src/auth/controller/auth_controller.dart';
 import 'package:casaflutterapp/src/auth/view/widgets/auth_button.dart';
 import 'package:casaflutterapp/src/common/widgets/custom_text_form_field_widget.dart';
@@ -7,8 +6,8 @@ import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../routes/app_routes.dart';
+import '../../../../utils/preference_manager.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
@@ -82,7 +81,21 @@ class SignInScreen extends StatelessWidget {
                                 message: authController.message(),
                               );
                               if (authController.isLoggedIn()) {
-                                router.goNamed(RouteNames.navigation);
+                                if (authController.isRegistered()) {
+                                  if (PreferenceManager.getBool(
+                                          PreferenceManager.isFirstTime) ??
+                                      true) {
+                                    router.goNamed(RouteNames.navigation,
+                                        extra: true);
+                                    await PreferenceManager.setData(
+                                        PreferenceManager.isFirstTime, false);
+                                  } else {
+                                    router.goNamed(RouteNames.navigation,
+                                        extra: false);
+                                  }
+                                } else {
+                                  router.goNamed(RouteNames.personalDetails);
+                                }
                               }
                             }
                           },
@@ -114,8 +127,24 @@ class SignInScreen extends StatelessWidget {
                           showToast(
                             message: authController.message(),
                           );
-                          if (authController.isGoogleLoggedIn()) {
-                            router.goNamed(RouteNames.navigation);
+                          // if registered then navigate to home screen
+                          if (authController.isRegistered()) {
+                            if (authController.isGoogleLoggedIn()) {
+                              if (PreferenceManager.getBool(
+                                  PreferenceManager.isFirstTime)!) {
+                                router.goNamed(RouteNames.navigation,
+                                    extra: true);
+                                await PreferenceManager.setData(
+                                    PreferenceManager.isFirstTime, false);
+                              } else {
+                                router.goNamed(RouteNames.navigation,
+                                    extra: false);
+                              }
+                            }
+                          }
+                          // else navigate to Add Preferences Screen
+                          else {
+                            router.pushNamed(RouteNames.personalDetails);
                           }
                         }
                       },
@@ -128,6 +157,30 @@ class SignInScreen extends StatelessWidget {
                             isLoading: authController.isAppleSignInLoading(),
                             onPressed: () async {
                               await authController.signInWithApple();
+                              if (authController.message().isNotEmpty) {
+                                showToast(
+                                  message: authController.message(),
+                                );
+                                // if registered then navigate to home screen
+                                if (authController.isRegistered()) {
+                                  if (authController.isAppleLoggedIn()) {
+                                    if (PreferenceManager.getBool(
+                                        PreferenceManager.isFirstTime)!) {
+                                      router.goNamed(RouteNames.navigation,
+                                          extra: true);
+                                      await PreferenceManager.setData(
+                                          PreferenceManager.isFirstTime, false);
+                                    } else {
+                                      router.goNamed(RouteNames.navigation,
+                                          extra: false);
+                                    }
+                                  }
+                                }
+                                // else navigate to Add Preferences Screen
+                                else {
+                                  router.pushNamed(RouteNames.personalDetails);
+                                }
+                              }
                             },
                           ),
                         )

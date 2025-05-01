@@ -19,6 +19,7 @@ class AuthController extends GetxController {
   final AuthService _authService = AuthService();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+
   // ========= CONTROLLERS ========= //
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
@@ -32,6 +33,7 @@ class AuthController extends GetxController {
   RxBool isAppleSignInLoading = false.obs;
   RxBool isGoogleLoggedIn = false.obs;
   RxBool isAppleLoggedIn = false.obs;
+  RxBool isRegistered = false.obs;
 
   RxString message = ''.obs;
 
@@ -50,6 +52,7 @@ class AuthController extends GetxController {
     isGoogleLoggedIn(false);
     isAppleLoggedIn(false);
     checkboxValue(false);
+    isRegistered(false);
   }
 
   @override
@@ -97,8 +100,15 @@ class AuthController extends GetxController {
           PreferenceManager.userId,
           loginResponse?.login?.user?.id.toString(),
         );
-        message('User logged com successfully');
-        isLoggedIn(true);
+        if (loginResponse?.login?.user?.isRegistered ?? false) {
+          isRegistered(true);
+          message('User logged in successfully');
+          isLoggedIn(true);
+        } else {
+          isRegistered(false);
+          message('Please update preferences');
+          isLoggedIn(true);
+        }
       } else {
         message(loginResponse?.errorMessage);
         isLoading(false);
@@ -131,6 +141,8 @@ class AuthController extends GetxController {
           email: user.email ?? '',
           provider: "GOOGLE",
           providerId: user.uid,
+          name: user.displayName ?? '',
+          image: user.photoURL ?? '',
         );
       } else {
         message("Google Sign-In failed");
@@ -171,8 +183,9 @@ class AuthController extends GetxController {
         email: email ?? '',
         provider: "APPLE",
         providerId: userId,
+        name: fullName ?? '',
+        image: '',
       );
-
       message("Apple Sign-In successful");
     } catch (e) {
       message("Apple Sign-In failed: ${e.toString()}");
@@ -183,6 +196,8 @@ class AuthController extends GetxController {
     required String email,
     required String providerId,
     required String provider,
+    required String name,
+    required String image,
   }) async {
     // Determine which loading state to update
     if (provider == 'GOOGLE') {
@@ -195,6 +210,8 @@ class AuthController extends GetxController {
       email: email,
       providerId: providerId,
       provider: provider,
+      name: name,
+      image: image,
     );
 
     final googleLoginResponse = await _authService.googleLoginUser(
@@ -225,7 +242,13 @@ class AuthController extends GetxController {
         isAppleLoggedIn(true);
         isAppleSignInLoading(false);
       }
+
       message('User logged in successfully');
+      if (googleLoginResponse?.singleSignOn?.user?.isRegistered ?? false) {
+        isRegistered(true);
+      } else {
+        isRegistered(false);
+      }
     } else {
       isGoogleSignInLoading(false);
       isAppleSignInLoading(false);
@@ -270,6 +293,12 @@ class AuthController extends GetxController {
     // clear user id
     await PreferenceManager.setData(
       PreferenceManager.userId,
+      '',
+    );
+
+    // clear user address details
+    await PreferenceManager.setData(
+      PreferenceManager.userAddressDetails,
       '',
     );
   }
