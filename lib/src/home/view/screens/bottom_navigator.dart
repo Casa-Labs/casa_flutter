@@ -66,13 +66,15 @@ class NavPageState extends State<NavPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BackgroundColor.white,
-      body: Stack(
-        children: [
-          _getScreen(_selectedIndex), // Display the selected page
-          TutorialScreen(
-            isFirstTime: _isFirstLaunch,
-          ),
-        ],
+      body: SafeArea(
+        child: Stack(
+          children: [
+            _getScreen(_selectedIndex), // Display the selected page
+            TutorialScreen(
+              isFirstTime: _isFirstLaunch,
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: MediaQuery(
         data: MediaQuery.of(context).removePadding(removeBottom: true),
