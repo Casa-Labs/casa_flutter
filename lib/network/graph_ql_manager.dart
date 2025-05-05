@@ -412,7 +412,7 @@ class GraphQLManager {
 
   Future<QueryResult> getNewArrivalProducts(
       int page, int limit, String? search) async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getNewArrivalProducts,
       variables:
           GraphQLVariables.getNewArrivalProductsVariables(page, limit, search),
@@ -421,7 +421,7 @@ class GraphQLManager {
 
   Future<QueryResult> getNewArrivalProductsForExplore(
       int page, int limit, String? search) async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getNewArrivalProductsForExplore,
       variables:
           GraphQLVariables.getNewArrivalProductsVariables(page, limit, search),
@@ -450,35 +450,35 @@ class GraphQLManager {
   }
 
   Future<QueryResult> getProducts(Map<String, dynamic> params) async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getProducts,
       variables: GraphQLVariables.getProductsVariables(params),
     );
   }
 
   Future<QueryResult> getProductsForExplore(Map<String, dynamic> params) async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getProductsForExplore,
       variables: GraphQLVariables.getProductsVariables(params),
     );
   }
 
   Future<QueryResult> getRelatedProducts(Map<String, dynamic> params) async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getProductsForExplore,
       variables: GraphQLVariables.getProductsVariables(params),
     );
   }
 
   Future<QueryResult> getProductsForSearch(Map<String, dynamic> params) async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getProductsForSearch,
       variables: GraphQLVariables.getProductsVariables(params),
     );
   }
 
   Future<QueryResult> getProductsById(String productId) async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getProductDescription,
       variables: GraphQLVariables.getProductById(productId),
     );
@@ -486,7 +486,7 @@ class GraphQLManager {
 
   Future<QueryResult> getBrands(
       {int? limit, int? page, String? search, String? storeType}) async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getBrand,
       variables:
           GraphQLVariables.getBrandVariables(storeType, page, limit, search),
@@ -500,14 +500,14 @@ class GraphQLManager {
   }
 
   Future<QueryResult> getSizes() async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getSizes,
     );
   }
 
   Future<QueryResult> getTrendingProducts(
       int page, int limit, String? search) async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getTrendingProducts,
       variables:
           GraphQLVariables.getTrendingProductsVariables(page, limit, search),
@@ -516,7 +516,7 @@ class GraphQLManager {
 
   Future<QueryResult> getStoreInventoryById(
       {required int page, required int limit, required String storeId}) async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getStoreInventory,
       variables: GraphQLVariables.getStoreInventoryVariables(
           page: page, limit: limit, storeId: storeId),
