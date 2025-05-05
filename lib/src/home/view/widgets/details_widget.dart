@@ -150,7 +150,9 @@ class ProductDetails extends StatelessWidget {
                               product: product,
                             );
                           },
-                        );
+                        ).then((value) {
+                          logic.update();
+                        },);
                       },
                       child: Text("Write a review")),
                 ],
