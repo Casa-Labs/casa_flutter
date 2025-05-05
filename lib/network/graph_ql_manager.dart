@@ -553,7 +553,7 @@ class GraphQLManager {
   Future<QueryResult> getCartItems({required String userId}) async {
     return await _clientService.performQuery(
       document: GraphQLQueries.getCartItems,
-      variables: GraphQLVariables.getCartItemsVariables(userId),
+      variables: GraphQLVariables.getCartItemsVariables(userId)
     );
   }
 
