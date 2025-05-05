@@ -177,7 +177,7 @@ class OrderReviewController extends GetxController {
     final shippingInfo = ShippingInfo(
       name: userDetails.name,
       city: address.city,
-      pincode: int.parse(address.pinCode ?? '0'),
+      pincode: address.pinCode ?? '0',
       address: address.address,
     );
 

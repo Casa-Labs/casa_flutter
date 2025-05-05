@@ -53,14 +53,17 @@ class Cards extends StatelessWidget {
                           Align(
                             alignment: Alignment.center,
                             child: SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.80,
-                              child: ClipRRect(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(18)),
-                                child: Image.network(
-                                    product.mainImage ??
-                                        ImageConstants.dummyNetworkPortrait,
-                                    fit: BoxFit.fill),
+                              // height: MediaQuery.of(context).size.height * 0.785,
+                              child: AspectRatio(
+                                aspectRatio: 0.55,
+                                child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(18)),
+                                  child: Image.network(
+                                      product.mainImage ??
+                                          ImageConstants.dummyNetworkPortrait,
+                                      fit: BoxFit.fill),
+                                ),
                               ),
                             ),
                           ),

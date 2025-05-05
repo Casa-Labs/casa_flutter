@@ -14,7 +14,6 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../auth/model/auth_models.dart';
-import '../../../auth/view/widgets/auth_button.dart';
 import '../widgets/logout_confim_action_dialog.dart';
 import '../widgets/share_dialog.dart';
 
@@ -31,166 +30,107 @@ class ProfileScreen extends StatelessWidget {
           title: 'Profile',
           showBackButton: false,
         ),
-        body: (PreferenceManager.getString(PreferenceManager.token) ?? "")
-                .isEmpty
-            ? Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  spacing: 10,
-                  children: [
-                    Image.asset("assets/tutorial_image/penguin_seven.png"),
-                    AuthButton(
-                      type: AuthButtonType.signIn,
-                      isLoading: false,
-                      onPressed: () async {},
+        body: SafeArea(
+          child: GetX(
+            initState: (final _) {
+              homeCtrl.getLoggedInUserName();
+            },
+            builder: (final ProfileController homeCtrl) {
+              return Column(
+                children: [
+                  const SizedBox(height: 20),
+                  CircleAvatar(
+                    backgroundImage: AssetImage(
+                      ImageConstants.avatarLogo,
                     ),
-                    AuthButton(
-                      type: AuthButtonType.signUp,
-                      isLoading: false,
-                      onPressed: () async {},
-                    ),
-                    SizedBox(height: 10),
-                    Text('login to explore CASA’s dynamic  features',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(fontWeight: FontWeight.w600)),
-                    SizedBox(height: 25),
-                    Container(
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                              color: ButtonColor.grey,
-                              width: 1), // Bottom border only
-                        ),
-                      ),
-                      child: ListTile(
-                        title: Text("Share with a Friend"),
-                        titleTextStyle: Theme.of(context).textTheme.bodySmall,
-                        trailing: const Icon(
-                          Icons.arrow_forward_ios,
-                          size: 12,
-                        ),
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => ShareAppDialog(
-                              appName: 'CASA',
-                              iosAppLink: 'https://apps.apple.com/app',
-                              androidAppLink:
-                                  'https://play.google.com/store/apps/details?id=com.casashop.casaflutterappapp',
-                              shareMessage:
-                                  'Check out this amazing app!', // Optional
+                    radius: 35,
+                  ),
+                  Text(
+                    homeCtrl.loggedInUser(),
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  const SizedBox(height: 20),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: PaddingSize.commonPadding),
+                      child: ListView.builder(
+                        itemCount: profileList.length,
+                        itemBuilder: (context, index) {
+                          final item = profileList[index];
+                          return Container(
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                    color: ButtonColor.grey,
+                                    width: 0.5), // Bottom border only
+                              ),
+                            ),
+                            child: ListTile(
+                              title: Text(item.title),
+                              titleTextStyle:
+                                  Theme.of(context).textTheme.bodySmall,
+                              trailing: const Icon(
+                                Icons.arrow_forward_ios,
+                                size: 12,
+                              ),
+                              onTap: () => item.onTap(context),
+                              contentPadding: EdgeInsets.zero,
+                              minVerticalPadding: 0,
+                              dense: true,
+                              // visualDensity:
+                              //     VisualDensity.compact, // Else theme will be use
                             ),
                           );
                         },
-                        contentPadding: EdgeInsets.zero,
-                        minVerticalPadding: 0,
-                        dense: true, // Else theme will be use
                       ),
                     ),
-                  ],
-                ),
-              )
-            : GetX(
-                initState: (final _) {
-                  homeCtrl.getLoggedInUserName();
-                },
-                builder: (final ProfileController homeCtrl) {
-                  return Column(
-                    children: [
-                      const SizedBox(height: 20),
-                      CircleAvatar(
-                        backgroundImage: AssetImage(
-                          ImageConstants.avatarLogo,
+                  ),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: ButtonColor.black,
+                        foregroundColor: ButtonColor.white,
+                        fixedSize: Size(
+                          MediaQuery.of(context).size.width * .9,
+                          36.0,
                         ),
-                        radius: 35,
                       ),
-                      Text(
-                        homeCtrl.loggedInUser(),
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                      const SizedBox(height: 20),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: PaddingSize.commonPadding),
-                          child: ListView.builder(
-                            itemCount: profileList.length,
-                            itemBuilder: (context, index) {
-                              final item = profileList[index];
-                              return Container(
-                                decoration: const BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                        color: ButtonColor.grey,
-                                        width: 0.5), // Bottom border only
-                                  ),
-                                ),
-                                child: ListTile(
-                                  title: Text(item.title),
-                                  titleTextStyle:
-                                      Theme.of(context).textTheme.bodySmall,
-                                  trailing: const Icon(
-                                    Icons.arrow_forward_ios,
-                                    size: 12,
-                                  ),
-                                  onTap: () => item.onTap(context),
-                                  contentPadding: EdgeInsets.zero,
-                                  minVerticalPadding: 0,
-                                  dense: true,
-                                  // visualDensity:
-                                  //     VisualDensity.compact, // Else theme will be use
-                                ),
-                              );
+                      onPressed: () async {
+                        showDialog(
+                          context: context,
+                          builder: (_) => ConfirmActionDialog(
+                            title: "Delete Account",
+                            message:
+                                "Are you sure you want to delete your account? This action cannot be undone.",
+                            confirmText: "Delete",
+                            isLoading: homeCtrl.isUserDeleteProgress,
+                            onConfirm: () async {
+                              await homeCtrl.deleteUserCall();
+                              if (homeCtrl.message.isNotEmpty) {
+                                showToast(
+                                  message: homeCtrl.message(),
+                                );
+                                if (homeCtrl.isUserDeleted()) {
+                                  final authController =
+                                      Get.put(AuthController());
+                                  await authController.logOutUser();
+                                  authController.clearAllControllers();
+                                  router.goNamed(RouteNames.signIn);
+                                }
+                              }
                             },
                           ),
-                        ),
-                      ),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: ButtonColor.black,
-                            foregroundColor: ButtonColor.white,
-                            fixedSize: Size(
-                              MediaQuery.of(context).size.width * .9,
-                              36.0,
-                            ),
-                          ),
-                          onPressed: () async {
-                            showDialog(
-                              context: context,
-                              builder: (_) => ConfirmActionDialog(
-                                title: "Delete Account",
-                                message:
-                                    "Are you sure you want to delete your account? This action cannot be undone.",
-                                confirmText: "Delete",
-                                isLoading: homeCtrl.isUserDeleteProgress,
-                                onConfirm: () async {
-                                  await homeCtrl.deleteUserCall();
-                                  if (homeCtrl.message.isNotEmpty) {
-                                    showToast(
-                                      message: homeCtrl.message(),
-                                    );
-                                    if (homeCtrl.isUserDeleted()) {
-                                      final authController =
-                                          Get.put(AuthController());
-                                      await authController.logOutUser();
-                                      authController.clearAllControllers();
-                                      router.goNamed(RouteNames.signIn);
-                                    }
-                                  }
-                                },
-                              ),
-                            );
-                          },
-                          child: Text(
-                            'Delete Account',
-                          )),
-                      const SizedBox(height: 50),
-                    ],
-                  );
-                },
-              ),
+                        );
+                      },
+                      child: Text(
+                        'Delete Account',
+                      )),
+                  const SizedBox(height: 50),
+                ],
+              );
+            },
+          ),
+        ),
       ),
     );
   }

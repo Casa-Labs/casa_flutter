@@ -165,7 +165,7 @@ class SignInScreen extends StatelessWidget {
                                 if (authController.isRegistered()) {
                                   if (authController.isAppleLoggedIn()) {
                                     if (PreferenceManager.getBool(
-                                        PreferenceManager.isFirstTime)!) {
+                                        PreferenceManager.isFirstTime) ?? false) {
                                       router.goNamed(RouteNames.navigation,
                                           extra: true);
                                       await PreferenceManager.setData(
