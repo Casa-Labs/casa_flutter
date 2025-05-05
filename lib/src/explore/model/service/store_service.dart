@@ -1,7 +1,7 @@
-import 'package:casaflutterapp/network/graph_ql_manager.dart';
-import 'package:casaflutterapp/src/explore/controller/store_controller.dart';
-import 'package:casaflutterapp/src/explore/model/store_model.dart';
-import 'package:casaflutterapp/utils/utils.dart';
+import 'package:casaflutter/network/graph_ql_manager.dart';
+import 'package:casaflutter/src/explore/controller/store_controller.dart';
+import 'package:casaflutter/src/explore/model/store_model.dart';
+import 'package:casaflutter/utils/utils.dart';
 import 'package:get/get.dart';
 
 class StoreService {

@@ -1,8 +1,7 @@
-import 'package:casaflutterapp/utils/color.dart';
+import 'package:casaflutter/utils/color.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/color_constant.dart';
-
 
 class ButtonWidget extends StatelessWidget {
   final Function() onPressed;

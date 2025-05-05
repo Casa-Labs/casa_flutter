@@ -1,4 +1,4 @@
-import 'package:casaflutterapp/src/order/model/create_order.dart';
+import 'package:casaflutter/src/order/model/create_order.dart';
 
 class CreateOrderResponse {
   CreateOrderData? createOrder;

@@ -1,17 +1,15 @@
-import 'package:casaflutterapp/network/graph_ql_manager.dart';
-import 'package:casaflutterapp/src/explore/model/brands_model.dart' as brand;
-import 'package:casaflutterapp/src/explore/model/explore_products_model.dart'
+import 'package:casaflutter/network/graph_ql_manager.dart';
+import 'package:casaflutter/src/explore/model/brands_model.dart' as brand;
+import 'package:casaflutter/src/explore/model/explore_products_model.dart'
     as epm;
-import 'package:casaflutterapp/src/explore/model/new_arrivals_model.dart'
-    as nam;
-import 'package:casaflutterapp/src/explore/model/product_by_id_model.dart'
-    as pim;
-import 'package:casaflutterapp/src/explore/model/product_categories_model.dart'
+import 'package:casaflutter/src/explore/model/new_arrivals_model.dart' as nam;
+import 'package:casaflutter/src/explore/model/product_by_id_model.dart' as pim;
+import 'package:casaflutter/src/explore/model/product_categories_model.dart'
     as pcm;
-import 'package:casaflutterapp/src/explore/model/service/explore_service.dart';
-import 'package:casaflutterapp/src/explore/model/trending_products_model.dart'
+import 'package:casaflutter/src/explore/model/service/explore_service.dart';
+import 'package:casaflutter/src/explore/model/trending_products_model.dart'
     as tpm;
-import 'package:casaflutterapp/utils/utils.dart';
+import 'package:casaflutter/utils/utils.dart';
 import 'package:get/get.dart';
 
 import '../../cart/model/cart_models.dart';

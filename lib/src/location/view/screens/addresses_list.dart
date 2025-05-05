@@ -1,10 +1,10 @@
-import 'package:casaflutterapp/routes/app_routes.dart';
-import 'package:casaflutterapp/src/common/widgets/common_app_bars.dart';
-import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
-import 'package:casaflutterapp/src/location/controller/addresses_controller.dart';
-import 'package:casaflutterapp/src/order/controller/order_review_controller.dart';
-import 'package:casaflutterapp/src/profile/view/widgets/logout_confim_action_dialog.dart';
-import 'package:casaflutterapp/utils/color_constant.dart';
+import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutter/src/common/widgets/common_app_bars.dart';
+import 'package:casaflutter/src/common/widgets/show_toast.dart';
+import 'package:casaflutter/src/location/controller/addresses_controller.dart';
+import 'package:casaflutter/src/order/controller/order_review_controller.dart';
+import 'package:casaflutter/src/profile/view/widgets/logout_confim_action_dialog.dart';
+import 'package:casaflutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

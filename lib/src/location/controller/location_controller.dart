@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:casaflutterapp/src/location/model/get_user_response_model.dart';
-import 'package:casaflutterapp/src/location/model/service/location_service.dart';
+import 'package:casaflutter/src/location/model/get_user_response_model.dart';
+import 'package:casaflutter/src/location/model/service/location_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 

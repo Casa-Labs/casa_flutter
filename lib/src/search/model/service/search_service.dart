@@ -1,7 +1,7 @@
-import 'package:casaflutterapp/network/graph_ql_manager.dart';
-import 'package:casaflutterapp/src/search/controller/search_view_controller.dart';
-import 'package:casaflutterapp/src/search/model/search_models.dart';
-import 'package:casaflutterapp/utils/utils.dart';
+import 'package:casaflutter/network/graph_ql_manager.dart';
+import 'package:casaflutter/src/search/controller/search_view_controller.dart';
+import 'package:casaflutter/src/search/model/search_models.dart';
+import 'package:casaflutter/utils/utils.dart';
 import 'package:get/get.dart';
 
 class SearchService {

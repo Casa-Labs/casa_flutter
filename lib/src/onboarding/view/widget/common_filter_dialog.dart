@@ -1,7 +1,8 @@
-import 'package:casaflutterapp/utils/color_constant.dart';
+import 'package:casaflutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+
 import '../../../common/widgets/price_slider.dart';
 import '../../../common/widgets/textfields.dart';
 import '../../../home/controller/home_controller.dart';
@@ -68,15 +69,18 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                             decoration: BoxDecoration(
                                 border: Border.all(color: TabBarColor.black),
                                 borderRadius: BorderRadius.circular(30),
-                                color:
-                                    index == 0 ? TabBarColor.black : TabBarColor.white),
+                                color: index == 0
+                                    ? TabBarColor.black
+                                    : TabBarColor.white),
                             child: Center(
                                 child: Text(
                               "MEN",
                               style: textTheme.bodyMedium?.copyWith(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
-                                color: index == 0 ? TextColor.white : TextColor.black,
+                                color: index == 0
+                                    ? TextColor.white
+                                    : TextColor.black,
                               ),
                             )),
                           ),
@@ -99,15 +103,18 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                             decoration: BoxDecoration(
                                 border: Border.all(color: TabBarColor.black),
                                 borderRadius: BorderRadius.circular(30),
-                                color:
-                                    index == 1 ? TabBarColor.black : TabBarColor.white),
+                                color: index == 1
+                                    ? TabBarColor.black
+                                    : TabBarColor.white),
                             child: Center(
                                 child: Text(
                               "WOMEN",
                               style: textTheme.bodyMedium?.copyWith(
                                 // fontSize: 16,
                                 fontWeight: FontWeight.w500,
-                                color: index == 1 ? TextColor.white : TextColor.black,
+                                color: index == 1
+                                    ? TextColor.white
+                                    : TextColor.black,
                               ),
                             )),
                           ),
@@ -204,7 +211,8 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  overlayColor: WidgetStateProperty.all(ButtonColor.transparent),
+                  overlayColor:
+                      WidgetStateProperty.all(ButtonColor.transparent),
                   splashFactory: NoSplash.splashFactory,
                   onTap: () {
                     var selectedItem = widget.children!
@@ -231,13 +239,13 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                       )),
                 ),
                 InkWell(
-                  overlayColor: WidgetStateProperty.all(ButtonColor.transparent),
+                  overlayColor:
+                      WidgetStateProperty.all(ButtonColor.transparent),
                   splashFactory: NoSplash.splashFactory,
                   onTap: () {
                     Navigator.of(context).pop();
                     if (widget.children!.isEmpty) {
-                      homeCtrl
-                          .fetchProducts({
+                      homeCtrl.fetchProducts({
                         "minPrice": homeCtrl.minValue,
                         "maxPrice": homeCtrl.maxValue
                       });
@@ -294,7 +302,8 @@ class _CommonFilterDialogState extends State<CommonFilterDialog> {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                          border: Border.all(color: TabBarColor.black, width: 1.5),
+                          border:
+                              Border.all(color: TabBarColor.black, width: 1.5),
                           borderRadius: BorderRadius.circular(40)),
                       child: CircleAvatar(
                         maxRadius: 18,

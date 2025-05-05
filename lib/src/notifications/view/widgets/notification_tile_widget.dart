@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:casaflutterapp/utils/color_constant.dart';
+import 'package:casaflutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
 class NotificationTile extends StatelessWidget {
@@ -11,7 +11,8 @@ class NotificationTile extends StatelessWidget {
       {super.key,
       required this.circleImageUrl,
       required this.squareImageUrl,
-      required this.text, required this.message});
+      required this.text,
+      required this.message});
 
   @override
   Widget build(BuildContext context) {

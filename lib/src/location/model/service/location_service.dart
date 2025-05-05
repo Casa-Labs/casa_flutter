@@ -1,4 +1,4 @@
-import 'package:casaflutterapp/src/location/model/get_user_response_model.dart';
+import 'package:casaflutter/src/location/model/get_user_response_model.dart';
 
 import '../../../../network/graph_ql_manager.dart';
 import '../../../auth/model/add_user_address_response_model.dart';

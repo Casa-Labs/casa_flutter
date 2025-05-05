@@ -1,7 +1,7 @@
-import 'package:casaflutterapp/routes/app_routes.dart';
-import 'package:casaflutterapp/src/common/widgets/common_app_bars.dart';
-import 'package:casaflutterapp/src/order/controller/order_review_controller.dart';
-import 'package:casaflutterapp/src/order/view/widgets/add_instructions_widget.dart';
+import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutter/src/common/widgets/common_app_bars.dart';
+import 'package:casaflutter/src/order/controller/order_review_controller.dart';
+import 'package:casaflutter/src/order/view/widgets/add_instructions_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

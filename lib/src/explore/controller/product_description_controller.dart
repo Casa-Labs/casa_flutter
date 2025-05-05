@@ -1,7 +1,7 @@
-import 'package:casaflutterapp/network/graph_ql_manager.dart';
-import 'package:casaflutterapp/src/explore/model/product_by_id_model.dart'
+import 'package:casaflutter/network/graph_ql_manager.dart';
+import 'package:casaflutter/src/explore/model/product_by_id_model.dart'
     as model;
-import 'package:casaflutterapp/utils/utils.dart';
+import 'package:casaflutter/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,4 +1,3 @@
-import 'package:casaflutterapp/src/onboarding/view/widget/text_container.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/color_constant.dart';
@@ -9,14 +8,19 @@ class SwipeTutorial extends StatelessWidget {
     this.alignment,
     this.image,
     this.text,
-    this.onTap,  this.top,  this.bottom,  this.topImage,  this.bottomImage, this.onSkip,
+    this.onTap,
+    this.top,
+    this.bottom,
+    this.topImage,
+    this.bottomImage,
+    this.onSkip,
   });
 
   final String? image;
   final String? text;
   final AlignmentGeometry? alignment;
-  final  Function()? onTap;
-  final  Function()? onSkip;
+  final Function()? onTap;
+  final Function()? onSkip;
   final double? top;
   final double? bottom;
   final double? topImage;
@@ -110,9 +114,10 @@ class SwipeTutorial extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: topImage ?? 0, bottom: bottomImage ?? 0),
-                child:
-                    Image.asset(image ?? "assets/tutorial_image/penguin_two.png"),
+                padding: EdgeInsets.only(
+                    top: topImage ?? 0, bottom: bottomImage ?? 0),
+                child: Image.asset(
+                    image ?? "assets/tutorial_image/penguin_two.png"),
               )
             ],
           ),

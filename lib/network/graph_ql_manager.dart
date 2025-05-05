@@ -1,8 +1,8 @@
 // graphql_manager.dart
-import 'package:casaflutterapp/network/graph_ql_mutations.dart';
-import 'package:casaflutterapp/network/graph_ql_queries.dart';
-import 'package:casaflutterapp/network/graph_ql_variables.dart';
-import 'package:casaflutterapp/network/graphql_client.dart';
+import 'package:casaflutter/network/graph_ql_mutations.dart';
+import 'package:casaflutter/network/graph_ql_queries.dart';
+import 'package:casaflutter/network/graph_ql_variables.dart';
+import 'package:casaflutter/network/graphql_client.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../src/order/model/create_order.dart';
@@ -552,9 +552,8 @@ class GraphQLManager {
 
   Future<QueryResult> getCartItems({required String userId}) async {
     return await _clientService.performQuery(
-      document: GraphQLQueries.getCartItems,
-      variables: GraphQLVariables.getCartItemsVariables(userId)
-    );
+        document: GraphQLQueries.getCartItems,
+        variables: GraphQLVariables.getCartItemsVariables(userId));
   }
 
   Future<QueryResult> getUserClosets({required String userId}) async {

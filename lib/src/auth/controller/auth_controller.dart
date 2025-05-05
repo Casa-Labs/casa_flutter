@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:casaflutterapp/utils/extensions.dart';
-import 'package:casaflutterapp/utils/preference_manager.dart';
-import 'package:casaflutterapp/utils/validators.dart';
+import 'package:casaflutter/utils/extensions.dart';
+import 'package:casaflutter/utils/preference_manager.dart';
+import 'package:casaflutter/utils/validators.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -216,7 +216,8 @@ class AuthController extends GetxController {
 
     print('login data --->>> $googleLoginRequestModel');
 
-    final googleLoginResponse = await _authService.googleLoginUser(googleLoginRequestModel: googleLoginRequestModel);
+    final googleLoginResponse = await _authService.googleLoginUser(
+        googleLoginRequestModel: googleLoginRequestModel);
 
     if (googleLoginResponse?.singleSignOn != null) {
       // Set token to storage

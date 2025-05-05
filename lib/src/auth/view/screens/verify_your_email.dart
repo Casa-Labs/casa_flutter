@@ -1,9 +1,9 @@
-import 'package:casaflutterapp/routes/app_routes.dart';
-import 'package:casaflutterapp/src/auth/controller/forgot_password_controller.dart';
-import 'package:casaflutterapp/src/auth/view/widgets/auth_button.dart';
-import 'package:casaflutterapp/src/common/widgets/custom_text_form_field_widget.dart';
-import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
-import 'package:casaflutterapp/utils/string_constant.dart';
+import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutter/src/auth/controller/forgot_password_controller.dart';
+import 'package:casaflutter/src/auth/view/widgets/auth_button.dart';
+import 'package:casaflutter/src/common/widgets/custom_text_form_field_widget.dart';
+import 'package:casaflutter/src/common/widgets/show_toast.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

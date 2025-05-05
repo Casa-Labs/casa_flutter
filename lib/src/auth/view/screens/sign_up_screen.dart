@@ -1,7 +1,6 @@
-import 'package:casaflutterapp/src/auth/controller/sign_up_controller.dart';
-import 'package:casaflutterapp/src/common/widgets/show_toast.dart'
-    show showToast;
-import 'package:casaflutterapp/utils/string_constant.dart';
+import 'package:casaflutter/src/auth/controller/sign_up_controller.dart';
+import 'package:casaflutter/src/common/widgets/show_toast.dart' show showToast;
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,11 +1,11 @@
-import 'package:casaflutterapp/src/onboarding/controller/onboarding_controller.dart';
-import 'package:casaflutterapp/src/onboarding/view/widget/swipe_tutorial.dart';
+import 'package:casaflutter/src/onboarding/controller/onboarding_controller.dart';
+import 'package:casaflutter/src/onboarding/view/widget/swipe_tutorial.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TutorialScreen extends StatefulWidget {
   final bool? isFirstTime;
-   const TutorialScreen({super.key,this.isFirstTime});
+  const TutorialScreen({super.key, this.isFirstTime});
 
   @override
   State<TutorialScreen> createState() => _TutorialScreenState();
@@ -73,7 +73,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
           alignment: Alignment.bottomCenter,
           text: "click on the logo to visit the store",
           onTap: onBoardingCtrl.changeIndexTutorial,
-          bottom:130,
+          bottom: 130,
           bottomImage: 90,
           top: 0,
           topImage: 0,
@@ -81,7 +81,8 @@ class _TutorialScreenState extends State<TutorialScreen> {
       SwipeTutorial(
           image: "assets/tutorial_image/penguin_six.png",
           alignment: Alignment.bottomCenter,
-          text: "use the  add to cart, save button to create closet and buy now for instant checkout",
+          text:
+              "use the  add to cart, save button to create closet and buy now for instant checkout",
           onTap: onBoardingCtrl.changeIndexTutorial,
           bottom: 140,
           bottomImage: 100,

@@ -1,6 +1,6 @@
-import 'package:casaflutterapp/src/cart/model/cart_models.dart';
-import 'package:casaflutterapp/src/cart/model/service/cart_service.dart';
-import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
+import 'package:casaflutter/src/cart/model/cart_models.dart';
+import 'package:casaflutter/src/cart/model/service/cart_service.dart';
+import 'package:casaflutter/src/common/widgets/show_toast.dart';
 import 'package:get/get.dart';
 
 import '../../../network/graph_ql_manager.dart';

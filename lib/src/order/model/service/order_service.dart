@@ -1,7 +1,7 @@
-import 'package:casaflutterapp/network/graph_ql_manager.dart';
-import 'package:casaflutterapp/src/order/model/create_order.dart';
-import 'package:casaflutterapp/src/order/model/create_order_response.dart';
-import 'package:casaflutterapp/src/order/model/verify_payment_response_model.dart';
+import 'package:casaflutter/network/graph_ql_manager.dart';
+import 'package:casaflutter/src/order/model/create_order.dart';
+import 'package:casaflutter/src/order/model/create_order_response.dart';
+import 'package:casaflutter/src/order/model/verify_payment_response_model.dart';
 
 class OrderService {
   final GraphQLManager _graphQLManager = GraphQLManager();

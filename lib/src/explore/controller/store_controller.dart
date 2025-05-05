@@ -1,5 +1,5 @@
-import 'package:casaflutterapp/src/explore/model/service/store_service.dart';
-import 'package:casaflutterapp/src/explore/model/store_model.dart';
+import 'package:casaflutter/src/explore/model/service/store_service.dart';
+import 'package:casaflutter/src/explore/model/store_model.dart';
 import 'package:get/get.dart';
 
 class StoreController extends GetxController {

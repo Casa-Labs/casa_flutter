@@ -1,6 +1,6 @@
-import 'package:casaflutterapp/routes/app_routes.dart';
-import 'package:casaflutterapp/utils/color_constant.dart';
-import 'package:casaflutterapp/utils/padding_size.dart';
+import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutter/utils/color_constant.dart';
+import 'package:casaflutter/utils/padding_size.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';

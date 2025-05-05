@@ -1,14 +1,14 @@
 import 'dart:convert';
 
-import 'package:casaflutterapp/routes/app_routes.dart';
-import 'package:casaflutterapp/src/auth/controller/auth_controller.dart';
-import 'package:casaflutterapp/src/common/widgets/common_app_bars.dart';
-import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
-import 'package:casaflutterapp/src/profile/controller/profile_controller.dart';
-import 'package:casaflutterapp/utils/color_constant.dart';
-import 'package:casaflutterapp/utils/padding_size.dart';
-import 'package:casaflutterapp/utils/preference_manager.dart';
-import 'package:casaflutterapp/utils/string_constant.dart';
+import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutter/src/auth/controller/auth_controller.dart';
+import 'package:casaflutter/src/common/widgets/common_app_bars.dart';
+import 'package:casaflutter/src/common/widgets/show_toast.dart';
+import 'package:casaflutter/src/profile/controller/profile_controller.dart';
+import 'package:casaflutter/utils/color_constant.dart';
+import 'package:casaflutter/utils/padding_size.dart';
+import 'package:casaflutter/utils/preference_manager.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -159,7 +159,7 @@ List<ProfileListModel> profileList = [
           appName: 'CASA',
           iosAppLink: 'https://apps.apple.com/app',
           androidAppLink:
-              'https://play.google.com/store/apps/details?id=com.casashop.casaflutterappapp',
+              'https://play.google.com/store/apps/details?id=com.casashop.casaflutterapp',
           shareMessage: 'Check out this amazing app!', // Optional
         ),
       );

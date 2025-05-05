@@ -1,4 +1,4 @@
-import 'package:casaflutterapp/utils/preference_manager.dart';
+import 'package:casaflutter/utils/preference_manager.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
@@ -57,7 +57,8 @@ class SplashController extends GetxController {
         PreferenceManager.getInt(PreferenceManager.lastSplashSlot) ?? -1;
 
     if (totalSlot != lastSlot) {
-      await PreferenceManager.setData(PreferenceManager.lastSplashSlot, totalSlot);
+      await PreferenceManager.setData(
+          PreferenceManager.lastSplashSlot, totalSlot);
     }
 
     _currentSlot.value = totalSlot;

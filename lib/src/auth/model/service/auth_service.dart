@@ -1,8 +1,8 @@
-import 'package:casaflutterapp/network/graph_ql_manager.dart';
-import 'package:casaflutterapp/src/auth/model/add_preferences_response_model.dart';
-import 'package:casaflutterapp/src/auth/model/add_user_address_response_model.dart';
-import 'package:casaflutterapp/src/auth/model/auth_models.dart';
-import 'package:casaflutterapp/src/auth/model/update_user_details_response_model.dart';
+import 'package:casaflutter/network/graph_ql_manager.dart';
+import 'package:casaflutter/src/auth/model/add_preferences_response_model.dart';
+import 'package:casaflutter/src/auth/model/add_user_address_response_model.dart';
+import 'package:casaflutter/src/auth/model/auth_models.dart';
+import 'package:casaflutter/src/auth/model/update_user_details_response_model.dart';
 
 class AuthService {
   final GraphQLManager _graphQLManager = GraphQLManager();

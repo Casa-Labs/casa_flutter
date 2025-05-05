@@ -1,9 +1,9 @@
-import 'package:casaflutterapp/routes/app_routes.dart';
-import 'package:casaflutterapp/src/explore/controller/store_controller.dart';
-import 'package:casaflutterapp/src/explore/model/store_model.dart';
-import 'package:casaflutterapp/src/explore/view/widgets/banner_image.dart';
-import 'package:casaflutterapp/utils/padding_size.dart';
-import 'package:casaflutterapp/utils/string_constant.dart';
+import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutter/src/explore/controller/store_controller.dart';
+import 'package:casaflutter/src/explore/model/store_model.dart';
+import 'package:casaflutter/src/explore/view/widgets/banner_image.dart';
+import 'package:casaflutter/utils/padding_size.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
