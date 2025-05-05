@@ -6,8 +6,10 @@
 class AssetsRes {
   AssetsRes._();
 
-  static const String PLUGIN_NAME = 'casaflutterapp';
+  static const String PLUGIN_NAME = 'casaflutter';
   static const String PLUGIN_VERSION = '1.0.0+8';
+  static const String BACK_BUTTON = 'assets/icons/back_button.svg';
+  static const String SEARCH_ICON = 'assets/icons/search_icon.svg';
   static const String EMAIL = 'assets/images/email.png';
   static const String SPLASH_BACKGROUND = 'assets/images/splash_background.jpeg';
   static const String VERIFY = 'assets/images/verify.png';

@@ -131,7 +131,7 @@ class GraphQLMutations {
       isRegistered
       isVerified
       name
-      image
+      profileImage
     }
   }
 }

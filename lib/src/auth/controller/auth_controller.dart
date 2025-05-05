@@ -214,9 +214,9 @@ class AuthController extends GetxController {
       image: image,
     );
 
-    final googleLoginResponse = await _authService.googleLoginUser(
-      googleLoginRequestModel: googleLoginRequestModel,
-    );
+    print('login data --->>> $googleLoginRequestModel');
+
+    final googleLoginResponse = await _authService.googleLoginUser(googleLoginRequestModel: googleLoginRequestModel);
 
     if (googleLoginResponse?.singleSignOn != null) {
       // Set token to storage

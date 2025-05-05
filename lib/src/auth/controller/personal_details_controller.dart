@@ -48,11 +48,9 @@ class PersonalDetailsController extends GetxController {
       isLoading(true);
 
       // get user details
-      final userDetailsData = PreferenceManager.getString(
-        PreferenceManager.userDetails,
-      );
+      final userDetailsData = PreferenceManager.getString(PreferenceManager.userDetails);
       var userDetailsMap = <String, dynamic>{};
-      if (userDetailsData != null) {
+      if (userDetailsData != null && userDetailsData.isNotEmpty) {
         userDetailsMap = json.decode(userDetailsData.trim());
       }
       final userDetails = User.fromJson(userDetailsMap);
