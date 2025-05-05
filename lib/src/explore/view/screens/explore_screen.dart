@@ -300,7 +300,7 @@ class ExploreSection extends StatelessWidget {
                       child: ListView.builder(
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
-                          itemCount: 10,
+                          itemCount: exploreCtrl.clothesYouMightLike.length > 10  ?10 : exploreCtrl.clothesYouMightLike.length,
                           itemBuilder: (context, index) {
                             final product =
                                 exploreCtrl.clothesYouMightLike[index];

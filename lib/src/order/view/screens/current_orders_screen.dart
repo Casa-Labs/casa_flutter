@@ -134,7 +134,7 @@ class CurrentOrdersScreen extends StatelessWidget {
                                 const Divider(),
                               ],
                             );
-                          }).toList()
+                          })
                         ],
                       );
                     },

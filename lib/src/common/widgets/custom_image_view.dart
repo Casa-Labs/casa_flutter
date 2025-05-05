@@ -6,8 +6,8 @@ class CustomImageView extends StatelessWidget {
   final double? width;
   final BoxFit? boxFit;
   final Color? color;
-  CustomImageView(
-      {required this.image, this.height, this.width, this.boxFit, this.color,});
+  const CustomImageView(
+      {super.key, required this.image, this.height, this.width, this.boxFit, this.color,});
 
   @override
   Widget build(BuildContext context) {
