@@ -1,5 +1,5 @@
-import 'package:casaflutterapp/src/common/widgets/common_app_bars.dart';
-import 'package:casaflutterapp/utils/color_constant.dart';
+import 'package:casaflutter/src/common/widgets/common_app_bars.dart';
+import 'package:casaflutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -192,7 +192,9 @@ class _SearchScreenState extends State<SearchScreen> {
               Divider(color: DividerColor.grey),
               const SizedBox(height: 20),
               AddressDisplayBox(
-                address: PreferenceManager.getString(PreferenceManager.keyAddress) ?? "",
+                address:
+                    PreferenceManager.getString(PreferenceManager.keyAddress) ??
+                        "",
               ),
               const SizedBox(height: 20),
               GestureDetector(

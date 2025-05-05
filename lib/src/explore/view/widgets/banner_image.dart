@@ -1,7 +1,6 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:casaflutterapp/src/wishlist/view/widgets/icons_widget.dart';
-import 'package:casaflutterapp/utils/color_constant.dart';
+import 'package:casaflutter/src/wishlist/view/widgets/icons_widget.dart';
+import 'package:casaflutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';

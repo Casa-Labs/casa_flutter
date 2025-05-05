@@ -1,6 +1,5 @@
-import 'package:casaflutterapp/src/onboarding/view/widget/text_container.dart';
+import 'package:casaflutter/src/onboarding/view/widget/text_container.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class PositionTutorial extends StatelessWidget {
   const PositionTutorial(
@@ -35,7 +34,7 @@ class PositionTutorial extends StatelessWidget {
     var width = size.width;
     return Container(
       width: width,
-      color: Colors.black.withValues(alpha:0.6),
+      color: Colors.black.withValues(alpha: 0.6),
       child: GestureDetector(
         onTap: onTap,
         child: Stack(
@@ -64,7 +63,7 @@ class PositionTutorial extends StatelessWidget {
                             ),
                       ],
                     ),
-                  textContainer(text,context),
+                  textContainer(text, context),
                   if (!isAbove)
                     Column(
                       crossAxisAlignment: crossAxisAlignmentSecond,

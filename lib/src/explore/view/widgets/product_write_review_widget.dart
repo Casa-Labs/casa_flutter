@@ -1,7 +1,7 @@
-import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
-import 'package:casaflutterapp/src/home/controller/home_controller.dart';
-import 'package:casaflutterapp/src/explore/model/product_by_id_model.dart'
+import 'package:casaflutter/src/common/widgets/show_toast.dart';
+import 'package:casaflutter/src/explore/model/product_by_id_model.dart'
     as model;
+import 'package:casaflutter/src/home/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';

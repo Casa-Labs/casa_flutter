@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:casaflutterapp/src/common/payment/razorpay.dart';
-import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
-import 'package:casaflutterapp/src/location/model/get_user_response_model.dart';
-import 'package:casaflutterapp/src/location/model/service/location_service.dart';
-import 'package:casaflutterapp/src/order/model/service/order_service.dart';
-import 'package:casaflutterapp/src/order/model/verify_payment_response_model.dart';
+import 'package:casaflutter/src/common/payment/razorpay.dart';
+import 'package:casaflutter/src/common/widgets/show_toast.dart';
+import 'package:casaflutter/src/location/model/get_user_response_model.dart';
+import 'package:casaflutter/src/location/model/service/location_service.dart';
+import 'package:casaflutter/src/order/model/service/order_service.dart';
+import 'package:casaflutter/src/order/model/verify_payment_response_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';

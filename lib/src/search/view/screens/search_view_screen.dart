@@ -1,8 +1,8 @@
-import 'package:casaflutterapp/routes/app_routes.dart';
-import 'package:casaflutterapp/src/common/widgets/textfields.dart';
-import 'package:casaflutterapp/src/explore/view/widgets/product_card.dart';
-import 'package:casaflutterapp/src/search/controller/search_view_controller.dart';
-import 'package:casaflutterapp/utils/string_constant.dart';
+import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutter/src/common/widgets/textfields.dart';
+import 'package:casaflutter/src/explore/view/widgets/product_card.dart';
+import 'package:casaflutter/src/search/controller/search_view_controller.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';

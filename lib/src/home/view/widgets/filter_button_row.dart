@@ -51,9 +51,9 @@
 //   }
 // }
 
-import 'package:casaflutterapp/src/home/view/widgets/filter_chip_button.dart';
-import 'package:casaflutterapp/src/home/view/widgets/filter_selection_dialog.dart';
-import 'package:casaflutterapp/utils/color_constant.dart';
+import 'package:casaflutter/src/home/view/widgets/filter_chip_button.dart';
+import 'package:casaflutter/src/home/view/widgets/filter_selection_dialog.dart';
+import 'package:casaflutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
 class FilterButtonRow extends StatelessWidget {

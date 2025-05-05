@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:casaflutterapp/routes/app_routes.dart';
-import 'package:casaflutterapp/src/explore/view/widgets/divider_title.dart';
-import 'package:casaflutterapp/src/explore/view/widgets/explore_search_bar.dart';
-import 'package:casaflutterapp/src/explore/view/widgets/product_card.dart';
+import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutter/src/explore/view/widgets/divider_title.dart';
+import 'package:casaflutter/src/explore/view/widgets/explore_search_bar.dart';
+import 'package:casaflutter/src/explore/view/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -300,7 +300,9 @@ class ExploreSection extends StatelessWidget {
                       child: ListView.builder(
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
-                          itemCount: exploreCtrl.clothesYouMightLike.length > 10  ?10 : exploreCtrl.clothesYouMightLike.length,
+                          itemCount: exploreCtrl.clothesYouMightLike.length > 10
+                              ? 10
+                              : exploreCtrl.clothesYouMightLike.length,
                           itemBuilder: (context, index) {
                             final product =
                                 exploreCtrl.clothesYouMightLike[index];

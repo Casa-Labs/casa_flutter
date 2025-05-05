@@ -1,7 +1,7 @@
-import 'package:casaflutterapp/src/cart/view/widgets/size_guide_dialog.dart';
-import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
-import 'package:casaflutterapp/utils/color_constant.dart';
-import 'package:casaflutterapp/utils/string_constant.dart';
+import 'package:casaflutter/src/cart/view/widgets/size_guide_dialog.dart';
+import 'package:casaflutter/src/common/widgets/show_toast.dart';
+import 'package:casaflutter/utils/color_constant.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';

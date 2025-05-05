@@ -1,4 +1,4 @@
-import 'package:casaflutterapp/src/auth/model/service/auth_service.dart';
+import 'package:casaflutter/src/auth/model/service/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

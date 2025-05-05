@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:appinio_swiper/appinio_swiper.dart';
-import 'package:casaflutterapp/src/home/model/service/home_service.dart';
+import 'package:casaflutter/src/home/model/service/home_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

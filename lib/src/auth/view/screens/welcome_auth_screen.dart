@@ -1,6 +1,6 @@
-import 'package:casaflutterapp/routes/app_routes.dart';
-import 'package:casaflutterapp/src/auth/controller/auth_controller.dart';
-import 'package:casaflutterapp/src/auth/view/widgets/auth_button.dart';
+import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutter/src/auth/controller/auth_controller.dart';
+import 'package:casaflutter/src/auth/view/widgets/auth_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';

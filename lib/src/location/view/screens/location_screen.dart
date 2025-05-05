@@ -1,11 +1,12 @@
-import 'package:casaflutterapp/routes/app_routes.dart';
-import 'package:casaflutterapp/src/common/widgets/buttons/custom_button.dart';
-import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
-import 'package:casaflutterapp/src/location/controller/addresses_controller.dart';
-import 'package:casaflutterapp/src/location/controller/location_controller.dart';
-import 'package:casaflutterapp/src/location/model/get_user_response_model.dart';
+import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutter/src/common/widgets/buttons/custom_button.dart';
+import 'package:casaflutter/src/common/widgets/show_toast.dart';
+import 'package:casaflutter/src/location/controller/addresses_controller.dart';
+import 'package:casaflutter/src/location/controller/location_controller.dart';
+import 'package:casaflutter/src/location/model/get_user_response_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../../common/widgets/common_app_bars.dart';
 import '../../../common/widgets/custom_text_form_field_widget.dart';
 import '../../../common/widgets/mandatory_title_widget.dart';
