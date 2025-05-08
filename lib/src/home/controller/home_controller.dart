@@ -217,7 +217,10 @@ class HomeController extends GetxController {
     try {
       isLoading.value = true;
       update();
-      var response = await manager.getProducts(map);
+      var response = await manager.getProducts({
+        "pageSize": 20,
+        "page": 1
+      });
       var getProductList = GetProductData.fromJson(response.data!);
       products = getProductList.getProducts!.data ?? [];
       products.shuffle(Random());
