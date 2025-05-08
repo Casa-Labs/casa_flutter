@@ -1,24 +1,25 @@
-import 'package:casaflutterapp/routes/app_routes.dart';
-import 'package:casaflutterapp/src/auth/controller/change_password_controller.dart';
-import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
+import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutter/src/auth/controller/change_password_controller.dart';
+import 'package:casaflutter/src/common/widgets/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../../utils/string_constant.dart';
 import '../../../common/widgets/custom_text_form_field_widget.dart';
 import '../widgets/auth_button.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
   final String email;
+  final bool isFromWithinApp;
   ChangePasswordScreen({
     super.key,
     required this.email,
+    required this.isFromWithinApp,
   });
 
-  late final changePasswordController = Get.put(
-    ChangePasswordController(
-      email: email,
-    ),
+  final changePasswordController = Get.put(
+    ChangePasswordController(),
   );
 
   @override
@@ -124,13 +125,20 @@ class ChangePasswordScreen extends StatelessWidget {
                             .isPasswordChangeInProgress(),
                         type: AuthButtonType.save,
                         onPressed: () async {
-                          await changePasswordController.changePassword();
+                          await changePasswordController.changePassword(
+                            email: email,
+                            isFromWithinApp: isFromWithinApp,
+                          );
                           if (changePasswordController.message().isNotEmpty) {
                             showToast(
                               message: changePasswordController.message(),
                             );
                             if (changePasswordController.isPasswordChanged()) {
-                              router.goNamed(RouteNames.signIn);
+                              if (isFromWithinApp && context.mounted) {
+                                Navigator.of(context).maybePop();
+                              } else {
+                                router.goNamed(RouteNames.signIn);
+                              }
                             }
                           }
                         },

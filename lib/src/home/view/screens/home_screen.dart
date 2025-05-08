@@ -1,10 +1,11 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
-import 'package:casaflutterapp/src/home/controller/home_controller.dart';
-import 'package:casaflutterapp/src/home/view/widgets/card.dart';
-import 'package:casaflutterapp/src/home/view/widgets/filter_button_row.dart';
-import 'package:casaflutterapp/src/home/view/widgets/home_search_app_bar.dart';
-import 'package:casaflutterapp/src/home/view/widgets/swipe_animation.dart';
-import 'package:casaflutterapp/utils/color_constant.dart';
+import 'package:casaflutter/src/home/controller/home_controller.dart';
+import 'package:casaflutter/src/home/view/widgets/card.dart';
+import 'package:casaflutter/src/home/view/widgets/filter_button_row.dart';
+import 'package:casaflutter/src/home/view/widgets/home_search_app_bar.dart';
+import 'package:casaflutter/src/home/view/widgets/swipe_animation.dart';
+import 'package:casaflutter/utils/color_constant.dart';
+import 'package:casaflutter/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -31,20 +32,165 @@ class HomeScreen extends StatelessWidget {
             ? Center(
                 child: CircularProgressIndicator(color: BorderColor.black),
               )
-            : SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    FilterButtonRow(),
-                    SizedBox(height: 5),
-                    homeCtrl.products.isNotEmpty
-                        ? _cardSwiper(homeCtrl, context, homeCtrl.products)
-                        : Center(
-                            child: Text('No products found'),
-                          ),
-                  ],
-                ),
+            : Column(
+                children: [
+                  FilterButtonRow(
+                    filters: [
+                      FilterButtonModel(
+                        title: 'Brand',
+                        list: homeCtrl.brand.map((item) => item.name!).toList(),
+                        onClear: () {
+                          logg.i("Brand selection cleared");
+                        },
+                        onDone: (selectedName) {
+                          final brandId = homeCtrl.brand
+                              .firstWhereOrNull((e) => e.name == selectedName)
+                              ?.id;
+                          logg.i("Selected brand ID: $brandId");
+
+                          if (brandId != null) {
+                            homeCtrl.fetchProducts({"storeId": brandId});
+                          }
+                        },
+                      ),
+                      FilterButtonModel(
+                        title: 'Product',
+                        list: homeCtrl.category
+                            .map((item) => item.name!)
+                            .toList(),
+                        onClear: () {
+                          logg.i("Category selection cleared");
+                        },
+                        onDone: (selectedName) {
+                          final category = homeCtrl.category
+                              .firstWhereOrNull((e) => e.name == selectedName)
+                              ?.id;
+                          logg.i("Selected category ID: $category");
+
+                          if (category != null) {
+                            homeCtrl.fetchProducts({"categoryId": category});
+                          }
+                        },
+                      ),
+                      FilterButtonModel(
+                        title: 'Colors',
+                        list: ['Red', 'Blue', 'Green', 'Black', 'White', 'NA'],
+                        onClear: () {
+                          logg.i("Color selection cleared");
+                        },
+                        onDone: (selectedName) {
+                          // final category = homeCtrl.category
+                          //     .firstWhereOrNull((e) => e.name == selectedName)
+                          //     ?.id;
+                          // logg.i("Selected category ID: $category");
+
+                          final selectedColor = selectedName;
+
+                          if (selectedColor != null) {
+                            homeCtrl.fetchProducts({
+                              "productColor": [selectedColor]
+                            });
+                          }
+                        },
+                      ),
+                      FilterButtonModel(
+                        title: 'Size',
+                        list: [
+                          'X-Small',
+                          'Small',
+                          'Medium',
+                          'Large',
+                          'X-Large',
+                          'M',
+                          'XL',
+                          'S',
+                          'L',
+                          'Default Title',
+                          'S / M',
+                          'S / L',
+                          'M / S',
+                          'M / M',
+                          'L / M',
+                          'M / L',
+                          'L / L',
+                          'L / S',
+                          'S / S',
+                          'XS',
+                          'XS / S',
+                          'XS / XS',
+                          'XS / M',
+                          'S / XS',
+                          'XS / L',
+                          'M / XS',
+                          'L / XS',
+                          'Ivory / L',
+                          'Black / XS',
+                          'Black / S',
+                          'Black / M',
+                          'Navy / XS',
+                          'Black / L',
+                          'Navy / S',
+                          'Ivory / XS',
+                          'Navy / M',
+                          'Ivory / S',
+                          'Navy / L',
+                          'Ivory / M'
+                        ],
+                        onClear: () {
+                          logg.i("size selection cleared");
+                        },
+                        onDone: (selectedName) {
+                          // final category = homeCtrl.category
+                          //     .firstWhereOrNull((e) => e.name == selectedName)
+                          //     ?.id;
+                          // logg.i("Selected sizey ID: $category");
+
+                          final selectedSize = selectedName;
+
+                          if (selectedSize != null) {
+                            homeCtrl.fetchProducts({
+                              "productSize": [selectedSize]
+                            });
+                          }
+                        },
+                      ),
+
+                      // FilterButtonModel(
+                      //   title: 'Product',
+                      //   list: homeCtrl.category
+                      //       .map((item) => item.name!)
+                      //       .toList(),
+                      //   // onClear: () => clearBrandSelection(),
+                      //   // onDone: () => applyBrandSelection(),
+                      //   onClear: () {
+                      //     logg.e('clearing category selection');
+                      //     context.pop();
+                      //   },
+                      //   onDone: () {
+                      //     logg.e('Category selection done');
+                      //     context.pop();
+                      //   },
+                      // ),
+                    ],
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 5),
+                          homeCtrl.products.isNotEmpty
+                              ? _cardSwiper(
+                                  homeCtrl, context, homeCtrl.products)
+                              : Center(
+                                  child: Text('No products found'),
+                                ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
       ),
     );
@@ -63,7 +209,7 @@ class HomeScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.76,
+                height: MediaQuery.of(context).size.height * 0.8,
                 child: AppinioSwiper(
                   loop: true,
                   controller: logic.controller,

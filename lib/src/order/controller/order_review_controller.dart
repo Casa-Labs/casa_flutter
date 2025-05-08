@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:casaflutterapp/src/auth/model/add_user_address_response_model.dart';
-import 'package:casaflutterapp/src/common/payment/razorpay.dart';
-import 'package:casaflutterapp/src/order/model/service/order_service.dart';
+import 'package:casaflutter/src/common/payment/razorpay.dart';
+import 'package:casaflutter/src/common/widgets/show_toast.dart';
+import 'package:casaflutter/src/location/model/get_user_response_model.dart';
+import 'package:casaflutter/src/location/model/service/location_service.dart';
+import 'package:casaflutter/src/order/model/service/order_service.dart';
+import 'package:casaflutter/src/order/model/verify_payment_response_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -19,6 +22,7 @@ import '../model/create_order.dart';
 class OrderReviewController extends GetxController {
   // ========= OBJECTS ============= //
   final OrderService _orderService = OrderService();
+  final LocationService _locationService = LocationService();
 
   // ========= CONTROLLERS ========= //
   CartController cartController = Get.find<CartController>();
@@ -35,6 +39,7 @@ class OrderReviewController extends GetxController {
   RxString message = ''.obs;
   RxBool isBlinking = false.obs;
   Timer? _blinkingTimer;
+  RxBool isDeliveryAddressAdded = false.obs;
 
   // ========== STATES ========== //
 
@@ -50,11 +55,13 @@ class OrderReviewController extends GetxController {
           "productId": product.id,
           "name": product.name,
           "productPrice": product.price,
-          "mainImage": product.mainImage,
-          "color": product.colors!.first.color!.id,
           "size": sizeID,
-          "sizeValue": selectedSize,
+          "sizes": product.sizes?.map((e) => e.toJson()).toList(),
+          "color": product.colors!.first.color!.id,
+          "store": product.store!.toJson(),
+          "mainImage": product.mainImage,
           "description": product.description,
+          "sizeValue": selectedSize,
           "quantity": quantity, // Add quantity field
         }),
         createdAt: "",
@@ -109,8 +116,43 @@ class OrderReviewController extends GetxController {
   }
 
   // ========== APIs FUNCTIONS ========== //
+  Future<void> checkForAddress() async {
+    // get user details
+    final userDetailsData = PreferenceManager.getString(
+      PreferenceManager.userDetails,
+    );
+    var userDetailsMap = <String, dynamic>{};
+    if (userDetailsData != null) {
+      userDetailsMap = json.decode(userDetailsData.trim());
+    }
+    final userDetails = User.fromJson(userDetailsMap);
+    if (userDetails.id != null) {
+      final getUserResponse = await _locationService.getUser(
+        userId: userDetails.id ?? '',
+      );
+      if (getUserResponse != null &&
+          (getUserResponse.getUser?.addresses ?? []).isNotEmpty) {
+        isDeliveryAddressAdded(true);
+      } else {
+        isDeliveryAddressAdded(false);
+        message('Please add delivery address, then continue...');
+      }
+      // get user address details
+      /*  final userAddressDetails =
+          PreferenceManager.getString(PreferenceManager.userAddressDetails);
+      if ((userAddressDetails ?? '').isEmpty) {
+        isDeliveryAddressAdded(false);
+        message('Please add delivery address, then continue...');
+      } else {
+        isDeliveryAddressAdded(true);
+      }*/
+    }
+  }
 
-  Future<void> createOrder() async {
+  Future<void> createOrder({
+    required Addresses address,
+    required VoidCallback onPaymentSuccess,
+  }) async {
     List<Items> productItem = [];
     for (var product in productsList) {
       var item = Items();
@@ -132,19 +174,11 @@ class OrderReviewController extends GetxController {
     }
     final userDetails = User.fromJson(userDetailsMap);
 
-    // get user address details
-    final userAddressDetails =
-        PreferenceManager.getString(PreferenceManager.userAddressDetails);
-    var userAddressDetailsMap = <String, dynamic>{};
-    if (userAddressDetails != null) {
-      userAddressDetailsMap = json.decode(userAddressDetails.trim());
-    }
-    final addressDetails = AddUserAddress.fromJson(userAddressDetailsMap);
     final shippingInfo = ShippingInfo(
       name: userDetails.name,
-      city: addressDetails.city,
-      pincode: int.parse(addressDetails.pincode ?? '0'),
-      address: addressDetails.address,
+      city: address.city,
+      pincode: address.pinCode ?? '0',
+      address: address.address,
     );
 
     CreateOrder createOrder = CreateOrder(
@@ -183,6 +217,7 @@ class OrderReviewController extends GetxController {
                 .createOrder?.paymentOrderDetails?.razorpayOrderId ??
             '',
         amount: amount.toInt(),
+        onPaymentSuccess: onPaymentSuccess,
       );
     }
 
@@ -192,25 +227,37 @@ class OrderReviewController extends GetxController {
   Future<void> callPaymentGateway({
     required String razorPayOrderId,
     required int amount,
+    required VoidCallback onPaymentSuccess,
   }) async {
     Payment.of(
       amount: amount, // Amount
       orderId: razorPayOrderId, // Order ID of Razorpay
-      handlePaymentSuccess: (final PaymentSuccessResponse? response) {
-        _handlePaymentSuccess(response);
+      handlePaymentSuccess: (final PaymentSuccessResponse? response) async {
+        final verifyPaymentResponse = await _handlePaymentSuccess(response);
+        if (verifyPaymentResponse != null &&
+            verifyPaymentResponse.verifyPayment?.success == true &&
+            (verifyPaymentResponse.errorMessage ?? '').isEmpty) {
+          showToast(
+            message: 'Order placed successfully',
+          );
+          deleteAllItem();
+          onPaymentSuccess();
+        } else {
+          final errorMessage = verifyPaymentResponse?.errorMessage ??
+              verifyPaymentResponse?.verifyPayment?.message;
+          showToast(message: errorMessage ?? '');
+        }
       }, // Success Handler
       handlePaymentError: (final PaymentFailureResponse? response) {
-        //showToast(message: response?.message ?? '');
-        message(response?.message ?? '');
+        showToast(message: response?.message ?? '');
       }, // Error Handler
       handleExternalWallet: (final ExternalWalletResponse? response) {
-        //showToast(message: 'External Wallet - ${response?.walletName ?? ''}');
-        message('External Wallet - ${response?.walletName ?? ''}');
+        showToast(message: 'External Wallet - ${response?.walletName ?? ''}');
       }, // External wallet Handler
     );
   }
 
-  Future<void> _handlePaymentSuccess(
+  Future<VerifyPaymentResponseModel?> _handlePaymentSuccess(
     final PaymentSuccessResponse? response,
   ) async {
     // verify Payment
@@ -220,20 +267,7 @@ class OrderReviewController extends GetxController {
       signature: response?.signature ?? '',
     );
 
-    if (verifyPaymentResponse != null &&
-        verifyPaymentResponse.verifyPayment?.success == true &&
-        (verifyPaymentResponse.errorMessage ?? '').isEmpty) {
-      //showToast(message: 'Payment is successful.');
-      // TODO fix navigation
-      // deleteAllItem();
-      message('Order placed successfully');
-    } else {
-      //showToast(message: verifyPaymentResponse?.errorMessage ?? '');
-      message(
-        verifyPaymentResponse?.errorMessage ??
-            verifyPaymentResponse?.verifyPayment?.message,
-      );
-    }
+    return verifyPaymentResponse;
   }
 
   void startBlinking() {

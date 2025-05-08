@@ -1,6 +1,6 @@
-import 'package:casaflutterapp/src/common/widgets/buttons/select_size_button.dart';
-import 'package:casaflutterapp/src/home/controller/home_controller.dart';
-import 'package:casaflutterapp/utils/string_constant.dart';
+import 'package:casaflutter/src/common/widgets/buttons/select_size_button.dart';
+import 'package:casaflutter/src/home/controller/home_controller.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -84,7 +84,6 @@ class ProductDetails extends StatelessWidget {
                   cartLogin.addProductsToCart(
                       product, product.quantity!, logic.selectedSize.value);
                   logic.addToCartSwipe();
-
                 },
               ),
               const SizedBox(height: 20),
@@ -150,6 +149,10 @@ class ProductDetails extends StatelessWidget {
                             return WriteReviewWidget(
                               product: product,
                             );
+                          },
+                        ).then(
+                          (value) {
+                            logic.update();
                           },
                         );
                       },

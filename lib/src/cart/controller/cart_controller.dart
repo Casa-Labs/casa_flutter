@@ -1,6 +1,6 @@
-import 'package:casaflutterapp/src/cart/model/cart_models.dart';
-import 'package:casaflutterapp/src/cart/model/service/cart_service.dart';
-import 'package:casaflutterapp/src/common/widgets/show_toast.dart';
+import 'package:casaflutter/src/cart/model/cart_models.dart';
+import 'package:casaflutter/src/cart/model/service/cart_service.dart';
+import 'package:casaflutter/src/common/widgets/show_toast.dart';
 import 'package:get/get.dart';
 
 import '../../../network/graph_ql_manager.dart';
@@ -62,12 +62,13 @@ class CartController extends GetxController {
       "productId": product.id,
       "name": product.name,
       "productPrice": product.price,
-      "mainImage": product.mainImage,
-      "color": product.colors!.first.color!.id,
       "size": sizeID,
-      "sizeValue": selectedSize,
-      "description": product.description,
       "sizes": product.sizes,
+      "color": product.colors!.first.color!.id,
+      "store": product.store,
+      "mainImage": product.mainImage,
+      "description": product.description,
+      "sizeValue": selectedSize,
       "quantity": quantity, // Add quantity field
       // ...product.toJson(), // Convert product to JSON
       // "quantity": quantity, // Add quantity field

@@ -1,13 +1,13 @@
-import 'package:casaflutterapp/src/cart/view/widgets/size_guide_dialog.dart';
-import 'package:casaflutterapp/utils/color_constant.dart';
-import 'package:casaflutterapp/utils/string_constant.dart';
+import 'package:casaflutter/src/cart/view/widgets/size_guide_dialog.dart';
+import 'package:casaflutter/src/common/widgets/show_toast.dart';
+import 'package:casaflutter/utils/color_constant.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../routes/app_routes.dart';
-import '../../../../utils/color.dart';
 import '../../../common/widgets/buttons/custom_button.dart';
 import '../../controller/cart_controller.dart';
 import '../../model/cart_models.dart';
@@ -36,25 +36,28 @@ class CartItem extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            context.pushNamed(RouteNames.store);
+            if (item.store?.id != null) {
+              context.pushNamed(
+                RouteNames.store,
+                pathParameters: {'id': item.store?.id ?? ''},
+              );
+            } else {
+              showToast(message: 'API Error, Store ID not found');
+            }
           },
           child: Container(
-            height: 50,
-            width: 50,
-            padding: EdgeInsets.all(2),
             decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                    image: NetworkImage(
-                        item.store?.logo ?? ImageConstants.dummyNetworkPortrait),
-                    fit: BoxFit.fill),
-                border: Border.all(color: CColor.circleBoarder, width: 1)),
-            // child: CircleAvatar(
-            //   maxRadius: 24,
-            //   child: Image.network(item
-            //       .store?.logo ??
-            //       ImageConstants.dummyNetworkPortrait)
-            // ),
+              border: Border.all(color: Colors.black, width: 2),
+              shape: BoxShape.circle,
+            ),
+            padding: EdgeInsets.all(1.5),
+            child: CircleAvatar(
+                maxRadius: 24,
+                child: Image.network(item.store != null &&
+                        item.store!.logo != null &&
+                        item.store!.logo!.isNotEmpty
+                    ? item.store!.logo!
+                    : ImageConstants.dummyNetworkPortrait)),
           ),
         ),
         SizedBox(height: 15),
@@ -66,10 +69,14 @@ class CartItem extends StatelessWidget {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () {
-                context.pushNamed(
-                  RouteNames.productDescription,
-                  pathParameters: {'id': item.productId ?? ''},
-                );
+                if (item.productId != null) {
+                  context.pushNamed(
+                    RouteNames.productDescription,
+                    pathParameters: {'id': item.productId ?? ''},
+                  );
+                } else {
+                  showToast(message: 'API Error, Product ID not found');
+                }
               },
               child: Card(
                 elevation: 2,
@@ -81,7 +88,9 @@ class CartItem extends StatelessWidget {
                   child: SizedBox(
                       height: MediaQuery.of(context).size.height * 0.2,
                       width: MediaQuery.of(context).size.width * 0.25,
-                      child: Image.network(item.mainImage ?? ImageConstants.dummyNetworkPortrait, fit: BoxFit.fill)
+                      child: Image.network(
+                          item.mainImage ?? ImageConstants.dummyNetworkPortrait,
+                          fit: BoxFit.fill)
                       //  Image.asset(
                       //   'assets/images/placeholder.png',
                       //   fit: BoxFit.fill,

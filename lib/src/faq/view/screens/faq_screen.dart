@@ -1,4 +1,4 @@
-import 'package:casaflutterapp/src/common/widgets/common_app_bars.dart';
+import 'package:casaflutter/src/common/widgets/common_app_bars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,7 +28,8 @@ class _FAQScreenState extends State<FAQScreen> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: PaddingSize.commonPadding, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: PaddingSize.commonPadding, vertical: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -55,8 +56,7 @@ class _FAQScreenState extends State<FAQScreen> {
                 itemBuilder: (context, index) {
                   var faqEntry = faqCtrl.helpList[index];
                   return InkWell(
-                    overlayColor:
-                    WidgetStateProperty.all(Colors.transparent),
+                    overlayColor: WidgetStateProperty.all(Colors.transparent),
                     splashFactory: NoSplash.splashFactory,
                     onTap: () {
                       setState(() {
@@ -64,8 +64,8 @@ class _FAQScreenState extends State<FAQScreen> {
                       });
                     },
                     child: Container(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,27 +76,35 @@ class _FAQScreenState extends State<FAQScreen> {
                             children: [
                               Text(
                                 faqEntry.question,
-                                style:
-                                    Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                          color: TextColor.greyFAQ,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                              ),
-                              faqEntry.isOpen? Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                    Text(
-                                      faqEntry.answer,
-                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                        color: TextColor.greyFAQ,
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                      color: TextColor.greyFAQ,
+                                      fontWeight: FontWeight.w600,
                                     ),
-                                ],
-                              ):SizedBox(),
+                              ),
+                              faqEntry.isOpen
+                                  ? Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                        Text(
+                                          faqEntry.answer,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                color: TextColor.greyFAQ,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                        ),
+                                      ],
+                                    )
+                                  : SizedBox(),
                             ],
                           )),
                           Padding(

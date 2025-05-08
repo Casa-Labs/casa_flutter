@@ -8,6 +8,7 @@ class PreferenceManager {
   static const String keyAddress = 'userAddress';
   static const String userAddressDetails = 'userAddressDetails';
   static const String isFirstTime = 'isFirstTime';
+  static const String lastSplashSlot = 'lastSplashSlot';
 
   static setData(String key, dynamic value) async {
     getStorage().write(key, value);
@@ -32,6 +33,10 @@ class PreferenceManager {
 
   // Get data as bool from GetStorage
   static bool? getBool(String key) {
+    return getStorage().read(key);
+  }
+
+  static int? getInt(String key) {
     return getStorage().read(key);
   }
 }

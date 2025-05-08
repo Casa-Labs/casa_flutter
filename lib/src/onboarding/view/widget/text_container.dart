@@ -1,6 +1,5 @@
-import 'package:casaflutterapp/utils/color_constant.dart';
+import 'package:casaflutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
-
 
 Widget textContainer(String text, BuildContext context) {
   return Container(

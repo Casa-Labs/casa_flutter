@@ -1,7 +1,6 @@
-import 'package:casaflutterapp/routes/app_routes.dart';
+import 'package:casaflutter/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 
 class Address {
   final String label;
@@ -57,14 +56,13 @@ class AddressDisplayBox extends StatelessWidget {
               ),
             ],
           ),
-          address.isNotEmpty ?Text(
-            address,
-            style: Theme
-                .of(context)
-                .textTheme
-                .bodyMedium,
-            softWrap: true,
-          ):SizedBox(),
+          address.isNotEmpty
+              ? Text(
+                  address,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  softWrap: true,
+                )
+              : SizedBox(),
         ],
       ),
     );

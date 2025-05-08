@@ -1,10 +1,10 @@
-import 'package:casaflutterapp/routes/app_routes.dart';
-import 'package:casaflutterapp/src/cart/controller/cart_controller.dart';
-import 'package:casaflutterapp/src/common/widgets/buttons/buy_now_button.dart';
-import 'package:casaflutterapp/src/home/controller/home_controller.dart';
-import 'package:casaflutterapp/src/home/view/widgets/details_widget.dart';
-import 'package:casaflutterapp/utils/font.dart';
-import 'package:casaflutterapp/utils/string_constant.dart';
+import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutter/src/cart/controller/cart_controller.dart';
+import 'package:casaflutter/src/common/widgets/buttons/buy_now_button.dart';
+import 'package:casaflutter/src/home/controller/home_controller.dart';
+import 'package:casaflutter/src/home/view/widgets/details_widget.dart';
+import 'package:casaflutter/utils/font.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -53,7 +53,8 @@ class Cards extends StatelessWidget {
                           Align(
                             alignment: Alignment.center,
                             child: SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.74,
+                              height: MediaQuery.of(context).size.height * 0.80,
+                              width: MediaQuery.of(context).size.width,
                               child: ClipRRect(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(18)),
@@ -101,6 +102,7 @@ class Cards extends StatelessWidget {
                           Positioned(
                             bottom: 0,
                             left: 0,
+                            right: 0,
                             child: ClipRRect(
                               borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(20),
@@ -109,7 +111,6 @@ class Cards extends StatelessWidget {
                               child: Container(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 7, vertical: 10),
-                                width: MediaQuery.of(context).size.width * 0.91,
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
@@ -143,7 +144,12 @@ class Cards extends StatelessWidget {
                                             splashFactory:
                                                 NoSplash.splashFactory,
                                             onTap: () {
-                                              // context.pushNamed(RouteNames.store);
+                                              context.pushNamed(
+                                                RouteNames.store,
+                                                pathParameters: {
+                                                  'id': product.store?.id ?? ''
+                                                },
+                                              );
                                             },
 
                                             /// Need to add dummy image preview image
@@ -163,11 +169,18 @@ class Cards extends StatelessWidget {
                                               ),
                                               padding: EdgeInsets.all(1.5),
                                               child: CircleAvatar(
-                                                  maxRadius: 24,
-                                                  child: Image.network(product
-                                                          .store?.logo ??
-                                                      ImageConstants
-                                                          .dummyNetworkPortrait)),
+                                                maxRadius: 24,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                child: Image.network(
+                                                  (product.store?.logo ?? '')
+                                                          .isNotEmpty
+                                                      ? product.store?.logo ??
+                                                          ''
+                                                      : ImageConstants
+                                                          .dummyNetworkPortrait,
+                                                ),
+                                              ),
                                             ),
                                           ),
                                           Text(
@@ -182,7 +195,7 @@ class Cards extends StatelessWidget {
                                                 ),
                                           ),
                                           Text(
-                                            '₹ ${AppStrings.productPrice}',
+                                            '₹ ${product.price}',
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyLarge
@@ -219,11 +232,11 @@ class Cards extends StatelessWidget {
                                                             .value);
                                                     homeCtrl.addToCartSwipe();
                                                   },
-                                                  icon: Icon(
-                                                      Icons
-                                                          .add_shopping_cart_outlined,
-                                                      color: IconColor.white,
-                                                      size: 30),
+                                                  icon: Image.asset(
+                                                    IconConstants.cartAdd,
+                                                    height: 40.0,
+                                                    width: 40.0,
+                                                  ),
                                                 ),
                                                 IconButton(
                                                   onPressed: () {
@@ -247,11 +260,10 @@ class Cards extends StatelessWidget {
                                                       },
                                                     );
                                                   },
-                                                  icon: Icon(
-                                                    Icons
-                                                        .bookmark_border_rounded,
-                                                    color: IconColor.white,
-                                                    size: 30,
+                                                  icon: Image.asset(
+                                                    IconConstants.bookMark,
+                                                    height: 40.0,
+                                                    width: 40.0,
                                                   ),
                                                 ),
                                                 IconButton(
@@ -261,10 +273,11 @@ class Cards extends StatelessWidget {
                                                     Share.share(
                                                         'Check out the CASA app now');
                                                   },
-                                                  icon: Icon(
-                                                      Icons.share_rounded,
-                                                      color: IconColor.white,
-                                                      size: 30),
+                                                  icon: Image.asset(
+                                                    IconConstants.forward,
+                                                    height: 40.0,
+                                                    width: 40.0,
+                                                  ),
                                                 ),
                                               ],
                                             ),
@@ -292,8 +305,7 @@ class Cards extends StatelessWidget {
                         ],
                       ),
                       ProductDetails(
-                          product: product,
-                          size: homeCtrl.formattedSizesList(product))
+                          product: product, size: homeCtrl.formattedSizesList())
                     ],
                   ),
                 ),

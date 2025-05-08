@@ -1,8 +1,7 @@
 import 'dart:async';
 
-import 'package:casaflutterapp/src/search/model/search_models.dart'
-    as searchModel;
-import 'package:casaflutterapp/src/search/model/service/search_service.dart';
+import 'package:casaflutter/src/search/model/search_models.dart' as searchModel;
+import 'package:casaflutter/src/search/model/service/search_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

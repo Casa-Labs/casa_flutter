@@ -17,13 +17,21 @@ class ImageConstants {
   static String undo = 'assets/icons/undo.svg';
   static String email = 'assets/images/email.png';
   static String verify = 'assets/images/verify.png';
-  static String mondayLogo = 'assets/logos/monday_logo.png';
-  static String tuesdayLogo = 'assets/logos/tuseday_logo.png';
-  static String wednesdayLogo = 'assets/logos/wednesday_logo.png';
-  static String thursdayLogo = 'assets/logos/thursday_logo.png';
-  static String fridayLogo = 'assets/logos/friday_logo.png';
-  static String saturdayLogo = 'assets/logos/saturday_logo.png';
-  static String sundayLogo = 'assets/logos/sunday_logo.png';
+  static String logoTwo = 'assets/splash/logo_two.png';
+  static String logoFour = 'assets/splash/logo_four.png';
+  static String logoSix = 'assets/splash/logo_six.png';
+  static String logoFive = 'assets/splash/logo_five.png';
+  static String logoOne = 'assets/splash/logo_one.png';
+  static String logoThree = 'assets/splash/logo_three.png';
+  static String logoEight = 'assets/splash/logo_eight.png';
+  static String logoNine = 'assets/splash/logo_nine.png';
+  static String logoTen = 'assets/splash/logo_ten.png';
+  static String logoEleven = 'assets/splash/logo_eleven.png';
+  static String logoTwelve = 'assets/splash/logo_twelve.png';
+  static String logoThirteen = 'assets/splash/logo_thirteen.png';
+  static String logoFourteen = 'assets/splash/logo_fourteen.png';
+  static String logoFifteen = 'assets/splash/logo_fifteen.png';
+  static String logoSeven = 'assets/splash/logo_seven.png';
 }
 
 class IconConstants {
@@ -31,6 +39,21 @@ class IconConstants {
   static String cartIcon = 'assets/icons/search.svg';
   static String wishlistIcon = 'assets/icons/search.svg';
   static String profileIcon = 'assets/icons/search.svg';
+  static String home = 'assets/icons/home.png';
+  static String homeSelected = 'assets/icons/home_selected.png';
+  static String search = 'assets/icons/search.png';
+  static String searchSelected = 'assets/icons/search_selected.png';
+  static String cart = 'assets/icons/cart.png';
+  static String cartSelected = 'assets/icons/cart_selected.png';
+  static String heart = 'assets/icons/heart.png';
+  static String heartSelected = 'assets/icons/heart_selected.png';
+  static String profile = 'assets/icons/profile.png';
+  static String profileSelected = 'assets/icons/profile_selected.png';
+  static String cartAdd = 'assets/icons/cart_add.png';
+  static String bookMark = 'assets/icons/book_mark.png';
+  static String forward = 'assets/icons/forward.png';
+  static String notifications = 'assets/icons/notification.png';
+  static String settings = 'assets/icons/settings.png';
 }
 
 class AppStrings {

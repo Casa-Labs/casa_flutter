@@ -8,11 +8,11 @@ enum DropdownMode { single, multiple }
 
 class ReusableDropdown extends StatefulWidget {
   final List<String> items;
-  final Function(List<String>) onSelected;
+  final ValueChanged<String?>? onSelected;
   final String label;
   final DropdownMode mode;
-  final double fontSize;
-  final double menufontSize;
+  final double? fontSize;
+  final double? menufontSize;
   final bool fullSize;
   final Widget? hint;
   final double? width;
@@ -23,8 +23,8 @@ class ReusableDropdown extends StatefulWidget {
     required this.onSelected,
     required this.label,
     this.mode = DropdownMode.single,
-    this.fontSize = 22,
-    this.menufontSize = 22,
+    this.fontSize,
+    this.menufontSize,
     this.fullSize = true,
     this.hint,
     this.width,
@@ -70,7 +70,7 @@ class _ReusableDropdownState extends State<ReusableDropdown> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             item,
-                            style: textTheme.bodyMedium?.copyWith(
+                            style: textTheme.headlineSmall?.copyWith(
                               fontSize: widget.menufontSize,
                               fontWeight: FontWeight.w500,
                               color: TextColor.white, // Menu item text color
@@ -80,11 +80,7 @@ class _ReusableDropdownState extends State<ReusableDropdown> {
                     ))
                 .toList(),
             value: selectedValue,
-            onChanged: (String? value) {
-              setState(() {
-                selectedValue = value;
-              });
-            },
+            onChanged: widget.onSelected,
             selectedItemBuilder: (BuildContext context) {
               return widget.items.map((String item) {
                 return widget.hint ??
@@ -126,23 +122,25 @@ class _ReusableDropdownState extends State<ReusableDropdown> {
               maxHeight: 260,
               useSafeArea: true,
               offset: Offset(0, 0),
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               width: widget.width ??
                   (widget.fullSize ? Get.width * .98 : Get.width / 2),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: BorderRadius.circular(20),
                 gradient: const LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Color.fromARGB(228, 25, 25, 25),
-                    Color.fromARGB(230, 53, 53, 53),
-                    Color.fromARGB(226, 68, 67, 67),
-                    Color.fromARGB(207, 80, 80, 80),
-                    Color.fromARGB(208, 108, 108, 108),
-                    Color.fromARGB(205, 135, 135, 135),
-                    Color.fromARGB(209, 148, 148, 148),
-                    Color.fromARGB(207, 193, 193, 193),
+                    DropdownColor.black,
+                    DropdownColor.black69,
+                    // Color.fromARGB(228, 25, 25, 25),
+                    // Color.fromARGB(230, 53, 53, 53),
+                    // Color.fromARGB(226, 68, 67, 67),
+                    // Color.fromARGB(207, 80, 80, 80),
+                    // Color.fromARGB(208, 108, 108, 108),
+                    // Color.fromARGB(205, 135, 135, 135),
+                    // Color.fromARGB(209, 148, 148, 148),
+                    // Color.fromARGB(207, 193, 193, 193),
                   ],
                 ),
               ),

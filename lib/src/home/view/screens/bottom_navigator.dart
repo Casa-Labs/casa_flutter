@@ -1,7 +1,8 @@
-import 'package:casaflutterapp/src/explore/view/screens/explore_screen.dart';
-import 'package:casaflutterapp/src/home/view/screens/home_screen.dart';
-import 'package:casaflutterapp/src/profile/view/screens/profile_screen.dart';
-import 'package:casaflutterapp/utils/color_constant.dart';
+import 'package:casaflutter/src/explore/view/screens/explore_screen.dart';
+import 'package:casaflutter/src/home/view/screens/home_screen.dart';
+import 'package:casaflutter/src/profile/view/screens/profile_screen.dart';
+import 'package:casaflutter/utils/color_constant.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -21,7 +22,6 @@ class NavPage extends StatefulWidget {
 class NavPageState extends State<NavPage> {
   bool _isFirstLaunch = true; // Variable to track first launch
   int _selectedIndex = 0; // Track the selected index of the BottomNavigationBar
-  int tutorialScreenIndex = 0;
 
   // IMP : Flutter will create the widgets list eagerly resulting in controller
   // initialization without navigation when bottom navbar is created,
@@ -62,12 +62,6 @@ class NavPageState extends State<NavPage> {
     });
   }
 
-  void changeIndexTutorial() {
-    setState(() {
-      tutorialScreenIndex += 1;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,53 +70,97 @@ class NavPageState extends State<NavPage> {
         child: Stack(
           children: [
             _getScreen(_selectedIndex), // Display the selected page
-            if (tutorialScreenIndex < 14 && _isFirstLaunch)
-              Positioned.fill(
-                child: TutorialScreen(
-                  index: tutorialScreenIndex,
-                  onTap: changeIndexTutorial,
-                ),
-              ),
+            TutorialScreen(
+              isFirstTime: _isFirstLaunch,
+            ),
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        backgroundColor: BottomNavigationColor.white,
-        elevation: 0,
-        fixedColor: BottomNavigationColor.black,
-        onTap: _onItemTapped,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        type: BottomNavigationBarType.fixed,
-        // Handle item tap
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined, size: 25),
-              activeIcon: Icon(Icons.home, size: 25),
+      bottomNavigationBar: MediaQuery(
+        data: MediaQuery.of(context).removePadding(removeBottom: true),
+        child: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          backgroundColor: BottomNavigationColor.white,
+          elevation: 0,
+          fixedColor: BottomNavigationColor.black,
+          onTap: _onItemTapped,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          type: BottomNavigationBarType.fixed,
+          // Handle item tap
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                IconConstants.home,
+                height: 26.0,
+                width: 26.0,
+              ),
+              activeIcon: Image.asset(
+                IconConstants.homeSelected,
+                height: 26.0,
+                width: 26.0,
+              ),
               label: '',
-              backgroundColor: BottomNavigationColor.white),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.search_outlined, size: 25),
-              activeIcon: Icon(Icons.search, size: 25),
+              backgroundColor: BottomNavigationColor.white,
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                IconConstants.search,
+                height: 32.0,
+                width: 32.0,
+              ),
+              activeIcon: Image.asset(
+                IconConstants.searchSelected,
+                height: 32.0,
+                width: 32.0,
+              ),
               label: '',
-              backgroundColor: BottomNavigationColor.white),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart_outlined, size: 25),
-              activeIcon: Icon(Icons.shopping_cart_rounded, size: 25),
+              backgroundColor: BottomNavigationColor.white,
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                IconConstants.cart,
+                height: 32.0,
+                width: 32.0,
+              ),
+              activeIcon: Image.asset(
+                IconConstants.cartSelected,
+                height: 32.0,
+                width: 32.0,
+              ),
               label: '',
-              backgroundColor: BottomNavigationColor.white),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border, size: 25),
-              activeIcon: Icon(Icons.favorite, size: 25),
+              backgroundColor: BottomNavigationColor.white,
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                IconConstants.heart,
+                height: 32.0,
+                width: 32.0,
+              ),
+              activeIcon: Image.asset(
+                IconConstants.heartSelected,
+                height: 28.0,
+                width: 28.0,
+              ),
               label: '',
-              backgroundColor: BottomNavigationColor.white),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline_outlined, size: 25),
-              activeIcon: Icon(Icons.person, size: 25),
+              backgroundColor: BottomNavigationColor.white,
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                IconConstants.profile,
+                height: 28.0,
+                width: 28.0,
+              ),
+              activeIcon: Image.asset(
+                IconConstants.profileSelected,
+                height: 28.0,
+                width: 28.0,
+              ),
               label: '',
-              backgroundColor: BottomNavigationColor.white)
-        ],
+              backgroundColor: BottomNavigationColor.white,
+            )
+          ],
+        ),
       ),
     );
   }

@@ -61,7 +61,7 @@ class CreateOrder {
 class ShippingInfo {
   String? name;
   String? city;
-  int? pincode;
+  String? pincode;
   String? address;
 
   ShippingInfo({this.name, this.city, this.pincode, this.address});

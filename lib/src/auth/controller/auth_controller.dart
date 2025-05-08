@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:casaflutterapp/utils/extensions.dart';
-import 'package:casaflutterapp/utils/preference_manager.dart';
-import 'package:casaflutterapp/utils/validators.dart';
+import 'package:casaflutter/utils/extensions.dart';
+import 'package:casaflutter/utils/preference_manager.dart';
+import 'package:casaflutter/utils/validators.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -100,8 +100,15 @@ class AuthController extends GetxController {
           PreferenceManager.userId,
           loginResponse?.login?.user?.id.toString(),
         );
-        message('User logged in successfully');
-        isLoggedIn(true);
+        if (loginResponse?.login?.user?.isRegistered ?? false) {
+          isRegistered(true);
+          message('User logged in successfully');
+          isLoggedIn(true);
+        } else {
+          isRegistered(false);
+          message('Please update preferences');
+          isLoggedIn(true);
+        }
       } else {
         message(loginResponse?.errorMessage);
         isLoading(false);
@@ -207,9 +214,10 @@ class AuthController extends GetxController {
       image: image,
     );
 
+    print('login data --->>> $googleLoginRequestModel');
+
     final googleLoginResponse = await _authService.googleLoginUser(
-      googleLoginRequestModel: googleLoginRequestModel,
-    );
+        googleLoginRequestModel: googleLoginRequestModel);
 
     if (googleLoginResponse?.singleSignOn != null) {
       // Set token to storage
@@ -286,6 +294,12 @@ class AuthController extends GetxController {
     // clear user id
     await PreferenceManager.setData(
       PreferenceManager.userId,
+      '',
+    );
+
+    // clear user address details
+    await PreferenceManager.setData(
+      PreferenceManager.userAddressDetails,
       '',
     );
   }

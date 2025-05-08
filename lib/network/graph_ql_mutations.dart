@@ -30,6 +30,8 @@ class GraphQLMutations {
       phone
       role
       updatedAt
+      isRegistered
+      isVerified
     }
   }
 }
@@ -101,6 +103,24 @@ class GraphQLMutations {
 }
 """;
 
+  static const String updateUserAddress = """
+  mutation UpdateUserAddress(\$id: String!, \$address: String!, \$city: String!, \$state: String!, \$pincode: String!, \$country: String!, \$landmark: String, \$tag: String) {
+  updateUserAddress(id: \$id, address: \$address, city: \$city, state: \$state, pincode: \$pincode, country: \$country, landmark: \$landmark, tag: \$tag) {
+    id
+    userId
+    tag
+    address
+    landmark
+    city
+    state
+    pincode
+    country
+    createdAt
+    updatedAt
+  }
+}
+""";
+
   static const String singleSignOnMutation = """
   mutation SingleSignOn(\$email: String!, \$provider: AuthProvider!, \$providerId: String!, \$name: String!, \$image: String!) {
   SingleSignOn(email: \$email, provider: \$provider, providerId: \$providerId, name: \$name, image: \$image) {
@@ -111,7 +131,7 @@ class GraphQLMutations {
       isRegistered
       isVerified
       name
-      image
+      profileImage
     }
   }
 }
@@ -144,6 +164,12 @@ class GraphQLMutations {
   static const String updatePasswordAfterVerification = """
   mutation UpdatePasswordAfterVerification(\$email: String!, \$newPassword: String!) {
   updatePasswordAfterVerification(email: \$email, newPassword: \$newPassword)
+}
+  """;
+
+  static const String updatePasswordWithinApp = """
+  mutation UpdatePasswordWithinApp(\$email: String!, \$newPassword: String!) {
+  updatePasswordWithinApp(email: \$email, newPassword: \$newPassword)
 }
   """;
 
@@ -432,4 +458,10 @@ mutation DeleteNotificationForUser(\$id: String!) {
   deleteNotificationForUser(id: \$id)
 }
 ''';
+
+  static const String deleteUserAddress = """
+mutation DeleteUserAddress(\$deleteUserAddressId: String!) {
+  deleteUserAddress(id: \$deleteUserAddressId)
+}
+""";
 }

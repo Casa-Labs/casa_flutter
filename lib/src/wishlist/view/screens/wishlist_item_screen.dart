@@ -1,11 +1,10 @@
-import 'package:casaflutterapp/routes/app_routes.dart';
-import 'package:casaflutterapp/utils/color_constant.dart';
-import 'package:casaflutterapp/utils/padding_size.dart';
+import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutter/utils/color_constant.dart';
+import 'package:casaflutter/utils/padding_size.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../common/widgets/filter_row.dart';
 import '../../controller/wishlist_controller.dart';
 import '../widgets/icons_widget.dart';
 
@@ -94,16 +93,16 @@ class WishlistItemScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: PaddingSize.commonPadding, vertical: 5),
-                child: FilterRow(
-                  brandList: wishlistController.brandFilter,
-                  colorList: wishlistController.colorFilter,
-                  productList: wishlistController.productFilter,
-                  sizedList: wishlistController.sizedFilter,
-                ),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(
+              //       horizontal: PaddingSize.commonPadding, vertical: 5),
+              //   child: FilterRow(
+              //     brandList: wishlistController.brandFilter,
+              //     colorList: wishlistController.colorFilter,
+              //     productList: wishlistController.productFilter,
+              //     sizedList: wishlistController.sizedFilter,
+              //   ),
+              // ),
               Obx(() {
                 return Expanded(
                   child: GridView.builder(

@@ -1,5 +1,5 @@
-import 'package:casaflutterapp/src/cart/model/cart_models.dart';
-import 'package:casaflutterapp/utils/color_constant.dart';
+import 'package:casaflutter/src/cart/model/cart_models.dart';
+import 'package:casaflutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
 class CartSizeSelector extends StatelessWidget {

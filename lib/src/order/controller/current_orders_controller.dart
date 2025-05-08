@@ -1,27 +1,30 @@
-import 'package:casaflutterapp/network/graph_ql_manager.dart';
-import 'package:casaflutterapp/src/order/model/order_models.dart';
+import 'package:casaflutter/network/graph_ql_manager.dart';
+import 'package:casaflutter/src/order/model/customer_order_model.dart';
+import 'package:casaflutter/utils/utils.dart';
 import 'package:get/get.dart';
 
 import '../../../utils/preference_manager.dart';
 
 class CurrentOrdersController extends GetxController {
   var isLoading = true.obs;
-  final manager = GraphQLManager();
   final userID = PreferenceManager.getString(PreferenceManager.userId);
 
-  Future<List<CustomerOrders>> fetchProducts() async {
+  Future<GetCustomerOrdersResponseModel> getOrdersCall() async {
     try {
-      List<CustomerOrders> orderList = [];
-      var response = await manager.getOrders(userID!);
-      List<CustomerOrders> data = response.data?['customerOrders'] ?? [];
-       orderList = data.map((json) => CustomerOrders.fromJson(response.data!)).toList();
-      return orderList;
+      var response = await GraphQLManager().getOrders(userID!);
+
+      if (!response.hasException && response.data != null) {
+        // TODO : parse this response without hard string
+        final orderResponse = GetCustomerOrdersResponseModel.fromJson(
+            {'customerOrders': response.data!['customerOrders']});
+        return orderResponse;
+      } else {
+        logg.e('Get customer orders Exception: ${response.exception}');
+        return GetCustomerOrdersResponseModel();
+      }
     } catch (e) {
-      return [];
+      logg.e('Exception during getOrdersCall: $e');
+      return GetCustomerOrdersResponseModel();
     }
   }
 }
-
-
-
-

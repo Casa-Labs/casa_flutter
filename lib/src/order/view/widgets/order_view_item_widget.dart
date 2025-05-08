@@ -1,10 +1,12 @@
-import 'package:casaflutterapp/src/cart/model/cart_models.dart';
+import 'package:casaflutter/src/cart/model/cart_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../../../utils/color.dart';
+import '../../../../routes/app_routes.dart';
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/string_constant.dart';
+import '../../../common/widgets/show_toast.dart';
 
 class OrderViewItemWidget extends StatelessWidget {
   final ProductForCart item;
@@ -19,23 +21,23 @@ class OrderViewItemWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-       Container(
-          height: 50,
-          width: 50,
-          padding: EdgeInsets.all(2),
+        Container(
           decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                  image: NetworkImage(
-                      item.store?.logo ?? ImageConstants.dummyNetworkPortrait),
-                  fit: BoxFit.fill),
-              border: Border.all(color: CColor.circleBoarder, width: 1)),
-          // child: CircleAvatar(
-          //   maxRadius: 24,
-          //   child: Image.network(item
-          //       .store?.logo ??
-          //       ImageConstants.dummyNetworkPortrait)
-          // ),
+            border: Border.all(color: Colors.black, width: 2),
+            shape: BoxShape.circle,
+          ),
+          padding: EdgeInsets.all(1.5),
+          child: CircleAvatar(
+            maxRadius: 24,
+            backgroundColor: Colors.transparent,
+            child: Image.network(
+              item.store != null &&
+                      item.store!.logo != null &&
+                      item.store!.logo!.isNotEmpty
+                  ? item.store!.logo!
+                  : ImageConstants.dummyNetworkPortrait,
+            ),
+          ),
         ),
         const SizedBox(
           height: 10,
@@ -53,23 +55,40 @@ class OrderViewItemWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Card(
-                      elevation: 2,
-                      color: ButtonColor.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.2,
-                            width: MediaQuery.of(context).size.width * 0.25,
-                            child: Image.network(item.mainImage ?? ImageConstants.dummyNetworkPortrait, fit: BoxFit.fill)
-                            //  Image.asset(
-                            //   'assets/images/placeholder.png',
-                            //   fit: BoxFit.fill,
-                            // ),
-                            ),
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () {
+                        if (item.productId != null) {
+                          context.pushNamed(
+                            RouteNames.productDescription,
+                            pathParameters: {'id': item.productId ?? ''},
+                          );
+                        } else {
+                          showToast(message: 'API Error, Product ID not found');
+                        }
+                      },
+                      child: Card(
+                        elevation: 2,
+                        color: ButtonColor.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.2,
+                              width: MediaQuery.of(context).size.width * 0.25,
+                              child: Image.network(
+                                  item.mainImage ??
+                                      ImageConstants.dummyNetworkPortrait,
+                                  fit: BoxFit.fill)
+                              //  Image.asset(
+                              //   'assets/images/placeholder.png',
+                              //   fit: BoxFit.fill,
+                              // ),
+                              ),
+                        ),
                       ),
                     ),
                     Expanded(
@@ -167,8 +186,8 @@ class OrderViewItemWidget extends StatelessWidget {
                                       horizontal: 10, vertical: 2),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
-                                      color:
-                                          const Color.fromARGB(106, 217, 217, 217)),
+                                      color: const Color.fromARGB(
+                                          106, 217, 217, 217)),
                                   child: Text(
                                     item.quantity.toString(),
                                     style: textTheme.bodyMedium?.copyWith(

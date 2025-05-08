@@ -1,27 +1,32 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:casaflutterapp/src/common/widgets/buttons/buy_now_button.dart';
-import 'package:casaflutterapp/src/common/widgets/common_app_bars.dart';
-import 'package:casaflutterapp/src/common/widgets/custom_image_view.dart';
-import 'package:casaflutterapp/src/explore/controller/explore_controller.dart';
-import 'package:casaflutterapp/src/explore/controller/product_description_controller.dart';
-import 'package:casaflutterapp/src/explore/model/product_by_id_model.dart'
+import 'package:casaflutter/src/common/widgets/buttons/buy_now_button.dart';
+import 'package:casaflutter/src/common/widgets/common_app_bars.dart';
+import 'package:casaflutter/src/explore/controller/explore_controller.dart';
+import 'package:casaflutter/src/explore/controller/product_description_controller.dart';
+import 'package:casaflutter/src/explore/model/product_by_id_model.dart'
     as model;
-import 'package:casaflutterapp/src/explore/view/widgets/divider_title.dart';
-import 'package:casaflutterapp/src/explore/view/widgets/product_card.dart';
-import 'package:casaflutterapp/utils/color_constant.dart';
-import 'package:casaflutterapp/utils/font.dart';
-import 'package:casaflutterapp/utils/string_constant.dart';
-import 'package:casaflutterapp/utils/utils.dart';
+import 'package:casaflutter/src/explore/view/widgets/divider_title.dart';
+import 'package:casaflutter/src/explore/view/widgets/product_card.dart';
+import 'package:casaflutter/utils/color_constant.dart';
+import 'package:casaflutter/utils/font.dart';
+import 'package:casaflutter/utils/string_constant.dart';
+import 'package:casaflutter/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../../routes/app_routes.dart';
 import '../../../../utils/padding_size.dart';
+import '../../../cart/controller/cart_controller.dart';
 import '../../../common/widgets/buttons/add_to_cart_button.dart';
 import '../../../common/widgets/buttons/select_size_button.dart';
 import '../../../home/controller/home_controller.dart';
 import '../../../home/model/review_response.dart';
+import '../../../order/controller/order_review_controller.dart';
+import '../../../wishlist/controller/wishlist_controller.dart';
+import '../../../wishlist/view/screens/add_to_closet.dart';
 import '../widgets/product_write_review_widget.dart';
 import '../widgets/quantity_selector_button.dart';
 
@@ -32,6 +37,9 @@ class ProductDescriptionScreen extends StatelessWidget {
 
   final productDescriptionCtrl = Get.put(ProductDescriptionController());
   final homeController = Get.find<HomeController>();
+  final cartController = Get.find<CartController>();
+  final orderReviewController = Get.find<OrderReviewController>();
+  final wishController = Get.find<WishlistController>();
   @override
   Widget build(BuildContext context) {
     // TODO : Terrible logic of relying on explore controller but will fix it later
@@ -55,16 +63,18 @@ class ProductDescriptionScreen extends StatelessWidget {
             final product = snapshot.data;
             return Obx(
               () => NotificationListener<ScrollNotification>(
-                onNotification: (ScrollNotification scrollInfo) {
-                  if (scrollInfo.metrics.pixels >=
-                          scrollInfo.metrics.maxScrollExtent - 100 &&
-                      !exploreCtrl.relatedProductsIsLoadingMore.value &&
-                      exploreCtrl.relatedProductsHasMore.value) {
-                    logg.d("Fetching more products...");
-                    productDescriptionCtrl.getRelatedProductsCall();
-                  }
-                  return true;
-                },
+                // TODO : Add back the pagination later by uncommenting below logic
+
+                // onNotification: (ScrollNotification scrollInfo) {
+                //   if (scrollInfo.metrics.pixels >=
+                //           scrollInfo.metrics.maxScrollExtent - 100 &&
+                //       !exploreCtrl.relatedProductsIsLoadingMore.value &&
+                //       exploreCtrl.relatedProductsHasMore.value) {
+                //     logg.d("Fetching more products...");
+                //     productDescriptionCtrl.getRelatedProductsCall();
+                //   }
+                //   return true;
+                // },
                 child: ListView(
                   padding: const EdgeInsets.all(PaddingSize.commonPadding),
                   controller: productDescriptionCtrl.scrollController,
@@ -128,22 +138,79 @@ class ProductDescriptionScreen extends StatelessWidget {
                               right: 10,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
+                                spacing: 10,
                                 children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      context.pushNamed(RouteNames.cart);
-                                    },
-                                    icon: const Icon(
-                                        Icons.add_shopping_cart_outlined),
-                                    color: IconColor.white,
-                                    padding: EdgeInsets.zero,
-                                    constraints: BoxConstraints(),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 12),
+                                    child: Column(
+                                      spacing: 10,
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {
+                                            HapticFeedback.heavyImpact();
+
+                                            cartController.addProductsToCart(
+                                                productDescriptionCtrl
+                                                    .getProductData(product!),
+                                                product.quantity!,
+                                                product.sizeValue!);
+                                          },
+                                          icon: Image.asset(
+                                            IconConstants.cartAdd,
+                                            height: 40.0,
+                                            width: 40.0,
+                                          ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            HapticFeedback.heavyImpact();
+                                            wishController.selectedClosets
+                                                .clear();
+                                            showModalBottomSheet(
+                                              context: context,
+                                              isScrollControlled: true,
+                                              builder: (context) {
+                                                return AddToCloset(
+                                                  imageUrl: product
+                                                          ?.mainImage ??
+                                                      ImageConstants
+                                                          .dummyNetworkPortrait,
+                                                  itemId:
+                                                      product!.id.toString(),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          icon: Image.asset(
+                                            IconConstants.bookMark,
+                                            height: 40.0,
+                                            width: 40.0,
+                                          ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            HapticFeedback.heavyImpact();
+                                            Share.share(
+                                                'Check out the CASA app now');
+                                          },
+                                          icon: Image.asset(
+                                            IconConstants.forward,
+                                            height: 40.0,
+                                            width: 40.0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  BuyNowButton(
-                                    onPressed: () {
-                                      context.pushNamed(RouteNames.orderReview);
-                                    },
-                                  ),
+                                  BuyNowButton(onPressed: () {
+                                    HapticFeedback.heavyImpact();
+                                    orderReviewController.getHomeProduct(
+                                        productDescriptionCtrl
+                                            .getProductData(product!),
+                                        product.quantity!,
+                                        product.sizeValue!);
+                                    context.pushNamed(RouteNames.orderReview);
+                                  }),
                                 ],
                               ),
                             ),
@@ -151,29 +218,29 @@ class ProductDescriptionScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: CustomImageView(
-                            image: ImageConstants.send,
-                            height: 24,
-                          ),
-                        ),
-                        IconButton(
-                            onPressed: () {},
-                            icon: CustomImageView(
-                              image: ImageConstants.chat,
-                              height: 24,
-                            )),
-                        Spacer(),
-                        InkWell(
-                          child: Icon(Icons.bookmark_border),
-                          onTap: () {},
-                        ),
-                      ],
-                    ),
+                    // const SizedBox(height: 20),
+                    // Row(
+                    //   children: [
+                    //     IconButton(
+                    //       onPressed: () {},
+                    //       icon: CustomImageView(
+                    //         image: ImageConstants.send,
+                    //         height: 24,
+                    //       ),
+                    //     ),
+                    //     IconButton(
+                    //         onPressed: () {},
+                    //         icon: CustomImageView(
+                    //           image: ImageConstants.chat,
+                    //           height: 24,
+                    //         )),
+                    //     Spacer(),
+                    //     InkWell(
+                    //       child: Icon(Icons.bookmark_border),
+                    //       onTap: () {},
+                    //     ),
+                    //   ],
+                    // ),
                     const SizedBox(height: 10),
                     Text(
                       product?.name ?? 'NA',
@@ -197,49 +264,68 @@ class ProductDescriptionScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const SizedBox(height: 20),
-                    SelectSizeButton(
-                      size: [],
-                      selectedSize: "S",
-                      onSizeSelected: (newSize) {},
+                    GetBuilder<ProductDescriptionController>(
+                      builder: (controller) {
+                        return SelectSizeButton(
+                          size: controller.formattedSizesList(product!),
+                          selectedSize: product.sizeValue!,
+                          onSizeSelected: (newSize) {
+                            controller.selectSize(
+                                product, newSize); // calls update()
+                          },
+                        );
+                      },
                     ),
                     const SizedBox(height: 20),
-                    Center(
-                        child: QuantitySelectorButton(
-                      count: 1,
-                      getQuantity: (count) {},
-                    )),
+                    GetBuilder<ProductDescriptionController>(
+                      builder: (controller) {
+                        return Center(
+                          child: QuantitySelectorButton(
+                            count: product!.quantity!,
+                            getQuantity: (count) {
+                              controller.quantityCount(
+                                  product, count); // calls update()
+                            },
+                          ),
+                        );
+                      },
+                    ),
                     const SizedBox(height: 20),
                     AddToCartButton(
                       onPressed: () {
-                        // Get.to(() => const PaymentOptionsScreen());
-                        Get.snackbar('Item added to cart successfully',
-                            'Not really until API integrates');
+                        HapticFeedback.heavyImpact();
+
+                        cartController.addProductsToCart(
+                            productDescriptionCtrl.getProductData(product!),
+                            product.quantity!,
+                            product.sizeValue!);
                       },
                     ),
                     const SizedBox(height: 30),
 
                     _buildPolicyTile(
-                        title: 'RETURN POLICY',
-                        isExpanded: exploreCtrl.isShowReturn,
-                        onTap: () => exploreCtrl.changeReturnPolicy(),
-                        content: product!.customReturnPolicy??'Api Error',
-                      ),
-                      const SizedBox(height: 20),
-                      _buildPolicyTile(
-                        title: 'SHIPPING POLICY',
-                        isExpanded: exploreCtrl.isShowShipping,
-                        onTap: () => exploreCtrl.changeShippingPolicy(),
-                        content: product.customShippingPolicy??'Api Error',
-                      ),
+                      title: 'RETURN POLICY',
+                      isExpanded: exploreCtrl.isShowReturn,
+                      onTap: () => exploreCtrl.changeReturnPolicy(),
+                      content: product!.customReturnPolicy ?? 'Api Error',
+                    ),
+                    const SizedBox(height: 20),
+                    _buildPolicyTile(
+                      title: 'SHIPPING POLICY',
+                      isExpanded: exploreCtrl.isShowShipping,
+                      onTap: () => exploreCtrl.changeShippingPolicy(),
+                      content: product.customShippingPolicy ?? 'Api Error',
+                    ),
                     const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           'Reviews',
-                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                         ),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -264,15 +350,19 @@ class ProductDescriptionScreen extends StatelessWidget {
                     FutureBuilder<GetProductReviewModel?>(
                       future: homeController.getReviews(product.id ?? ''),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return const Center(child: CircularProgressIndicator());
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
                         }
 
                         if (snapshot.hasError) {
-                          return Text('Error loading reviews: ${snapshot.error}');
+                          return Text(
+                              'Error loading reviews: ${snapshot.error}');
                         }
 
-                        final reviews = snapshot.data?.getProductInteractions ?? [];
+                        final reviews =
+                            snapshot.data?.getProductInteractions ?? [];
 
                         if (reviews.isEmpty) {
                           return const Text('No reviews yet');
@@ -283,32 +373,37 @@ class ProductDescriptionScreen extends StatelessWidget {
                             ListView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: reviews.length > 2 ? 2 : reviews.length,
+                              itemCount:
+                                  reviews.length > 2 ? 2 : reviews.length,
                               itemBuilder: (context, index) {
                                 final review = reviews[index];
                                 return Padding(
                                   padding: const EdgeInsets.only(bottom: 15),
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Container(
                                         padding: const EdgeInsets.all(1),
                                         decoration: BoxDecoration(
-                                            border:
-                                            Border.all(color: ButtonColor.black),
-                                            borderRadius: BorderRadius.circular(50)),
+                                            border: Border.all(
+                                                color: ButtonColor.black),
+                                            borderRadius:
+                                                BorderRadius.circular(50)),
                                         child: CircleAvatar(
                                           maxRadius: 28,
-                                          backgroundColor: const Color(0xFF002957),
+                                          backgroundColor:
+                                              const Color(0xFF002957),
                                           child: Text(
                                             review.user?.name
-                                                ?.substring(0, 1)
-                                                .toUpperCase() ??
+                                                    ?.substring(0, 1)
+                                                    .toUpperCase() ??
                                                 "U",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium!
-                                                .copyWith(color: TextColor.white),
+                                                .copyWith(
+                                                    color: TextColor.white),
                                           ),
                                         ),
                                       ),
@@ -316,7 +411,7 @@ class ProductDescriptionScreen extends StatelessWidget {
                                       Expanded(
                                         child: Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               review.user?.name ?? 'Anonymous',
@@ -324,20 +419,21 @@ class ProductDescriptionScreen extends StatelessWidget {
                                                   .textTheme
                                                   .bodyLarge!
                                                   .copyWith(
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                             ),
                                             const SizedBox(height: 5),
                                             Row(
                                               children: [
                                                 ...List.generate(
                                                   5,
-                                                      (i) => Icon(
+                                                  (i) => Icon(
                                                     Icons.star,
                                                     size: 16,
-                                                    color: i < (review.rating ?? 0)
-                                                        ? Colors.black
-                                                        : Colors.grey,
+                                                    color:
+                                                        i < (review.rating ?? 0)
+                                                            ? Colors.black
+                                                            : Colors.grey,
                                                   ),
                                                 ),
                                                 const SizedBox(width: 10),
@@ -347,12 +443,12 @@ class ProductDescriptionScreen extends StatelessWidget {
                                                       .textTheme
                                                       .bodyMedium!
                                                       .copyWith(
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
                                                 ),
                                               ],
                                             ),
-
                                           ],
                                         ),
                                       ),
@@ -361,7 +457,6 @@ class ProductDescriptionScreen extends StatelessWidget {
                                 );
                               },
                             ),
-
                           ],
                         );
                       },
@@ -469,7 +564,7 @@ class ProductDescriptionScreen extends StatelessWidget {
               children: [
                 SizedBox(),
                 Text(
-                  title??'Api Error',
+                  title ?? 'Api Error',
                   style: const TextStyle(
                     fontSize: 14,
                     color: Colors.white,

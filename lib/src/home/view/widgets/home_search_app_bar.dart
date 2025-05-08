@@ -1,8 +1,11 @@
-import 'package:casaflutterapp/routes/app_routes.dart';
-import 'package:casaflutterapp/src/common/widgets/textfields.dart';
-import 'package:casaflutterapp/utils/color_constant.dart';
+import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutter/src/common/widgets/textfields.dart';
+import 'package:casaflutter/utils/color_constant.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../explore/view/widgets/reusable_dropdown.dart';
 
 class HomeSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeSearchAppBar({
@@ -20,9 +23,30 @@ class HomeSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Row(
         children: [
           SizedBox(width: 5),
-          Text(
-            'CASA',
-            style: Theme.of(context).textTheme.headlineMedium,
+          SizedBox(
+            width: MediaQuery.sizeOf(context).width * 0.2,
+            child: ReusableDropdown(
+              items: const [
+                'Brands',
+                'Thrift',
+              ],
+              hint: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Row(
+                  children: [
+                    Text(
+                      'CASA',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                  ],
+                ),
+              ),
+              width: MediaQuery.sizeOf(context).width * 0.4,
+              mode: DropdownMode.single,
+              fullSize: false,
+              onSelected: (selectedItems) {},
+              label: '',
+            ),
           ),
           SizedBox(width: 10),
           Expanded(
@@ -41,7 +65,11 @@ class HomeSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () {
             context.pushNamed(RouteNames.notifications);
           },
-          icon: Icon(Icons.notifications_outlined),
+          icon: Image.asset(
+            IconConstants.notifications,
+            width: 28.0,
+            height: 28.0,
+          ),
           iconSize: 25,
           color: IconColor.black,
           style: IconButton.styleFrom(
@@ -54,7 +82,11 @@ class HomeSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () {
             context.pushNamed(RouteNames.search);
           },
-          icon: Icon(Icons.tune_rounded),
+          icon: Image.asset(
+            IconConstants.settings,
+            width: 28.0,
+            height: 28.0,
+          ),
           iconSize: 25,
           color: IconColor.black,
           style: IconButton.styleFrom(

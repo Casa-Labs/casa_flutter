@@ -1,8 +1,8 @@
 // graphql_manager.dart
-import 'package:casaflutterapp/network/graph_ql_mutations.dart';
-import 'package:casaflutterapp/network/graph_ql_queries.dart';
-import 'package:casaflutterapp/network/graph_ql_variables.dart';
-import 'package:casaflutterapp/network/graphql_client.dart';
+import 'package:casaflutter/network/graph_ql_mutations.dart';
+import 'package:casaflutter/network/graph_ql_queries.dart';
+import 'package:casaflutter/network/graph_ql_variables.dart';
+import 'package:casaflutter/network/graphql_client.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../src/order/model/create_order.dart';
@@ -73,6 +73,19 @@ class GraphQLManager {
     return await _clientService.performMutationWithoutToken(
       document: GraphQLMutations.updatePasswordAfterVerification,
       variables: GraphQLVariables.updatePasswordAfterVerification(
+        email,
+        newPassword,
+      ),
+    );
+  }
+
+  Future<QueryResult> updatePasswordWithinApp({
+    required String email,
+    required String newPassword,
+  }) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.updatePasswordWithinApp,
+      variables: GraphQLVariables.updatePasswordWithinApp(
         email,
         newPassword,
       ),
@@ -170,6 +183,31 @@ class GraphQLManager {
       document: GraphQLMutations.addUserAddress,
       variables: GraphQLVariables.addUserAddressVariables(
         userId,
+        address,
+        city,
+        state,
+        pinCode,
+        country,
+        landmark,
+        tag,
+      ),
+    );
+  }
+
+  Future<QueryResult> updateUserAddress({
+    required String id,
+    required String address,
+    required String city,
+    required String state,
+    required String pinCode,
+    required String country,
+    String? landmark,
+    String? tag,
+  }) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.updateUserAddress,
+      variables: GraphQLVariables.updateUserAddressVariables(
+        id,
         address,
         city,
         state,
@@ -374,7 +412,7 @@ class GraphQLManager {
 
   Future<QueryResult> getNewArrivalProducts(
       int page, int limit, String? search) async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getNewArrivalProducts,
       variables:
           GraphQLVariables.getNewArrivalProductsVariables(page, limit, search),
@@ -383,7 +421,7 @@ class GraphQLManager {
 
   Future<QueryResult> getNewArrivalProductsForExplore(
       int page, int limit, String? search) async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getNewArrivalProductsForExplore,
       variables:
           GraphQLVariables.getNewArrivalProductsVariables(page, limit, search),
@@ -412,35 +450,35 @@ class GraphQLManager {
   }
 
   Future<QueryResult> getProducts(Map<String, dynamic> params) async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getProducts,
       variables: GraphQLVariables.getProductsVariables(params),
     );
   }
 
   Future<QueryResult> getProductsForExplore(Map<String, dynamic> params) async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getProductsForExplore,
       variables: GraphQLVariables.getProductsVariables(params),
     );
   }
 
   Future<QueryResult> getRelatedProducts(Map<String, dynamic> params) async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getProductsForExplore,
       variables: GraphQLVariables.getProductsVariables(params),
     );
   }
 
   Future<QueryResult> getProductsForSearch(Map<String, dynamic> params) async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getProductsForSearch,
       variables: GraphQLVariables.getProductsVariables(params),
     );
   }
 
   Future<QueryResult> getProductsById(String productId) async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getProductDescription,
       variables: GraphQLVariables.getProductById(productId),
     );
@@ -448,7 +486,7 @@ class GraphQLManager {
 
   Future<QueryResult> getBrands(
       {int? limit, int? page, String? search, String? storeType}) async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getBrand,
       variables:
           GraphQLVariables.getBrandVariables(storeType, page, limit, search),
@@ -462,14 +500,14 @@ class GraphQLManager {
   }
 
   Future<QueryResult> getSizes() async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getSizes,
     );
   }
 
   Future<QueryResult> getTrendingProducts(
       int page, int limit, String? search) async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getTrendingProducts,
       variables:
           GraphQLVariables.getTrendingProductsVariables(page, limit, search),
@@ -478,17 +516,30 @@ class GraphQLManager {
 
   Future<QueryResult> getStoreInventoryById(
       {required int page, required int limit, required String storeId}) async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getStoreInventory,
       variables: GraphQLVariables.getStoreInventoryVariables(
           page: page, limit: limit, storeId: storeId),
     );
   }
 
-  Future<QueryResult> getUser(String getUserId) async {
+  Future<QueryResult> getUser({
+    required String userId,
+  }) async {
     return await _clientService.performQuery(
       document: GraphQLQueries.getUser,
-      variables: GraphQLVariables.getUserVariables(getUserId),
+      variables: GraphQLVariables.getUserVariables(userId),
+    );
+  }
+
+  Future<QueryResult> deleteUserAddress({
+    required String addressId,
+  }) async {
+    return await _clientService.performMutation(
+      document: GraphQLMutations.deleteUserAddress,
+      variables: GraphQLVariables.deleteUserAddressVariables(
+        addressId,
+      ),
     );
   }
 
@@ -501,9 +552,8 @@ class GraphQLManager {
 
   Future<QueryResult> getCartItems({required String userId}) async {
     return await _clientService.performQuery(
-      document: GraphQLQueries.getCartItems,
-      variables: GraphQLVariables.getCartItemsVariables(userId),
-    );
+        document: GraphQLQueries.getCartItems,
+        variables: GraphQLVariables.getCartItemsVariables(userId));
   }
 
   Future<QueryResult> getUserClosets({required String userId}) async {
