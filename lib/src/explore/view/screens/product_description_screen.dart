@@ -19,6 +19,7 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../../../routes/app_routes.dart';
 import '../../../../utils/padding_size.dart';
+import '../../../../utils/preference_manager.dart';
 import '../../../cart/controller/cart_controller.dart';
 import '../../../common/widgets/buttons/add_to_cart_button.dart';
 import '../../../common/widgets/buttons/select_size_button.dart';
@@ -147,13 +148,22 @@ class ProductDescriptionScreen extends StatelessWidget {
                                       children: [
                                         IconButton(
                                           onPressed: () {
-                                            HapticFeedback.heavyImpact();
+                                            final token =
+                                                PreferenceManager.getString(
+                                                    PreferenceManager.token);
+                                            if (token == null ||
+                                                token.isEmpty) {
+                                              context
+                                                  .pushNamed(RouteNames.signIn);
+                                            } else {
+                                              HapticFeedback.heavyImpact();
 
-                                            cartController.addProductsToCart(
-                                                productDescriptionCtrl
-                                                    .getProductData(product!),
-                                                product.quantity!,
-                                                product.sizeValue!);
+                                              cartController.addProductsToCart(
+                                                  productDescriptionCtrl
+                                                      .getProductData(product!),
+                                                  product.quantity!,
+                                                  product.sizeValue!);
+                                            }
                                           },
                                           icon: Image.asset(
                                             IconConstants.cartAdd,
@@ -163,23 +173,32 @@ class ProductDescriptionScreen extends StatelessWidget {
                                         ),
                                         IconButton(
                                           onPressed: () {
-                                            HapticFeedback.heavyImpact();
-                                            wishController.selectedClosets
-                                                .clear();
-                                            showModalBottomSheet(
-                                              context: context,
-                                              isScrollControlled: true,
-                                              builder: (context) {
-                                                return AddToCloset(
-                                                  imageUrl: product
-                                                          ?.mainImage ??
-                                                      ImageConstants
-                                                          .dummyNetworkPortrait,
-                                                  itemId:
-                                                      product!.id.toString(),
-                                                );
-                                              },
-                                            );
+                                            final token =
+                                                PreferenceManager.getString(
+                                                    PreferenceManager.token);
+                                            if (token == null ||
+                                                token.isEmpty) {
+                                              context
+                                                  .pushNamed(RouteNames.signIn);
+                                            } else {
+                                              HapticFeedback.heavyImpact();
+                                              wishController.selectedClosets
+                                                  .clear();
+                                              showModalBottomSheet(
+                                                context: context,
+                                                isScrollControlled: true,
+                                                builder: (context) {
+                                                  return AddToCloset(
+                                                    imageUrl: product
+                                                            ?.mainImage ??
+                                                        ImageConstants
+                                                            .dummyNetworkPortrait,
+                                                    itemId:
+                                                        product!.id.toString(),
+                                                  );
+                                                },
+                                              );
+                                            }
                                           },
                                           icon: Image.asset(
                                             IconConstants.bookMark,
@@ -203,13 +222,19 @@ class ProductDescriptionScreen extends StatelessWidget {
                                     ),
                                   ),
                                   BuyNowButton(onPressed: () {
-                                    HapticFeedback.heavyImpact();
-                                    orderReviewController.getHomeProduct(
-                                        productDescriptionCtrl
-                                            .getProductData(product!),
-                                        product.quantity!,
-                                        product.sizeValue!);
-                                    context.pushNamed(RouteNames.orderReview);
+                                    final token = PreferenceManager.getString(
+                                        PreferenceManager.token);
+                                    if (token == null || token.isEmpty) {
+                                      context.pushNamed(RouteNames.signIn);
+                                    } else {
+                                      HapticFeedback.heavyImpact();
+                                      orderReviewController.getHomeProduct(
+                                          productDescriptionCtrl
+                                              .getProductData(product!),
+                                          product.quantity!,
+                                          product.sizeValue!);
+                                      context.pushNamed(RouteNames.orderReview);
+                                    }
                                   }),
                                 ],
                               ),

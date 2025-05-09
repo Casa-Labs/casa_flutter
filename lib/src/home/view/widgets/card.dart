@@ -15,6 +15,7 @@ import 'package:share_plus/share_plus.dart';
 // import 'package:share_plus/share_plus.dart';
 
 import '../../../../utils/color_constant.dart';
+import '../../../../utils/preference_manager.dart';
 import '../../../order/controller/order_review_controller.dart';
 import '../../../wishlist/controller/wishlist_controller.dart';
 import '../../../wishlist/view/screens/add_to_closet.dart';
@@ -223,14 +224,27 @@ class Cards extends StatelessWidget {
                                               children: [
                                                 IconButton(
                                                   onPressed: () {
-                                                    HapticFeedback
-                                                        .heavyImpact();
-                                                    cartLogin.addProductsToCart(
-                                                        product,
-                                                        product.quantity!,
-                                                        homeCtrl.selectedSize
-                                                            .value);
-                                                    homeCtrl.addToCartSwipe();
+                                                    final token =
+                                                        PreferenceManager
+                                                            .getString(
+                                                                PreferenceManager
+                                                                    .token);
+                                                    if (token == null ||
+                                                        token.isEmpty) {
+                                                      context.pushNamed(
+                                                          RouteNames.signIn);
+                                                    } else {
+                                                      HapticFeedback
+                                                          .heavyImpact();
+                                                      cartLogin
+                                                          .addProductsToCart(
+                                                              product,
+                                                              product.quantity!,
+                                                              homeCtrl
+                                                                  .selectedSize
+                                                                  .value);
+                                                      homeCtrl.addToCartSwipe();
+                                                    }
                                                   },
                                                   icon: Image.asset(
                                                     IconConstants.cartAdd,
@@ -240,25 +254,37 @@ class Cards extends StatelessWidget {
                                                 ),
                                                 IconButton(
                                                   onPressed: () {
-                                                    HapticFeedback
-                                                        .heavyImpact();
+                                                    final token =
+                                                        PreferenceManager
+                                                            .getString(
+                                                                PreferenceManager
+                                                                    .token);
+                                                    if (token == null ||
+                                                        token.isEmpty) {
+                                                      context.pushNamed(
+                                                          RouteNames.signIn);
+                                                    } else {
+                                                      HapticFeedback
+                                                          .heavyImpact();
 
-                                                    wishController
-                                                        .selectedClosets
-                                                        .clear();
-                                                    showModalBottomSheet(
-                                                      context: context,
-                                                      isScrollControlled: true,
-                                                      builder: (context) {
-                                                        return AddToCloset(
-                                                          imageUrl: product
-                                                              .mainImage
-                                                              .toString(),
-                                                          itemId: product.id
-                                                              .toString(),
-                                                        );
-                                                      },
-                                                    );
+                                                      wishController
+                                                          .selectedClosets
+                                                          .clear();
+                                                      showModalBottomSheet(
+                                                        context: context,
+                                                        isScrollControlled:
+                                                            true,
+                                                        builder: (context) {
+                                                          return AddToCloset(
+                                                            imageUrl: product
+                                                                .mainImage
+                                                                .toString(),
+                                                            itemId: product.id
+                                                                .toString(),
+                                                          );
+                                                        },
+                                                      );
+                                                    }
                                                   },
                                                   icon: Image.asset(
                                                     IconConstants.bookMark,
@@ -283,16 +309,25 @@ class Cards extends StatelessWidget {
                                             ),
                                           ),
                                           BuyNowButton(onPressed: () {
-                                            HapticFeedback.heavyImpact();
+                                            final token =
+                                                PreferenceManager.getString(
+                                                    PreferenceManager.token);
+                                            if (token == null ||
+                                                token.isEmpty) {
+                                              context
+                                                  .pushNamed(RouteNames.signIn);
+                                            } else {
+                                              HapticFeedback.heavyImpact();
 
-                                            orderReviewController
-                                                .getHomeProduct(
-                                                    product,
-                                                    product.quantity!,
-                                                    homeCtrl
-                                                        .selectedSize.value);
-                                            context.pushNamed(
-                                                RouteNames.orderReview);
+                                              orderReviewController
+                                                  .getHomeProduct(
+                                                      product,
+                                                      product.quantity!,
+                                                      homeCtrl
+                                                          .selectedSize.value);
+                                              context.pushNamed(
+                                                  RouteNames.orderReview);
+                                            }
                                           }),
                                         ],
                                       ),

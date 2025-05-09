@@ -43,7 +43,7 @@ class SplashController extends GetxController {
     super.onInit();
     dayIndex(DateTime.now().weekday);
     Future.delayed(const Duration(seconds: 5), () {
-      navigatorKey.currentContext?.goNamed(RouteNames.signIn);
+      navigatorKey.currentContext?.goNamed(RouteNames.navigation);
     });
   }
 

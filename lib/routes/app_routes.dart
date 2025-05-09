@@ -121,17 +121,16 @@ class RouteNames {
 final GoRouter router = GoRouter(
   navigatorKey: navigatorKey,
   redirect: (context, state) {
-    bool isLoggedIn = false;
     final token = PreferenceManager.getString(PreferenceManager.token);
-    if (token != null && token.isNotEmpty) {
-      isLoggedIn = true;
-    }
+    final isLoggedIn = token != null && token.isNotEmpty;
     final isLoggingIn = state.fullPath == _AppPaths.signIn;
 
     if (isLoggedIn && isLoggingIn) {
+      // User is logged in and tries to go to login again -> redirect to main screen
       return _AppPaths.navigation;
     }
 
+    // Let user access all other routes freely (including navigation without auth)
     return null;
   },
   debugLogDiagnostics: true,
