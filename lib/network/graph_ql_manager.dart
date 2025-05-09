@@ -494,7 +494,7 @@ class GraphQLManager {
   }
 
   Future<QueryResult> getCategory() async {
-    return await _clientService.performQuery(
+    return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getCategory,
     );
   }
