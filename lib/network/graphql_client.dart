@@ -22,7 +22,43 @@ class GraphQLClientService {
     },
   );
 
-  static final Link _link = _authLink.concat(_httpLink);
+  // Custom middleware to inject dynamic headers
+  static final Link _customHeaderLink =
+      Link.function((request, [forward]) async* {
+    final Map<String, String> additionalHeaders = {
+      'X-device-id': '123456789',
+    };
+
+    request.updateContextEntry<HttpLinkHeaders>(
+      (existing) => HttpLinkHeaders(
+        headers: {
+          ...?existing?.headers,
+          ...additionalHeaders,
+        },
+      ),
+    );
+
+    final mergedHeaders = request.context.entry<HttpLinkHeaders>()?.headers;
+    logg.d('🚀 Outgoing GraphQL Headers:');
+    mergedHeaders?.forEach((key, value) => logg.d('$key: $value'));
+
+    yield* forward!(request);
+  });
+
+  // static final Link _link = _authLink.concat(_httpLink);
+
+  // Combine the links
+  static final Link _link = Link.from([
+    _customHeaderLink,
+    _authLink,
+    _httpLink,
+  ]);
+
+  // Combine the links for token less query and mutation
+  static final Link _linkWithoutToken = Link.from([
+    _customHeaderLink,
+    _httpLink,
+  ]);
 
   static final GraphQLClient _client = GraphQLClient(
     link: _link,
@@ -77,7 +113,7 @@ class GraphQLClientService {
     _prettyPrintRequest(document, variables);
 
     final tokenLessClient = GraphQLClient(
-      link: _httpLink,
+      link: _linkWithoutToken,
       cache: GraphQLCache(
         store: InMemoryStore(),
       ), // Caching for better performance
@@ -102,7 +138,7 @@ class GraphQLClientService {
     _prettyPrintRequest(document, variables);
 
     final tokenLessClient = GraphQLClient(
-      link: _httpLink,
+      link: _linkWithoutToken,
       cache: GraphQLCache(
         store: InMemoryStore(),
       ), // Caching for better performance

@@ -67,7 +67,7 @@ class ExploreService {
       exploreCtrl.categories
           .assignAll(categoriesResponse.getProductCategories ?? []);
     } else {
-      logg.e('Get brands Exception: ${response.exception}');
+      logg.e('Get product categories Exception: ${response.exception}');
     }
   }
 
