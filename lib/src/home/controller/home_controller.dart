@@ -58,6 +58,11 @@ class HomeController extends GetxController {
 
   final manager = GraphQLManager();
 
+  int currentPage = 1;
+  final int pageSize = 10;
+  bool isPaginating = false;
+  bool noMoreData = false;
+
   // ========== STATES ========== //
 
   @override
@@ -120,7 +125,10 @@ class HomeController extends GetxController {
             update();
           });
         }
-        update();
+        // Trigger Pagination Api
+        if (targetIndex >= reactiveProducts.length - 2 && !isPaginating && !noMoreData) {
+          fetchProducts({});
+        }
         break;
 
       case Unswipe():
@@ -213,21 +221,49 @@ class HomeController extends GetxController {
 
 // ========== APIs FUNCTIONS ========== //
 
-  Future<void> fetchProducts(Map<String, dynamic> map) async {
-    try {
-      isLoading.value = true;
+  Future<void> fetchProducts(Map<String, dynamic> map,{bool reset = false}) async {
+    isLoading.value = true;
+    if (isPaginating) return;
+    if (reset) {
+      currentPage = 1;
+      noMoreData = false;
+      products.clear();
+      reactiveProducts.clear();
       update();
-      var response = await manager.getProducts({
-        "pageSize": 20,
-        "page": 1
-      });
-      var getProductList = GetProductData.fromJson(response.data!);
-      products = getProductList.getProducts!.data ?? [];
-      products.shuffle(Random());
+    }
+
+    if (noMoreData) {
       isLoading.value = false;
       update();
+      return;
+    }
+
+    isPaginating = true;
+    update();
+
+    try {
+      final Map<String, dynamic> finalParams = {
+        ...map,
+        "page": currentPage,
+        "pageSize": pageSize,
+      };
+
+      final response = await manager.getProducts(finalParams);
+      final getProductList = GetProductData.fromJson(response.data!);
+      final newProducts = getProductList.getProducts?.data ?? [];
+
+      if (newProducts.isEmpty) {
+        noMoreData = true;
+      } else {
+        products.addAll(newProducts);
+        products.shuffle(Random());
+        reactiveProducts.assignAll(products);
+        currentPage++;
+      }
     } catch (e) {
-      logg.e('get error to fetch product data $e');
+      logg.e('Error fetching paginated product data: $e');
+    } finally {
+      isPaginating = false;
       isLoading.value = false;
       update();
     }
