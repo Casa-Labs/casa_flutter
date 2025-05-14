@@ -139,33 +139,37 @@ class ExploreSection extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyLarge)
                   : SizedBox(
                       height: 50,
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: exploreCtrl.brands.length,
-                          itemBuilder: (context, index) {
-                            final brand = exploreCtrl.brands[index];
-                            return InkWell(
-                              onTap: () {
-                                context.pushNamed(
-                                  RouteNames.store,
-                                  pathParameters: {'id': brand.id ?? ''},
-                                );
-                              },
-                              child: Container(
-                                width: 80,
-                                margin: EdgeInsets.only(right: 8),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  image: DecorationImage(
-                                      image: CachedNetworkImageProvider(brand
-                                              .logo ??
-                                          ImageConstants.dummyNetworkPortrait),
-                                      fit: BoxFit.cover),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: exploreCtrl.brands.length,
+                            itemBuilder: (context, index) {
+                              final brand = exploreCtrl.brands[index];
+                              return InkWell(
+                                onTap: () {
+                                  context.pushNamed(
+                                    RouteNames.store,
+                                    pathParameters: {'id': brand.id ?? ''},
+                                  );
+                                },
+                                child: Container(
+                                  width: 80,
+                                  margin: EdgeInsets.only(right: 8),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    image: DecorationImage(
+                                        image: CachedNetworkImageProvider(
+                                            brand.logo ??
+                                                ImageConstants
+                                                    .dummyNetworkPortrait),
+                                        fit: BoxFit.cover),
+                                  ),
                                 ),
-                              ),
-                            );
-                          }),
+                              );
+                            }),
+                      ),
                     ),
             ],
           ),
