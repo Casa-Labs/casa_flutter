@@ -4,13 +4,18 @@ import 'package:casaflutter/src/explore/view/widgets/product_card.dart';
 import 'package:casaflutter/src/search/controller/search_view_controller.dart';
 import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../wishlist/controller/wishlist_controller.dart';
+import '../../../wishlist/view/screens/add_to_closet.dart';
 
 class SearchViewScreen extends StatelessWidget {
   SearchViewScreen({super.key});
 
   final searchViewCtrl = Get.put(SearchViewController());
+  final wishController = Get.find<WishlistController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +55,18 @@ class SearchViewScreen extends StatelessWidget {
                         imageURL: product.mainImage ??
                             ImageConstants.dummyNetworkPortrait,
                         wishlistOnPressed: () {
-                          // TODO : Implement add to closet
+                          HapticFeedback.heavyImpact();
+                          wishController.selectedClosets.clear();
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (context) {
+                              return AddToCloset(
+                                imageUrl: product.mainImage.toString(),
+                                itemId: product.id.toString(),
+                              );
+                            },
+                          );
                         },
                         onTap: () {
                           context.pushNamed(

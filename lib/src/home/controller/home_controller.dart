@@ -5,6 +5,7 @@ import 'package:casaflutter/src/home/model/service/home_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../network/graph_ql_manager.dart';
 import '../../../utils/preference_manager.dart';
@@ -190,37 +191,49 @@ class HomeController extends GetxController {
     return sizes;
   }
 
-  String formatDate(String? dateString) {
-    if (dateString == null) return '';
+  // String formatDate(String? dateString) {
+  //   if (dateString == null) return '';
+  //   try {
+  //     final date = DateTime.parse(dateString);
+  //     final now = DateTime.now();
+  //     final difference = now.difference(date);
+  //
+  //     if (difference.inDays > 0) {
+  //       return '${difference.inDays}d ago';
+  //     } else if (difference.inHours > 0) {
+  //       return '${difference.inHours}h ago';
+  //     } else if (difference.inMinutes > 0) {
+  //       return '${difference.inMinutes}m ago';
+  //     } else {
+  //       return 'Just now';
+  //     }
+  //   } catch (e) {
+  //     return dateString;
+  //   }
+  // }
+  /// Converts a timestamp string (in milliseconds) to a formatted date string.
+  ///
+  /// [timestampMillisStr] is the Unix timestamp in milliseconds, passed as a string.
+  /// [format] is the desired output format (default: 'yyyy-MM-dd HH:mm:ss').
+  /// [isUtc] determines whether to interpret the time in UTC or local.
+  String formatTimestamp(String timestampMillisStr,
+      {String format = 'dd-MM-yyyy', bool isUtc = false}) {
     try {
-      final date = DateTime.parse(dateString);
-      final now = DateTime.now();
-      final difference = now.difference(date);
-
-      if (difference.inDays > 0) {
-        return '${difference.inDays}d ago';
-      } else if (difference.inHours > 0) {
-        return '${difference.inHours}h ago';
-      } else if (difference.inMinutes > 0) {
-        return '${difference.inMinutes}m ago';
-      } else {
-        return 'Just now';
-      }
+      int timestampMillis = int.parse(timestampMillisStr);
+      DateTime date =
+          DateTime.fromMillisecondsSinceEpoch(timestampMillis, isUtc: isUtc);
+      return DateFormat(format).format(date);
     } catch (e) {
-      return dateString;
+      return 'Invalid timestamp';
     }
   }
-
 // ========== APIs FUNCTIONS ========== //
 
   Future<void> fetchProducts(Map<String, dynamic> map) async {
     try {
       isLoading.value = true;
       update();
-      var response = await manager.getProducts({
-        "pageSize": 20,
-        "page": 1
-      });
+      var response = await manager.getProducts({"pageSize": 20, "page": 1});
       var getProductList = GetProductData.fromJson(response.data!);
       products = getProductList.getProducts!.data ?? [];
       products.shuffle(Random());
