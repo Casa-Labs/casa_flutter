@@ -252,23 +252,24 @@ class ProductDetails extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      // if (review.comment != null &&
-                                      //     review.comment!.isNotEmpty) ...[
-                                      //   const SizedBox(height: 5),
-                                      //   Text(
-                                      //     review.comment!,
-                                      //     style: Theme.of(context)
-                                      //         .textTheme
-                                      //         .bodyMedium,
-                                      //   ),
-                                      // ],
-                                      // const SizedBox(height: 5),
-                                      // Text(
-                                      //   logic.formatDate(review.createdAt),
-                                      //   style: Theme.of(context)
-                                      //       .textTheme
-                                      //       .bodySmall,
-                                      // ),
+                                      if (review.comment != null &&
+                                          review.comment!.isNotEmpty) ...[
+                                        const SizedBox(height: 5),
+                                        Text(
+                                          review.comment!,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium,
+                                        ),
+                                      ],
+                                      const SizedBox(height: 5),
+                                      Text(
+                                        logic.formatTimestamp(
+                                            review.createdAt ?? 'NA'),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall,
+                                      ),
                                     ],
                                   ),
                                 ),
