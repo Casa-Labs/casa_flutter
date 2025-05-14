@@ -127,7 +127,9 @@ class HomeController extends GetxController {
           });
         }
         // Trigger Pagination Api
-        if (targetIndex >= reactiveProducts.length - 2 && !isPaginating && !noMoreData) {
+        if (targetIndex >= reactiveProducts.length - 2 &&
+            !isPaginating &&
+            !noMoreData) {
           fetchProducts({});
         }
         break;
@@ -237,7 +239,8 @@ class HomeController extends GetxController {
   }
 // ========== APIs FUNCTIONS ========== //
 
-  Future<void> fetchProducts(Map<String, dynamic> map,{bool reset = false}) async {
+  Future<void> fetchProducts(Map<String, dynamic> map,
+      {bool reset = false}) async {
     isLoading.value = true;
     if (isPaginating) return;
     if (reset) {
