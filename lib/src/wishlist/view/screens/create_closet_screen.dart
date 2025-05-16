@@ -222,9 +222,7 @@ class CreateClosetScreen extends StatelessWidget {
                             type: AuthButtonType.createCloset,
                             onPressed: () async {
                               wishlistController.addItemToCloset(
-                                  closetId: wishlistController
-                                      .getUserClosetList.first.id
-                                      .toString(),
+                                  closetId: wishlistController.getUserClosetList.first.id.toString(),
                                   imageUrl: wishlistController.selectedImage(),
                                   name:
                                       wishlistController.closetController.text);
