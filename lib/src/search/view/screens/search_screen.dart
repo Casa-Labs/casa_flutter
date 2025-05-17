@@ -1,10 +1,6 @@
 import 'package:casaflutter/src/common/widgets/common_app_bars.dart';
-import 'package:casaflutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../../utils/preference_manager.dart';
-import '../widgets/address_display_box.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -188,34 +184,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
-              Divider(color: DividerColor.grey),
-              const SizedBox(height: 20),
-              AddressDisplayBox(
-                address:
-                    PreferenceManager.getString(PreferenceManager.keyAddress) ??
-                        "",
-              ),
-              const SizedBox(height: 20),
-              GestureDetector(
-                onTap: () {},
-                child: _materialWidget(
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Payment Method?',
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                      const Icon(
-                        Icons.arrow_forward,
-                        color: Colors.black54,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
             ],
           ),
         ),
