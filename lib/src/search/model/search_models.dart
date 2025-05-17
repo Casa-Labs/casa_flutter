@@ -52,7 +52,7 @@ class Data {
   int? stock;
   bool? isNewArrival;
   bool? isTrending;
-  String? trendingScore;
+  int? trendingScore;
   String? variants;
   List<Sizes>? sizes;
   String? createdAt;
