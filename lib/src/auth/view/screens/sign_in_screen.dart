@@ -132,12 +132,8 @@ class SignInScreen extends StatelessWidget {
                           // if registered then navigate to home screen
                           if (authController.isRegistered()) {
                             if (authController.isGoogleLoggedIn()) {
-                              if (PreferenceManager.getBool(
-                                  PreferenceManager.isFirstTime)!) {
-                                router.goNamed(RouteNames.navigation,
-                                    extra: true);
-                                await PreferenceManager.setData(
-                                    PreferenceManager.isFirstTime, false);
+                              if (PreferenceManager.getBool(PreferenceManager.isFirstTime)??true) {router.goNamed(RouteNames.navigation, extra: true);
+                                await PreferenceManager.setData(PreferenceManager.isFirstTime, false);
                               } else {
                                 router.goNamed(RouteNames.navigation,
                                     extra: false);
