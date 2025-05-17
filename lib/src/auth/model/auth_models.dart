@@ -3,10 +3,12 @@ import 'package:casaflutter/utils/base_model.dart';
 class LoginRequestModel {
   String username;
   String password;
+  String deviceID;
 
   LoginRequestModel({
     required this.username,
     required this.password,
+    required this.deviceID,
   });
 }
 

@@ -4,8 +4,10 @@ import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../routes/app_routes.dart';
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/font.dart';
+import '../../../../utils/preference_manager.dart';
 import '../../../cart/controller/cart_controller.dart';
 import '../../../common/widgets/buttons/add_to_cart_button.dart';
 import '../../../explore/view/widgets/quantity_selector_button.dart';
@@ -81,9 +83,15 @@ class ProductDetails extends StatelessWidget {
               const SizedBox(height: 80),
               AddToCartButton(
                 onPressed: () {
-                  cartLogin.addProductsToCart(
-                      product, product.quantity!, logic.selectedSize.value);
-                  logic.addToCartSwipe();
+                  if ((PreferenceManager.getString(PreferenceManager.token) ??
+                          "")
+                      .isEmpty) {
+                    router.goNamed(RouteNames.signIn);
+                  } else {
+                    cartLogin.addProductsToCart(
+                        product, product.quantity!, logic.selectedSize.value);
+                    logic.addToCartSwipe();
+                  }
                 },
               ),
               const SizedBox(height: 20),

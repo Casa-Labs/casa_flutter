@@ -43,8 +43,8 @@ class _TutorialScreenState extends State<TutorialScreen> {
           text: "swipe right on the clothes you like.",
           onTap: onBoardingCtrl.changeIndexTutorial,
           bottom: 0,
-          bottomImage: 0,
-          top: 80,
+          bottomImage: 50,
+          top: 150,
           topImage: 50,
           onSkip: onBoardingCtrl.skipIndexTutorial),
       SwipeTutorial(
@@ -55,7 +55,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
           onTap: onBoardingCtrl.changeIndexTutorial,
           bottom: 0,
           bottomImage: 0,
-          top: 120,
+          top: 180,
           topImage: 50,
           onSkip: onBoardingCtrl.skipIndexTutorial),
       SwipeTutorial(
@@ -65,7 +65,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
           onTap: onBoardingCtrl.changeIndexTutorial,
           bottom: 10,
           bottomImage: 80,
-          top: 0,
+          top: 70,
           topImage: 0,
           onSkip: onBoardingCtrl.skipIndexTutorial),
       SwipeTutorial(
@@ -73,7 +73,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
           alignment: Alignment.bottomCenter,
           text: "click on the logo to visit the store",
           onTap: onBoardingCtrl.changeIndexTutorial,
-          bottom: 130,
+          bottom: 170,
           bottomImage: 90,
           top: 0,
           topImage: 0,
@@ -84,7 +84,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
           text:
               "use the  add to cart, save button to create closet and buy now for instant checkout",
           onTap: onBoardingCtrl.changeIndexTutorial,
-          bottom: 140,
+          bottom: 240,
           bottomImage: 100,
           top: 0,
           topImage: 0,
@@ -97,7 +97,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
           onTap: onBoardingCtrl.changeIndexTutorial,
           bottom: 0,
           bottomImage: 0,
-          top: 90,
+          top: 170,
           topImage: 20,
           onSkip: onBoardingCtrl.skipIndexTutorial),
     ];

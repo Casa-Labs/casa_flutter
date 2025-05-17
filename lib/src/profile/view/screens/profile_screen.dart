@@ -43,12 +43,15 @@ class ProfileScreen extends StatelessWidget {
                       type: AuthButtonType.signIn,
                       isLoading: false,
                       onPressed: () async {
+                        router.goNamed(RouteNames.signIn);
                       },
                     ),
                     AuthButton(
                       type: AuthButtonType.signUp,
                       isLoading: false,
-                      onPressed: () async {},
+                      onPressed: () async {
+                        router.goNamed(RouteNames.signUp);
+                      },
                     ),
                     SizedBox(height: 10),
                     Text('login to explore CASA’s dynamic  features',

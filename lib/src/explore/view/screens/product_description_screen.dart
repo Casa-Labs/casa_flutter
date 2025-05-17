@@ -318,12 +318,18 @@ class ProductDescriptionScreen extends StatelessWidget {
                     const SizedBox(height: 20),
                     AddToCartButton(
                       onPressed: () {
+                        if((PreferenceManager.getString(PreferenceManager.token) ?? "")
+                            .isEmpty){
+                          router.goNamed(RouteNames.signIn);
+                        }else{
+
                         HapticFeedback.heavyImpact();
 
                         cartController.addProductsToCart(
                             productDescriptionCtrl.getProductData(product!),
                             product.quantity!,
                             product.sizeValue!);
+                        }
                       },
                     ),
                     const SizedBox(height: 30),

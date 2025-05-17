@@ -137,6 +137,7 @@ class SignUpController extends GetxController {
     LoginRequestModel loginRequestModel = LoginRequestModel(
       username: registeredEmail.text,
       password: registeredPassword.text,
+      deviceID: '1234', /// devise id should be change
     );
 
     final registerUserResponse = await _authService.registerUser(
