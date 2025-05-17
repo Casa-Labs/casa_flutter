@@ -176,7 +176,7 @@ class ShippingInfo {
   String? city;
   String? name;
   String? address;
-  int? pincode;
+  String? pincode;
 
   ShippingInfo({this.city, this.name, this.address, this.pincode});
 
