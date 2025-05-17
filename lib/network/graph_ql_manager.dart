@@ -11,10 +11,10 @@ class GraphQLManager {
   final GraphQLClientService _clientService = GraphQLClientService();
 
   //MUTATION
-  Future<QueryResult> registerUser(String email, String password) async {
+  Future<QueryResult> registerUser(String email, String password,String  deviceId) async {
     return await _clientService.performMutationWithoutToken(
       document: GraphQLMutations.registerMutation,
-      variables: GraphQLVariables.registerVariables(email, password),
+      variables: GraphQLVariables.registerVariables(email, password,deviceId),
     );
   }
 

@@ -76,7 +76,7 @@ class AuthController extends GetxController {
       isLoading(true);
       LoginRequestModel loginRequestModel = LoginRequestModel(
         username: email.text,
-        password: password.text,
+        password: password.text, deviceID: '',
       );
 
       final loginResponse = await _authService.loginUser(

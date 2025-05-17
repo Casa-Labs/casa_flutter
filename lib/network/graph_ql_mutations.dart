@@ -1,7 +1,7 @@
 class GraphQLMutations {
   static const String registerMutation = """
-  mutation Register(\$email: String!, \$password: String!) {
-    register(email: \$email, password: \$password) {
+  mutation Register(\$email: String!, \$password: String!,\$deviceId: String!) {
+    register(email: \$email, password: \$password ,deviceId: \$deviceId) {
       token
       user {
         authProvider

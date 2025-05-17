@@ -9,10 +9,11 @@ class GraphQLVariables {
     };
   }
 
-  static Map<String, dynamic> registerVariables(String email, String password) {
+  static Map<String, dynamic> registerVariables(String email, String password,String deviceID) {
     return {
       "email": email,
       "password": password,
+      "deviceId":deviceID
     };
   }
 

@@ -8,6 +8,7 @@ class PreferenceManager {
   static const String keyAddress = 'userAddress';
   static const String userAddressDetails = 'userAddressDetails';
   static const String isFirstTime = 'isFirstTime';
+  static const String isCompletedTutorial = 'isCompletedTutorial';
   static const String lastSplashSlot = 'lastSplashSlot';
 
   static setData(String key, dynamic value) async {
