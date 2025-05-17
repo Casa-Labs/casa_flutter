@@ -318,17 +318,18 @@ class ProductDescriptionScreen extends StatelessWidget {
                     const SizedBox(height: 20),
                     AddToCartButton(
                       onPressed: () {
-                        if((PreferenceManager.getString(PreferenceManager.token) ?? "")
-                            .isEmpty){
+                        if ((PreferenceManager.getString(
+                                    PreferenceManager.token) ??
+                                "")
+                            .isEmpty) {
                           router.goNamed(RouteNames.signIn);
-                        }else{
+                        } else {
+                          HapticFeedback.heavyImpact();
 
-                        HapticFeedback.heavyImpact();
-
-                        cartController.addProductsToCart(
-                            productDescriptionCtrl.getProductData(product!),
-                            product.quantity!,
-                            product.sizeValue!);
+                          cartController.addProductsToCart(
+                              productDescriptionCtrl.getProductData(product!),
+                              product.quantity!,
+                              product.sizeValue!);
                         }
                       },
                     ),
@@ -388,8 +389,9 @@ class ProductDescriptionScreen extends StatelessWidget {
                         }
 
                         if (snapshot.hasError) {
-                          return Text(
-                              'Error loading reviews: ${snapshot.error}');
+                          logg.e('Error loading reviews: ${snapshot.error}');
+
+                          return Text('No reviews yet');
                         }
 
                         final reviews =
@@ -480,6 +482,24 @@ class ProductDescriptionScreen extends StatelessWidget {
                                                 ),
                                               ],
                                             ),
+                                            if (review.comment != null &&
+                                                review.comment!.isNotEmpty) ...[
+                                              const SizedBox(height: 5),
+                                              Text(
+                                                review.comment!,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium,
+                                              ),
+                                            ],
+                                            const SizedBox(height: 5),
+                                            Text(
+                                              homeController.formatTimestamp(
+                                                  review.createdAt ?? 'NA'),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall,
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -488,6 +508,24 @@ class ProductDescriptionScreen extends StatelessWidget {
                                 );
                               },
                             ),
+                            /*  if (reviews.length > 2) ...[
+                        const SizedBox(height: 10),
+                        TextButton(
+                          onPressed: () {
+                            Get.to(() => AllReviewsScreen(
+                                  productId: product.id ?? '',
+                                  productName: product.name ?? '',
+                                ));
+                          },
+                          child: Text(
+                            'More Reviews (${reviews.length - 2})',
+                            style:
+                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                          ),
+                        ),
+                      ],*/
                           ],
                         );
                       },
@@ -530,7 +568,31 @@ class ProductDescriptionScreen extends StatelessWidget {
                                                   ImageConstants
                                                       .dummyNetworkPortrait,
                                               wishlistOnPressed: () {
-                                                // TODO: Implement add to closet
+                                                if ((PreferenceManager.getString(
+                                                            PreferenceManager
+                                                                .token) ??
+                                                        "")
+                                                    .isEmpty) {
+                                                  router.goNamed(
+                                                      RouteNames.signIn);
+                                                } else {
+                                                  HapticFeedback.heavyImpact();
+                                                  wishController.selectedClosets
+                                                      .clear();
+                                                  showModalBottomSheet(
+                                                    context: context,
+                                                    isScrollControlled: true,
+                                                    builder: (context) {
+                                                      return AddToCloset(
+                                                        imageUrl: product!
+                                                            .mainImage
+                                                            .toString(),
+                                                        itemId: product.id
+                                                            .toString(),
+                                                      );
+                                                    },
+                                                  );
+                                                }
                                               },
                                               onTap: () {
                                                 context.pushNamed(
