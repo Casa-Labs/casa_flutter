@@ -71,7 +71,7 @@ class HomeController extends GetxController {
     super.onInit();
     await fetchProducts({});
     await getBrand();
-    // await getSize();
+    await getSize();
     await getCategory();
   }
 
@@ -221,6 +221,7 @@ class HomeController extends GetxController {
   //     return dateString;
   //   }
   // }
+
   /// Converts a timestamp string (in milliseconds) to a formatted date string.
   ///
   /// [timestampMillisStr] is the Unix timestamp in milliseconds, passed as a string.
@@ -295,9 +296,9 @@ class HomeController extends GetxController {
       var response = await manager.getSizes();
       var getSizeData = GetSizeData.fromJson(response.data!);
       size = getSizeData.getProductSizes ?? [];
-      // Convert API sizes to button format
-      formattedSizes =
-          size.map((s) => GetProductSizes.mapSize(s.name!)).toList();
+      // // Convert API sizes to button format
+      // formattedSizes =
+      //     size.map((s) => GetProductSizes.mapSize(s.name!)).toList();
       // isLoading.value =  false;
       update();
     } catch (e) {

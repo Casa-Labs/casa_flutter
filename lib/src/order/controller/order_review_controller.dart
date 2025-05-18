@@ -34,8 +34,8 @@ class OrderReviewController extends GetxController {
   RxDouble itemtotal = 0.0.obs;
   RxDouble gst = 0.0.obs;
   RxBool isExpaned = false.obs;
-  double deliveryCharge = 34.00;
-  double platFormFee = 7.00;
+  double deliveryCharge = 30.00;
+  double platFormFee = 10.00;
   RxString message = ''.obs;
   RxBool isBlinking = false.obs;
   Timer? _blinkingTimer;

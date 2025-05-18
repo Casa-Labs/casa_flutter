@@ -219,12 +219,11 @@ List<ProfileListModel> profileList = [
     onTap: (context) {
       showDialog(
         context: context,
-        builder: (context) => ShareAppDialog(
-          appName: 'CASA',
-          iosAppLink: 'https://apps.apple.com/app',
+        builder: (_) => ShareAppDialog(
+          appName: "CASA",
           androidAppLink:
-              'https://play.google.com/store/apps/details?id=com.casashop.casaflutterapp',
-          shareMessage: 'Check out this amazing app!', // Optional
+              "https://play.google.com/store/apps/details?id=com.casashop.casaflutterapp",
+          iosAppLink: "https://apps.apple.com/app",
         ),
       );
     },
