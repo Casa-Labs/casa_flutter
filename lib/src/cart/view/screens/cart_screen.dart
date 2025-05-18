@@ -29,22 +29,20 @@ class CartScreen extends StatelessWidget {
           : AppBar(
               scrolledUnderElevation: 0,
               leading: cartController.cartList.isNotEmpty
-                  ? Obx(
-                      () => InkWell(
-                        overlayColor:
-                            WidgetStateProperty.all(ButtonColor.transparent),
-                        splashFactory: NoSplash.splashFactory,
-                        onTap: () {
-                          cartController.removeAllItemFromCart();
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Text(
-                              'Clear',
-                              style: textTheme.bodyMedium,
-                            ),
+                  ? InkWell(
+                      overlayColor:
+                          WidgetStateProperty.all(ButtonColor.transparent),
+                      splashFactory: NoSplash.splashFactory,
+                      onTap: () {
+                        cartController.removeAllItemFromCart();
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            'Clear',
+                            style: textTheme.bodyMedium,
                           ),
                         ),
                       ),

@@ -308,8 +308,10 @@ class ProductDescriptionScreen extends StatelessWidget {
                           child: QuantitySelectorButton(
                             count: product!.quantity!,
                             getQuantity: (count) {
-                              controller.quantityCount(
-                                  product, count); // calls update()
+                              if (count < 6) {
+                                controller.quantityCount(
+                                    product, count); // calls update()
+                              }
                             },
                           ),
                         );

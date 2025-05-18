@@ -43,7 +43,7 @@ class ExploreScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     ExploreSearchBar(),
-                    const Divider(),
+                    const SizedBox(height: 15),
                     Row(
                       children: [
                         const SizedBox(width: 20),

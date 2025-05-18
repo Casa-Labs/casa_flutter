@@ -3,6 +3,7 @@ import 'package:casaflutter/src/cart/controller/cart_controller.dart';
 import 'package:casaflutter/src/common/widgets/buttons/buy_now_button.dart';
 import 'package:casaflutter/src/home/controller/home_controller.dart';
 import 'package:casaflutter/src/home/view/widgets/details_widget.dart';
+import 'package:casaflutter/src/profile/view/widgets/share_dialog.dart';
 import 'package:casaflutter/utils/font.dart';
 import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:share_plus/share_plus.dart';
 
 // import 'package:share_plus/share_plus.dart';
 
@@ -296,8 +296,17 @@ class Cards extends StatelessWidget {
                                                   onPressed: () {
                                                     HapticFeedback
                                                         .heavyImpact();
-                                                    Share.share(
-                                                        'Check out the CASA app now');
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (_) =>
+                                                          ShareAppDialog(
+                                                        appName: "CASA",
+                                                        androidAppLink:
+                                                            "https://play.google.com/store/apps/details?id=com.casashop.casaflutterapp",
+                                                        iosAppLink:
+                                                            "https://apps.apple.com/app",
+                                                      ),
+                                                    );
                                                   },
                                                   icon: Image.asset(
                                                     IconConstants.forward,

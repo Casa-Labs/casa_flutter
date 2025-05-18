@@ -181,7 +181,7 @@ class _FilterSelectionDialogState extends State<FilterSelectionDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: BackgroundColor.white.withOpacity(0.7),
+      backgroundColor: BackgroundColor.white.withValues(alpha: 0.7),
       insetPadding: const EdgeInsets.symmetric(horizontal: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
@@ -221,11 +221,9 @@ class _FilterSelectionDialogState extends State<FilterSelectionDialog> {
               children: [
                 _buildBottomButton("Clear", () {
                   widget.onClear(null);
-                  // Navigator.of(context).pop();
                 }),
                 _buildBottomButton("Done", () {
                   widget.onDone(selected);
-                  // Navigator.of(context).pop();
                 }),
               ],
             ),
