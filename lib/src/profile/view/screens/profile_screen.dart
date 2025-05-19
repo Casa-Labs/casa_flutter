@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:casaflutter/routes/app_routes.dart';
 import 'package:casaflutter/src/auth/controller/auth_controller.dart';
 import 'package:casaflutter/src/common/widgets/common_app_bars.dart';
+import 'package:casaflutter/src/common/widgets/login_first_screen.dart';
 import 'package:casaflutter/src/common/widgets/show_toast.dart';
 import 'package:casaflutter/src/profile/controller/profile_controller.dart';
 import 'package:casaflutter/utils/color_constant.dart';
@@ -14,9 +15,8 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../auth/model/auth_models.dart';
-import '../../../auth/view/widgets/auth_button.dart';
 import '../widgets/logout_confim_action_dialog.dart';
-import '../widgets/share_dialog.dart';
+import '../../../common/widgets/share_app_dialog.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
@@ -31,170 +31,108 @@ class ProfileScreen extends StatelessWidget {
           title: 'Profile',
           showBackButton: false,
         ),
-        body: (PreferenceManager.getString(PreferenceManager.token) ?? "")
-                .isEmpty
-            ? Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  spacing: 10,
-                  children: [
-                    Image.asset("assets/tutorial_image/penguin_seven.png"),
-                    AuthButton(
-                      type: AuthButtonType.signIn,
-                      isLoading: false,
-                      onPressed: () async {
-                        router.goNamed(RouteNames.signIn);
-                      },
-                    ),
-                    AuthButton(
-                      type: AuthButtonType.signUp,
-                      isLoading: false,
-                      onPressed: () async {
-                        router.goNamed(RouteNames.signUp);
-                      },
-                    ),
-                    SizedBox(height: 10),
-                    Text('login to explore CASA’s dynamic  features',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(fontWeight: FontWeight.w600)),
-                    SizedBox(height: 25),
-                    Container(
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                              color: ButtonColor.grey,
-                              width: 1), // Bottom border only
-                        ),
-                      ),
-                      child: ListTile(
-                        title: Text("Share with a Friend"),
-                        titleTextStyle: Theme.of(context).textTheme.bodySmall,
-                        trailing: const Icon(
-                          Icons.arrow_forward_ios,
-                          size: 12,
-                        ),
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => ShareAppDialog(
-                              appName: 'CASA',
-                              iosAppLink: 'https://apps.apple.com/app',
-                              androidAppLink:
-                                  'https://play.google.com/store/apps/details?id=com.casashop.casaflutterappapp',
-                              shareMessage:
-                                  'Check out this amazing app!', // Optional
+        body:
+            (PreferenceManager.getString(PreferenceManager.token) ?? "").isEmpty
+                ? LoginFirstScreen()
+                : GetX(
+                    initState: (final _) {
+                      homeCtrl.getLoggedInUserName();
+                    },
+                    builder: (final ProfileController homeCtrl) {
+                      return Column(
+                        children: [
+                          const SizedBox(height: 20),
+                          CircleAvatar(
+                            backgroundImage: AssetImage(
+                              ImageConstants.avatarLogo,
                             ),
-                          );
-                        },
-                        contentPadding: EdgeInsets.zero,
-                        minVerticalPadding: 0,
-                        dense: true, // Else theme will be use
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            : GetX(
-                initState: (final _) {
-                  homeCtrl.getLoggedInUserName();
-                },
-                builder: (final ProfileController homeCtrl) {
-                  return Column(
-                    children: [
-                      const SizedBox(height: 20),
-                      CircleAvatar(
-                        backgroundImage: AssetImage(
-                          ImageConstants.avatarLogo,
-                        ),
-                        radius: 35,
-                      ),
-                      Text(
-                        homeCtrl.loggedInUser(),
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                      const SizedBox(height: 20),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: PaddingSize.commonPadding),
-                          child: ListView.builder(
-                            itemCount: profileList.length,
-                            itemBuilder: (context, index) {
-                              final item = profileList[index];
-                              return Container(
-                                decoration: const BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                        color: ButtonColor.grey,
-                                        width: 0.5), // Bottom border only
-                                  ),
-                                ),
-                                child: ListTile(
-                                  title: Text(item.title),
-                                  titleTextStyle:
-                                      Theme.of(context).textTheme.bodySmall,
-                                  trailing: const Icon(
-                                    Icons.arrow_forward_ios,
-                                    size: 12,
-                                  ),
-                                  onTap: () => item.onTap(context),
-                                  contentPadding: EdgeInsets.zero,
-                                  minVerticalPadding: 0,
-                                  dense: true,
-                                  // visualDensity:
-                                  //     VisualDensity.compact, // Else theme will be use
-                                ),
-                              );
-                            },
+                            radius: 35,
                           ),
-                        ),
-                      ),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: ButtonColor.black,
-                            foregroundColor: ButtonColor.white,
-                            fixedSize: Size(
-                              MediaQuery.of(context).size.width * .9,
-                              36.0,
-                            ),
+                          Text(
+                            homeCtrl.loggedInUser(),
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
-                          onPressed: () async {
-                            showDialog(
-                              context: context,
-                              builder: (_) => ConfirmActionDialog(
-                                title: "Delete Account",
-                                message:
-                                    "Are you sure you want to delete your account? This action cannot be undone.",
-                                confirmText: "Delete",
-                                isLoading: homeCtrl.isUserDeleteProgress,
-                                onConfirm: () async {
-                                  await homeCtrl.deleteUserCall();
-                                  if (homeCtrl.message.isNotEmpty) {
-                                    showToast(
-                                      message: homeCtrl.message(),
-                                    );
-                                    if (homeCtrl.isUserDeleted()) {
-                                      final authController =
-                                          Get.put(AuthController());
-                                      await authController.logOutUser();
-                                      authController.clearAllControllers();
-                                      router.goNamed(RouteNames.signIn);
-                                    }
-                                  }
+                          const SizedBox(height: 20),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: PaddingSize.commonPadding),
+                              child: ListView.builder(
+                                itemCount: profileList.length,
+                                itemBuilder: (context, index) {
+                                  final item = profileList[index];
+                                  return Container(
+                                    decoration: const BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                            color: ButtonColor.grey,
+                                            width: 0.5), // Bottom border only
+                                      ),
+                                    ),
+                                    child: ListTile(
+                                      title: Text(item.title),
+                                      titleTextStyle:
+                                          Theme.of(context).textTheme.bodySmall,
+                                      trailing: const Icon(
+                                        Icons.arrow_forward_ios,
+                                        size: 12,
+                                      ),
+                                      onTap: () => item.onTap(context),
+                                      contentPadding: EdgeInsets.zero,
+                                      minVerticalPadding: 0,
+                                      dense: true,
+                                      // visualDensity:
+                                      //     VisualDensity.compact, // Else theme will be use
+                                    ),
+                                  );
                                 },
                               ),
-                            );
-                          },
-                          child: Text(
-                            'Delete Account',
-                          )),
-                      const SizedBox(height: 50),
-                    ],
-                  );
-                },
-              ),
+                            ),
+                          ),
+                          ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: ButtonColor.black,
+                                foregroundColor: ButtonColor.white,
+                                fixedSize: Size(
+                                  MediaQuery.of(context).size.width * .9,
+                                  36.0,
+                                ),
+                              ),
+                              onPressed: () async {
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => ConfirmActionDialog(
+                                    title: "Delete Account",
+                                    message:
+                                        "Are you sure you want to delete your account? This action cannot be undone.",
+                                    confirmText: "Delete",
+                                    isLoading: homeCtrl.isUserDeleteProgress,
+                                    onConfirm: () async {
+                                      await homeCtrl.deleteUserCall();
+                                      if (homeCtrl.message.isNotEmpty) {
+                                        showToast(
+                                          message: homeCtrl.message(),
+                                        );
+                                        if (homeCtrl.isUserDeleted()) {
+                                          final authController =
+                                              Get.put(AuthController());
+                                          await authController.logOutUser();
+                                          authController.clearAllControllers();
+                                          router.goNamed(RouteNames.signIn);
+                                        }
+                                      }
+                                    },
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'Delete Account',
+                              )),
+                          const SizedBox(height: 50),
+                        ],
+                      );
+                    },
+                  ),
       ),
     );
   }
@@ -236,10 +174,10 @@ List<ProfileListModel> profileList = [
     title: 'Talk to a Founder',
     onTap: (context) => context.pushNamed(RouteNames.contactUs),
   ),
-  ProfileListModel(
-    title: 'Chat with an Associate',
-    onTap: (context) => context.pushNamed(RouteNames.contactUs),
-  ),
+  // ProfileListModel(
+  //   title: 'Chat with an Associate',
+  //   onTap: (context) => context.pushNamed(RouteNames.contactUs),
+  // ),
   ProfileListModel(
     title: 'Change Password',
     onTap: (context) {

@@ -32,14 +32,14 @@ class ProductDescriptionController extends GetxController {
 
     // Todo : Handling via a list view controller since infinite scroll is present in product description screen. Fix it later.
 
-    scrollController.addListener(() {
-      if (scrollController.position.pixels >=
-              scrollController.position.maxScrollExtent - 100 &&
-          !relatedProductsIsLoadingMore.value &&
-          relatedProductsHasMore.value) {
-        getRelatedProductsCall();
-      }
-    });
+    // scrollController.addListener(() {
+    //   if (scrollController.position.pixels >=
+    //           scrollController.position.maxScrollExtent - 100 &&
+    //       !relatedProductsIsLoadingMore.value &&
+    //       relatedProductsHasMore.value) {
+    //     getRelatedProductsCall();
+    //   }
+    // });
   }
 
   @override

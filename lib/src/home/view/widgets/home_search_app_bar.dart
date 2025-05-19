@@ -79,23 +79,6 @@ class HomeSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           padding: EdgeInsets.symmetric(horizontal: 5),
         ),
-        // IconButton(
-        //   onPressed: () {
-        //     context.pushNamed(RouteNames.search);
-        //   },
-        //   icon: Image.asset(
-        //     IconConstants.settings,
-        //     width: 28.0,
-        //     height: 28.0,
-        //   ),
-        //   iconSize: 25,
-        //   color: IconColor.black,
-        //   style: IconButton.styleFrom(
-        //     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        //     minimumSize: Size.zero,
-        //   ),
-        //   padding: EdgeInsets.symmetric(horizontal: 5),
-        // ),
       ],
     );
   }

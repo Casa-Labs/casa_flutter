@@ -16,9 +16,7 @@ import '../../../../utils/preference_manager.dart';
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
 
-  final authController = Get.put(
-    AuthController(),
-  );
+  final authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {

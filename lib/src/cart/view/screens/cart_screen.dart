@@ -1,14 +1,13 @@
 import 'package:casaflutter/routes/app_routes.dart';
+import 'package:casaflutter/src/common/widgets/login_first_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/preference_manager.dart';
-import '../../../auth/view/widgets/auth_button.dart';
 import '../../../common/widgets/buttons/custom_button.dart';
 import '../../../order/controller/order_review_controller.dart';
-import '../../../profile/view/widgets/share_dialog.dart';
 import '../../controller/cart_controller.dart';
 import '../widgets/cart_item.dart';
 
@@ -78,69 +77,7 @@ class CartScreen extends StatelessWidget {
               centerTitle: true,
             ),
       body: (PreferenceManager.getString(PreferenceManager.token) ?? "").isEmpty
-          ? Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                spacing: 10,
-                children: [
-                  Image.asset("assets/tutorial_image/penguin_seven.png"),
-                  AuthButton(
-                    type: AuthButtonType.signIn,
-                    isLoading: false,
-                    onPressed: () async {
-                      router.goNamed(RouteNames.signIn);
-                    },
-                  ),
-                  AuthButton(
-                    type: AuthButtonType.signUp,
-                    isLoading: false,
-                    onPressed: () async {
-                      router.goNamed(RouteNames.signUp);
-                    },
-                  ),
-                  SizedBox(height: 10),
-                  Text('login to explore CASA’s dynamic  features',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge!
-                          .copyWith(fontWeight: FontWeight.w600)),
-                  SizedBox(height: 25),
-                  Container(
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                            color: ButtonColor.grey,
-                            width: 1), // Bottom border only
-                      ),
-                    ),
-                    child: ListTile(
-                      title: Text("Share with a Friend"),
-                      titleTextStyle: Theme.of(context).textTheme.bodySmall,
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 12,
-                      ),
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) => ShareAppDialog(
-                            appName: 'CASA',
-                            iosAppLink: 'https://apps.apple.com/app',
-                            androidAppLink:
-                                'https://play.google.com/store/apps/details?id=com.casashop.casaflutterappapp',
-                            shareMessage:
-                                'Check out this amazing app!', // Optional
-                          ),
-                        );
-                      },
-                      contentPadding: EdgeInsets.zero,
-                      minVerticalPadding: 0,
-                      dense: true, // Else theme will be use
-                    ),
-                  ),
-                ],
-              ),
-            )
+          ? LoginFirstScreen()
           : Obx(
               () => SafeArea(
                 child: SingleChildScrollView(

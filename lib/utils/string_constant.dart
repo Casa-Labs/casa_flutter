@@ -2,6 +2,14 @@ class ImageConstants {
   static String splashBackground = 'assets/images/splash_background.jpeg';
   static String dummyNetworkPortrait =
       'https://static.zara.net/assets/public/fc4d/82fd/112c4f65b37a/cbc21e516880/03152381402-p/03152381402-p.jpg?ts=1743090495295&w=1024';
+  static String tutorialPenguinTwo = 'assets/tutorial_image/penguin_two.png';
+  static String tutorialPenguinThree =
+      'assets/tutorial_image/penguin_three.png';
+  static String tutorialPenguinFour = 'assets/tutorial_image/penguin_four.png';
+  static String tutorialPenguinFive = 'assets/tutorial_image/penguin_five.png';
+  static String tutorialPenguinSix = 'assets/tutorial_image/penguin_six.png';
+  static String tutorialPenguinSeven =
+      'assets/tutorial_image/penguin_seven.png';
   static String authBackground = 'assets/images/auth_background.png';
   static String removeIcon = 'assets/icons/remove-icon.svg';
   static String forgotPasswordLogo = 'assets/images/forgot_password_logo.png';

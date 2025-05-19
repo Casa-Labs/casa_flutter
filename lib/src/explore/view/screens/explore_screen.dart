@@ -379,8 +379,6 @@ class ExploreSection extends StatelessWidget {
                                     imageURL: product?.mainImage ??
                                         ImageConstants.dummyNetworkPortrait,
                                     wishlistOnPressed: () {
-                                      // TODO: Implement add to closet
-
                                       HapticFeedback.heavyImpact();
 
                                       wishController.selectedClosets.clear();
@@ -407,16 +405,15 @@ class ExploreSection extends StatelessWidget {
                                   );
                                 },
                               ),
-                              Obx(() =>
-                                  exploreCtrl.relatedProductsIsLoadingMore.value
-                                      ? Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 20),
-                                          child: Center(
-                                            child: CircularProgressIndicator(),
-                                          ),
-                                        )
-                                      : const SizedBox.shrink()),
+                              exploreCtrl.relatedProductsIsLoadingMore.value
+                                  ? Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 20),
+                                      child: Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    )
+                                  : const SizedBox.shrink(),
                             ],
                           )),
                     ),

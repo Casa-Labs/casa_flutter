@@ -21,6 +21,8 @@ class IconColor {
   static const Color pinkAccent = Color(0xFFFF4081);
   static const Color deepPurple = Color(0xFF673AB7);
   static const Color transparent = Color(0x00000000);
+  static const Color fadeGrey = Color(0xffD9D9D9);
+  static const Color mediumGrey = Color(0xffC3C3C3);
 }
 
 class ButtonColor {
@@ -37,6 +39,7 @@ class ButtonColor {
 class BorderColor {
   static const Color grey = Color(0xffCCCCCC);
   static const Color black = Color(0xff000000);
+  static const Color lightWhite = Color(0xffF0EFF4);
 }
 
 class BackgroundColor {

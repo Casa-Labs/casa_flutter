@@ -32,7 +32,6 @@ import '../src/home/view/screens/bottom_navigator.dart';
 import '../src/home/view/screens/home_screen.dart';
 import '../src/location/view/screens/location_screen.dart';
 import '../src/notifications/view/screens/notifications_screen.dart';
-import '../src/search/view/screens/search_screen.dart';
 import '../src/splash/view/screens/splash_screen.dart';
 import '../src/wishlist/view/screens/create_closet_screen.dart';
 import '../src/wishlist/view/screens/wishlist_item_screen.dart';
@@ -63,7 +62,6 @@ class _AppPaths {
   static const String createCloset = '/createCloset';
   static const String wishlistItem = '/wishlistItem';
   static const String explore = '/explore';
-  static const String search = '/search';
   static const String profile = '/profile';
   static const String development = '/development';
   static const String myOrders = '/myOrders';
@@ -139,7 +137,7 @@ final GoRouter router = GoRouter(
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         if ((PreferenceManager.getBool(PreferenceManager.isCompletedTutorial) ??
-                false)) {
+            false)) {
           router.goNamed(RouteNames.navigation, extra: true);
         } else {
           router.goNamed(RouteNames.navigation, extra: false);
@@ -294,11 +292,6 @@ final GoRouter router = GoRouter(
       path: _AppPaths.explore,
       name: RouteNames.explore,
       builder: (context, state) => ExploreScreen(),
-    ),
-    GoRoute(
-      path: _AppPaths.search,
-      name: RouteNames.search,
-      builder: (context, state) => SearchScreen(),
     ),
     GoRoute(
       path: _AppPaths.profile,

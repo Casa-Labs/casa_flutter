@@ -10,10 +10,10 @@ class NotificationsService {
     try {
       var response = await _graphQLManager.getNotification(userID);
       notificationResponse = NotificationModel.fromJson(response.data!);
-      logg.d('hello i get notifications ------ >>>>> ');
+      logg.d('Notifications received');
       return notificationResponse;
     } catch (e) {
-      logg.e('get error to fetch notifications data $e');
+      logg.e('Error while fetching notifications data $e');
       return NotificationModel();
     }
   }
@@ -26,10 +26,10 @@ class NotificationsService {
           await _graphQLManager.deleteAllNotificationsForUser(userId: userId);
       deleteAllNotificationsResponse =
           DeleteAllNotificationsModel.fromJson(response.data!);
-      logg.d('hello i deleted all notifications ------ >>>>> ');
+      logg.d('Deleted all notifications');
       return deleteAllNotificationsResponse;
     } catch (e) {
-      logg.e('get error to deleted all notifications data $e');
+      logg.e('Error while deleting all notifications data $e');
       return DeleteAllNotificationsModel();
     }
   }
