@@ -22,10 +22,10 @@ import '../../../../utils/preference_manager.dart';
 import '../../../cart/controller/cart_controller.dart';
 import '../../../common/widgets/buttons/add_to_cart_button.dart';
 import '../../../common/widgets/buttons/select_size_button.dart';
+import '../../../common/widgets/share_app_dialog.dart';
 import '../../../home/controller/home_controller.dart';
 import '../../../home/model/review_response.dart';
 import '../../../order/controller/order_review_controller.dart';
-import '../../../common/widgets/share_app_dialog.dart';
 import '../../../wishlist/controller/wishlist_controller.dart';
 import '../../../wishlist/view/screens/add_to_closet.dart';
 import '../widgets/product_write_review_widget.dart';
@@ -62,6 +62,7 @@ class ProductDescriptionScreen extends StatelessWidget {
             return const Center(child: Text("No product details available"));
           } else {
             final product = snapshot.data;
+            productDescriptionCtrl.getRelatedProductsCall(isInitialLoad: true);
             return Obx(
               () => ListView(
                 padding: const EdgeInsets.all(PaddingSize.commonPadding),
@@ -310,14 +311,16 @@ class ProductDescriptionScreen extends StatelessWidget {
                     title: 'RETURN POLICY',
                     isExpanded: exploreCtrl.isShowReturn,
                     onTap: () => exploreCtrl.changeReturnPolicy(),
-                    content: product!.customReturnPolicy ?? 'Api Error',
+                    content:
+                        product!.customReturnPolicy ?? AppStrings.returnPolicy,
                   ),
                   const SizedBox(height: 20),
                   _buildPolicyTile(
                     title: 'SHIPPING POLICY',
                     isExpanded: exploreCtrl.isShowShipping,
                     onTap: () => exploreCtrl.changeShippingPolicy(),
-                    content: product.customShippingPolicy ?? 'Api Error',
+                    content: product.customShippingPolicy ??
+                        AppStrings.shippingPolicy,
                   ),
                   const SizedBox(height: 20),
                   Row(

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:casaflutter/network/graph_ql_manager.dart';
 import 'package:casaflutter/src/explore/model/product_by_id_model.dart'
     as model;
@@ -115,7 +117,12 @@ class ProductDescriptionController extends GetxController {
   Future<void> getRelatedProductsCall({bool isInitialLoad = false}) async {
     logg.i('Get Related Products call in product description');
     if (isInitialLoad) {
-      relatedProductsPage.value = 1;
+      // Generate a random number between 1 and 15
+      // This gives illusion of an ML algorithm
+      final randomPage = Random().nextInt(7) +
+          1; // nextInt(15) gives 0–7, so +1. There are 182 products in DB right now
+
+      relatedProductsPage.value = randomPage;
       relatedProductsHasMore.value = true;
       relatedProducts.clear();
     }
