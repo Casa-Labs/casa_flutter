@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:share_plus/share_plus.dart'; // You can also use `share` package
+import 'package:share_plus/share_plus.dart';
 
 class ShareAppDialog extends StatefulWidget {
   final String appName;
