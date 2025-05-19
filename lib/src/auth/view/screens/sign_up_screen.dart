@@ -3,8 +3,10 @@ import 'package:casaflutter/src/common/widgets/show_toast.dart' show showToast;
 import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../routes/app_routes.dart';
+import '../../../../utils/utils.dart';
 import '../../../common/widgets/custom_text_form_field_widget.dart';
 import '../widgets/auth_button.dart';
 
@@ -296,11 +298,32 @@ class SignUpScreen extends StatelessWidget {
                           ),
                           SizedBox(width: 20),
                           Spacer(),
-                          SizedBox(
-                            width: 300,
+                          TextButton(
+                            onPressed: () async {
+                              final Uri url =
+                                  Uri.parse('https://casashop.in/privacy');
+                              if (await canLaunchUrl(url)) {
+                                await launchUrl(url,
+                                    mode: LaunchMode.externalApplication);
+                              } else {
+                                logg.e(
+                                    'Error while opening the privacy policy');
+                                showToast(
+                                    message:
+                                        'Unable to open privacy policy, please visit https://casashop.in/privacy');
+                              }
+                            },
+                            style: TextButton.styleFrom(
+                              textStyle: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                            ),
                             child: Text(
-                              'I hereby declare that I accept all the terms and conditions.',
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              'I hereby agree to the Terms of Service and Privacy Policy',
+                              textAlign: TextAlign.center,
                             ),
                           ),
                           Spacer(),
@@ -328,7 +351,6 @@ class SignUpScreen extends StatelessWidget {
                             }
                           : null,
                     ),
-                    Spacer(),
                   ],
                 ),
               ),
