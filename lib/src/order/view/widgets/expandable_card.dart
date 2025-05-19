@@ -77,7 +77,11 @@ class ExpandableCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 10),
-                      Text('Item Total: ₹${orderController.itemtotal}',
+                      Text('Item Total: ₹${orderController.baseAmount}',
+                          style: Theme.of(context).textTheme.bodyMedium),
+                      SizedBox(height: 5),
+                      Text(
+                          'Total Tax: ₹${orderController.tax}',
                           style: Theme.of(context).textTheme.bodyMedium),
                       SizedBox(height: 5),
                       Text('Delivery Fee: ₹${orderController.deliveryCharge}',
@@ -85,11 +89,7 @@ class ExpandableCard extends StatelessWidget {
                       SizedBox(height: 5),
                       Text('Platform Fee: ₹${orderController.platFormFee}',
                           style: Theme.of(context).textTheme.bodyMedium),
-                      // SizedBox(height: 5),
-                      // Text(
-                      //     'GST Charges: ₹${orderController.gst}',
-                      //     style: Theme.of(context).textTheme.bodyMedium),
-                      // SizedBox(height: 10),
+                      SizedBox(height: 10),
                     ],
                   ),
               ],
