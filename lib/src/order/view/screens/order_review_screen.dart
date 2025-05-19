@@ -204,12 +204,11 @@ class OrderReviewScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       ExpandableCard(
                         orderController: orderReviewController,
                       ),
+                      const SizedBox(height: 10),
                     ],
                   ),
                 ),
