@@ -1,16 +1,13 @@
 import 'package:casaflutter/routes/app_routes.dart';
 import 'package:casaflutter/src/common/widgets/login_first_screen.dart';
-import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/preference_manager.dart';
-import '../../../auth/view/widgets/auth_button.dart';
 import '../../../common/widgets/buttons/custom_button.dart';
 import '../../../order/controller/order_review_controller.dart';
-import '../../../common/widgets/share_app_dialog.dart';
 import '../../controller/cart_controller.dart';
 import '../widgets/cart_item.dart';
 

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import '../../../../utils/color_constant.dart';
-import '../../../../utils/font.dart';
 import '../../controller/home_controller.dart';
 import '../../model/review_response.dart';
 

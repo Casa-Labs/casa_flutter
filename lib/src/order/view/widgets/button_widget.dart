@@ -1,4 +1,3 @@
-import 'package:casaflutter/utils/color.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/color_constant.dart';
@@ -23,7 +22,7 @@ class ButtonWidget extends StatelessWidget {
             padding: EdgeInsets.zero,
             alignment: Alignment.center,
             shape: RoundedRectangleBorder(
-                side: BorderSide(color: CColor.borderColor, width: 1.5),
+                side: BorderSide(color: BorderColor.lightWhite, width: 1.5),
                 borderRadius: BorderRadius.circular(12)),
           ),
           child: Text(

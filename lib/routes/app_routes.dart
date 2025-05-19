@@ -62,7 +62,6 @@ class _AppPaths {
   static const String createCloset = '/createCloset';
   static const String wishlistItem = '/wishlistItem';
   static const String explore = '/explore';
-  static const String search = '/search';
   static const String profile = '/profile';
   static const String development = '/development';
   static const String myOrders = '/myOrders';

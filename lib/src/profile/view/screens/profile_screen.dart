@@ -15,7 +15,6 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../auth/model/auth_models.dart';
-import '../../../auth/view/widgets/auth_button.dart';
 import '../widgets/logout_confim_action_dialog.dart';
 import '../../../common/widgets/share_app_dialog.dart';
 

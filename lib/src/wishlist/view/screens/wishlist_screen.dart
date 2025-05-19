@@ -8,9 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../routes/app_routes.dart';
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/preference_manager.dart';
-import '../../../auth/view/widgets/auth_button.dart';
 import '../../../common/widgets/textfields.dart';
-import '../../../common/widgets/share_app_dialog.dart';
 import '../../controller/wishlist_controller.dart';
 import '../widgets/icons_widget.dart';
 

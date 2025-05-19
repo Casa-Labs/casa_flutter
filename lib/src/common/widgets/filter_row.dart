@@ -3,7 +3,6 @@ import 'package:casaflutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../utils/color.dart';
 import '../../home/model/home_models.dart';
 import '../../onboarding/view/widget/common_filter_dialog.dart';
 
@@ -39,9 +38,9 @@ class FilterRow extends StatelessWidget {
                   },
                   child: CircleAvatar(
                     radius: 18,
-                    backgroundColor: CColor.filterColor,
-                    child:
-                        Icon(Icons.tune_rounded, size: 20, color: CColor.black),
+                    backgroundColor: IconColor.fadeGrey,
+                    child: Icon(Icons.tune_rounded,
+                        size: 20, color: IconColor.black),
                   ),
                 ),
                 Visibility(
@@ -55,61 +54,6 @@ class FilterRow extends StatelessWidget {
                       _filterItem('Color', colorList!, context),
                       _filterItem('Price', [], context),
                       _filterItem('Size', sizedList!, context),
-                      /*  ListView.builder(
-                          itemCount: 5,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                          itemBuilder: (BuildContext context, int index) {
-                            return InkWell(
-                              splashColor: CColor.transparent,
-                              highlightColor: CColor.transparent,
-                              onTap: () {
-                                var children = [];
-                                switch (item[index]) {
-                                  case 'Brand':
-                                    children = homeCtrl.brandFilter;
-                                    break;
-                                  case 'Product':
-                                    children = homeCtrl.productFilter;
-                                    break;
-                                  case 'Color':
-                                    children = homeCtrl.colorFilter;
-                                    break;
-                                  default:
-                                    children = [];
-                                    break;
-                                }
-                                _showTextInputDialog(context,children);
-                                  },
-                              child: Container(
-                                margin: const EdgeInsets.all(5),
-                                padding: const EdgeInsets.symmetric(horizontal: 10),
-                                decoration: BoxDecoration(
-                                  color: CColor.filterColor,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      item[index],
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        color: CColor.black,
-                                        fontWeight: FontWeight.w500,
-                                        fontFamily: Font.gilroy,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 2),
-                                    Icon(Icons.arrow_drop_down,color: CColor.black)
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),*/
                     ],
                   ),
                 )
@@ -151,8 +95,8 @@ class FilterRow extends StatelessWidget {
   _filterItem(String filterName, List<ProductModelFilter> children,
       BuildContext context) {
     return InkWell(
-      splashColor: CColor.transparent,
-      highlightColor: CColor.transparent,
+      splashColor: ButtonColor.transparent,
+      highlightColor: ButtonColor.transparent,
       onTap: () {
         _showTextInputDialog(context, children, filterName);
       },
