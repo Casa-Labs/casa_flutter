@@ -9,6 +9,7 @@ import '../../../../routes/app_routes.dart';
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/font.dart';
 import '../../../../utils/preference_manager.dart';
+import '../../../../utils/utils.dart';
 import '../../../cart/controller/cart_controller.dart';
 import '../../../common/widgets/buttons/add_to_cart_button.dart';
 import '../../../explore/view/widgets/quantity_selector_button.dart';
@@ -162,7 +163,9 @@ class ProductDetails extends StatelessWidget {
                   }
 
                   if (snapshot.hasError) {
-                    return Text('Error loading reviews: ${snapshot.error}');
+                    logg.e('Error loading reviews: ${snapshot.error}');
+
+                    return Text('No reviews yet');
                   }
 
                   final reviews = snapshot.data?.getProductInteractions ?? [];
