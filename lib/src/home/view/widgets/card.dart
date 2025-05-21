@@ -2,9 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:casaflutter/routes/app_routes.dart';
 import 'package:casaflutter/src/cart/controller/cart_controller.dart';
 import 'package:casaflutter/src/common/widgets/buttons/buy_now_button.dart';
-import 'package:casaflutter/src/home/controller/home_controller.dart';
-import 'package:casaflutter/src/home/view/widgets/details_widget.dart';
 import 'package:casaflutter/src/common/widgets/share_app_dialog.dart';
+import 'package:casaflutter/src/home/controller/home_controller.dart';
 import 'package:casaflutter/utils/font.dart';
 import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +20,7 @@ import '../../../order/controller/order_review_controller.dart';
 import '../../../wishlist/controller/wishlist_controller.dart';
 import '../../../wishlist/view/screens/add_to_closet.dart';
 import '../../model/home_models.dart';
+import 'details_widget.dart';
 
 class Cards extends StatelessWidget {
   final int index;

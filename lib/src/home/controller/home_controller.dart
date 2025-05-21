@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:casaflutter/src/home/model/service/home_service.dart';
 import 'package:flutter/foundation.dart';
@@ -255,7 +253,7 @@ class HomeController extends GetxController {
         noMoreData = true;
       } else {
         products.addAll(newProducts);
-        products.shuffle(Random());
+        // products.shuffle(Random());
         reactiveProducts.assignAll(products);
         currentPage++;
       }

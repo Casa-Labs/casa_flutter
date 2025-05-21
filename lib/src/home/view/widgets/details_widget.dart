@@ -112,7 +112,8 @@ class ProductDetails extends StatelessWidget {
                 title: 'SHIPPING POLICY',
                 isExpanded: logic.isShowShipping,
                 onTap: () => logic.changeShippingPolicy(),
-                content: product.customShippingPolicy ?? AppStrings.shippingPolicy,
+                content:
+                    product.customShippingPolicy ?? AppStrings.shippingPolicy,
               ),
               const SizedBox(height: 20),
               Row(
@@ -274,24 +275,6 @@ class ProductDetails extends StatelessWidget {
                           );
                         },
                       ),
-                      /*  if (reviews.length > 2) ...[
-                        const SizedBox(height: 10),
-                        TextButton(
-                          onPressed: () {
-                            Get.to(() => AllReviewsScreen(
-                                  productId: product.id ?? '',
-                                  productName: product.name ?? '',
-                                ));
-                          },
-                          child: Text(
-                            'More Reviews (${reviews.length - 2})',
-                            style:
-                                Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                          ),
-                        ),
-                      ],*/
                     ],
                   );
                 },
