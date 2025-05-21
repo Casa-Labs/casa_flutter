@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:casaflutter/network/graph_ql_manager.dart';
 import 'package:casaflutter/src/explore/model/brands_model.dart' as brand;
 import 'package:casaflutter/src/explore/model/explore_products_model.dart'
@@ -24,6 +26,7 @@ class ExploreController extends GetxController {
   RxList<nam.Products> newArrivalProducts = <nam.Products>[].obs;
   RxList<brand.Data> brands = <brand.Data>[].obs;
   RxList<epm.Data?> clothesYouMightLike = <epm.Data>[].obs;
+  RxList<epm.Data?> relatedProducts = <epm.Data>[].obs;
   RxList<pcm.GetProductCategories> categories =
       <pcm.GetProductCategories>[].obs;
 
@@ -32,11 +35,11 @@ class ExploreController extends GetxController {
   bool isShowShipping = false;
   // Pagination - temporary calling 100 items
   RxInt page = 1.obs;
-  RxInt limit = 30.obs;
+  RxInt limit = 20.obs;
 
   // Related Products ( Products Call) pagination
   RxInt relatedProductsPage = 1.obs;
-  RxInt relatedProductsLimit = 20.obs;
+  RxInt relatedProductsLimit = 40.obs;
   RxBool relatedProductsIsLoadingMore = false.obs;
   RxBool relatedProductsHasMore = true.obs;
 
@@ -94,9 +97,15 @@ class ExploreController extends GetxController {
   // TODO : Clean up the pagination logic, API calls should be handled by service
   Future<void> getProductsCall({bool isInitialLoad = false}) async {
     if (isInitialLoad) {
-      relatedProductsPage.value = 1;
+      // Generate a random number between 1 and 15
+      // This gives illusion of an ML algorithm
+      final randomPage = Random().nextInt(7) +
+          1; // nextInt(15) gives 0–7, so +1. There are 182 products in DB right now
+
+      relatedProductsPage.value = randomPage;
       relatedProductsHasMore.value = true;
       clothesYouMightLike.clear();
+      relatedProducts.clear();
     }
 
     if (!relatedProductsHasMore.value || relatedProductsIsLoadingMore.value) {
@@ -138,7 +147,15 @@ class ExploreController extends GetxController {
         relatedProductsHasMore.value = false;
       }
 
-      clothesYouMightLike.addAll(newProducts);
+      var firstHalfOfNewProducts =
+          newProducts.sublist(0, newProducts.length ~/ 2);
+      var secondHalfOfNewProducts =
+          newProducts.sublist(newProducts.length ~/ 2, newProducts.length);
+
+      relatedProducts.addAll(firstHalfOfNewProducts);
+      clothesYouMightLike.addAll(secondHalfOfNewProducts);
+
+      // clothesYouMightLike.addAll(newProducts);
       relatedProductsPage.value++;
     } else {
       logg.e('Get clothes you might like Exception: ${response.exception}');

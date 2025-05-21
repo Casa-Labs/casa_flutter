@@ -105,14 +105,14 @@ class ProductDetails extends StatelessWidget {
                 title: 'RETURN POLICY',
                 isExpanded: logic.isShowReturn,
                 onTap: () => logic.changeReturnPolicy(),
-                content: product.customReturnPolicy!,
+                content: product.customReturnPolicy ?? AppStrings.returnPolicy,
               ),
               const SizedBox(height: 20),
               _buildPolicyTile(
                 title: 'SHIPPING POLICY',
                 isExpanded: logic.isShowShipping,
                 onTap: () => logic.changeShippingPolicy(),
-                content: product.customShippingPolicy!,
+                content: product.customShippingPolicy ?? AppStrings.shippingPolicy,
               ),
               const SizedBox(height: 20),
               Row(
