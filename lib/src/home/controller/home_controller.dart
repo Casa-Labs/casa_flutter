@@ -246,7 +246,7 @@ class HomeController extends GetxController {
       };
 
       final response = await manager.getProducts(finalParams);
-      final getProductList = GetProductData.fromJson(response.data!);
+      final getProductList = GetProductData.fromJson(response.data ?? {});
       final newProducts = getProductList.getProducts?.data ?? [];
 
       if (newProducts.isEmpty) {
