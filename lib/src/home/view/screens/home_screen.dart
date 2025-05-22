@@ -95,57 +95,15 @@ class HomeScreen extends StatelessWidget {
                       ),
                       FilterButtonModel(
                         title: 'Size',
-                        list: [
-                          'X-Small',
-                          'Small',
-                          'Medium',
-                          'Large',
-                          'X-Large',
-                          'M',
-                          'XL',
-                          'S',
-                          'L',
-                          'Default Title',
-                          'S / M',
-                          'S / L',
-                          'M / S',
-                          'M / M',
-                          'L / M',
-                          'M / L',
-                          'L / L',
-                          'L / S',
-                          'S / S',
-                          'XS',
-                          'XS / S',
-                          'XS / XS',
-                          'XS / M',
-                          'S / XS',
-                          'XS / L',
-                          'M / XS',
-                          'L / XS',
-                          'Ivory / L',
-                          'Black / XS',
-                          'Black / S',
-                          'Black / M',
-                          'Navy / XS',
-                          'Black / L',
-                          'Navy / S',
-                          'Ivory / XS',
-                          'Navy / M',
-                          'Ivory / S',
-                          'Navy / L',
-                          'Ivory / M'
-                        ],
+                        list: homeCtrl.size.map((item) => item.name!).toList(),
                         onClear: () {
                           logg.i("size selection cleared");
                         },
                         onDone: (selectedName) {
-                          // final category = homeCtrl.category
-                          //     .firstWhereOrNull((e) => e.name == selectedName)
-                          //     ?.id;
-                          // logg.i("Selected sizey ID: $category");
-
-                          final selectedSize = selectedName;
+                          final selectedSize = homeCtrl.size
+                              .firstWhereOrNull((e) => e.name == selectedName)
+                              ?.id;
+                          logg.i("Selected size ID: $selectedName");
 
                           if (selectedSize != null) {
                             homeCtrl.fetchProducts({
@@ -154,23 +112,6 @@ class HomeScreen extends StatelessWidget {
                           }
                         },
                       ),
-
-                      // FilterButtonModel(
-                      //   title: 'Product',
-                      //   list: homeCtrl.category
-                      //       .map((item) => item.name!)
-                      //       .toList(),
-                      //   // onClear: () => clearBrandSelection(),
-                      //   // onDone: () => applyBrandSelection(),
-                      //   onClear: () {
-                      //     logg.e('clearing category selection');
-                      //     context.pop();
-                      //   },
-                      //   onDone: () {
-                      //     logg.e('Category selection done');
-                      //     context.pop();
-                      //   },
-                      // ),
                     ],
                   ),
                   Expanded(

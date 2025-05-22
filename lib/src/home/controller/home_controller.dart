@@ -71,7 +71,7 @@ class HomeController extends GetxController {
     super.onInit();
     await fetchProducts({});
     await getBrand();
-    // await getSize();
+    await getSize();
     await getCategory();
   }
 
@@ -201,26 +201,6 @@ class HomeController extends GetxController {
     return sizes;
   }
 
-  // String formatDate(String? dateString) {
-  //   if (dateString == null) return '';
-  //   try {
-  //     final date = DateTime.parse(dateString);
-  //     final now = DateTime.now();
-  //     final difference = now.difference(date);
-  //
-  //     if (difference.inDays > 0) {
-  //       return '${difference.inDays}d ago';
-  //     } else if (difference.inHours > 0) {
-  //       return '${difference.inHours}h ago';
-  //     } else if (difference.inMinutes > 0) {
-  //       return '${difference.inMinutes}m ago';
-  //     } else {
-  //       return 'Just now';
-  //     }
-  //   } catch (e) {
-  //     return dateString;
-  //   }
-  // }
   /// Converts a timestamp string (in milliseconds) to a formatted date string.
   ///
   /// [timestampMillisStr] is the Unix timestamp in milliseconds, passed as a string.
@@ -295,9 +275,9 @@ class HomeController extends GetxController {
       var response = await manager.getSizes();
       var getSizeData = GetSizeData.fromJson(response.data!);
       size = getSizeData.getProductSizes ?? [];
-      // Convert API sizes to button format
-      formattedSizes =
-          size.map((s) => GetProductSizes.mapSize(s.name!)).toList();
+      // // Convert API sizes to button format
+      // formattedSizes =
+      //     size.map((s) => GetProductSizes.mapSize(s.name!)).toList();
       // isLoading.value =  false;
       update();
     } catch (e) {

@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:casaflutter/routes/app_routes.dart';
 import 'package:casaflutter/src/cart/controller/cart_controller.dart';
 import 'package:casaflutter/src/common/widgets/buttons/buy_now_button.dart';
 import 'package:casaflutter/src/home/controller/home_controller.dart';
 import 'package:casaflutter/src/home/view/widgets/details_widget.dart';
+import 'package:casaflutter/src/common/widgets/share_app_dialog.dart';
 import 'package:casaflutter/utils/font.dart';
 import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +12,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:share_plus/share_plus.dart';
 
 // import 'package:share_plus/share_plus.dart';
 
@@ -59,8 +60,8 @@ class Cards extends StatelessWidget {
                               child: ClipRRect(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(18)),
-                                child: Image.network(
-                                    product.mainImage ??
+                                child: CachedNetworkImage(
+                                    imageUrl: product.mainImage ??
                                         ImageConstants.dummyNetworkPortrait,
                                     fit: BoxFit.fill),
                               ),
@@ -137,7 +138,6 @@ class Cards extends StatelessWidget {
                                             CrossAxisAlignment.start,
                                         spacing: 5,
                                         children: [
-                                          // Todo : Circle Avatar should accept network image => done
                                           InkWell(
                                             overlayColor:
                                                 WidgetStateProperty.all(
@@ -152,16 +152,7 @@ class Cards extends StatelessWidget {
                                                 },
                                               );
                                             },
-
-                                            /// Need to add dummy image preview image
-                                            child: /*NetworkImageWidget(
-                                              url: '',
-                                              height: 50,
-                                              width: 50,
-                                            )*/
-
-                                                /// Remove this after use above code
-                                                Container(
+                                            child: Container(
                                               decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: Colors.black,
@@ -173,8 +164,10 @@ class Cards extends StatelessWidget {
                                                 maxRadius: 24,
                                                 backgroundColor:
                                                     Colors.transparent,
-                                                child: Image.network(
-                                                  (product.store?.logo ?? '')
+                                                child: CachedNetworkImage(
+                                                  imageUrl: (product.store
+                                                                  ?.logo ??
+                                                              '')
                                                           .isNotEmpty
                                                       ? product.store?.logo ??
                                                           ''
@@ -296,8 +289,17 @@ class Cards extends StatelessWidget {
                                                   onPressed: () {
                                                     HapticFeedback
                                                         .heavyImpact();
-                                                    Share.share(
-                                                        'Check out the CASA app now');
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (_) =>
+                                                          ShareAppDialog(
+                                                        appName: "CASA",
+                                                        androidAppLink:
+                                                            "https://play.google.com/store/apps/details?id=com.casashop.casaflutterapp",
+                                                        iosAppLink:
+                                                            "https://apps.apple.com/app",
+                                                      ),
+                                                    );
                                                   },
                                                   icon: Image.asset(
                                                     IconConstants.forward,

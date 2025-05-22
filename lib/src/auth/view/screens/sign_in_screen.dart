@@ -4,9 +4,11 @@ import 'package:casaflutter/src/auth/controller/auth_controller.dart';
 import 'package:casaflutter/src/auth/view/widgets/auth_button.dart';
 import 'package:casaflutter/src/common/widgets/custom_text_form_field_widget.dart';
 import 'package:casaflutter/src/common/widgets/show_toast.dart';
+import 'package:casaflutter/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../routes/app_routes.dart';
 import '../../../../utils/preference_manager.dart';
@@ -14,9 +16,7 @@ import '../../../../utils/preference_manager.dart';
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
 
-  final authController = Get.put(
-    AuthController(),
-  );
+  final authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -132,8 +132,13 @@ class SignInScreen extends StatelessWidget {
                           // if registered then navigate to home screen
                           if (authController.isRegistered()) {
                             if (authController.isGoogleLoggedIn()) {
-                              if (PreferenceManager.getBool(PreferenceManager.isFirstTime)??true) {router.goNamed(RouteNames.navigation, extra: true);
-                                await PreferenceManager.setData(PreferenceManager.isFirstTime, false);
+                              if (PreferenceManager.getBool(
+                                      PreferenceManager.isFirstTime) ??
+                                  true) {
+                                router.goNamed(RouteNames.navigation,
+                                    extra: true);
+                                await PreferenceManager.setData(
+                                    PreferenceManager.isFirstTime, false);
                               } else {
                                 router.goNamed(RouteNames.navigation,
                                     extra: false);
@@ -184,12 +189,6 @@ class SignInScreen extends StatelessWidget {
                           ),
                         )
                       : SizedBox(),
-                  /*AuthButton(
-                    type: AuthButtonType.apple,
-                    onPressed: () {
-                      context.pushNamed(RouteNames.navigation);
-                    },
-                  ),*/
                   Spacer(),
                   TextButton(
                     onPressed: () {
@@ -197,6 +196,31 @@ class SignInScreen extends StatelessWidget {
                     },
                     child: Text(
                       'New to CASA? \n Register',
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextButton(
+                    onPressed: () async {
+                      final Uri url = Uri.parse('https://casashop.in/privacy');
+                      if (await canLaunchUrl(url)) {
+                        await launchUrl(url,
+                            mode: LaunchMode.externalApplication);
+                      } else {
+                        logg.e('Error while opening the privacy policy');
+                        showToast(
+                            message:
+                                'Unable to open privacy policy, please visit https://casashop.in/privacy');
+                      }
+                    },
+                    style: TextButton.styleFrom(
+                      textStyle:
+                          Theme.of(context).textTheme.bodySmall!.copyWith(
+                                fontWeight: FontWeight.w300,
+                              ),
+                    ),
+                    child: Text(
+                      'By signing up, you agree to our \nTerms of Service and Privacy Policy',
                       textAlign: TextAlign.center,
                     ),
                   ),

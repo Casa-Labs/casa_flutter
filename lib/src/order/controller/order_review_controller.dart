@@ -32,10 +32,12 @@ class OrderReviewController extends GetxController {
   RxList<CartItem> productsList = <CartItem>[].obs;
   RxDouble total = 0.0.obs;
   RxDouble itemtotal = 0.0.obs;
+  RxDouble tax = 0.0.obs;
+  RxDouble baseAmount = 0.0.obs;
   RxDouble gst = 0.0.obs;
   RxBool isExpaned = false.obs;
-  double deliveryCharge = 34.00;
-  double platFormFee = 7.00;
+  double deliveryCharge = 30.00;
+  double platFormFee = 10.00;
   RxString message = ''.obs;
   RxBool isBlinking = false.obs;
   Timer? _blinkingTimer;
@@ -106,13 +108,10 @@ class OrderReviewController extends GetxController {
       totalSum += itemPrice * product.item!.quantity!;
     }
     itemtotal.value = double.parse(totalSum.toStringAsFixed(2));
-    gst.value = calculateGST(itemtotal.value);
+    tax.value = double.parse((itemtotal.value * 18 / 118).toStringAsFixed(2));
+    baseAmount.value = double.parse((itemtotal.value - tax.value).toStringAsFixed(2));
     total.value =
-        double.parse((itemtotal.value + gst.value).toStringAsFixed(2));
-  }
-
-  double calculateGST(double totalValue) {
-    return double.parse(((totalValue * 18) / 100).toStringAsFixed(2));
+        double.parse((itemtotal.value + deliveryCharge + platFormFee).toStringAsFixed(2));
   }
 
   // ========== APIs FUNCTIONS ========== //

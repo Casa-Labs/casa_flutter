@@ -5,9 +5,13 @@ import 'package:casaflutter/src/explore/view/widgets/banner_image.dart';
 import 'package:casaflutter/utils/padding_size.dart';
 import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../utils/preference_manager.dart';
+import '../../../wishlist/controller/wishlist_controller.dart';
+import '../../../wishlist/view/screens/add_to_closet.dart';
 import '../widgets/product_card.dart';
 
 class StoreScreen extends StatelessWidget {
@@ -16,6 +20,7 @@ class StoreScreen extends StatelessWidget {
   StoreScreen({super.key, required this.id});
 
   final storeCtrl = Get.put(StoreController());
+  final wishController = Get.find<WishlistController>();
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +71,26 @@ class StoreScreen extends StatelessWidget {
                                     imageURL: product?.mainImage ??
                                         ImageConstants.dummyNetworkPortrait,
                                     wishlistOnPressed: () {
-                                      // TODO : Implement add to closet
+                                      if ((PreferenceManager.getString(
+                                                  PreferenceManager.token) ??
+                                              "")
+                                          .isEmpty) {
+                                        router.goNamed(RouteNames.signIn);
+                                      } else {
+                                        HapticFeedback.heavyImpact();
+                                        wishController.selectedClosets.clear();
+                                        showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          builder: (context) {
+                                            return AddToCloset(
+                                              imageUrl:
+                                                  product!.mainImage.toString(),
+                                              itemId: product.id.toString(),
+                                            );
+                                          },
+                                        );
+                                      }
                                     },
                                     onTap: () {
                                       context.pushNamed(

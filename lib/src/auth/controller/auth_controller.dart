@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:casaflutter/utils/extensions.dart';
 import 'package:casaflutter/utils/preference_manager.dart';
+import 'package:casaflutter/utils/utils.dart';
 import 'package:casaflutter/utils/validators.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth/firebase_auth.dart';
@@ -39,6 +40,12 @@ class AuthController extends GetxController {
 
   // ========== STATES ========== //
 
+  @override
+  void onReady() {
+    clearAllControllers();
+    super.onReady();
+  }
+
   // ========== UI FUNCTIONS ========== //
 
   void clearAllControllers() {
@@ -53,12 +60,6 @@ class AuthController extends GetxController {
     isAppleLoggedIn(false);
     checkboxValue(false);
     isRegistered(false);
-  }
-
-  @override
-  void onReady() {
-    clearAllControllers();
-    super.onReady();
   }
 
   // ========== APIs FUNCTIONS ========== //
@@ -77,6 +78,7 @@ class AuthController extends GetxController {
       LoginRequestModel loginRequestModel = LoginRequestModel(
         username: email.text,
         password: password.text,
+        deviceID: '',
       );
 
       final loginResponse = await _authService.loginUser(
@@ -214,7 +216,7 @@ class AuthController extends GetxController {
       image: image,
     );
 
-    print('login data --->>> $googleLoginRequestModel');
+    logg.d('login data --->>> $googleLoginRequestModel');
 
     final googleLoginResponse = await _authService.googleLoginUser(
         googleLoginRequestModel: googleLoginRequestModel);

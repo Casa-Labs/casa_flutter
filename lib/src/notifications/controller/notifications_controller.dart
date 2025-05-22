@@ -22,10 +22,14 @@ class NotificationsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    var loginData = User.fromJson(jsonDecode(
-        PreferenceManager.getString(PreferenceManager.userDetails)!));
-    _userId = loginData.id ?? "";
-    getNotificationData(_userId);
+
+    if ((PreferenceManager.getString(PreferenceManager.token) ?? "")
+        .isNotEmpty) {
+      var loginData = User.fromJson(jsonDecode(
+          PreferenceManager.getString(PreferenceManager.userDetails)!));
+      _userId = loginData.id ?? "";
+      getNotificationData(_userId);
+    }
   }
 
   // ========== UI FUNCTIONS ========== //

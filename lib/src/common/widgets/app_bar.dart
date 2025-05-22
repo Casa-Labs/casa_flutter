@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../utils/color.dart';
 import '../../home/controller/home_controller.dart';
 
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
@@ -101,7 +100,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
             child: Padding(
                 padding: EdgeInsets.all(4.0),
                 child: Icon(Icons.notifications_none_rounded,
-                    color: CColor.black)),
+                    color: IconColor.black)),
           ),
         const SizedBox(width: 5),
         if (isFilter)
@@ -113,7 +112,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
             },
             child: Padding(
                 padding: const EdgeInsets.all(4.0),
-                child: Icon(Icons.tune_rounded, color: CColor.black)),
+                child: Icon(Icons.tune_rounded, color: IconColor.black)),
           ),
         if (isSupport)
           InkWell(
@@ -122,7 +121,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
             onTap: () {},
             child: Padding(
                 padding: const EdgeInsets.all(4.0),
-                child: Icon(Icons.headphones, color: CColor.black)),
+                child: Icon(Icons.headphones, color: IconColor.black)),
           ),
         const SizedBox(width: 15),
       ],

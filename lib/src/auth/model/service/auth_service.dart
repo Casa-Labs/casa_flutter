@@ -58,6 +58,7 @@ class AuthService {
     final response = await _graphQLManager.registerUser(
       loginRequestModel.username,
       loginRequestModel.password,
+      loginRequestModel.deviceID,
     );
 
     registerUserResponse = RegisterUserResponseModel.fromJson(

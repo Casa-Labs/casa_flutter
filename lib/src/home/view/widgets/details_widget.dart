@@ -3,9 +3,13 @@ import 'package:casaflutter/src/home/controller/home_controller.dart';
 import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../routes/app_routes.dart';
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/font.dart';
+import '../../../../utils/preference_manager.dart';
+import '../../../../utils/utils.dart';
 import '../../../cart/controller/cart_controller.dart';
 import '../../../common/widgets/buttons/add_to_cart_button.dart';
 import '../../../explore/view/widgets/quantity_selector_button.dart';
@@ -75,56 +79,40 @@ class ProductDetails extends StatelessWidget {
                   child: QuantitySelectorButton(
                 count: product.quantity!,
                 getQuantity: (count) {
-                  logic.quantityCount(product, count);
+                  if (count < 6) {
+                    logic.quantityCount(product, count);
+                  }
                 },
               )),
               const SizedBox(height: 80),
               AddToCartButton(
                 onPressed: () {
-                  cartLogin.addProductsToCart(
-                      product, product.quantity!, logic.selectedSize.value);
-                  logic.addToCartSwipe();
+                  if ((PreferenceManager.getString(PreferenceManager.token) ??
+                          "")
+                      .isEmpty) {
+                    router.goNamed(RouteNames.signIn);
+                  } else {
+                    cartLogin.addProductsToCart(
+                        product, product.quantity!, logic.selectedSize.value);
+                    logic.addToCartSwipe();
+                  }
                 },
               ),
               const SizedBox(height: 20),
-              // GridView.builder(
-              //   shrinkWrap: true,
-              //   itemCount: product.productImages!.length > 4
-              //       ? 4
-              //       : product.productImages!.length,
-              //   physics: const NeverScrollableScrollPhysics(),
-              //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              //       crossAxisCount: 2,
-              //       crossAxisSpacing: 8,
-              //       childAspectRatio: 0.85,
-              //       mainAxisSpacing: 8),
-              //   itemBuilder: (BuildContext context, int index) {
-              //     return GestureDetector(
-              //       onTap: () {},
-              //       child: ClipRRect(
-              //         borderRadius: BorderRadius.circular(20),
-              //         child: Image.network(
-              //           product.productImages![index],
-              //           fit: BoxFit.cover,
-              //         ),
-              //       ),
-              //     );
-              //   },
-              // ),
               ProductImageGrid(productImages: product.productImages ?? []),
               const SizedBox(height: 30),
               _buildPolicyTile(
                 title: 'RETURN POLICY',
                 isExpanded: logic.isShowReturn,
                 onTap: () => logic.changeReturnPolicy(),
-                content: product.customReturnPolicy!,
+                content: product.customReturnPolicy ?? AppStrings.returnPolicy,
               ),
               const SizedBox(height: 20),
               _buildPolicyTile(
                 title: 'SHIPPING POLICY',
                 isExpanded: logic.isShowShipping,
                 onTap: () => logic.changeShippingPolicy(),
-                content: product.customShippingPolicy!,
+                content: product.customShippingPolicy ?? AppStrings.shippingPolicy,
               ),
               const SizedBox(height: 20),
               Row(
@@ -142,19 +130,25 @@ class ProductDetails extends StatelessWidget {
                         foregroundColor: ButtonColor.white,
                       ),
                       onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          builder: (context) {
-                            return WriteReviewWidget(
-                              product: product,
-                            );
-                          },
-                        ).then(
-                          (value) {
-                            logic.update();
-                          },
-                        );
+                        final token = PreferenceManager.getString(
+                            PreferenceManager.token);
+                        if (token == null || token.isEmpty) {
+                          context.pushNamed(RouteNames.signIn);
+                        } else {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (context) {
+                              return WriteReviewWidget(
+                                product: product,
+                              );
+                            },
+                          ).then(
+                            (value) {
+                              logic.update();
+                            },
+                          );
+                        }
                       },
                       child: Text("Write a review")),
                 ],
@@ -169,7 +163,9 @@ class ProductDetails extends StatelessWidget {
                   }
 
                   if (snapshot.hasError) {
-                    return Text('Error loading reviews: ${snapshot.error}');
+                    logg.e('Error loading reviews: ${snapshot.error}');
+
+                    return Text('No reviews yet');
                   }
 
                   final reviews = snapshot.data?.getProductInteractions ?? [];

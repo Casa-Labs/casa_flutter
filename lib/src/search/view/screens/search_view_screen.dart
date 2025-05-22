@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../utils/preference_manager.dart';
 import '../../../wishlist/controller/wishlist_controller.dart';
 import '../../../wishlist/view/screens/add_to_closet.dart';
 
@@ -55,18 +56,25 @@ class SearchViewScreen extends StatelessWidget {
                         imageURL: product.mainImage ??
                             ImageConstants.dummyNetworkPortrait,
                         wishlistOnPressed: () {
-                          HapticFeedback.heavyImpact();
-                          wishController.selectedClosets.clear();
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            builder: (context) {
-                              return AddToCloset(
-                                imageUrl: product.mainImage.toString(),
-                                itemId: product.id.toString(),
-                              );
-                            },
-                          );
+                          if ((PreferenceManager.getString(
+                                      PreferenceManager.token) ??
+                                  "")
+                              .isEmpty) {
+                            router.goNamed(RouteNames.signIn);
+                          } else {
+                            HapticFeedback.heavyImpact();
+                            wishController.selectedClosets.clear();
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (context) {
+                                return AddToCloset(
+                                  imageUrl: product.mainImage.toString(),
+                                  itemId: product.id.toString(),
+                                );
+                              },
+                            );
+                          }
                         },
                         onTap: () {
                           context.pushNamed(

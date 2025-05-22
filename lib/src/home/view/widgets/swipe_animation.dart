@@ -1,4 +1,3 @@
-import 'package:casaflutter/utils/color.dart';
 import 'package:casaflutter/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
@@ -34,12 +33,12 @@ class SwipeAnimation extends StatelessWidget {
             radius: swipeIcon == Icons.add_shopping_cart_outlined ? 55 : 35,
             key: ValueKey(swipeIcon),
             backgroundColor: swipeIcon == null
-                ? CColor.transparent
+                ? ButtonColor.transparent
                 : swipeIcon == Icons.add_shopping_cart_outlined
-                    ? CColor.transparent
+                    ? ButtonColor.transparent
                     : swipeIcon == Icons.check_rounded
                         ? IconColor.black
-                        : CColor.closeTick,
+                        : IconColor.mediumGrey,
             child: swipeIcon == Icons.add_shopping_cart_outlined
                 ? Image.asset("assets/images/ecommerce.png", height: 175)
                 : Icon(
@@ -47,8 +46,8 @@ class SwipeAnimation extends StatelessWidget {
                     color: swipeIcon == Icons.add_shopping_cart_outlined
                         ? Colors.black
                         : swipeIcon == Icons.check_rounded
-                            ? CColor.closeTick
-                            : CColor.black,
+                            ? IconColor.mediumGrey
+                            : IconColor.black,
                     size: 55,
                   ),
           ),

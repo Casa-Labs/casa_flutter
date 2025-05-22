@@ -42,8 +42,9 @@ class ExploreScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
+                    const SizedBox(height: 15),
                     ExploreSearchBar(),
-                    const Divider(),
+                    const SizedBox(height: 15),
                     Row(
                       children: [
                         const SizedBox(width: 20),
@@ -100,7 +101,7 @@ class ExploreScreen extends StatelessWidget {
                             },
                           ),
                         ),
-                        const SizedBox(width: 20),
+                        const SizedBox(width: 15),
                       ],
                     ),
                     ExploreSection(),
@@ -126,7 +127,7 @@ class ExploreSection extends StatelessWidget {
     return Obx(
       () => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 35,
+        spacing: 25,
         children: [
           const SizedBox.shrink(),
           Column(
@@ -232,7 +233,7 @@ class ExploreSection extends StatelessWidget {
                                   SizedBox(
                                     width: 100,
                                     child: Text(
-                                      '\$${trendingProduct.price ?? 'NA'}',
+                                      '₹ ${trendingProduct.price ?? 'NA'}',
                                       style:
                                           Theme.of(context).textTheme.bodySmall,
                                     ),
@@ -352,7 +353,7 @@ class ExploreSection extends StatelessWidget {
             children: [
               DividerTitle(text: 'RELATED'),
               const SizedBox(height: 25),
-              exploreCtrl.clothesYouMightLike.isEmpty
+              exploreCtrl.relatedProducts.isEmpty
                   ? Text('No related clothes found',
                       style: Theme.of(context).textTheme.bodyLarge)
                   : Padding(
@@ -368,19 +369,16 @@ class ExploreSection extends StatelessWidget {
                                         crossAxisSpacing: 20,
                                         childAspectRatio: 0.48,
                                         mainAxisSpacing: 15),
-                                itemCount:
-                                    exploreCtrl.clothesYouMightLike.length,
+                                itemCount: exploreCtrl.relatedProducts.length,
                                 itemBuilder: (context, index) {
                                   final product =
-                                      exploreCtrl.clothesYouMightLike[index];
+                                      exploreCtrl.relatedProducts[index];
                                   return ProductCard(
                                     name: product?.name ?? 'API Error',
                                     price: product?.price ?? 0.0,
                                     imageURL: product?.mainImage ??
                                         ImageConstants.dummyNetworkPortrait,
                                     wishlistOnPressed: () {
-                                      // TODO: Implement add to closet
-
                                       HapticFeedback.heavyImpact();
 
                                       wishController.selectedClosets.clear();
@@ -407,16 +405,15 @@ class ExploreSection extends StatelessWidget {
                                   );
                                 },
                               ),
-                              Obx(() =>
-                                  exploreCtrl.relatedProductsIsLoadingMore.value
-                                      ? Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 20),
-                                          child: Center(
-                                            child: CircularProgressIndicator(),
-                                          ),
-                                        )
-                                      : const SizedBox.shrink()),
+                              exploreCtrl.relatedProductsIsLoadingMore.value
+                                  ? Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 20),
+                                      child: Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    )
+                                  : const SizedBox.shrink(),
                             ],
                           )),
                     ),
