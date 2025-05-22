@@ -7,10 +7,26 @@ class AssetsRes {
   AssetsRes._();
 
   static const String PLUGIN_NAME = 'casaflutter';
-  static const String PLUGIN_VERSION = '1.0.0+8';
+  static const String PLUGIN_VERSION = '1.0.0+6';
   static const String BACK_BUTTON = 'assets/icons/back_button.svg';
+  static const String BOOK_MARK = 'assets/icons/book_mark.png';
+  static const String CART = 'assets/icons/cart.png';
+  static const String CART_ADD = 'assets/icons/cart_add.png';
+  static const String CART_SELECTED = 'assets/icons/cart_selected.png';
+  static const String FORWARD = 'assets/icons/forward.png';
+  static const String HEART = 'assets/icons/heart.png';
+  static const String HEART_SELECTED = 'assets/icons/heart_selected.png';
+  static const String HOME = 'assets/icons/home.png';
+  static const String HOME_SELECTED = 'assets/icons/home_selected.png';
+  static const String NOTIFICATION = 'assets/icons/notification.png';
+  static const String PROFILE = 'assets/icons/profile.png';
+  static const String PROFILE_SELECTED = 'assets/icons/profile_selected.png';
+  static const String SEARCH = 'assets/icons/search.png';
   static const String SEARCH_ICON = 'assets/icons/search_icon.svg';
+  static const String SEARCH_SELECTED = 'assets/icons/search_selected.png';
+  static const String SETTINGS = 'assets/icons/settings.png';
   static const String EMAIL = 'assets/images/email.png';
+  static const String SIZE_GUIDE = 'assets/images/size_guide.jpeg';
   static const String SPLASH_BACKGROUND = 'assets/images/splash_background.jpeg';
   static const String VERIFY = 'assets/images/verify.png';
 }
