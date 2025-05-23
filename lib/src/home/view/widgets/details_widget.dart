@@ -3,19 +3,15 @@ import 'package:casaflutter/src/home/controller/home_controller.dart';
 import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../routes/app_routes.dart';
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/font.dart';
 import '../../../../utils/preference_manager.dart';
-import '../../../../utils/utils.dart';
 import '../../../cart/controller/cart_controller.dart';
 import '../../../common/widgets/buttons/add_to_cart_button.dart';
 import '../../../explore/view/widgets/quantity_selector_button.dart';
 import '../../model/home_models.dart';
-import '../../model/review_response.dart';
-import 'write_review_widget.dart';
 
 class ProductDetails extends StatelessWidget {
   final Product product;
@@ -112,191 +108,176 @@ class ProductDetails extends StatelessWidget {
                 title: 'SHIPPING POLICY',
                 isExpanded: logic.isShowShipping,
                 onTap: () => logic.changeShippingPolicy(),
-                content: product.customShippingPolicy ?? AppStrings.shippingPolicy,
+                content:
+                    product.customShippingPolicy ?? AppStrings.shippingPolicy,
               ),
               const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Reviews',
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: ButtonColor.black,
-                        foregroundColor: ButtonColor.white,
-                      ),
-                      onPressed: () {
-                        final token = PreferenceManager.getString(
-                            PreferenceManager.token);
-                        if (token == null || token.isEmpty) {
-                          context.pushNamed(RouteNames.signIn);
-                        } else {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            builder: (context) {
-                              return WriteReviewWidget(
-                                product: product,
-                              );
-                            },
-                          ).then(
-                            (value) {
-                              logic.update();
-                            },
-                          );
-                        }
-                      },
-                      child: Text("Write a review")),
-                ],
-              ),
 
-              const SizedBox(height: 10),
-              FutureBuilder<GetProductReviewModel?>(
-                future: logic.getReviews(product.id ?? ''),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-
-                  if (snapshot.hasError) {
-                    logg.e('Error loading reviews: ${snapshot.error}');
-
-                    return Text('No reviews yet');
-                  }
-
-                  final reviews = snapshot.data?.getProductInteractions ?? [];
-
-                  if (reviews.isEmpty) {
-                    return const Text('No reviews yet');
-                  }
-
-                  return Column(
-                    children: [
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: reviews.length > 2 ? 2 : reviews.length,
-                        itemBuilder: (context, index) {
-                          final review = reviews[index];
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 15),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(1),
-                                  decoration: BoxDecoration(
-                                      border:
-                                          Border.all(color: ButtonColor.black),
-                                      borderRadius: BorderRadius.circular(50)),
-                                  child: CircleAvatar(
-                                    maxRadius: 28,
-                                    backgroundColor: const Color(0xFF002957),
-                                    child: Text(
-                                      review.user?.name
-                                              ?.substring(0, 1)
-                                              .toUpperCase() ??
-                                          "U",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .copyWith(color: TextColor.white),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        review.user?.name ?? 'Anonymous',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge!
-                                            .copyWith(
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                      ),
-                                      const SizedBox(height: 5),
-                                      Row(
-                                        children: [
-                                          ...List.generate(
-                                            5,
-                                            (i) => Icon(
-                                              Icons.star,
-                                              size: 16,
-                                              color: i < (review.rating ?? 0)
-                                                  ? Colors.black
-                                                  : Colors.grey,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 10),
-                                          Text(
-                                            '${review.rating ?? 0}/5',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .copyWith(
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                          ),
-                                        ],
-                                      ),
-                                      if (review.comment != null &&
-                                          review.comment!.isNotEmpty) ...[
-                                        const SizedBox(height: 5),
-                                        Text(
-                                          review.comment!,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium,
-                                        ),
-                                      ],
-                                      const SizedBox(height: 5),
-                                      Text(
-                                        logic.formatTimestamp(
-                                            review.createdAt ?? 'NA'),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                      /*  if (reviews.length > 2) ...[
-                        const SizedBox(height: 10),
-                        TextButton(
-                          onPressed: () {
-                            Get.to(() => AllReviewsScreen(
-                                  productId: product.id ?? '',
-                                  productName: product.name ?? '',
-                                ));
-                          },
-                          child: Text(
-                            'More Reviews (${reviews.length - 2})',
-                            style:
-                                Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                          ),
-                        ),
-                      ],*/
-                    ],
-                  );
-                },
-              ),
-              const SizedBox(height: 50),
+              // TODO : Need to redo the review section to rely on OBX
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Text(
+              //       'Reviews',
+              //       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+              //             fontWeight: FontWeight.bold,
+              //           ),
+              //     ),
+              //     ElevatedButton(
+              //         style: ElevatedButton.styleFrom(
+              //           backgroundColor: ButtonColor.black,
+              //           foregroundColor: ButtonColor.white,
+              //         ),
+              //         onPressed: () {
+              //           final token = PreferenceManager.getString(
+              //               PreferenceManager.token);
+              //           if (token == null || token.isEmpty) {
+              //             context.pushNamed(RouteNames.signIn);
+              //           } else {
+              //             showModalBottomSheet(
+              //               context: context,
+              //               isScrollControlled: true,
+              //               builder: (context) {
+              //                 return WriteReviewWidget(
+              //                   product: product,
+              //                 );
+              //               },
+              //             ).then(
+              //               (value) {
+              //                 logic.update();
+              //               },
+              //             );
+              //           }
+              //         },
+              //         child: Text("Write a review")),
+              //   ],
+              // ),
+              //
+              // const SizedBox(height: 10),
+              // FutureBuilder<GetProductReviewModel?>(
+              //   future: logic.getReviews(product.id ?? ''),
+              //   builder: (context, snapshot) {
+              //     if (snapshot.connectionState == ConnectionState.waiting) {
+              //       return const Center(child: CircularProgressIndicator());
+              //     }
+              //
+              //     if (snapshot.hasError) {
+              //       logg.e('Error loading reviews: ${snapshot.error}');
+              //
+              //       return Text('No reviews yet');
+              //     }
+              //
+              //     final reviews = snapshot.data?.getProductInteractions ?? [];
+              //
+              //     if (reviews.isEmpty) {
+              //       return const Text('No reviews yet');
+              //     }
+              //
+              //     return Column(
+              //       children: [
+              //         ListView.builder(
+              //           shrinkWrap: true,
+              //           physics: const NeverScrollableScrollPhysics(),
+              //           itemCount: reviews.length > 2 ? 2 : reviews.length,
+              //           itemBuilder: (context, index) {
+              //             final review = reviews[index];
+              //             return Padding(
+              //               padding: const EdgeInsets.only(bottom: 15),
+              //               child: Row(
+              //                 crossAxisAlignment: CrossAxisAlignment.start,
+              //                 children: [
+              //                   Container(
+              //                     padding: const EdgeInsets.all(1),
+              //                     decoration: BoxDecoration(
+              //                         border:
+              //                             Border.all(color: ButtonColor.black),
+              //                         borderRadius: BorderRadius.circular(50)),
+              //                     child: CircleAvatar(
+              //                       maxRadius: 28,
+              //                       backgroundColor: const Color(0xFF002957),
+              //                       child: Text(
+              //                         review.user?.name
+              //                                 ?.substring(0, 1)
+              //                                 .toUpperCase() ??
+              //                             "U",
+              //                         style: Theme.of(context)
+              //                             .textTheme
+              //                             .bodyMedium!
+              //                             .copyWith(color: TextColor.white),
+              //                       ),
+              //                     ),
+              //                   ),
+              //                   const SizedBox(width: 10),
+              //                   Expanded(
+              //                     child: Column(
+              //                       crossAxisAlignment:
+              //                           CrossAxisAlignment.start,
+              //                       children: [
+              //                         Text(
+              //                           review.user?.name ?? 'Anonymous',
+              //                           style: Theme.of(context)
+              //                               .textTheme
+              //                               .bodyLarge!
+              //                               .copyWith(
+              //                                 fontWeight: FontWeight.bold,
+              //                               ),
+              //                         ),
+              //                         const SizedBox(height: 5),
+              //                         Row(
+              //                           children: [
+              //                             ...List.generate(
+              //                               5,
+              //                               (i) => Icon(
+              //                                 Icons.star,
+              //                                 size: 16,
+              //                                 color: i < (review.rating ?? 0)
+              //                                     ? Colors.black
+              //                                     : Colors.grey,
+              //                               ),
+              //                             ),
+              //                             const SizedBox(width: 10),
+              //                             Text(
+              //                               '${review.rating ?? 0}/5',
+              //                               style: Theme.of(context)
+              //                                   .textTheme
+              //                                   .bodyMedium!
+              //                                   .copyWith(
+              //                                     fontWeight: FontWeight.bold,
+              //                                   ),
+              //                             ),
+              //                           ],
+              //                         ),
+              //                         if (review.comment != null &&
+              //                             review.comment!.isNotEmpty) ...[
+              //                           const SizedBox(height: 5),
+              //                           Text(
+              //                             review.comment!,
+              //                             style: Theme.of(context)
+              //                                 .textTheme
+              //                                 .bodyMedium,
+              //                           ),
+              //                         ],
+              //                         const SizedBox(height: 5),
+              //                         Text(
+              //                           logic.formatTimestamp(
+              //                               review.createdAt ?? 'NA'),
+              //                           style: Theme.of(context)
+              //                               .textTheme
+              //                               .bodySmall,
+              //                         ),
+              //                       ],
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //             );
+              //           },
+              //         ),
+              //       ],
+              //     );
+              //   },
+              // ),
+              // const SizedBox(height: 50),
             ],
           ),
         );

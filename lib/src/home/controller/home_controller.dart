@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:appinio_swiper/appinio_swiper.dart';
+import 'package:casaflutter/src/home/model/color_model.dart';
 import 'package:casaflutter/src/home/model/service/home_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +55,7 @@ class HomeController extends GetxController {
   RxInt reviewStar = 0.obs;
 
   RxString shareMessage = ''.obs;
+  RxList<GetColors> colors = <GetColors>[].obs;
 
   final manager = GraphQLManager();
 
@@ -63,6 +63,17 @@ class HomeController extends GetxController {
   final int pageSize = 10;
   bool isPaginating = false;
   bool noMoreData = false;
+
+  RxMap<String, dynamic> filters = {
+    "category": null, // String
+    "gender": null, // String
+    "maxPrice": null, // int
+    "minPrice": null, // int
+    "productColor": <String>[], // List<String>
+    "productSize": <String>[], // List<String>
+    "storeIds": <String>[], // List<String>
+    "storeType": null // String
+  }.obs;
 
   // ========== STATES ========== //
 
@@ -73,6 +84,7 @@ class HomeController extends GetxController {
     await getBrand();
     await getSize();
     await getCategory();
+    await getColors();
   }
 
   // ========== UI FUNCTIONS ========== //
@@ -217,6 +229,14 @@ class HomeController extends GetxController {
       return 'Invalid timestamp';
     }
   }
+
+  /// This method ensures you're only passing relevant filters to the backend, cleaning null values
+  Map<String, dynamic> getCleanFilters() {
+    return Map.fromEntries(
+      filters.entries.where((entry) => entry.value != null),
+    );
+  }
+
 // ========== APIs FUNCTIONS ========== //
 
   Future<void> fetchProducts(Map<String, dynamic> map,
@@ -248,14 +268,14 @@ class HomeController extends GetxController {
       };
 
       final response = await manager.getProducts(finalParams);
-      final getProductList = GetProductData.fromJson(response.data!);
+      final getProductList = GetProductData.fromJson(response.data ?? {});
       final newProducts = getProductList.getProducts?.data ?? [];
 
       if (newProducts.isEmpty) {
         noMoreData = true;
       } else {
         products.addAll(newProducts);
-        products.shuffle(Random());
+        // products.shuffle(Random());
         reactiveProducts.assignAll(products);
         currentPage++;
       }
@@ -275,10 +295,6 @@ class HomeController extends GetxController {
       var response = await manager.getSizes();
       var getSizeData = GetSizeData.fromJson(response.data!);
       size = getSizeData.getProductSizes ?? [];
-      // // Convert API sizes to button format
-      // formattedSizes =
-      //     size.map((s) => GetProductSizes.mapSize(s.name!)).toList();
-      // isLoading.value =  false;
       update();
     } catch (e) {
       logg.e('get error to fetch product data $e');
@@ -299,6 +315,22 @@ class HomeController extends GetxController {
       update();
     } catch (e) {
       logg.e('get error to fetch product data $e');
+      isLoading.value = false;
+      update();
+    }
+  }
+
+  Future<void> getColors() async {
+    try {
+      isLoading.value = true;
+      update();
+      var response = await manager.getColors();
+      var colorList = GetColorResponseModel.fromJson(response.data!);
+      colors.assignAll(colorList.getColors ?? []);
+      isLoading.value = false;
+      update();
+    } catch (e) {
+      logg.e('get error to fetch colors data $e');
       isLoading.value = false;
       update();
     }

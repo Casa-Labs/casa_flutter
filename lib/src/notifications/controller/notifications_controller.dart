@@ -49,7 +49,7 @@ class NotificationsController extends GetxController {
     isLoading(true);
     update();
     _notificationsService.getNotification(userID).then((value) {
-      notificationList = value.notificationByUser!;
+      notificationList = value.notificationByUser ?? [];
       isLoading(false);
       update();
     });

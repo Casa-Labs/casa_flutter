@@ -11,10 +11,11 @@ class GraphQLManager {
   final GraphQLClientService _clientService = GraphQLClientService();
 
   //MUTATION
-  Future<QueryResult> registerUser(String email, String password,String  deviceId) async {
+  Future<QueryResult> registerUser(
+      String email, String password, String deviceId) async {
     return await _clientService.performMutationWithoutToken(
       document: GraphQLMutations.registerMutation,
-      variables: GraphQLVariables.registerVariables(email, password,deviceId),
+      variables: GraphQLVariables.registerVariables(email, password, deviceId),
     );
   }
 
@@ -502,6 +503,12 @@ class GraphQLManager {
   Future<QueryResult> getSizes() async {
     return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getSizes,
+    );
+  }
+
+  Future<QueryResult> getColors() async {
+    return await _clientService.performQueryWithoutToken(
+      document: GraphQLQueries.getColors,
     );
   }
 
