@@ -62,6 +62,17 @@ class HomeController extends GetxController {
   bool isPaginating = false;
   bool noMoreData = false;
 
+  RxMap<String, dynamic> filters = {
+    "category": null, // String
+    "gender": null, // String
+    "maxPrice": null, // int
+    "minPrice": null, // int
+    "productColor": <String>[], // List<String>
+    "productSize": <String>[], // List<String>
+    "storeIds": <String>[], // List<String>
+    "storeType": null // String
+  }.obs;
+
   // ========== STATES ========== //
 
   @override
@@ -215,6 +226,14 @@ class HomeController extends GetxController {
       return 'Invalid timestamp';
     }
   }
+
+  /// This method ensures you're only passing relevant filters to the backend, cleaning null values
+  Map<String, dynamic> getCleanFilters() {
+    return Map.fromEntries(
+      filters.entries.where((entry) => entry.value != null),
+    );
+  }
+
 // ========== APIs FUNCTIONS ========== //
 
   Future<void> fetchProducts(Map<String, dynamic> map,

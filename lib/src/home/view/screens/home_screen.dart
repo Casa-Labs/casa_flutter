@@ -54,17 +54,25 @@ class HomeScreen extends StatelessWidget {
                       FilterButtonModel(
                         title: 'Brand',
                         list: homeCtrl.brand.map((item) => item.name!).toList(),
-                        onClear: () {
+                        onClear: (values) {
                           logg.i("Brand selection cleared");
+                          homeCtrl.filters["storeIds"] = null;
+                          homeCtrl.fetchProducts(homeCtrl.getCleanFilters(),
+                              reset: true);
                         },
-                        onDone: (selectedName) {
-                          final brandId = homeCtrl.brand
-                              .firstWhereOrNull((e) => e.name == selectedName)
-                              ?.id;
-                          logg.i("Selected brand ID: $brandId");
+                        onDone: (selectedNames) {
+                          final brandIds = homeCtrl.brand
+                              .where((e) => selectedNames.contains(e.name))
+                              .map((e) => e.id)
+                              .whereType<String>()
+                              .toList();
 
-                          if (brandId != null) {
-                            homeCtrl.fetchProducts({"storeId": brandId});
+                          logg.i("Selected brand IDs: $brandIds");
+
+                          if (brandIds.isNotEmpty) {
+                            homeCtrl.filters["storeIds"] = brandIds;
+                            homeCtrl.fetchProducts(homeCtrl.getCleanFilters(),
+                                reset: true);
                           }
                         },
                       ),
@@ -73,24 +81,27 @@ class HomeScreen extends StatelessWidget {
                         list: homeCtrl.category
                             .map((item) => item.name!)
                             .toList(),
-                        onClear: () {
+                        onClear: (values) {
                           logg.i("Category selection cleared");
+                          homeCtrl.filters["category"] = null;
+                          homeCtrl.fetchProducts(homeCtrl.getCleanFilters());
                         },
                         onDone: (selectedName) {
-                          final category = homeCtrl.category
+                          final categoryId = homeCtrl.category
                               .firstWhereOrNull((e) => e.name == selectedName)
                               ?.id;
-                          logg.i("Selected category ID: $category");
+                          logg.i("Selected category ID: $categoryId");
 
-                          if (category != null) {
-                            homeCtrl.fetchProducts({"categoryId": category});
+                          if (categoryId != null) {
+                            homeCtrl.filters["category"] = categoryId;
+                            homeCtrl.fetchProducts(homeCtrl.getCleanFilters());
                           }
                         },
                       ),
                       FilterButtonModel(
                         title: 'Colors',
                         list: ['Red', 'Blue', 'Green', 'Black', 'White', 'NA'],
-                        onClear: () {
+                        onClear: (values) {
                           logg.i("Color selection cleared");
                         },
                         onDone: (selectedName) {
@@ -111,7 +122,7 @@ class HomeScreen extends StatelessWidget {
                       FilterButtonModel(
                         title: 'Size',
                         list: homeCtrl.size.map((item) => item.name!).toList(),
-                        onClear: () {
+                        onClear: (values) {
                           logg.i("size selection cleared");
                         },
                         onDone: (selectedName) {

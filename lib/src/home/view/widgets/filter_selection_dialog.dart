@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 class FilterSelectionDialog extends StatefulWidget {
   final bool showTabs;
   final List<String> categories;
-  final String? initiallySelected;
-  final void Function(String?) onClear;
-  final void Function(String?) onDone;
+  final List<String>? initiallySelected;
+  final void Function(List<String>) onClear;
+  final void Function(List<String>) onDone;
 
   const FilterSelectionDialog({
     super.key,
@@ -22,12 +22,12 @@ class FilterSelectionDialog extends StatefulWidget {
 }
 
 class _FilterSelectionDialogState extends State<FilterSelectionDialog> {
-  String? selected;
+  List<String> selected = [];
 
   @override
   void initState() {
     super.initState();
-    selected = widget.initiallySelected;
+    selected = List.from(widget.initiallySelected ?? []);
   }
 
   @override
@@ -59,9 +59,17 @@ class _FilterSelectionDialogState extends State<FilterSelectionDialog> {
                 itemCount: widget.categories.length,
                 itemBuilder: (context, index) {
                   final category = widget.categories[index];
-                  final isSelected = selected == category;
+                  final isSelected = selected.contains(category);
                   return GestureDetector(
-                    onTap: () => setState(() => selected = category),
+                    onTap: () {
+                      setState(() {
+                        if (isSelected) {
+                          selected.remove(category);
+                        } else {
+                          selected.add(category);
+                        }
+                      });
+                    },
                     child: _buildCategoryTile(category, isSelected),
                   );
                 },
@@ -72,10 +80,15 @@ class _FilterSelectionDialogState extends State<FilterSelectionDialog> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _buildBottomButton("Clear", () {
-                  widget.onClear(null);
+                  setState(() {
+                    selected.clear();
+                  });
+                  widget.onClear([]);
+                  Navigator.of(context).pop();
                 }),
                 _buildBottomButton("Done", () {
                   widget.onDone(selected);
+                  Navigator.of(context).pop();
                 }),
               ],
             ),

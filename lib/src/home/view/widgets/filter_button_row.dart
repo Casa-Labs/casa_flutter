@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 class FilterButtonRow extends StatelessWidget {
   final List<FilterButtonModel> filters;
-
   final VoidCallback onFilterSettingsPressed;
 
   const FilterButtonRow({
@@ -36,37 +35,40 @@ class FilterButtonRow extends StatelessWidget {
               onPressed: onFilterSettingsPressed,
             ),
           ),
-          ...filters.map((filter) => Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: FilterChipButton(
-                  text: filter.selected != null
-                      ? "${filter.title}: ${filter.selected}"
-                      : filter.title,
-                  onPressed: () async {
-                    final selectedValue = await showDialog<String?>(
-                      context: context,
-                      builder: (context) => FilterSelectionDialog(
-                        showTabs: false,
-                        categories: filter.list,
-                        initiallySelected: filter.selected,
-                        onClear: (value) {
-                          filter.selected = null;
-                          filter.onClear?.call();
-                          Navigator.of(context).pop(null);
-                        },
-                        onDone: (value) {
-                          Navigator.of(context).pop(value);
-                        },
-                      ),
-                    );
+          ...filters.map(
+            (filter) => Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: FilterChipButton(
+                text: (filter.selectedValues != null &&
+                        filter.selectedValues!.isNotEmpty)
+                    ? "${filter.title}: ${filter.selectedValues!.join(', ')}"
+                    : filter.title,
+                onPressed: () async {
+                  final selectedValues = await showDialog<List<String>>(
+                    context: context,
+                    builder: (context) => FilterSelectionDialog(
+                      showTabs: false,
+                      categories: filter.list,
+                      initiallySelected: filter.selectedValues ?? [],
+                      onClear: (values) {
+                        filter.selectedValues = [];
+                        filter.onClear?.call(values);
+                      },
+                      onDone: (values) {
+                        filter.selectedValues = values;
+                        filter.onDone?.call(values);
+                      },
+                    ),
+                  );
 
-                    if (selectedValue != null) {
-                      filter.selected = selectedValue;
-                      filter.onDone?.call(selectedValue);
-                    }
-                  },
-                ),
-              )),
+                  if (selectedValues != null) {
+                    filter.selectedValues = selectedValues;
+                    filter.onDone?.call(selectedValues);
+                  }
+                },
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -76,15 +78,15 @@ class FilterButtonRow extends StatelessWidget {
 class FilterButtonModel {
   final String title;
   final List<String> list;
-  final void Function()? onClear;
-  final void Function(String?)? onDone;
-  String? selected;
+  final void Function(List<String>)? onClear;
+  final void Function(List<String>)? onDone;
+  List<String>? selectedValues;
 
   FilterButtonModel({
     required this.title,
     required this.list,
     this.onClear,
     this.onDone,
-    this.selected,
+    this.selectedValues,
   });
 }
