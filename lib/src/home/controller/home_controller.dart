@@ -1,4 +1,5 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
+import 'package:casaflutter/src/home/model/color_model.dart';
 import 'package:casaflutter/src/home/model/service/home_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +55,7 @@ class HomeController extends GetxController {
   RxInt reviewStar = 0.obs;
 
   RxString shareMessage = ''.obs;
+  RxList<GetColors> colors = <GetColors>[].obs;
 
   final manager = GraphQLManager();
 
@@ -82,6 +84,7 @@ class HomeController extends GetxController {
     await getBrand();
     await getSize();
     await getCategory();
+    await getColors();
   }
 
   // ========== UI FUNCTIONS ========== //
@@ -292,10 +295,6 @@ class HomeController extends GetxController {
       var response = await manager.getSizes();
       var getSizeData = GetSizeData.fromJson(response.data!);
       size = getSizeData.getProductSizes ?? [];
-      // // Convert API sizes to button format
-      // formattedSizes =
-      //     size.map((s) => GetProductSizes.mapSize(s.name!)).toList();
-      // isLoading.value =  false;
       update();
     } catch (e) {
       logg.e('get error to fetch product data $e');
@@ -316,6 +315,22 @@ class HomeController extends GetxController {
       update();
     } catch (e) {
       logg.e('get error to fetch product data $e');
+      isLoading.value = false;
+      update();
+    }
+  }
+
+  Future<void> getColors() async {
+    try {
+      isLoading.value = true;
+      update();
+      var response = await manager.getColors();
+      var colorList = GetColorResponseModel.fromJson(response.data!);
+      colors.assignAll(colorList.getColors ?? []);
+      isLoading.value = false;
+      update();
+    } catch (e) {
+      logg.e('get error to fetch colors data $e');
       isLoading.value = false;
       update();
     }

@@ -12,7 +12,7 @@ class FilterChipButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: ButtonColor.white,
         minimumSize: Size.zero,
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+        padding: EdgeInsets.symmetric(horizontal: 18, vertical: 2),
         textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
               color: TextColor.black,
             ),
@@ -22,6 +22,7 @@ class FilterChipButton extends StatelessWidget {
       onPressed: onPressed,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
+        spacing: 10,
         children: [
           Text(text),
           Icon(

@@ -91,6 +91,15 @@ query GetProductSizes {
 }
 """;
 
+  static const String getColors = """
+query GetColors {
+  getColors {
+    id
+    name
+  }
+}
+""";
+
   static const String getBrand = """
 query GetBrands(\$storeType: StoreType!, \$page: Int, \$limit: Int, \$search: String) {
   getBrands(storeType: \$storeType, page: \$page, limit: \$limit, search: \$search) {
