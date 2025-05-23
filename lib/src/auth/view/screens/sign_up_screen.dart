@@ -331,6 +331,7 @@ class SignUpScreen extends StatelessWidget {
                         ],
                       ),
                     ),
+
                     SizedBox(height: 20),
                     AuthButton(
                       type: AuthButtonType.signUp,

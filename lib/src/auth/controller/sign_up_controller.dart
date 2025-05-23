@@ -3,6 +3,7 @@ import 'package:casaflutter/src/auth/model/service/auth_service.dart';
 import 'package:casaflutter/utils/extensions.dart';
 import 'package:casaflutter/utils/preference_manager.dart';
 import 'package:casaflutter/utils/validators.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
