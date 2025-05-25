@@ -2,7 +2,7 @@
 class RazorpayConst {
   static const String devKeyId = 'rzp_test_fFvljonXlvK2BG';
 
-  static const String liveKeyId = '';
+  static const String liveKeyId = 'rzp_live_1nzkHh8TnNLlwJ';
 
   /// Razorpay Key ID based on the environment
   /// Will use [_liveKeyId] for Live flavor else [_devKeyId] for Stage
