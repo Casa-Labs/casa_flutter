@@ -61,6 +61,8 @@ class WishlistScreen extends StatelessWidget {
                                 ),
                                 IconsWidget(
                                     onTap: () {
+                                      wishController.getUserClosets();
+
                                       context
                                           .pushNamed(RouteNames.createCloset);
                                     },

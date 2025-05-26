@@ -9,9 +9,28 @@ import 'package:go_router/go_router.dart';
 import '../../../common/widgets/app_bar.dart';
 import '../../controller/wishlist_controller.dart';
 
-class CreateClosetScreen extends StatelessWidget {
+class CreateClosetScreen extends StatefulWidget {
   final bool isBottomSheet;
   const CreateClosetScreen({super.key, this.isBottomSheet = false});
+
+  @override
+  State<CreateClosetScreen> createState() => _CreateClosetScreenState();
+}
+
+class _CreateClosetScreenState extends State<CreateClosetScreen> {
+  // Todo : Temporary solution to create closet error on new user login
+  // getUserClosets called here since wishlist controller is initialized in home screen and
+  // sometimes the API is not hit, this is a work around solution but needs to be fixed
+  // in proper manner with more controllers across the wishlist module
+  // The closet screen will still show blank list, just that on opening create closet we are hitting
+  // the getUserClosets to make feature work. Note that this maybe an issue of OBX not forcing the rebuild.
+
+  @override
+  void initState() {
+    super.initState();
+    final wishlistController = Get.find<WishlistController>();
+    wishlistController.getUserClosets();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +41,11 @@ class CreateClosetScreen extends StatelessWidget {
         child: Obx(() {
           return Container(
             color: BackgroundColor.white,
-            height: isBottomSheet ? screenHeight * 1 : null,
+            height: widget.isBottomSheet ? screenHeight * 1 : null,
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  if (isBottomSheet)
+                  if (widget.isBottomSheet)
                     Padding(
                       padding: const EdgeInsets.all(28.0),
                       child: Row(
@@ -62,7 +81,7 @@ class CreateClosetScreen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: PaddingSize.commonPadding,
-                        vertical: isBottomSheet ? 5 : 10),
+                        vertical: widget.isBottomSheet ? 5 : 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -222,7 +241,9 @@ class CreateClosetScreen extends StatelessWidget {
                             type: AuthButtonType.createCloset,
                             onPressed: () async {
                               wishlistController.addItemToCloset(
-                                  closetId: wishlistController.getUserClosetList.first.id.toString(),
+                                  closetId: wishlistController
+                                      .getUserClosetList.first.id
+                                      .toString(),
                                   imageUrl: wishlistController.selectedImage(),
                                   name:
                                       wishlistController.closetController.text);

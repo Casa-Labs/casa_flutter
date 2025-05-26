@@ -159,7 +159,7 @@ class WishlistController extends GetxController {
         addBoardRequestModel: addBoardRequestModel);
     logg.d("get Data ====> $response");
     showToast(
-      message: "Closet creted successfully!!",
+      message: "Closet created successfully",
     );
     getUserClosets();
   }
@@ -174,7 +174,7 @@ class WishlistController extends GetxController {
     var response = await _wishlistService.saveItemToCloset(
         saveItemToClosetRequestModel: saveItemToClosetRequestModel);
     showToast(
-      message: "Item added to wishlist!!",
+      message: "Item added to wishlist",
     );
     logg.d("get Data save item ====> $response");
     getUserClosets();
@@ -191,7 +191,7 @@ class WishlistController extends GetxController {
     if (response != null &&
         response.removeItemFromCloset != null &&
         response.removeItemFromCloset!) {
-      showToast(message: "Closet deleted successfully!!");
+      showToast(message: "Closet deleted successfully");
     }
     logg.d("get Delete save item ====> $response");
   }
@@ -221,7 +221,7 @@ class WishlistController extends GetxController {
         response.removeItemFromClothingItem! &&
         !isMultiple) {
       getSavedItemsToCloset(clothingItemId: wishItemList[0].clothingItem!.id!);
-      showToast(message: "Item removed from wishlist!!");
+      showToast(message: "Item removed from wishlist");
     }
     logg.d("get Delete save item ====> $response");
   }
@@ -253,39 +253,5 @@ class WishlistController extends GetxController {
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3IoMJuoE1LC9-Ado1qPjVitRXmLkAFhV-gA&s',
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxgVcve4HzfyMm88qW1pZMuxry1tg81PE2-A&s',
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-uWsMJev5y2_S1EpvpFSDed5oJwcPpBwbrA&s',
-  ];
-
-  final List<ProductModelFilter> brandFilter = [
-    ProductModelFilter(leading: '', title: 'Zara'),
-    ProductModelFilter(leading: '', title: 'H&M'),
-    ProductModelFilter(leading: '', title: 'Gap'),
-    ProductModelFilter(leading: '', title: 'CASA'),
-    ProductModelFilter(leading: '', title: 'Tommy hilfiger')
-  ];
-
-  final List<ProductModelFilter> productFilter = [
-    ProductModelFilter(leading: '', title: 'Topwear'),
-    ProductModelFilter(leading: '', title: 'Shirt'),
-    ProductModelFilter(leading: '', title: 'Sweatshirt'),
-    ProductModelFilter(leading: '', title: 'T- shirt'),
-    ProductModelFilter(leading: '', title: 'Hoodie')
-  ];
-
-  final List<ProductModelFilter> colorFilter = [
-    ProductModelFilter(leading: '', title: 'Black'),
-    ProductModelFilter(leading: '', title: 'Brown'),
-    ProductModelFilter(leading: '', title: 'Green'),
-    ProductModelFilter(leading: '', title: 'Denim'),
-    ProductModelFilter(leading: '', title: 'Zebra print')
-  ];
-
-  final List<ProductModelFilter> sizedFilter = [
-    ProductModelFilter(leading: '', title: 'XXS'),
-    ProductModelFilter(leading: '', title: 'XS'),
-    ProductModelFilter(leading: '', title: 'S'),
-    ProductModelFilter(leading: '', title: 'M'),
-    ProductModelFilter(leading: '', title: 'L'),
-    ProductModelFilter(leading: '', title: 'XL'),
-    ProductModelFilter(leading: '', title: 'XXL')
   ];
 }
