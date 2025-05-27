@@ -1,4 +1,5 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
+import 'package:casaflutter/src/home/controller/filter_controller.dart';
 import 'package:casaflutter/src/home/controller/home_controller.dart';
 import 'package:casaflutter/src/home/view/widgets/card.dart';
 import 'package:casaflutter/src/home/view/widgets/filter_button_row.dart';
@@ -23,6 +24,7 @@ class HomeScreen extends StatelessWidget {
   final cartController = Get.put(CartController());
   final orderReviewController = Get.put(OrderReviewController());
   final wishController = Get.put(WishlistController());
+  final filterController = Get.put(FilterController());
 
   @override
   Widget build(BuildContext context) {
@@ -39,73 +41,65 @@ class HomeScreen extends StatelessWidget {
                   FilterButtonRow(
                     onFilterSettingsPressed: () {
                       showDialog(
-                          context: context,
-                          builder: (context) => ResetDialog(
-                                onYesPressed: () {
-                                  homeCtrl.fetchProducts({}, reset: true);
-                                  context.pop();
-                                },
-                                onCancelPressed: () {
-                                  context.pop();
-                                },
-                              ));
+                        context: context,
+                        builder: (context) => ResetDialog(
+                          onYesPressed: () {
+                            filterController.filters.clear();
+                            homeCtrl.fetchProducts({}, reset: true);
+                            context.pop();
+                          },
+                          onCancelPressed: () {
+                            context.pop();
+                          },
+                        ),
+                      );
                     },
                     filters: [
                       FilterButtonModel(
                         title: 'Brand',
                         list: homeCtrl.brand.map((item) => item.name!).toList(),
-                        onClear: (values) {
-                          logg.d("Brand selection cleared");
-                          homeCtrl.filters["storeIds"] = null;
-                          homeCtrl.fetchProducts(homeCtrl.getCleanFilters(),
+                        getSelectedValues: () {
+                          return homeCtrl.brand
+                              .where((e) => filterController
+                                  .getFilter("storeIds")
+                                  .contains(e.id))
+                              .map((e) => e.name!)
+                              .toList();
+                        },
+                        onClear: (_) {
+                          filterController.clearFilter("storeIds");
+                          homeCtrl.fetchProducts(
+                              filterController.getCleanFilters(),
                               reset: true);
                         },
                         onDone: (selectedNames) {
                           final brandIds = homeCtrl.brand
                               .where((e) => selectedNames.contains(e.name))
-                              .map((e) => e.id)
-                              .whereType<String>()
+                              .map((e) => e.id!)
                               .toList();
 
-                          logg.d("Selected brand IDs: $brandIds");
-
-                          if (brandIds.isNotEmpty) {
-                            homeCtrl.filters["storeIds"] = brandIds;
-                            homeCtrl.fetchProducts(homeCtrl.getCleanFilters(),
-                                reset: true);
-                          }
+                          filterController.updateFilter("storeIds", brandIds);
+                          homeCtrl.fetchProducts(
+                              filterController.getCleanFilters(),
+                              reset: true);
                         },
                       ),
-                      // FilterButtonModel(
-                      //   title: 'Product',
-                      //   list: homeCtrl.category
-                      //       .map((item) => item.name!)
-                      //       .toList(),
-                      //   onClear: (values) {
-                      //     logg.i("Category selection cleared");
-                      //     homeCtrl.filters["category"] = null;
-                      //     homeCtrl.fetchProducts(homeCtrl.getCleanFilters());
-                      //   },
-                      //   onDone: (selectedName) {
-                      //     final categoryId = homeCtrl.category
-                      //         .firstWhereOrNull((e) => e.name == selectedName)
-                      //         ?.id;
-                      //     logg.i("Selected category ID: $categoryId");
-                      //
-                      //     if (categoryId != null) {
-                      //       homeCtrl.filters["category"] = categoryId;
-                      //       homeCtrl.fetchProducts(homeCtrl.getCleanFilters());
-                      //     }
-                      //   },
-                      // ),
                       FilterButtonModel(
                         title: 'Colors',
                         list:
                             homeCtrl.colors.map((item) => item.name!).toList(),
-                        onClear: (values) {
-                          logg.d("Color selection cleared");
-                          homeCtrl.filters["productColor"] = null;
-                          homeCtrl.fetchProducts(homeCtrl.getCleanFilters(),
+                        getSelectedValues: () {
+                          return homeCtrl.colors
+                              .where((e) => filterController
+                                  .getFilter("productColor")
+                                  .contains(e.id))
+                              .map((e) => e.name!)
+                              .toList();
+                        },
+                        onClear: (_) {
+                          filterController.clearFilter("productColor");
+                          homeCtrl.fetchProducts(
+                              filterController.getCleanFilters(),
                               reset: true);
                         },
                         onDone: (selectedNames) {
@@ -114,24 +108,28 @@ class HomeScreen extends StatelessWidget {
                               .map((e) => e.id)
                               .whereType<String>()
                               .toList();
-
-                          logg.d("Selected color IDs: $colorIds");
-
-                          if (colorIds.isNotEmpty) {
-                            homeCtrl.filters["productColor"] = colorIds;
-                            homeCtrl.fetchProducts(homeCtrl.getCleanFilters(),
-                                reset: true);
-                          }
+                          filterController.updateFilter(
+                              "productColor", colorIds);
+                          homeCtrl.fetchProducts(
+                              filterController.getCleanFilters(),
+                              reset: true);
                         },
                       ),
-
                       FilterButtonModel(
                         title: 'Size',
                         list: homeCtrl.size.map((item) => item.name!).toList(),
-                        onClear: (values) {
-                          logg.d("Size selection cleared");
-                          homeCtrl.filters["productSize"] = null;
-                          homeCtrl.fetchProducts(homeCtrl.getCleanFilters(),
+                        getSelectedValues: () {
+                          return homeCtrl.size
+                              .where((e) => filterController
+                                  .getFilter("productSize")
+                                  .contains(e.id))
+                              .map((e) => e.name!)
+                              .toList();
+                        },
+                        onClear: (_) {
+                          filterController.clearFilter("productSize");
+                          homeCtrl.fetchProducts(
+                              filterController.getCleanFilters(),
                               reset: true);
                         },
                         onDone: (selectedNames) {
@@ -140,18 +138,108 @@ class HomeScreen extends StatelessWidget {
                               .map((e) => e.id)
                               .whereType<String>()
                               .toList();
-
-                          logg.d("Selected size IDs: $sizeIds");
-
-                          if (sizeIds.isNotEmpty) {
-                            homeCtrl.filters["productSize"] = sizeIds;
-                            homeCtrl.fetchProducts(homeCtrl.getCleanFilters(),
-                                reset: true);
-                          }
+                          filterController.updateFilter("productSize", sizeIds);
+                          homeCtrl.fetchProducts(
+                              filterController.getCleanFilters(),
+                              reset: true);
                         },
                       ),
                     ],
                   ),
+
+                  // FilterButtonRow(
+                  //   onFilterSettingsPressed: () {
+                  //     showDialog(
+                  //         context: context,
+                  //         builder: (context) => ResetDialog(
+                  //               onYesPressed: () {
+                  //                 homeCtrl.fetchProducts({}, reset: true);
+                  //                 context.pop();
+                  //               },
+                  //               onCancelPressed: () {
+                  //                 context.pop();
+                  //               },
+                  //             ));
+                  //   },
+                  //   filters: [
+                  //     FilterButtonModel(
+                  //       title: 'Brand',
+                  //       list: homeCtrl.brand.map((item) => item.name!).toList(),
+                  //       onClear: (values) {
+                  //         logg.d("Brand selection cleared");
+                  //         homeCtrl.filters["storeIds"] = null;
+                  //         homeCtrl.fetchProducts(homeCtrl.getCleanFilters(),
+                  //             reset: true);
+                  //       },
+                  //       onDone: (selectedNames) {
+                  //         final brandIds = homeCtrl.brand
+                  //             .where((e) => selectedNames.contains(e.name))
+                  //             .map((e) => e.id)
+                  //             .whereType<String>()
+                  //             .toList();
+                  //
+                  //         logg.d("Selected brand IDs: $brandIds");
+                  //
+                  //         if (brandIds.isNotEmpty) {
+                  //           homeCtrl.filters["storeIds"] = brandIds;
+                  //           homeCtrl.fetchProducts(homeCtrl.getCleanFilters(),
+                  //               reset: true);
+                  //         }
+                  //       },
+                  //     ),
+                  //     FilterButtonModel(
+                  //       title: 'Colors',
+                  //       list:
+                  //           homeCtrl.colors.map((item) => item.name!).toList(),
+                  //       onClear: (values) {
+                  //         logg.d("Color selection cleared");
+                  //         homeCtrl.filters["productColor"] = null;
+                  //         homeCtrl.fetchProducts(homeCtrl.getCleanFilters(),
+                  //             reset: true);
+                  //       },
+                  //       onDone: (selectedNames) {
+                  //         final colorIds = homeCtrl.colors
+                  //             .where((e) => selectedNames.contains(e.name))
+                  //             .map((e) => e.id)
+                  //             .whereType<String>()
+                  //             .toList();
+                  //
+                  //         logg.d("Selected color IDs: $colorIds");
+                  //
+                  //         if (colorIds.isNotEmpty) {
+                  //           homeCtrl.filters["productColor"] = colorIds;
+                  //           homeCtrl.fetchProducts(homeCtrl.getCleanFilters(),
+                  //               reset: true);
+                  //         }
+                  //       },
+                  //     ),
+                  //     FilterButtonModel(
+                  //       title: 'Size',
+                  //       list: homeCtrl.size.map((item) => item.name!).toList(),
+                  //       onClear: (values) {
+                  //         logg.d("Size selection cleared");
+                  //         homeCtrl.filters["productSize"] = null;
+                  //         homeCtrl.fetchProducts(homeCtrl.getCleanFilters(),
+                  //             reset: true);
+                  //       },
+                  //       onDone: (selectedNames) {
+                  //         final sizeIds = homeCtrl.size
+                  //             .where((e) => selectedNames.contains(e.name))
+                  //             .map((e) => e.id)
+                  //             .whereType<String>()
+                  //             .toList();
+                  //
+                  //         logg.d("Selected size IDs: $sizeIds");
+                  //
+                  //         if (sizeIds.isNotEmpty) {
+                  //           homeCtrl.filters["productSize"] = sizeIds;
+                  //           homeCtrl.fetchProducts(homeCtrl.getCleanFilters(),
+                  //               reset: true);
+                  //         }
+                  //       },
+                  //     ),
+                  //   ],
+                  // ),
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
@@ -218,3 +306,26 @@ class HomeScreen extends StatelessWidget {
     });
   }
 }
+
+// FilterButtonModel(
+//   title: 'Product',
+//   list: homeCtrl.category
+//       .map((item) => item.name!)
+//       .toList(),
+//   onClear: (values) {
+//     logg.i("Category selection cleared");
+//     homeCtrl.filters["category"] = null;
+//     homeCtrl.fetchProducts(homeCtrl.getCleanFilters());
+//   },
+//   onDone: (selectedName) {
+//     final categoryId = homeCtrl.category
+//         .firstWhereOrNull((e) => e.name == selectedName)
+//         ?.id;
+//     logg.i("Selected category ID: $categoryId");
+//
+//     if (categoryId != null) {
+//       homeCtrl.filters["category"] = categoryId;
+//       homeCtrl.fetchProducts(homeCtrl.getCleanFilters());
+//     }
+//   },
+// ),

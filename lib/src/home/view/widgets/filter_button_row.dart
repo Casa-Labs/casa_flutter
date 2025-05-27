@@ -18,13 +18,13 @@ class FilterButtonRow extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 5),
             child: IconButton(
               icon: const Icon(Icons.tune_rounded),
-              iconSize: 27,
+              iconSize: 29,
               color: IconColor.black,
               style: IconButton.styleFrom(
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -39,30 +39,26 @@ class FilterButtonRow extends StatelessWidget {
             (filter) => Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: FilterChipButton(
-                text: (filter.selectedValues != null &&
-                        filter.selectedValues!.isNotEmpty)
-                    ? "${filter.title}: ${filter.selectedValues!.join(', ')}"
-                    : filter.title,
+                text: filter.title,
+                isSelected: (filter.getSelectedValues != null &&
+                    filter.getSelectedValues!().isNotEmpty),
                 onPressed: () async {
                   final selectedValues = await showDialog<List<String>>(
                     context: context,
                     builder: (context) => FilterSelectionDialog(
                       showTabs: false,
                       categories: filter.list,
-                      initiallySelected: filter.selectedValues ?? [],
+                      initiallySelected: filter.getSelectedValues?.call() ?? [],
                       onClear: (values) {
-                        filter.selectedValues = [];
                         filter.onClear?.call(values);
                       },
                       onDone: (values) {
-                        filter.selectedValues = values;
                         filter.onDone?.call(values);
                       },
                     ),
                   );
 
                   if (selectedValues != null) {
-                    filter.selectedValues = selectedValues;
                     filter.onDone?.call(selectedValues);
                   }
                 },
@@ -80,13 +76,13 @@ class FilterButtonModel {
   final List<String> list;
   final void Function(List<String>)? onClear;
   final void Function(List<String>)? onDone;
-  List<String>? selectedValues;
+  final List<String> Function()? getSelectedValues;
 
   FilterButtonModel({
     required this.title,
     required this.list,
     this.onClear,
     this.onDone,
-    this.selectedValues,
+    this.getSelectedValues,
   });
 }
