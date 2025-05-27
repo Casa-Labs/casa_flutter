@@ -3,8 +3,10 @@ import 'package:casaflutter/src/auth/model/service/auth_service.dart';
 import 'package:casaflutter/utils/extensions.dart';
 import 'package:casaflutter/utils/preference_manager.dart';
 import 'package:casaflutter/utils/validators.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uuid/uuid.dart';
 
 class SignUpController extends GetxController {
   // ========= OBJECTS ============= //
@@ -133,11 +135,14 @@ class SignUpController extends GetxController {
   }
 
   Future<void> registerUserCall() async {
+    // TODO : Uuid will remove after implement live deviceID
+    var deviceId = const Uuid().v4();
+
     isRegistrationInProgress(true);
     LoginRequestModel loginRequestModel = LoginRequestModel(
       username: registeredEmail.text,
       password: registeredPassword.text,
-      deviceID: '1234', /// devise id should be change
+      deviceID: deviceId,
     );
 
     final registerUserResponse = await _authService.registerUser(
