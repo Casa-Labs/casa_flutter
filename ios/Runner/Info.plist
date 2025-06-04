@@ -64,5 +64,9 @@
 	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
     <false/>
+    <key>UIDeviceFamily</key>
+    <array>
+        <integer>1</integer> <!-- iPhone only -->
+    </array>
 </dict>
 </plist>
