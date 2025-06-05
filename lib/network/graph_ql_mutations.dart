@@ -122,8 +122,8 @@ class GraphQLMutations {
 """;
 
   static const String singleSignOnMutation = """
-  mutation SingleSignOn(\$email: String!, \$provider: AuthProvider!, \$providerId: String!, \$name: String!, \$image: String!) {
-  SingleSignOn(email: \$email, provider: \$provider, providerId: \$providerId, name: \$name, image: \$image) {
+  mutation SingleSignOn(\$email: String!, \$provider: AuthProvider!, \$providerId: String!, \$name: String!, ) {
+  SingleSignOn(email: \$email, provider: \$provider, providerId: \$providerId, name: \$name,) {
    token
     user {
       email
