@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "437823381958-d1o5gv8ftbaqbpt6nmkb7pd0j7h66cba.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.casashop.casaflutterapp",
+            "certificate_hash": "ff09e51b245ee04498358966806ac19ef576a110"
+          }
+        },
+        {
           "client_id": "437823381958-hjh22it225f6cgf6sbhvneue6eq58605.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -47,10 +55,10 @@
               "client_type": 3
             },
             {
-              "client_id": "437823381958-reteljblu0n4dajtman6idgq234acj03.apps.googleusercontent.com",
+              "client_id": "437823381958-8d0nav8eq4jin2akeda8odgctl0lvotj.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.casashop.casaflutter"
+                "bundle_id": "com.casashop.casaflutterapp"
               }
             }
           ]

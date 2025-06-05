@@ -84,16 +84,11 @@ class SignInScreen extends StatelessWidget {
                               );
                               if (authController.isLoggedIn()) {
                                 if (authController.isRegistered()) {
-                                  if (PreferenceManager.getBool(
-                                          PreferenceManager.isFirstTime) ??
-                                      true) {
-                                    router.goNamed(RouteNames.navigation,
-                                        extra: true);
-                                    await PreferenceManager.setData(
-                                        PreferenceManager.isFirstTime, false);
+                                  if (PreferenceManager.getBool(PreferenceManager.isFirstTime) ?? true) {
+                                    router.goNamed(RouteNames.navigation, extra: true);
+                                    await PreferenceManager.setData(PreferenceManager.isFirstTime, false);
                                   } else {
-                                    router.goNamed(RouteNames.navigation,
-                                        extra: false);
+                                    router.goNamed(RouteNames.navigation, extra: false);
                                   }
                                 } else {
                                   router.goNamed(RouteNames.personalDetails);
@@ -182,7 +177,7 @@ class SignInScreen extends StatelessWidget {
                                 }
                                 // else navigate to Add Preferences Screen
                                 else {
-                                  router.pushNamed(RouteNames.personalDetails);
+                                  router.pushNamed(RouteNames.navigation);
                                 }
                               }
                             },

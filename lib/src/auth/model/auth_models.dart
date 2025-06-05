@@ -12,14 +12,14 @@ class LoginRequestModel {
   });
 }
 
-class GoogleLoginRequestModel {
+class SocialLoginRequestModel {
   String email;
   String provider;
   String providerId;
   String name;
   String image;
 
-  GoogleLoginRequestModel({
+  SocialLoginRequestModel({
     required this.email,
     required this.provider,
     required this.providerId,
@@ -152,14 +152,14 @@ class RegisterUserResponseModel {
   }
 }
 
-class GoogleLoginResponse {
+class SocialLoginResponse {
   SingleSignOn? singleSignOn;
 
-  GoogleLoginResponse({
+  SocialLoginResponse({
     this.singleSignOn,
   });
 
-  GoogleLoginResponse.fromJson(Map<String, dynamic> json) {
+  SocialLoginResponse.fromJson(Map<String, dynamic> json) {
     singleSignOn = json['SingleSignOn'] != null
         ? SingleSignOn.fromJson(json['SingleSignOn'])
         : null;

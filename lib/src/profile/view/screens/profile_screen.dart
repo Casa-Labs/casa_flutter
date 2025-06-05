@@ -20,8 +20,7 @@ import '../../../common/widgets/share_app_dialog.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
-
-  final homeCtrl = Get.put(ProfileController());
+  final profileCtrl = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +35,9 @@ class ProfileScreen extends StatelessWidget {
                 ? LoginFirstScreen()
                 : GetX(
                     initState: (final _) {
-                      homeCtrl.getLoggedInUserName();
+                      profileCtrl.getLoggedInUserName();
                     },
-                    builder: (final ProfileController homeCtrl) {
+                    builder: (final ProfileController profileCtrl) {
                       return Column(
                         children: [
                           const SizedBox(height: 20),
@@ -49,7 +48,7 @@ class ProfileScreen extends StatelessWidget {
                             radius: 35,
                           ),
                           Text(
-                            homeCtrl.loggedInUser(),
+                            profileCtrl.loggedInUser(),
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           const SizedBox(height: 20),
@@ -106,14 +105,14 @@ class ProfileScreen extends StatelessWidget {
                                     message:
                                         "Are you sure you want to delete your account? This action cannot be undone.",
                                     confirmText: "Delete",
-                                    isLoading: homeCtrl.isUserDeleteProgress,
+                                    isLoading: profileCtrl.isUserDeleteProgress,
                                     onConfirm: () async {
-                                      await homeCtrl.deleteUserCall();
-                                      if (homeCtrl.message.isNotEmpty) {
+                                      await profileCtrl.deleteUserCall();
+                                      if (profileCtrl.message.isNotEmpty) {
                                         showToast(
-                                          message: homeCtrl.message(),
+                                          message: profileCtrl.message(),
                                         );
-                                        if (homeCtrl.isUserDeleted()) {
+                                        if (profileCtrl.isUserDeleted()) {
                                           final authController =
                                               Get.put(AuthController());
                                           await authController.logOutUser();

@@ -30,24 +30,24 @@ class AuthService {
     }
   }
 
-  Future<GoogleLoginResponse?> googleLoginUser({
-    required GoogleLoginRequestModel googleLoginRequestModel,
+  Future<SocialLoginResponse?> socialLoginUser({
+    required SocialLoginRequestModel socialLoginRequestModel,
   }) async {
-    final GoogleLoginResponse googleLoginResponse;
+    final SocialLoginResponse socialLoginResponse;
 
     final response = await _graphQLManager.singleSignOn(
-      email: googleLoginRequestModel.email,
-      provider: googleLoginRequestModel.provider,
-      providerId: googleLoginRequestModel.providerId,
-      name: googleLoginRequestModel.name,
-      image: googleLoginRequestModel.image,
+      email: socialLoginRequestModel.email,
+      provider: socialLoginRequestModel.provider,
+      providerId: socialLoginRequestModel.providerId,
+      name: socialLoginRequestModel.name,
+      image: socialLoginRequestModel.image,
     );
 
-    googleLoginResponse = GoogleLoginResponse.fromJson(
+    socialLoginResponse = SocialLoginResponse.fromJson(
       response.data!,
     );
 
-    return googleLoginResponse;
+    return socialLoginResponse;
   }
 
   Future<RegisterUserResponseModel?> registerUser({

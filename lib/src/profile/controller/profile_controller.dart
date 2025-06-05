@@ -5,17 +5,21 @@ import 'package:casaflutter/src/auth/controller/auth_controller.dart';
 import 'package:casaflutter/src/auth/model/auth_models.dart';
 import 'package:casaflutter/src/auth/model/service/auth_service.dart';
 import 'package:casaflutter/utils/preference_manager.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
+
+import '../../location/model/service/location_service.dart';
 
 class ProfileController extends GetxController {
   // ========= OBJECTS ============= //
   final AuthService _authService = AuthService();
+  final LocationService _locationService = LocationService();
 
   // ========= CONTROLLERS ========= //
 
   // ========= VARIABLES ========= //
-
+  RxBool isLoading = false.obs;
   bool isSelectApple = Platform.isIOS ? true : false;
   bool isSelectPlay = Platform.isAndroid ? true : false;
   RxBool isUserDeleteProgress = false.obs;
@@ -30,8 +34,12 @@ class ProfileController extends GetxController {
 
   @override
   void onReady() {
-    getLoggedInUserName();
     super.onReady();
+    getLoggedInUserName();
+    final token = PreferenceManager.getString(PreferenceManager.token);
+    if (token == null || token.isEmpty) {
+      getUserDetailsCall();
+    }
   }
 
   selectApple() {
@@ -69,6 +77,36 @@ class ProfileController extends GetxController {
   }
 
 // ========== APIs FUNCTIONS ========== //
+
+
+
+
+  Future<void> getUserDetailsCall() async {
+    isLoading(true);
+    // get user details
+    final userDetailsData = PreferenceManager.getString(
+      PreferenceManager.userDetails,
+    );
+    var userDetailsMap = <String, dynamic>{};
+    if (userDetailsData != null) {
+      userDetailsMap = json.decode(userDetailsData.trim());
+    }
+    final userDetails = User.fromJson(userDetailsMap);
+    if (userDetails.id != null) {
+      final getUserResponse = await _locationService.getUser(
+        userId: userDetails.id ?? '',
+      );
+      final user = getUserResponse?.getUser;
+      loggedInUser(user?.name ?? '-');
+      loggedInEmail(user?.email ?? '');
+        isLoading(false);
+      } else {
+        isLoading(false);
+        message('Something went wrong...');
+      }
+
+  }
+
   Future<void> deleteUserCall() async {
     // get user details
     final userDetailsData = PreferenceManager.getString(
@@ -95,4 +133,5 @@ class ProfileController extends GetxController {
       }
     }
   }
+
 }

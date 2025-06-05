@@ -7,6 +7,7 @@ import 'package:casaflutter/utils/validators.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -14,6 +15,7 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../model/auth_models.dart';
 import '../model/service/auth_service.dart';
+const String kAppleStoragePrefix = 'apple_';
 
 class AuthController extends GetxController {
   // ========= OBJECTS ============= //
@@ -181,6 +183,7 @@ class AuthController extends GetxController {
         email = storedData?['email'] ?? 'No email found';
         fullName = storedData?['fullName'] ?? 'No name found';
       }
+
       await socialLoginCall(
         email: email ?? '',
         provider: "APPLE",
@@ -208,7 +211,7 @@ class AuthController extends GetxController {
       isAppleSignInLoading(true);
     }
 
-    GoogleLoginRequestModel googleLoginRequestModel = GoogleLoginRequestModel(
+    SocialLoginRequestModel socialLoginRequestModel = SocialLoginRequestModel(
       email: email,
       providerId: providerId,
       provider: provider,
@@ -216,26 +219,27 @@ class AuthController extends GetxController {
       image: image,
     );
 
-    logg.d('login data --->>> $googleLoginRequestModel');
+    logg.i('login data --->>> ${socialLoginRequestModel.providerId}');
 
-    final googleLoginResponse = await _authService.googleLoginUser(
-        googleLoginRequestModel: googleLoginRequestModel);
 
-    if (googleLoginResponse?.singleSignOn != null) {
+    final socialLoginResponse = await _authService.socialLoginUser(
+        socialLoginRequestModel: socialLoginRequestModel);
+
+    if (socialLoginResponse?.singleSignOn != null) {
       // Set token to storage
       await PreferenceManager.setData(
         PreferenceManager.token,
-        googleLoginResponse?.singleSignOn?.token,
+        socialLoginResponse?.singleSignOn?.token,
       );
       // Set user details
       await PreferenceManager.setData(
         PreferenceManager.userDetails,
-        googleLoginResponse?.singleSignOn?.user?.toJsonString(),
+        socialLoginResponse?.singleSignOn?.user?.toJsonString(),
       );
       // Set only user ID
       await PreferenceManager.setData(
         PreferenceManager.userId,
-        googleLoginResponse?.singleSignOn?.user?.id.toString(),
+        socialLoginResponse?.singleSignOn?.user?.id.toString(),
       );
 
       if (provider == 'GOOGLE') {
@@ -247,7 +251,7 @@ class AuthController extends GetxController {
       }
 
       message('User logged in successfully');
-      if (googleLoginResponse?.singleSignOn?.user?.isRegistered ?? false) {
+      if (socialLoginResponse?.singleSignOn?.user?.isRegistered ?? false) {
         isRegistered(true);
       } else {
         isRegistered(false);
@@ -308,12 +312,14 @@ class AuthController extends GetxController {
 }
 
 Future<void> saveUserData(String userId, String email, String? fullName) async {
-  // Save to local storage or backend
   final box = GetStorage();
-  box.write(userId, {'email': email, 'fullName': fullName});
+  box.write('$kAppleStoragePrefix$userId', {
+    'email': email,
+    'fullName': fullName ?? '',
+  });
 }
 
 Future<Map<String, dynamic>?> getStoredUserData(String userId) async {
   final box = GetStorage();
-  return box.read(userId);
+  return box.read('$kAppleStoragePrefix$userId');
 }
