@@ -20,6 +20,7 @@ class HomeSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       leadingWidth: 0,
       titleSpacing: 0,
+      leading: SizedBox(),
       title: Row(
         children: [
           SizedBox(width: 5),
@@ -37,7 +38,7 @@ class HomeSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
                   children: [
                     Text(
                       'CASA',
-                      style: Theme.of(context).textTheme.headlineMedium,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ],
                 ),
