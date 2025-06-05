@@ -37,6 +37,7 @@ class AuthController extends GetxController {
   RxBool isGoogleLoggedIn = false.obs;
   RxBool isAppleLoggedIn = false.obs;
   RxBool isRegistered = false.obs;
+  RxBool isSocialError = false.obs;
 
   RxString message = ''.obs;
 
@@ -152,7 +153,9 @@ class AuthController extends GetxController {
         message("Google Sign-In failed");
       }
     } catch (e) {
-      message("Google Sign-In error: ${e.toString()}");
+      isSocialError(true);
+      message("Google Sign-In error");
+      logg.e(e.toString());
     }
   }
 
@@ -193,7 +196,9 @@ class AuthController extends GetxController {
       );
       message("Apple Sign-In successful");
     } catch (e) {
-      message("Apple Sign-In failed: ${e.toString()}");
+      isSocialError(true);
+      message("Apple Sign-In failed");
+      logg.e(e.toString());
     }
   }
 

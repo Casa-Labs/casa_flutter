@@ -141,8 +141,9 @@ class SignInScreen extends StatelessWidget {
                             }
                           }
                           // else navigate to Add Preferences Screen
-                          else {
-                            router.pushNamed(RouteNames.personalDetails);
+                          else if(!authController.isSocialError()){
+                            // because of apple and google requirement, skipping personal detail screen
+                            router.pushNamed(RouteNames.stylePreferences);
                           }
                         }
                       },
@@ -176,8 +177,9 @@ class SignInScreen extends StatelessWidget {
                                   }
                                 }
                                 // else navigate to Add Preferences Screen
-                                else {
-                                  router.pushNamed(RouteNames.navigation);
+                                else if(!authController.isSocialError()){
+                                  // because of apple and google requirement, skipping personal detail screen
+                                  router.pushNamed(RouteNames.stylePreferences);
                                 }
                               }
                             },
