@@ -55,11 +55,11 @@ class Cards extends StatelessWidget {
                           Align(
                             alignment: Alignment.center,
                             child: SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.80,
+                              height: MediaQuery.of(context).size.height * 0.76,
                               width: MediaQuery.of(context).size.width,
                               child: ClipRRect(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(18)),
+                                    BorderRadius.all(Radius.circular(22)),
                                 child: CachedNetworkImage(
                                     imageUrl: product.mainImage ??
                                         ImageConstants.dummyNetworkPortrait,
@@ -107,19 +107,19 @@ class Cards extends StatelessWidget {
                             right: 0,
                             child: ClipRRect(
                               borderRadius: const BorderRadius.only(
-                                bottomLeft: Radius.circular(20),
-                                bottomRight: Radius.circular(20),
+                                bottomLeft: Radius.circular(22),
+                                bottomRight: Radius.circular(22),
                               ),
                               child: Container(
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: 7, vertical: 10),
+                                    horizontal: 7, vertical: 6),
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
                                       BackgroundColor.black
-                                          .withValues(alpha: 0.03),
+                                          .withValues(alpha: 0),
                                       BackgroundColor.black
-                                          .withValues(alpha: 0.3),
+                                          .withValues(alpha: 0.2),
                                       BackgroundColor.black
                                           .withValues(alpha: 0.5),
                                     ],

@@ -16,7 +16,7 @@ class CartController extends GetxController {
 
   // ========= VARIABLES ========= //
   RxList<CartItem> cartList = <CartItem>[].obs;
-  final userID = PreferenceManager.getString(PreferenceManager.userId);
+  String userID = "";
   GetCartResponseModel getCartResponseModel = GetCartResponseModel();
   final manager = GraphQLManager();
   RxString message = ''.obs;
@@ -75,9 +75,9 @@ class CartController extends GetxController {
     };
 
     logg.d(item);
-
+userID = PreferenceManager.getString(PreferenceManager.userId) ?? "";
     AddCartRequestModel addCartRequestModel = AddCartRequestModel(
-      userId: userID!,
+      userId: userID,
       item: item,
     );
     try {
@@ -102,8 +102,9 @@ class CartController extends GetxController {
   // fetch data for cart //
 
   Future<void> getCartItems() async {
+    userID = PreferenceManager.getString(PreferenceManager.userId) ?? "";
     GetcartRequestModel getCartRequestModel = GetcartRequestModel(
-      userId: userID!,
+      userId: userID,
     );
     try {
       isLoading = true;
@@ -126,8 +127,9 @@ class CartController extends GetxController {
   }
 
   Future<void> removeItemFromCart(String productId) async {
+    userID = PreferenceManager.getString(PreferenceManager.userId) ?? "";
     RemoveCartRequestModel removeCartRequestModel = RemoveCartRequestModel(
-      userId: userID!,
+      userId: userID ,
       productId: productId,
     );
     try {
@@ -146,8 +148,9 @@ class CartController extends GetxController {
   }
 
   Future<void> updateCartItem(String productId, int quantity) async {
+    userID = PreferenceManager.getString(PreferenceManager.userId) ?? "";
     UpdateCartRequestModel updateCartRequestModel = UpdateCartRequestModel(
-      userId: userID!,
+      userId: userID,
       productId: productId,
       quantity: quantity,
     );
