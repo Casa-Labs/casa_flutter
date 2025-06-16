@@ -7,7 +7,6 @@ import 'package:casaflutter/utils/validators.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -15,6 +14,7 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../model/auth_models.dart';
 import '../model/service/auth_service.dart';
+
 const String kAppleStoragePrefix = 'apple_';
 
 class AuthController extends GetxController {
@@ -126,6 +126,7 @@ class AuthController extends GetxController {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       if (googleUser == null) {
+        isSocialError(true);
         message("Google Sign-In cancelled");
         return;
       }
@@ -225,7 +226,6 @@ class AuthController extends GetxController {
     );
 
     logg.i('login data --->>> ${socialLoginRequestModel.providerId}');
-
 
     final socialLoginResponse = await _authService.socialLoginUser(
         socialLoginRequestModel: socialLoginRequestModel);
