@@ -136,11 +136,10 @@ final GoRouter router = GoRouter(
   errorBuilder: (context, state) {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        if ((PreferenceManager.getBool(PreferenceManager.isCompletedTutorial) ??
-            false)) {
-          router.goNamed(RouteNames.navigation, extra: true);
-        } else {
+        if ((PreferenceManager.getBool(PreferenceManager.isCompletedTutorial) ?? false)) {
           router.goNamed(RouteNames.navigation, extra: false);
+        } else {
+          router.goNamed(RouteNames.navigation, extra: true);
         }
       },
     );

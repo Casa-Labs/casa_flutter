@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/string_constant.dart';
@@ -70,8 +71,11 @@ class ExploreScreen extends StatelessWidget {
 
                               exploreCtrl.selectedIndex.value = 0;
                               exploreCtrl.clothesYouMightLike.clear();
+                              await exploreCtrl.getTrendingNowProductsCall("MA");
+                              await exploreCtrl.getNewArrivalProductsCall("MA");
                               await exploreCtrl.getProductsCall(
                                   isInitialLoad: true);
+
                             },
                           ),
                         ),
@@ -96,8 +100,11 @@ class ExploreScreen extends StatelessWidget {
                             onPressed: () async {
                               if (exploreCtrl.selectedIndex.value == 1) return;
                               exploreCtrl.selectedIndex.value = 1;
+                              await exploreCtrl.getTrendingNowProductsCall("FE");
+                              await exploreCtrl.getNewArrivalProductsCall("FE");
                               await exploreCtrl.getProductsCall(
                                   isInitialLoad: true);
+
                             },
                           ),
                         ),
@@ -205,19 +212,36 @@ class ExploreSection extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    height: 135,
-                                    width: 100,
-                                    margin: EdgeInsets.only(right: 20),
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: CachedNetworkImageProvider(
-                                              trendingProduct.mainImage ??
-                                                  ImageConstants
-                                                      .dummyNetworkPortrait),
-                                          fit: BoxFit.cover,
-                                          alignment: Alignment.center),
-                                      borderRadius: BorderRadius.circular(15),
+                                  Expanded(
+                                    child: CachedNetworkImage(
+                                      imageUrl: trendingProduct.mainImage ?? '',
+                                      imageBuilder: (context, imageProvider) {
+                                        return Container(
+                                          height: 135,
+                                          width: 100,
+                                          margin: EdgeInsets.only(right: 20),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(15),
+                                            image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      placeholder: (context, url) => Shimmer.fromColors(
+                                        baseColor: Colors.white.withValues(alpha: 0.5),
+                                        highlightColor: Colors.black.withValues(alpha: 0.5),
+                                        child: Container(
+                                          height: 135,
+                                          width: 100,
+                                          margin: EdgeInsets.only(right: 20),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(15),
+                                          ),
+                                        ),
+                                      )
                                     ),
                                   ),
                                   SizedBox(height: 10),
@@ -277,17 +301,36 @@ class ExploreSection extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    height: 210,
-                                    width: 100,
-                                    margin: EdgeInsets.only(right: 20),
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: CachedNetworkImageProvider(
-                                              newArrivalProduct.mainImage ??
-                                                  ''),
-                                          fit: BoxFit.cover),
-                                      borderRadius: BorderRadius.circular(15),
+                                  Expanded(
+                                    child: CachedNetworkImage(
+                                      imageUrl: newArrivalProduct.mainImage ?? '',
+                                      imageBuilder: (context, imageProvider) {
+                                        return Container(
+                                          height: 210,
+                                          width: 100,
+                                          margin: EdgeInsets.only(right: 20),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(15),
+                                            image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      placeholder: (context, url) => Shimmer.fromColors(
+                                        baseColor: Colors.white.withValues(alpha: 0.5),
+                                        highlightColor: Colors.black.withValues(alpha: 0.5),
+                                        child: Container(
+                                          height: 210,
+                                          width: 100,
+                                          margin: EdgeInsets.only(right: 20),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(15),
+                                          ),
+                                        ),
+                                      )
                                     ),
                                   ),
                                 ],
@@ -327,18 +370,36 @@ class ExploreSection extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    height: 210,
-                                    width: 100,
-                                    margin: EdgeInsets.only(right: 20),
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: CachedNetworkImageProvider(
-                                              product?.mainImage ??
-                                                  ImageConstants
-                                                      .dummyNetworkPortrait),
-                                          fit: BoxFit.cover),
-                                      borderRadius: BorderRadius.circular(15),
+                                  Expanded(
+                                    child: CachedNetworkImage(
+                                      imageUrl: product?.mainImage ?? '',
+                                      imageBuilder: (context, imageProvider) {
+                                        return Container(
+                                          height: 210,
+                                          width: 100,
+                                          margin: EdgeInsets.only(right: 20),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(15),
+                                            image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      placeholder: (context, url) => Shimmer.fromColors(
+                                        baseColor: Colors.white.withValues(alpha: 0.5),
+                                        highlightColor: Colors.black.withValues(alpha: 0.5),
+                                        child: Container(
+                                          height: 210,
+                                          width: 100,
+                                          margin: EdgeInsets.only(right: 20),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(15),
+                                          ),
+                                        ),
+                                      )
                                     ),
                                   ),
                                 ],

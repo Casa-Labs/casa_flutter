@@ -76,90 +76,92 @@ class NavPageState extends State<NavPage> {
           ],
         ),
       ),
-      bottomNavigationBar: MediaQuery(
-        data: MediaQuery.of(context).removePadding(removeBottom: true),
-        child: BottomNavigationBar(
-          currentIndex: _selectedIndex,
-          backgroundColor: BottomNavigationColor.white,
-          elevation: 0,
-          fixedColor: BottomNavigationColor.black,
-          onTap: _onItemTapped,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          type: BottomNavigationBarType.fixed,
-          // Handle item tap
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                IconConstants.home,
-                height: 26.0,
-                width: 26.0,
+      bottomNavigationBar: SafeArea(
+        child: MediaQuery(
+          data: MediaQuery.of(context).removePadding(removeBottom: true),
+          child: BottomNavigationBar(
+            currentIndex: _selectedIndex,
+            backgroundColor: BottomNavigationColor.white,
+            elevation: 0,
+            fixedColor: BottomNavigationColor.black,
+            onTap: _onItemTapped,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            type: BottomNavigationBarType.fixed,
+            // Handle item tap
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Image.asset(
+                  IconConstants.home,
+                  height: 26.0,
+                  width: 26.0,
+                ),
+                activeIcon: Image.asset(
+                  IconConstants.homeSelected,
+                  height: 26.0,
+                  width: 26.0,
+                ),
+                label: '',
+                backgroundColor: BottomNavigationColor.white,
               ),
-              activeIcon: Image.asset(
-                IconConstants.homeSelected,
-                height: 26.0,
-                width: 26.0,
+              BottomNavigationBarItem(
+                icon: Image.asset(
+                  IconConstants.search,
+                  height: 32.0,
+                  width: 32.0,
+                ),
+                activeIcon: Image.asset(
+                  IconConstants.searchSelected,
+                  height: 32.0,
+                  width: 32.0,
+                ),
+                label: '',
+                backgroundColor: BottomNavigationColor.white,
               ),
-              label: '',
-              backgroundColor: BottomNavigationColor.white,
-            ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                IconConstants.search,
-                height: 32.0,
-                width: 32.0,
+              BottomNavigationBarItem(
+                icon: Image.asset(
+                  IconConstants.cart,
+                  height: 32.0,
+                  width: 32.0,
+                ),
+                activeIcon: Image.asset(
+                  IconConstants.cartSelected,
+                  height: 32.0,
+                  width: 32.0,
+                ),
+                label: '',
+                backgroundColor: BottomNavigationColor.white,
               ),
-              activeIcon: Image.asset(
-                IconConstants.searchSelected,
-                height: 32.0,
-                width: 32.0,
+              BottomNavigationBarItem(
+                icon: Image.asset(
+                  IconConstants.heart,
+                  height: 32.0,
+                  width: 32.0,
+                ),
+                activeIcon: Image.asset(
+                  IconConstants.heartSelected,
+                  height: 28.0,
+                  width: 28.0,
+                ),
+                label: '',
+                backgroundColor: BottomNavigationColor.white,
               ),
-              label: '',
-              backgroundColor: BottomNavigationColor.white,
-            ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                IconConstants.cart,
-                height: 32.0,
-                width: 32.0,
-              ),
-              activeIcon: Image.asset(
-                IconConstants.cartSelected,
-                height: 32.0,
-                width: 32.0,
-              ),
-              label: '',
-              backgroundColor: BottomNavigationColor.white,
-            ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                IconConstants.heart,
-                height: 32.0,
-                width: 32.0,
-              ),
-              activeIcon: Image.asset(
-                IconConstants.heartSelected,
-                height: 28.0,
-                width: 28.0,
-              ),
-              label: '',
-              backgroundColor: BottomNavigationColor.white,
-            ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                IconConstants.profile,
-                height: 28.0,
-                width: 28.0,
-              ),
-              activeIcon: Image.asset(
-                IconConstants.profileSelected,
-                height: 28.0,
-                width: 28.0,
-              ),
-              label: '',
-              backgroundColor: BottomNavigationColor.white,
-            )
-          ],
+              BottomNavigationBarItem(
+                icon: Image.asset(
+                  IconConstants.profile,
+                  height: 28.0,
+                  width: 28.0,
+                ),
+                activeIcon: Image.asset(
+                  IconConstants.profileSelected,
+                  height: 28.0,
+                  width: 28.0,
+                ),
+                label: '',
+                backgroundColor: BottomNavigationColor.white,
+              )
+            ],
+          ),
         ),
       ),
     );

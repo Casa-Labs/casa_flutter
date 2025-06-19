@@ -10,23 +10,9 @@ class DividerTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        // Expanded(
-        //   child: CustomDropDownIcon(
-        //     items: exploreCtrl.brands,
-        //     hintText: 'BRANDS',
-        //     itemLabel: (brand) => brand.name!,
-        //   ),
-        // ),
-        Expanded(flex: 1, child: Divider()),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Text(text, style: Theme.of(context).textTheme.bodyLarge),
-        ),
-        Expanded(flex: 5, child: Divider()),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 15),
+      child: Text(text, style: Theme.of(context).textTheme.bodyLarge),
     );
   }
 }

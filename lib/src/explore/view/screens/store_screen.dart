@@ -1,6 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:casaflutter/routes/app_routes.dart';
 import 'package:casaflutter/src/explore/controller/store_controller.dart';
-import 'package:casaflutter/src/explore/view/widgets/banner_image.dart';
 import 'package:casaflutter/utils/padding_size.dart';
 import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +8,11 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../utils/color_constant.dart';
 import '../../../../utils/preference_manager.dart';
 import '../../../wishlist/controller/wishlist_controller.dart';
 import '../../../wishlist/view/screens/add_to_closet.dart';
+import '../../../wishlist/view/widgets/icons_widget.dart';
 import '../widgets/product_card.dart';
 
 class StoreScreen extends StatelessWidget {
@@ -52,10 +54,50 @@ class StoreScreen extends StatelessWidget {
 
           return Column(
             children: [
-              BannerImage(
-                imageUrl: productList.first.product?.store?.logo ??
-                    ImageConstants.dummyNetworkPortrait,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Expanded(
+                flex: 1,
+                child: Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: IconsWidget(
+                    onTap: () {
+                      context.pop();
+                    },
+                    icon: Icons.arrow_back_ios_new,
+                    backColor: IconColor.white,
+                    iconColor: IconColor.black,
+                  ).paddingOnly(top: 10,left: 10),
+                ),
               ),
+               Expanded(
+                 flex: 2,
+                 child: Align(
+                   alignment: AlignmentDirectional.centerStart,
+                   child: Container(
+                      height: 120,
+                      width: 120,
+                      margin: EdgeInsetsGeometry.only(left: 8,top: 15),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.black),
+                        image: DecorationImage(image: CachedNetworkImageProvider(
+
+                          productList.first.product?.store?.logo ??
+                              ImageConstants.dummyNetworkPortrait,
+                          // height: 130,
+                        ),)
+                      ),
+                    ),
+                 ),
+               ),
+            ],
+          ),
+              SizedBox(height: 10),
+              Text(productList.first.product?.store?.name ?? "", style:
+              Theme.of(context).textTheme.bodyLarge),
               Flexible(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(

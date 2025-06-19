@@ -55,7 +55,7 @@ class Cards extends StatelessWidget {
                           Align(
                             alignment: Alignment.center,
                             child: SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.76,
+                              height: MediaQuery.of(context).size.height * 0.74,
                               width: MediaQuery.of(context).size.width,
                               child: ClipRRect(
                                 borderRadius:

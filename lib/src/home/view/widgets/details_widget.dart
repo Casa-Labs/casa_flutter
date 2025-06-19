@@ -103,7 +103,7 @@ class ProductDetails extends StatelessWidget {
                 onTap: () => logic.changeReturnPolicy(),
                 content: product.customReturnPolicy ?? AppStrings.returnPolicy,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               _buildPolicyTile(
                 title: 'SHIPPING POLICY',
                 isExpanded: logic.isShowShipping,
@@ -111,8 +111,7 @@ class ProductDetails extends StatelessWidget {
                 content:
                     product.customShippingPolicy ?? AppStrings.shippingPolicy,
               ),
-              const SizedBox(height: 20),
-
+              const SizedBox(height: 50),
               // TODO : Need to redo the review section to rely on OBX
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
