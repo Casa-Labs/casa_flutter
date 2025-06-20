@@ -14,9 +14,9 @@ import '../../controller/explore_controller.dart';
 class ExploreService {
   final exploreCtrl = Get.find<ExploreController>();
 
-  Future<void> getTrendingNowProducts({String? search}) async {
+  Future<void> getTrendingNowProducts({String? search,String? gender}) async {
     var response = await GraphQLManager()
-        .getTrendingProducts(exploreCtrl.page(), exploreCtrl.limit(), search);
+        .getTrendingProducts(exploreCtrl.page(), exploreCtrl.limit(), search,gender);
 
     if (!response.hasException && response.data != null) {
       final trendingProductsResponse =
@@ -28,9 +28,9 @@ class ExploreService {
     }
   }
 
-  Future<void> getNewArrivalProducts({String? search}) async {
+  Future<void> getNewArrivalProducts({String? search,String? gender}) async {
     var response = await GraphQLManager().getNewArrivalProductsForExplore(
-        exploreCtrl.page(), exploreCtrl.limit(), search);
+        exploreCtrl.page(), exploreCtrl.limit(), search,gender);
 
     if (!response.hasException && response.data != null) {
       final newArrivalsResponse =

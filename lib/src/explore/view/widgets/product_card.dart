@@ -71,7 +71,7 @@ class ProductCard extends StatelessWidget {
             child: Text(
               name,
               style: Theme.of(context).textTheme.titleMedium,
-              maxLines: 2,
+              maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -81,6 +81,7 @@ class ProductCard extends StatelessWidget {
             child: Text(
               '₹ ${price.toStringAsFixed(2)}',
               style: Theme.of(context).textTheme.titleMedium,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],

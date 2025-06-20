@@ -421,11 +421,11 @@ class GraphQLManager {
   }
 
   Future<QueryResult> getNewArrivalProductsForExplore(
-      int page, int limit, String? search) async {
+      int page, int limit, String? search,String? gender) async {
     return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getNewArrivalProductsForExplore,
       variables:
-          GraphQLVariables.getNewArrivalProductsVariables(page, limit, search),
+          GraphQLVariables.getNewArrivalProductsForExploreVariables(page, limit, search,gender),
     );
   }
 
@@ -513,11 +513,11 @@ class GraphQLManager {
   }
 
   Future<QueryResult> getTrendingProducts(
-      int page, int limit, String? search) async {
+      int page, int limit, String? search,String? gender) async {
     return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getTrendingProducts,
       variables:
-          GraphQLVariables.getTrendingProductsVariables(page, limit, search),
+          GraphQLVariables.getTrendingProductsVariables(page, limit, search,gender),
     );
   }
 

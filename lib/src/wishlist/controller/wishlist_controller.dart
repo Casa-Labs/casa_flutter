@@ -114,7 +114,7 @@ class WishlistController extends GetxController {
 
   Future<void> getUserClosets() async {
     GetClosetRequestModel getClosetRequestModel = GetClosetRequestModel(
-      userId: userID!,
+      userId: userID ?? "",
     );
     try {
       isLoading = true;

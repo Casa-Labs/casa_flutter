@@ -31,6 +31,7 @@ class ExploreController extends GetxController {
       <pcm.GetProductCategories>[].obs;
 
   RxString storeType = 'BRAND'.obs;
+  RxString gender = 'MA'.obs;
   bool isShowReturn = false;
   bool isShowShipping = false;
   // Pagination - temporary calling 100 items
@@ -48,8 +49,8 @@ class ExploreController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    await getTrendingNowProductsCall();
-    await getNewArrivalProductsCall();
+    await getTrendingNowProductsCall(gender.value);
+    await getNewArrivalProductsCall("MA");
     await getBrandsCall();
     await getCategoriesCall();
     await getProductsCall(isInitialLoad: true);
@@ -60,17 +61,17 @@ class ExploreController extends GetxController {
   // ========== APIs FUNCTIONS ========== //
 
   Future<void> onRefresh() async {
-    await getTrendingNowProductsCall();
-    await getNewArrivalProductsCall();
+    await getTrendingNowProductsCall(gender.value);
+    await getNewArrivalProductsCall("MA");
     await getProductsCall(isInitialLoad: true);
   }
 
-  Future<void> getTrendingNowProductsCall() async {
-    await ExploreService().getTrendingNowProducts();
+  Future<void> getTrendingNowProductsCall(String gender) async {
+    await ExploreService().getTrendingNowProducts(gender: gender);
   }
 
-  Future<void> getNewArrivalProductsCall() async {
-    await ExploreService().getNewArrivalProducts();
+  Future<void> getNewArrivalProductsCall(String gender) async {
+    await ExploreService().getNewArrivalProducts(gender: gender);
   }
 
   Future<void> getBrandsCall() async {

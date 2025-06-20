@@ -13,11 +13,10 @@ class BannerImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        SizedBox(
-          width: double.maxFinite,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 10.0),
           child: CachedNetworkImage(
             imageUrl: imageUrl,
-            fit: BoxFit.cover,
             height: 150,
           ),
         ),

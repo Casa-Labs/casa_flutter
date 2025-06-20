@@ -85,6 +85,34 @@ class HomeScreen extends StatelessWidget {
                         },
                       ),
                       FilterButtonModel(
+                        title: 'Product',
+                        list: homeCtrl.category.map((item) => item.name!).toList(),
+                        getSelectedValues: () {
+                          return homeCtrl.category
+                              .where((e) => filterController
+                              .getFilter("categories")
+                              .contains(e.id))
+                              .map((e) => e.name!)
+                              .toList();
+                        },
+                        onClear: (_) {
+                          filterController.clearFilter("categories");
+                          homeCtrl.fetchProducts(
+                              filterController.getCleanFilters(),
+                              reset: true);
+                        },
+                        onDone: (selectedNames) {
+                          final catIds = homeCtrl.category
+                              .where((e) => selectedNames.contains(e.name))
+                              .map((e) => e.id!).toList();
+
+                          filterController.updateFilter("categories", catIds);
+                          homeCtrl.fetchProducts(
+                              filterController.getCleanFilters(),
+                              reset: true);
+                        },
+                      ),
+                      FilterButtonModel(
                         title: 'Colors',
                         list:
                             homeCtrl.colors.map((item) => item.name!).toList(),

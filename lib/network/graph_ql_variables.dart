@@ -366,6 +366,16 @@ class GraphQLVariables {
 
   //QUERIES
 
+  static Map<String, dynamic> getNewArrivalProductsForExploreVariables(
+      int page, int limit, String? search,String? gender) {
+    return {
+      "page": page,
+      "limit": limit,
+      "search": search,
+      "gender" :gender
+    };
+  }
+
   static Map<String, dynamic> getNewArrivalProductsVariables(
       int page, int limit, String? search) {
     return {
@@ -415,11 +425,12 @@ class GraphQLVariables {
   }
 
   static Map<String, dynamic> getTrendingProductsVariables(
-      int page, int limit, String? search) {
+      int page, int limit, String? search,String? gender) {
     return {
       "page": page,
       "limit": limit,
       "search": search,
+      "gender": gender,
     };
   }
 

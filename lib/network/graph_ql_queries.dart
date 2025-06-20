@@ -21,8 +21,8 @@ query GetNewArrivalProducts(\$page: Int!, \$limit: Int!, \$search: String) {
 """;
 
   static const String getNewArrivalProductsForExplore = """
-query GetNewArrivalProducts(\$page: Int!, \$limit: Int!) {
-  getNewArrivalProducts(page: \$page, limit: \$limit) {
+query GetNewArrivalProducts(\$page: Int!, \$limit: Int!,\$gender:Gender) {
+  getNewArrivalProducts(page: \$page, limit: \$limit,gender : \$gender) {
       totalCount
     products {
       mainImage
@@ -369,8 +369,8 @@ query GetProductDetails(\$productId: String!) {
 // """;
 
   static const String getTrendingProducts = """
-query GetTrendingProducts(\$page: Int!, \$limit: Int!) {
-  getTrendingProducts(page: \$page, limit: \$limit) {
+query GetTrendingProducts(\$page: Int!, \$limit: Int!,\$gender:Gender) {
+  getTrendingProducts(page: \$page, limit: \$limit,gender : \$gender) {
     totalCount
     products {
       mainImage
