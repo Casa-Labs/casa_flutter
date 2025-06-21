@@ -125,21 +125,21 @@ class SignInScreen extends StatelessWidget {
                             message: authController.message(),
                           );
                           // if registered then navigate to home screen
-                          if (authController.isRegistered()) {
+                          // if (authController.isRegistered()) {
                             if (authController.isGoogleLoggedIn()) {
                               if (PreferenceManager.getBool(
                                       PreferenceManager.isFirstTime) ??
                                   true) {
-                                router.goNamed(RouteNames.navigation,
-                                    extra: true);
                                 await PreferenceManager.setData(
                                     PreferenceManager.isFirstTime, false);
+                                router.goNamed(RouteNames.navigation,
+                                    extra: true);
                               } else {
                                 router.goNamed(RouteNames.navigation,
                                     extra: false);
                               }
                             }
-                          }
+                          // }
                           // else navigate to Add Preferences Screen
                           else if(!authController.isSocialError()){
                             // because of apple and google requirement, skipping personal detail screen
@@ -161,7 +161,7 @@ class SignInScreen extends StatelessWidget {
                                   message: authController.message(),
                                 );
                                 // if registered then navigate to home screen
-                                if (authController.isRegistered()) {
+                                // if (authController.isRegistered()) {
                                   if (authController.isAppleLoggedIn()) {
                                     if (PreferenceManager.getBool(
                                             PreferenceManager.isFirstTime) ??
@@ -175,7 +175,7 @@ class SignInScreen extends StatelessWidget {
                                           extra: false);
                                     }
                                   }
-                                }
+                                // }
                                 // else navigate to Add Preferences Screen
                                 else if(!authController.isSocialError()){
                                   // because of apple and google requirement, skipping personal detail screen

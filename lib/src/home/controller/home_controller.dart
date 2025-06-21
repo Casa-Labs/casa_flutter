@@ -142,7 +142,7 @@ class HomeController extends GetxController {
         if (targetIndex >= reactiveProducts.length - 2 &&
             !isPaginating &&
             !noMoreData) {
-          fetchProducts({});
+          fetchProducts(getCleanFilters());
         }
         break;
 

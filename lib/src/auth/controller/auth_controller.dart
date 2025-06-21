@@ -256,11 +256,11 @@ class AuthController extends GetxController {
       }
 
       message('User logged in successfully');
-      if (socialLoginResponse?.singleSignOn?.user?.isRegistered ?? false) {
-        isRegistered(true);
-      } else {
-        isRegistered(false);
-      }
+      // if (socialLoginResponse?.singleSignOn?.user?.isRegistered ?? false) {
+      //   isRegistered(true);
+      // } else {
+      //   isRegistered(false);
+      // }
     } else {
       isGoogleSignInLoading(false);
       isAppleSignInLoading(false);
@@ -291,6 +291,7 @@ class AuthController extends GetxController {
   // Apple Sign-Out
   Future<void> logOutUser() async {
     // clear user details
+    signOut();
     await PreferenceManager.setData(
       PreferenceManager.userDetails,
       '',
