@@ -4,8 +4,9 @@ import 'package:casaflutter/utils/color_constant.dart';
 import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:get/get.dart';
 import '../../../explore/view/widgets/reusable_dropdown.dart';
+import '../../controller/home_controller.dart';
 
 class HomeSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeSearchAppBar({
@@ -17,6 +18,7 @@ class HomeSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final homeCtrl = Get.put(HomeController());
     return AppBar(
       leadingWidth: 0,
       titleSpacing: 0,
@@ -46,7 +48,17 @@ class HomeSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
               width: MediaQuery.sizeOf(context).width * 0.4,
               mode: DropdownMode.single,
               fullSize: false,
-              onSelected: (selectedItems) {},
+              onSelected: (selectedItems) {
+                var storeType = '';
+                if(selectedItems == "Brands"){
+                  storeType = "BRAND";
+                }else if(selectedItems == "Thrift"){
+                  storeType = "THRIFT";
+                }
+                homeCtrl.fetchProducts({
+                  "storeType" : storeType
+                });
+              },
               label: '',
             ),
           ),
