@@ -5,15 +5,15 @@ import 'package:get/get.dart';
 
 import '../../../../utils/string_constant.dart';
 
-class TutorialScreen extends StatefulWidget {
+class OnboardingScreen extends StatefulWidget {
   final bool? isFirstTime;
-  const TutorialScreen({super.key, this.isFirstTime});
+  const OnboardingScreen({super.key, this.isFirstTime});
 
   @override
-  State<TutorialScreen> createState() => _TutorialScreenState();
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _TutorialScreenState extends State<TutorialScreen> {
+class _OnboardingScreenState extends State<OnboardingScreen> {
   final OnBoardingController onBoardingCtrl = Get.put(OnBoardingController());
   bool _isInitialized = false;
 
@@ -31,7 +31,8 @@ class _TutorialScreenState extends State<TutorialScreen> {
       SwipeTutorial(
         image: ImageConstants.tutorialPenguinSeven,
         alignment: Alignment.topCenter,
-        text: "welcome to casa! here is a small toturial to guide you through",
+        text:
+            "Welcome to CASA! \nHere is a small tutorial to guide you through.",
         onTap: onBoardingCtrl.changeIndexTutorial,
         bottom: 0,
         bottomImage: 0,
@@ -42,7 +43,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
       SwipeTutorial(
           image: ImageConstants.tutorialPenguinTwo,
           alignment: Alignment.topCenter,
-          text: "swipe right on the clothes you like.",
+          text: "Swipe right on the clothes you like.",
           onTap: onBoardingCtrl.changeIndexTutorial,
           bottom: 0,
           bottomImage: 50,
@@ -53,7 +54,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
           image: ImageConstants.tutorialPenguinThree,
           alignment: Alignment.topCenter,
           text:
-              "swipe left on the clothes you dont like! we will learn the rest",
+              "Swipe left on the clothes you don't like! We will learn the rest.",
           onTap: onBoardingCtrl.changeIndexTutorial,
           bottom: 0,
           bottomImage: 0,
@@ -63,7 +64,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
       SwipeTutorial(
           image: ImageConstants.tutorialPenguinFour,
           alignment: Alignment.topCenter,
-          text: "click the back button to go to the previous item",
+          text: "Click the back button to go to the previous item.",
           onTap: onBoardingCtrl.changeIndexTutorial,
           bottom: 10,
           bottomImage: 80,
@@ -73,7 +74,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
       SwipeTutorial(
           image: ImageConstants.tutorialPenguinFive,
           alignment: Alignment.bottomCenter,
-          text: "click on the logo to visit the store",
+          text: "Click on the logo to visit the store.",
           onTap: onBoardingCtrl.changeIndexTutorial,
           bottom: 170,
           bottomImage: 90,
@@ -84,7 +85,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
           image: ImageConstants.tutorialPenguinSix,
           alignment: Alignment.bottomCenter,
           text:
-              "use the  add to cart, save button to create closet and buy now for instant checkout",
+              "Use the add to cart, save to closet and buy now for instant checkout.",
           onTap: onBoardingCtrl.changeIndexTutorial,
           bottom: 240,
           bottomImage: 100,
@@ -95,7 +96,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
           image: ImageConstants.tutorialPenguinSeven,
           alignment: Alignment.topCenter,
           text:
-              "Steve and Derek the co-founder of CASA welcome you,were Cooking up our next move to get unique offers and discounts for you!",
+              "Steve and Derek the founders of CASA welcome you. We're cooking up our next move to get unique offers and discounts for you!",
           onTap: onBoardingCtrl.changeIndexTutorial,
           bottom: 0,
           bottomImage: 0,

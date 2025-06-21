@@ -57,7 +57,7 @@ class SwipeTutorial extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      SizedBox(height: 10),
+                      SizedBox(height: 60),
                       Text(
                         text ?? 'swipe right on the clothes you like.',
                         textAlign: TextAlign.center,

@@ -71,11 +71,11 @@ class ExploreScreen extends StatelessWidget {
 
                               exploreCtrl.selectedIndex.value = 0;
                               exploreCtrl.clothesYouMightLike.clear();
-                              await exploreCtrl.getTrendingNowProductsCall("MA");
+                              await exploreCtrl
+                                  .getTrendingNowProductsCall("MA");
                               await exploreCtrl.getNewArrivalProductsCall("MA");
                               await exploreCtrl.getProductsCall(
                                   isInitialLoad: true);
-
                             },
                           ),
                         ),
@@ -100,15 +100,15 @@ class ExploreScreen extends StatelessWidget {
                             onPressed: () async {
                               if (exploreCtrl.selectedIndex.value == 1) return;
                               exploreCtrl.selectedIndex.value = 1;
-                              await exploreCtrl.getTrendingNowProductsCall("FE");
+                              await exploreCtrl
+                                  .getTrendingNowProductsCall("FE");
                               await exploreCtrl.getNewArrivalProductsCall("FE");
                               await exploreCtrl.getProductsCall(
                                   isInitialLoad: true);
-
                             },
                           ),
                         ),
-                        const SizedBox(width: 15),
+                        const SizedBox(width: 20),
                       ],
                     ),
                     ExploreSection(),
@@ -167,7 +167,8 @@ class ExploreSection extends StatelessWidget {
                                   margin: EdgeInsets.symmetric(horizontal: 8),
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    border: Border.all(color: BorderColor.black),
+                                    border:
+                                        Border.all(color: BorderColor.black),
                                     image: DecorationImage(
                                         image: CachedNetworkImageProvider(
                                             brand.logo ??
@@ -214,35 +215,41 @@ class ExploreSection extends StatelessWidget {
                                 children: [
                                   Expanded(
                                     child: CachedNetworkImage(
-                                      imageUrl: trendingProduct.mainImage ?? '',
-                                      imageBuilder: (context, imageProvider) {
-                                        return Container(
-                                          height: 135,
-                                          width: 100,
-                                          margin: EdgeInsets.only(right: 20),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(15),
-                                            image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover,
+                                        imageUrl:
+                                            trendingProduct.mainImage ?? '',
+                                        imageBuilder: (context, imageProvider) {
+                                          return Container(
+                                            height: 135,
+                                            width: 100,
+                                            margin: EdgeInsets.only(right: 20),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      },
-                                      placeholder: (context, url) => Shimmer.fromColors(
-                                        baseColor: Colors.white.withValues(alpha: 0.5),
-                                        highlightColor: Colors.black.withValues(alpha: 0.5),
-                                        child: Container(
-                                          height: 135,
-                                          width: 100,
-                                          margin: EdgeInsets.only(right: 20),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(15),
-                                          ),
-                                        ),
-                                      )
-                                    ),
+                                          );
+                                        },
+                                        placeholder: (context, url) =>
+                                            Shimmer.fromColors(
+                                              baseColor: Colors.white
+                                                  .withValues(alpha: 0.5),
+                                              highlightColor: Colors.black
+                                                  .withValues(alpha: 0.5),
+                                              child: Container(
+                                                height: 135,
+                                                width: 100,
+                                                margin:
+                                                    EdgeInsets.only(right: 20),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                ),
+                                              ),
+                                            )),
                                   ),
                                   SizedBox(height: 10),
                                   SizedBox(
@@ -303,35 +310,41 @@ class ExploreSection extends StatelessWidget {
                                 children: [
                                   Expanded(
                                     child: CachedNetworkImage(
-                                      imageUrl: newArrivalProduct.mainImage ?? '',
-                                      imageBuilder: (context, imageProvider) {
-                                        return Container(
-                                          height: 210,
-                                          width: 100,
-                                          margin: EdgeInsets.only(right: 20),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(15),
-                                            image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover,
+                                        imageUrl:
+                                            newArrivalProduct.mainImage ?? '',
+                                        imageBuilder: (context, imageProvider) {
+                                          return Container(
+                                            height: 210,
+                                            width: 100,
+                                            margin: EdgeInsets.only(right: 20),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      },
-                                      placeholder: (context, url) => Shimmer.fromColors(
-                                        baseColor: Colors.white.withValues(alpha: 0.5),
-                                        highlightColor: Colors.black.withValues(alpha: 0.5),
-                                        child: Container(
-                                          height: 210,
-                                          width: 100,
-                                          margin: EdgeInsets.only(right: 20),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(15),
-                                          ),
-                                        ),
-                                      )
-                                    ),
+                                          );
+                                        },
+                                        placeholder: (context, url) =>
+                                            Shimmer.fromColors(
+                                              baseColor: Colors.white
+                                                  .withValues(alpha: 0.5),
+                                              highlightColor: Colors.black
+                                                  .withValues(alpha: 0.5),
+                                              child: Container(
+                                                height: 210,
+                                                width: 100,
+                                                margin:
+                                                    EdgeInsets.only(right: 20),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                ),
+                                              ),
+                                            )),
                                   ),
                                 ],
                               ),
@@ -372,35 +385,40 @@ class ExploreSection extends StatelessWidget {
                                 children: [
                                   Expanded(
                                     child: CachedNetworkImage(
-                                      imageUrl: product?.mainImage ?? '',
-                                      imageBuilder: (context, imageProvider) {
-                                        return Container(
-                                          height: 210,
-                                          width: 100,
-                                          margin: EdgeInsets.only(right: 20),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(15),
-                                            image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover,
+                                        imageUrl: product?.mainImage ?? '',
+                                        imageBuilder: (context, imageProvider) {
+                                          return Container(
+                                            height: 210,
+                                            width: 100,
+                                            margin: EdgeInsets.only(right: 20),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      },
-                                      placeholder: (context, url) => Shimmer.fromColors(
-                                        baseColor: Colors.white.withValues(alpha: 0.5),
-                                        highlightColor: Colors.black.withValues(alpha: 0.5),
-                                        child: Container(
-                                          height: 210,
-                                          width: 100,
-                                          margin: EdgeInsets.only(right: 20),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(15),
-                                          ),
-                                        ),
-                                      )
-                                    ),
+                                          );
+                                        },
+                                        placeholder: (context, url) =>
+                                            Shimmer.fromColors(
+                                              baseColor: Colors.white
+                                                  .withValues(alpha: 0.5),
+                                              highlightColor: Colors.black
+                                                  .withValues(alpha: 0.5),
+                                              child: Container(
+                                                height: 210,
+                                                width: 100,
+                                                margin:
+                                                    EdgeInsets.only(right: 20),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                ),
+                                              ),
+                                            )),
                                   ),
                                 ],
                               ),
