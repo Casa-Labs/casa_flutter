@@ -4,7 +4,7 @@ class ImageConstants {
       'https://static.zara.net/assets/public/fc4d/82fd/112c4f65b37a/cbc21e516880/03152381402-p/03152381402-p.jpg?ts=1743090495295&w=1024';
   static String tutorialPenguinTwo = 'assets/tutorial_image/penguin_two.png';
   static String tutorialPenguinThree =
-      'assets/tutorial_image/penguin_three.png';
+      'assets/tutorial_image/penguin_third.png';
   static String tutorialPenguinFour = 'assets/tutorial_image/penguin_four.png';
   static String tutorialPenguinFive = 'assets/tutorial_image/penguin_five.png';
   static String tutorialPenguinSix = 'assets/tutorial_image/penguin_six.png';

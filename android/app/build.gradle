@@ -48,9 +48,10 @@ android {
     }
 
     buildTypes {
-//        release {
-//            signingConfig signingConfigs.release
-//        }
+        release {
+//            signingConfig signingConfigs.release // Uncomment to use release signing
+            signingConfig signingConfigs.debug
+        }
     }
 }
 

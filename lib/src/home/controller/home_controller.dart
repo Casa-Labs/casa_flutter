@@ -64,6 +64,8 @@ class HomeController extends GetxController {
   bool isPaginating = false;
   bool noMoreData = false;
 
+  RxString selectedGender = ''.obs;
+
   RxMap<String, dynamic> filters = {
     "category": null, // String
     "gender": null, // String

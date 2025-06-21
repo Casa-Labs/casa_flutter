@@ -70,7 +70,7 @@ class NavPageState extends State<NavPage> {
         child: Stack(
           children: [
             _getScreen(_selectedIndex), // Display the selected page
-            TutorialScreen(
+            OnboardingScreen(
               isFirstTime: _isFirstLaunch,
             ),
           ],

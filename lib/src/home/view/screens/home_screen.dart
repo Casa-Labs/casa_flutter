@@ -4,10 +4,8 @@ import 'package:casaflutter/src/home/controller/home_controller.dart';
 import 'package:casaflutter/src/home/view/widgets/card.dart';
 import 'package:casaflutter/src/home/view/widgets/filter_button_row.dart';
 import 'package:casaflutter/src/home/view/widgets/home_search_app_bar.dart';
-import 'package:casaflutter/src/home/view/widgets/reset_dialog.dart';
 import 'package:casaflutter/src/home/view/widgets/swipe_animation.dart';
 import 'package:casaflutter/utils/color_constant.dart';
-import 'package:casaflutter/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -16,6 +14,7 @@ import '../../../cart/controller/cart_controller.dart';
 import '../../../order/controller/order_review_controller.dart';
 import '../../../wishlist/controller/wishlist_controller.dart';
 import '../../model/home_models.dart';
+import '../widgets/home_big_filter_dialog.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -42,8 +41,10 @@ class HomeScreen extends StatelessWidget {
                     onFilterSettingsPressed: () {
                       showDialog(
                         context: context,
-                        builder: (context) => ResetDialog(
+                        builder: (context) => HomeBigFilterDialog(
                           onYesPressed: () {
+                            homeCtrl.selectedGender.value =
+                                ''; // Reset gender selection
                             filterController.filters.clear();
                             homeCtrl.fetchProducts({}, reset: true);
                             context.pop();
@@ -86,12 +87,14 @@ class HomeScreen extends StatelessWidget {
                       ),
                       FilterButtonModel(
                         title: 'Product',
-                        list: homeCtrl.category.map((item) => item.name!).toList(),
+                        list: homeCtrl.category
+                            .map((item) => item.name!)
+                            .toList(),
                         getSelectedValues: () {
                           return homeCtrl.category
                               .where((e) => filterController
-                              .getFilter("categories")
-                              .contains(e.id))
+                                  .getFilter("categories")
+                                  .contains(e.id))
                               .map((e) => e.name!)
                               .toList();
                         },
@@ -104,7 +107,8 @@ class HomeScreen extends StatelessWidget {
                         onDone: (selectedNames) {
                           final catIds = homeCtrl.category
                               .where((e) => selectedNames.contains(e.name))
-                              .map((e) => e.id!).toList();
+                              .map((e) => e.id!)
+                              .toList();
 
                           filterController.updateFilter("categories", catIds);
                           homeCtrl.fetchProducts(
