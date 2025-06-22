@@ -1,4 +1,5 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
+import 'package:casaflutter/src/home/controller/filter_controller.dart';
 import 'package:casaflutter/src/home/model/color_model.dart';
 import 'package:casaflutter/src/home/model/service/home_service.dart';
 import 'package:flutter/foundation.dart';
@@ -144,7 +145,19 @@ class HomeController extends GetxController {
         if (targetIndex >= reactiveProducts.length - 2 &&
             !isPaginating &&
             !noMoreData) {
-          fetchProducts(getCleanFilters());
+          FilterController filterController = Get.find<FilterController>();
+          final Map<String, dynamic> updatedFilters;
+          if (selectedGender.value.isNotEmpty) {
+            updatedFilters = {
+              "gender": selectedGender.value,
+              ...filterController.getCleanFilters(),
+            };
+          } else {
+            updatedFilters = {
+              ...filterController.getCleanFilters(),
+            };
+          }
+          fetchProducts(updatedFilters);
         }
         break;
 
@@ -247,6 +260,7 @@ class HomeController extends GetxController {
     if (isPaginating) return;
     if (reset) {
       currentPage = 1;
+      cardIndex = 0;
       noMoreData = false;
       products.clear();
       reactiveProducts.clear();

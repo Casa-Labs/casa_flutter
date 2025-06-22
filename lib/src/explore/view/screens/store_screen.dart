@@ -54,50 +54,50 @@ class StoreScreen extends StatelessWidget {
 
           return Column(
             children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 1,
-                child: Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: IconsWidget(
-                    onTap: () {
-                      context.pop();
-                    },
-                    icon: Icons.arrow_back_ios_new,
-                    backColor: IconColor.white,
-                    iconColor: IconColor.black,
-                  ).paddingOnly(top: 10,left: 10),
-                ),
-              ),
-               Expanded(
-                 flex: 2,
-                 child: Align(
-                   alignment: AlignmentDirectional.centerStart,
-                   child: Container(
-                      height: 120,
-                      width: 120,
-                      margin: EdgeInsetsGeometry.only(left: 8,top: 15),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.black),
-                        image: DecorationImage(image: CachedNetworkImageProvider(
-
-                          productList.first.product?.store?.logo ??
-                              ImageConstants.dummyNetworkPortrait,
-                          // height: 130,
-                        ),)
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: IconsWidget(
+                        onTap: () {
+                          context.pop();
+                        },
+                        icon: Icons.arrow_back_ios_new,
+                        backColor: IconColor.white,
+                        iconColor: IconColor.black,
+                      ).paddingOnly(top: 10, left: 10),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Container(
+                        height: 120,
+                        width: 120,
+                        margin: const EdgeInsets.only(left: 8, top: 15),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.black),
+                            image: DecorationImage(
+                              image: CachedNetworkImageProvider(
+                                productList.first.product?.store?.logo ??
+                                    ImageConstants.dummyNetworkPortrait,
+                                // height: 130,
+                              ),
+                            )),
                       ),
                     ),
-                 ),
-               ),
-            ],
-          ),
+                  ),
+                ],
+              ),
               SizedBox(height: 10),
-              Text(productList.first.product?.store?.name ?? "", style:
-              Theme.of(context).textTheme.bodyLarge),
+              Text(productList.first.product?.store?.name ?? "",
+                  style: Theme.of(context).textTheme.bodyLarge),
               Flexible(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
