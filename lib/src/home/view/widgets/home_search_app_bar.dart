@@ -31,8 +31,8 @@ class HomeSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
             child: ReusableDropdown(
               items: const [
                 // Todo : Add back the dropdown later
-                'Brands',
-                'Thrift',
+                // 'Brands',
+                // 'Thrift',
               ],
               hint: Padding(
                 padding: const EdgeInsets.only(left: 8.0),
