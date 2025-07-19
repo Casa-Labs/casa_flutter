@@ -86,7 +86,7 @@ class HomeController extends GetxController {
     await fetchProducts({});
     await getBrand();
     await getSize();
-    await getCategory();
+    await getCategory("MA");
     await getColors();
   }
 
@@ -124,8 +124,10 @@ class HomeController extends GetxController {
         } else {
           if (activity.direction == AxisDirection.right) {
             swipeIcon = Icons.check_rounded; // ✅ Right Swipe
+            updateTradingScore(products[previousIndex].id ?? "", "RIGHT");
           } else if (activity.direction == AxisDirection.left) {
             swipeIcon = Icons.close_rounded; // ❌ Left Swipe
+            updateTradingScore(products[previousIndex].id ?? "", "LEFT");
           }
         }
 
@@ -304,6 +306,18 @@ class HomeController extends GetxController {
     }
   }
 
+  Future<void> updateTradingScore(String productId, String swipe) async {
+    try {
+      update();
+      await manager.updateTradingScore(productId, swipe);
+      update();
+    } catch (e) {
+      logg.e('get error to update trading score $e');
+      update();
+    }
+  }
+
+
   Future<void> getSize() async {
     try {
       isLoading.value = true;
@@ -319,18 +333,17 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> getCategory() async {
+  Future<void> getCategory(String gender) async {
     try {
       isLoading.value = true;
       update();
-      var response = await manager.getCategory();
+      var response = await manager.getCategory(gender);
       var catList = GetCategories.fromJson(response.data!);
       category = catList.getProductCategories ?? [];
-      logg.d('categories data ------ >>>>> $catList');
       isLoading.value = false;
       update();
     } catch (e) {
-      logg.e('get error to fetch product data $e');
+      logg.e('get error to fetch category data $e');
       isLoading.value = false;
       update();
     }

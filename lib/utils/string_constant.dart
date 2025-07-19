@@ -94,7 +94,7 @@ class AppStrings {
   static const String productPrice = "1000";
   static const String defaultClosetName = "All Saved";
   static const String defaultClosetImageUrl =
-      "https://static.vecteezy.com/system/resources/thumbnails/031/623/946/small_2x/background-for-productgraphy-ai-generated-photo.jpg";
+      "https://i.pinimg.com/1200x/aa/96/13/aa9613eecf2ad1c1ae36df74c4be40d7.jpg";
   static const String returnPolicy =
       "You have 30 days from the shipping date to return your purchase from CASA App.";
   static const String shippingPolicy = "Delivery in 3-5 working days.";

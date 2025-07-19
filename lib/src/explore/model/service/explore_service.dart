@@ -58,8 +58,8 @@ class ExploreService {
     }
   }
 
-  Future<void> getProductCategories({String? search}) async {
-    var response = await GraphQLManager().getCategory();
+  Future<void> getProductCategories(String gender,{String? search}) async {
+    var response = await GraphQLManager().getCategory(gender);
 
     if (!response.hasException && response.data != null) {
       final categoriesResponse =

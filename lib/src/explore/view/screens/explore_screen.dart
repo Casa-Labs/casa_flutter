@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:casaflutter/routes/app_routes.dart';
 import 'package:casaflutter/src/explore/view/widgets/divider_title.dart';
 import 'package:casaflutter/src/explore/view/widgets/explore_search_bar.dart';
@@ -14,6 +15,7 @@ import '../../../../utils/color_constant.dart';
 import '../../../../utils/string_constant.dart';
 import '../../../wishlist/view/screens/add_to_closet.dart';
 import '../../controller/explore_controller.dart';
+import '../widgets/auto_scroll_brand.dart';
 
 class ExploreScreen extends StatelessWidget {
   ExploreScreen({super.key});
@@ -45,47 +47,163 @@ class ExploreScreen extends StatelessWidget {
                   children: [
                     const SizedBox(height: 15),
                     ExploreSearchBar(),
-                    const SizedBox(height: 15),
+                    // const SizedBox(height: 45),
                     Row(
                       children: [
-                        const SizedBox(width: 20),
-                        Expanded(
-                          flex: 5,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              backgroundColor:
-                                  exploreCtrl.selectedIndex.value == 0
-                                      ? TabBarColor.black
-                                      : TabBarColor.white,
-                              foregroundColor:
-                                  exploreCtrl.selectedIndex.value == 0
-                                      ? TabBarColor.white
-                                      : TabBarColor.black,
-                            ),
-                            child: Text('MEN'),
-                            onPressed: () async {
-                              if (exploreCtrl.selectedIndex.value == 0) return;
+                        // const SizedBox(width: 20),
+                        /*Expanded(
+                              flex: 5,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  backgroundColor:
+                                      exploreCtrl.selectedIndex.value == 0
+                                          ? TabBarColor.black
+                                          : TabBarColor.white,
+                                  foregroundColor:
+                                      exploreCtrl.selectedIndex.value == 0
+                                          ? TabBarColor.white
+                                          : TabBarColor.black,
+                                ),
+                                child: Text('MEN'),
+                                onPressed: () async {
+                                  if (exploreCtrl.selectedIndex.value == 0) return;
 
-                              exploreCtrl.selectedIndex.value = 0;
-                              exploreCtrl.clothesYouMightLike.clear();
-                              await exploreCtrl
-                                  .getTrendingNowProductsCall("MA");
-                              await exploreCtrl.getNewArrivalProductsCall("MA");
-                              await exploreCtrl.getProductsCall(
-                                  isInitialLoad: true);
-                            },
+                                  exploreCtrl.selectedIndex.value = 0;
+                                  exploreCtrl.clothesYouMightLike.clear();
+                                  await exploreCtrl
+                                      .getTrendingNowProductsCall("MA");
+                                  await exploreCtrl.getNewArrivalProductsCall("MA");
+                                  await exploreCtrl.getProductsCall(
+                                      isInitialLoad: true);
+                                },
+                              ),
+                            ),*/
+                        Expanded(
+                          child: Stack(
+                            alignment: Alignment.centerLeft,
+                            children: [
+                              InkWell(
+                                onTap: () async {
+                                  if (exploreCtrl.selectedIndex.value == 0) {
+                                    return;
+                                  }
+
+                                  exploreCtrl.selectedIndex.value = 0;
+                                  exploreCtrl.clothesYouMightLike.clear();
+                                  await exploreCtrl
+                                      .getTrendingNowProductsCall("MA");
+                                  await exploreCtrl
+                                      .getNewArrivalProductsCall("MA");
+                                  await exploreCtrl.getProductsCall(
+                                      isInitialLoad: true);
+                                },
+                                child: Container(
+                                  height: 60,
+                                  margin: EdgeInsets.only(left: 20),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      color:
+                                          exploreCtrl.selectedIndex.value == 0
+                                              ? TabBarColor.black
+                                              : TabBarColor.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black
+                                              .withValues(alpha: 0.3),
+                                          blurRadius: 10,
+                                          offset: Offset(0, 8),
+                                        )
+                                      ],
+                                      borderRadius: BorderRadius.circular(15)),
+                                  child: Text('MEN',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                              fontSize: 20,
+                                              color: exploreCtrl.selectedIndex
+                                                          .value ==
+                                                      0
+                                                  ? Colors.white
+                                                  : Colors.black)),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 15),
+                                child: Image.asset('assets/images/men.png',
+                                    height: 150),
+                              )
+                            ],
                           ),
                         ),
-                        const Spacer(),
+                        SizedBox(width: 15),
                         Expanded(
+                          child: Stack(
+                            alignment: Alignment.centerRight,
+                            children: [
+                              InkWell(
+                                onTap: () async {
+                                  if (exploreCtrl.selectedIndex.value == 1) {
+                                    return;
+                                  }
+                                  exploreCtrl.selectedIndex.value = 1;
+                                  await exploreCtrl
+                                      .getTrendingNowProductsCall("FE");
+                                  await exploreCtrl
+                                      .getNewArrivalProductsCall("FE");
+                                  await exploreCtrl.getProductsCall(
+                                      isInitialLoad: true);
+                                },
+                                child: Container(
+                                  height: 60,
+                                  margin: EdgeInsets.only(right: 20),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      color:
+                                          exploreCtrl.selectedIndex.value == 1
+                                              ? TabBarColor.black
+                                              : TabBarColor.white,
+                                      borderRadius: BorderRadius.circular(15),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black
+                                              .withValues(alpha: 0.3),
+                                          blurRadius: 10,
+                                          offset: Offset(0, 8),
+                                        )
+                                      ]),
+                                  child: Text('WOMEN',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                              fontSize: 20,
+                                              color: exploreCtrl.selectedIndex
+                                                          .value ==
+                                                      1
+                                                  ? Colors.white
+                                                  : Colors.black)),
+                                ),
+                              ),
+                              Container(
+                                // color: Colors.red,
+                                padding:
+                                    const EdgeInsets.only(bottom: 50, left: 30),
+                                child: Image.asset('assets/images/women.png',
+                                    height: 150),
+                              )
+                            ],
+                          ),
+                        ),
+                        /*Expanded(
                           flex: 5,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(15),
                               ),
                               backgroundColor:
                                   exploreCtrl.selectedIndex.value == 1
@@ -107,8 +225,8 @@ class ExploreScreen extends StatelessWidget {
                                   isInitialLoad: true);
                             },
                           ),
-                        ),
-                        const SizedBox(width: 20),
+                        ),*/
+                        // const SizedBox(width: 20),
                       ],
                     ),
                     ExploreSection(),
@@ -145,11 +263,50 @@ class ExploreSection extends StatelessWidget {
               exploreCtrl.brands.isEmpty
                   ? Text('No Brands Found',
                       style: Theme.of(context).textTheme.bodyLarge)
-                  : SizedBox(
+                  : /*SizedBox(
                       height: 60,
+                      width: double.infinity,
                       child: Align(
                         alignment: Alignment.centerLeft,
-                        child: ListView.builder(
+                        child:
+                        CarouselSlider.builder(
+                          itemCount: exploreCtrl.brands.length,
+                          itemBuilder: (BuildContext context, int index, int realIndex) {
+                            final brand = exploreCtrl.brands[index];
+                            return InkWell(
+                              onTap: () {
+                                context.pushNamed(
+                                  RouteNames.store,
+                                  pathParameters: {'id': brand.id ?? ''},
+                                );
+                              },
+                              child: Container(
+                                width: 55,
+                                margin: EdgeInsets.symmetric(horizontal: 8),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border:
+                                  Border.all(color: BorderColor.black),
+                                  image: DecorationImage(
+                                      image: CachedNetworkImageProvider(
+                                          brand.logo ??
+                                              ImageConstants
+                                                  .dummyNetworkPortrait),
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                            );
+                          },
+                          options: CarouselOptions(
+                              initialPage: 0,
+                              enableInfiniteScroll: true,
+                              reverse: false,
+                              autoPlay: true,
+
+                              viewportFraction: 1,
+                              scrollDirection: Axis.horizontal),
+                        ),
+                        */ /*ListView.builder(
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
                             itemCount: exploreCtrl.brands.length,
@@ -178,9 +335,16 @@ class ExploreSection extends StatelessWidget {
                                   ),
                                 ),
                               );
-                            }),
+                            }),*/ /*
                       ),
-                    ),
+                    ),*/
+                  AutoScrollBrandList(
+                      brands: exploreCtrl.brands,
+                      isRight: false,
+                      scrollSpeed: 3),
+              SizedBox(height: 10),
+              AutoScrollBrandList(
+                  brands: exploreCtrl.brands, isRight: true, scrollSpeed: 2),
             ],
           ),
 

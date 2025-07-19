@@ -457,6 +457,13 @@ class GraphQLManager {
     );
   }
 
+  Future<QueryResult> updateTradingScore(String productId,String swipe) async {
+    return await _clientService.performMutationWithoutToken(
+      document: GraphQLMutations.updateTradingScore,
+      variables: GraphQLVariables.updateTradingScore(productId,swipe),
+    );
+  }
+
   Future<QueryResult> getProductsForExplore(Map<String, dynamic> params) async {
     return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getProductsForExplore,
@@ -494,9 +501,11 @@ class GraphQLManager {
     );
   }
 
-  Future<QueryResult> getCategory() async {
+  Future<QueryResult> getCategory(String gender) async {
     return await _clientService.performQueryWithoutToken(
       document: GraphQLQueries.getCategory,
+      variables:
+      GraphQLVariables.getProductCategories(gender),
     );
   }
 

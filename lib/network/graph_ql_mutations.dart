@@ -239,6 +239,12 @@ mutation CreateOrder(\$totalAmount: Float!, \$deliveryType: String!, \$shippingI
 }
 ''';
 
+  static const String updateTradingScore = """
+  mutation UpdateTrendingScore(\$productId: String!,\$swipe: Swipe!) {
+    updateTrendingScore(productId: \$productId, swipe: \$swipe)
+}
+  """;
+
   static const String createProduct = '''
 mutation CreateProduct(\$input: ProductInput!) {
   createProduct(input: \$input) {
