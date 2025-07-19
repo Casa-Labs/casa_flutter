@@ -29,6 +29,7 @@ class _HomeBigFilterDialogState extends State<HomeBigFilterDialog> {
 
     // Fetch products with selected gender
     homeCtrl.fetchProducts({"gender": genderCode}, reset: true);
+    homeCtrl.getCategory(homeCtrl.selectedGender.value);
 
     // Close the dialog
     Navigator.of(context).pop();

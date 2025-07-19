@@ -27,6 +27,13 @@ class GraphQLVariables {
     };
   }
 
+  static Map<String, dynamic> getProductCategories(
+      String? gender) {
+    return {
+      "gender": gender,
+    };
+  }
+
   static Map<String, dynamic> deleteUserVariables(String userId) {
     return {
       "userId": userId,
@@ -421,6 +428,13 @@ class GraphQLVariables {
       Map<String, dynamic> params) {
     return {
       "params": params,
+    };
+  }
+
+  static Map<String, dynamic> updateTradingScore(String? productId, String? swipe) {
+    return {
+      "productId": productId,
+      "swipe": swipe,
     };
   }
 

@@ -59,8 +59,8 @@ query GetUser(\$getUserId: String!) {
 """;
 
   static const String getCategory = """
-query GetProductCategories {
-  getProductCategories {
+query GetProductCategories(\$gender: Gender) {
+  getProductCategories(gender: \$gender) {
     name
     thumbnail
     id

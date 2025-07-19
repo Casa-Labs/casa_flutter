@@ -42,7 +42,7 @@ class GetCategories {
 
 class GetProductCategories {
   String? name;
-  Null thumbnail;
+  String? thumbnail;
   String? id;
 
   GetProductCategories({this.name, this.thumbnail, this.id});

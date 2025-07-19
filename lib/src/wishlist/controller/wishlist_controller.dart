@@ -3,10 +3,8 @@ import 'package:casaflutter/src/wishlist/model/save_item_to_closet_model.dart';
 import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../utils/preference_manager.dart';
 import '../../../utils/utils.dart';
-import '../../home/model/home_models.dart';
 import '../model/add_board_to_closet_model.dart';
 import '../model/get_closet_model.dart';
 import '../model/service/wishlist_service.dart';
@@ -229,35 +227,23 @@ class WishlistController extends GetxController {
   //=========== CONSTANT LIST =========== //
 
   List<String> imageLinks = [
-    // "https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?cs=srgb&dl=pexels-padrinan-255379.jpg&fm=jpg",
-    // 'https://t3.ftcdn.net/jpg/08/52/51/04/360_F_852510478_KdKJ1xGmlHICE8TD3QM68W6m7m1E7fHT.jpg',
-    // 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcL3kn1Z7tCYhQa-vOaLHwHTPIT81-uLoDBw&s',
-    // 'https://media.istockphoto.com/id/833727890/photo/wooden-table-background.jpg?s=170667a&w=0&k=20&c=X0T-EH3_hWKTTVOrEYxPWpFWHUzKD3VkMMAyOrmh8ac=',
-    // 'https://rukminim2.flixcart.com/image/850/1000/jjbqufk0/poster/r/h/h/large-vlnature00091a-natural-scene-of-mountain-near-lake-vinyl-original-imaeh9vdnj9xxfau.jpeg?q=90&crop=false',
-    // 'https://static.vecteezy.com/system/resources/thumbnails/036/226/872/small_2x/ai-generated-nature-landscapes-background-free-photo.jpg',
-    // 'https://images.unsplash.com/photo-1593642532973-d31b6557fa68',
-    // 'https://t3.ftcdn.net/jpg/05/54/02/68/360_F_554026892_UsZG4Tm3GPUV6fxzlpvV0qOOe9KKYvCj.jpg',
-    // 'https://thumbs.dreamstime.com/b/incredibly-beautiful-sunset-sun-lake-sunrise-landscape-panorama-nature-sky-amazing-colorful-clouds-fantasy-design-115177001.jpg',
-    // 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrM3XUaIRVRER_eqo062BNrTgS7SjjS0VJPg&s',
-    // 'https://i0.wp.com/picjumbo.com/wp-content/uploads/red-and-blue-pillars-wallpaper-abstract-background-free-image.jpeg?w=600&quality=80',
-    // 'https://t4.ftcdn.net/jpg/05/49/86/39/360_F_549863991_6yPKI08MG7JiZX83tMHlhDtd6XLFAMce.jpg',
-    // 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs-Zs1jAhbmypFTiTem5s6YzJpLB4tyD2F_Q&s',
-    // 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrCKVj1-g3zHrU5AeECjoDetg4Hmocpqa2BQ&s',
-    // 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiRx5GqAy1DRddqSBbX_cBulb5PQB2ACvLrQ&s',
-    // 'https://static.vecteezy.com/system/resources/previews/011/004/883/non_2x/triangular-abstract-with-security-symbol-circuit-board-modern-future-website-background-or-cover-page-for-technology-and-finance-concept-and-education-future-company-vector.jpg',
-    // 'https://t3.ftcdn.net/jpg/04/71/33/32/360_F_471333224_bQbXMG1TuzIed78bfWp2UVLN1kyhoQYf.jpg',
-    // 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcK6UYtv6T3_kmxUlPXuftZjgL2f0kgPjGYw&s',
-    'https://plus.unsplash.com/premium_photo-1700056214664-4bd97cec12b4?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2xvdGhlc3xlbnwwfDB8MHx8fDA%3D',
-    'https://plus.unsplash.com/premium_photo-1714226830923-03396831c4f0?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2xvdGhlc3xlbnwwfDB8MHx8fDA%3D',
-    'https://images.unsplash.com/photo-1564584217132-2271feaeb3c5?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2xvdGhlc3xlbnwwfDB8MHx8fDA%3D',
-    'https://images.unsplash.com/photo-1543076447-215ad9ba6923?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzF8fGNsb3RoZXN8ZW58MHwwfDB8fHww',
-    'https://images.unsplash.com/photo-1544441893-675973e31985?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzR8fGNsb3RoZXN8ZW58MHwwfDB8fHww',
-    'https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzh8fGNsb3RoZXN8ZW58MHwwfDB8fHww',
-    // 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSyn-X3QpIM1kFPux-_PrZW5SBNhfw-BWy7Q&s',
-    // 'https://pub-static.fotor.com/assets/bg/502d2e2f-f6cd-4508-9707-03c7663ecc1e.jpg',
-    // 'https://img.pikbest.com/best/video_preview_img/2404/10514271-66207a321ba5d.jpg!w340',
-    // 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3IoMJuoE1LC9-Ado1qPjVitRXmLkAFhV-gA&s',
-    // 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxgVcve4HzfyMm88qW1pZMuxry1tg81PE2-A&s',
-    // 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-uWsMJev5y2_S1EpvpFSDed5oJwcPpBwbrA&s',
+    'https://i.pinimg.com/1200x/e0/a6/ae/e0a6aea578961289899fa73e6a54c0e2.jpg',
+    'https://i.pinimg.com/1200x/14/c4/43/14c4432dee640576a434b5052019e4ab.jpg',
+    'https://i.pinimg.com/736x/82/37/29/82372916e934f2c36210ded34b33604b.jpg',
+    'https://i.pinimg.com/736x/75/06/e1/7506e116d849d407583680e7acc1e919.jpg',
+    'https://i.pinimg.com/1200x/0a/14/f4/0a14f49d6fc4d46a5c3e0fed519d3aa5.jpg',
+    'https://i.pinimg.com/736x/83/88/1b/83881bee801f159be715b72f57a9d011.jpg',
+    'https://i.pinimg.com/1200x/34/69/3f/34693ff99e3bf74e5b39430100b2efcf.jpg',
+    'https://i.pinimg.com/1200x/55/cf/5c/55cf5c5da45485b81ee4d338860ea688.jpg',
+    'https://i.pinimg.com/736x/23/ee/c1/23eec1d112017ffdb24bed7e5766bc40.jpg',
+    'https://i.pinimg.com/736x/7e/bf/85/7ebf85d5c56390ce5ed1a8656ed6f9cb.jpg',
+    'https://i.pinimg.com/736x/97/f9/78/97f978ae09fbeaa698eb115a428912ae.jpg',
+    'https://i.pinimg.com/736x/e8/5e/2f/e85e2f84087009add505edc10680cc80.jpg',
+    'https://i.pinimg.com/736x/a3/d4/e1/a3d4e1775455c8bb359caac220380d1f.jpg',
+    'https://i.pinimg.com/736x/ba/a2/0a/baa20a21e01cf29e742baf9c3b72e027.jpg',
+    'https://i.pinimg.com/736x/8f/d9/2a/8fd92af192f1c55ad110f0e231c5256b.jpg',
+    'https://i.pinimg.com/736x/66/b0/19/66b0190f9e04043bd2ea874ee590ea96.jpg',
+    'https://i.pinimg.com/1200x/17/b7/83/17b7833a8c29fdb9c59f31f27dcc7a0d.jpg',
+    'https://i.pinimg.com/1200x/ac/e9/db/ace9db96f2a1574b1cb2c5c1d90758b8.jpg',
   ];
 }

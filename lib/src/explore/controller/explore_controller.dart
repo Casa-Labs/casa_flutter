@@ -52,7 +52,7 @@ class ExploreController extends GetxController {
     await getTrendingNowProductsCall(gender.value);
     await getNewArrivalProductsCall("MA");
     await getBrandsCall();
-    await getCategoriesCall();
+    await getCategoriesCall("MA");
     await getProductsCall(isInitialLoad: true);
   }
 
@@ -78,8 +78,8 @@ class ExploreController extends GetxController {
     await ExploreService().getBrands();
   }
 
-  Future<void> getCategoriesCall() async {
-    await ExploreService().getProductCategories();
+  Future<void> getCategoriesCall(String gender) async {
+    await ExploreService().getProductCategories(gender);
   }
 
   Future<CartItem> getProductById(String productId) async {
