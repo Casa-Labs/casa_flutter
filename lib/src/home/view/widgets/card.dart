@@ -342,7 +342,9 @@ class Cards extends StatelessWidget {
                         ],
                       ),
                       ProductDetails(
-                          product: product, size: homeCtrl.formattedSizesList())
+                        product: product,
+                        size: homeCtrl.formattedSizesList(),
+                      ),
                     ],
                   ),
                 ),
