@@ -111,7 +111,7 @@ class ProductDetails extends StatelessWidget {
                 content:
                     product.customShippingPolicy ?? AppStrings.shippingPolicy,
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 100.0),
               // TODO : Need to redo the review section to rely on OBX
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.spaceBetween,

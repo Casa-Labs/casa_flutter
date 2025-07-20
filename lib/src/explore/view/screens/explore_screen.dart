@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:casaflutter/routes/app_routes.dart';
 import 'package:casaflutter/src/explore/view/widgets/divider_title.dart';
 import 'package:casaflutter/src/explore/view/widgets/explore_search_bar.dart';
@@ -118,23 +117,31 @@ class ExploreScreen extends StatelessWidget {
                                         )
                                       ],
                                       borderRadius: BorderRadius.circular(15)),
-                                  child: Text('MEN',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall
-                                          ?.copyWith(
-                                              fontSize: 20,
-                                              color: exploreCtrl.selectedIndex
-                                                          .value ==
+                                  child: Text(
+                                    'MEN',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall
+                                        ?.copyWith(
+                                          fontSize: 20,
+                                          color:
+                                              exploreCtrl.selectedIndex.value ==
                                                       0
                                                   ? Colors.white
-                                                  : Colors.black)),
+                                                  : Colors.black,
+                                        ),
+                                  ),
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(bottom: 15),
-                                child: Image.asset('assets/images/men.png',
-                                    height: 150),
+                                padding: const EdgeInsets.only(
+                                  bottom: 50.0,
+                                  left: 15.0,
+                                ),
+                                child: Image.asset(
+                                  'assets/images/men.png',
+                                  height: 150,
+                                ),
                               )
                             ],
                           ),
@@ -190,10 +197,14 @@ class ExploreScreen extends StatelessWidget {
                               ),
                               Container(
                                 // color: Colors.red,
-                                padding:
-                                    const EdgeInsets.only(bottom: 50, left: 30),
-                                child: Image.asset('assets/images/women.png',
-                                    height: 150),
+                                padding: const EdgeInsets.only(
+                                  bottom: 50.0,
+                                  right: 10.0,
+                                ),
+                                child: Image.asset(
+                                  'assets/images/women.png',
+                                  height: 150,
+                                ),
                               )
                             ],
                           ),

@@ -7,6 +7,7 @@ import 'package:casaflutter/src/explore/model/product_by_id_model.dart'
     as model;
 import 'package:casaflutter/src/explore/view/widgets/divider_title.dart';
 import 'package:casaflutter/src/explore/view/widgets/product_card.dart';
+import 'package:casaflutter/src/home/view/widgets/details_widget.dart';
 import 'package:casaflutter/utils/color_constant.dart';
 import 'package:casaflutter/utils/font.dart';
 import 'package:casaflutter/utils/string_constant.dart';
@@ -304,7 +305,9 @@ class ProductDescriptionScreen extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 30),
-
+                  ProductImageGrid(
+                    productImages: product?.productImages ?? [],
+                  ),
                   _buildPolicyTile(
                     title: 'RETURN POLICY',
                     isExpanded: exploreCtrl.isShowReturn,
