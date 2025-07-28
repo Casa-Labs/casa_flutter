@@ -30,12 +30,15 @@ class OrderViewItemWidget extends StatelessWidget {
           child: CircleAvatar(
             maxRadius: 24,
             backgroundColor: Colors.transparent,
-            child: Image.network(
-              item.store != null &&
-                      item.store!.logo != null &&
-                      item.store!.logo!.isNotEmpty
-                  ? item.store!.logo!
-                  : ImageConstants.dummyNetworkPortrait,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(24),
+              child: Image.network(
+                item.store != null &&
+                        item.store!.logo != null &&
+                        item.store!.logo!.isNotEmpty
+                    ? item.store!.logo!
+                    : ImageConstants.dummyNetworkPortrait,
+              ),
             ),
           ),
         ),

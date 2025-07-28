@@ -59,6 +59,7 @@ class HomeScreen extends StatelessWidget {
                       FilterButtonModel(
                         title: 'Brand',
                         list: homeCtrl.brand.map((item) => item.name!).toList(),
+                        brandLogo: homeCtrl.brand.map((item) => item.logo!).toList(),
                         getSelectedValues: () {
                           return homeCtrl.brand
                               .where((e) => filterController
@@ -67,6 +68,7 @@ class HomeScreen extends StatelessWidget {
                               .map((e) => e.name!)
                               .toList();
                         },
+                        isCircleShow: true,
                         onClear: (_) {
                           filterController.clearFilter("storeIds");
                           homeCtrl.fetchProducts(
@@ -98,6 +100,7 @@ class HomeScreen extends StatelessWidget {
                               .map((e) => e.name!)
                               .toList();
                         },
+                        isCircleShow: false,
                         onClear: (_) {
                           filterController.clearFilter("categories");
                           homeCtrl.fetchProducts(
@@ -134,6 +137,7 @@ class HomeScreen extends StatelessWidget {
                               filterController.getCleanFilters(),
                               reset: true);
                         },
+                        isCircleShow: false,
                         onDone: (selectedNames) {
                           final colorIds = homeCtrl.colors
                               .where((e) => selectedNames.contains(e.name))
@@ -158,6 +162,7 @@ class HomeScreen extends StatelessWidget {
                               .map((e) => e.name!)
                               .toList();
                         },
+                        isCircleShow: true,
                         onClear: (_) {
                           filterController.clearFilter("productSize");
                           homeCtrl.fetchProducts(
@@ -279,12 +284,15 @@ class HomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(height: 5),
-                          homeCtrl.products.isNotEmpty
-                              ? _cardSwiper(
-                                  homeCtrl, context, homeCtrl.products)
-                              : Center(
-                                  child: Text('No products found'),
-                                ),
+                        GetBuilder<HomeController>(builder: (logic) {
+                          return
+                            homeCtrl.products.isNotEmpty
+                                ? _cardSwiper(
+                                homeCtrl, context, homeCtrl.products)
+                                : Center(
+                              child: Text('No products found'),
+                            );
+                        })
                         ],
                       ),
                     ),

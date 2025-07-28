@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+import '../../../../utils/bool.dart';
+
 class AddressesList extends StatelessWidget {
   AddressesList({super.key});
 
@@ -186,71 +188,84 @@ class AddressesList extends StatelessWidget {
                               ),
                             ),
                           ),
-                        Container(
-                          color: ButtonColor.white,
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16.0,
-                            vertical: 30.0,
-                          ),
-                          child: Obx(
-                            () => AnimatedContainer(
-                              duration: const Duration(milliseconds: 900),
-                              decoration: BoxDecoration(
-                                color: addressesController.isBlinking()
-                                    ? const Color(0xFF2C9D24)
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: FilledButton(
-                                style: FilledButton.styleFrom(
-                                  backgroundColor: Colors.transparent,
-                                  shadowColor: Colors.transparent,
-                                  surfaceTintColor: Colors.transparent,
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 14),
+                         Container(
+                            color: ButtonColor.white,
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0,
+                              vertical: 30.0,
+                            ),
+                            child: Obx(
+                              () => AnimatedContainer(
+                                duration: const Duration(milliseconds: 900),
+                                decoration: BoxDecoration(
+                                  color: addressesController.isBlinking()
+                                      ? const Color(0xFF2C9D24)
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                                onPressed: () async {
-                                  HapticFeedback.lightImpact();
-                                  addressesController
-                                      .checkForAddressSelection();
-                                  if (addressesController.isAddressSelected()) {
-                                    final address = addressesController
-                                        .addressList()
-                                        .firstWhere(
-                                            (element) => element.isSelected);
-                                    await Get.find<OrderReviewController>()
-                                        .createOrder(
-                                      address: address,
-                                      onPaymentSuccess: () async {
-                                        final isPopped =
+                                child: FilledButton(
+                                  style: FilledButton.styleFrom(
+                                    backgroundColor: Colors.transparent,
+                                    shadowColor: Colors.transparent,
+                                    surfaceTintColor: Colors.transparent,
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 14),
+                                  ),
+                                  onPressed: () async {
+                                    HapticFeedback.lightImpact();
+
+                                    addressesController
+                                        .checkForAddressSelection();
+                                    if (addressesController.isAddressSelected()) {
+                                      final address = addressesController
+                                          .addressList()
+                                          .firstWhere(
+                                              (element) => element.isSelected);
+                                      await Get.find<OrderReviewController>()
+                                          .createOrder(
+                                        address: address,
+                                        onPaymentSuccess: () async {
+                                          final isPopped =
+                                              await Navigator.of(context)
+                                                  .maybePop();
+                                          Boolean.isPaymentLoading(false);
+                                          if (isPopped && context.mounted) {
                                             await Navigator.of(context)
                                                 .maybePop();
-                                        if (isPopped && context.mounted) {
-                                          await Navigator.of(context)
-                                              .maybePop();
-                                        }
-                                      },
-                                    );
-                                  } else {
-                                    showToast(
-                                      message: addressesController.message(),
-                                    );
-                                  }
-                                },
-                                child: Text(
-                                  'Continue payment',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(
-                                        color: Colors.white,
-                                      ),
-                                ),
-                              ).paddingSymmetric(horizontal: 10),
+                                          }
+                                        },
+                                      );
+                                    } else {
+
+                                      showToast(
+                                        message: addressesController.message(),
+                                      );
+                                    }
+                                  },
+                                  child:
+                                  Boolean.isPaymentLoading.value
+                                          ? SizedBox(
+                                              height: 20,
+                                              width: 20,
+                                              child: CircularProgressIndicator(
+                                                color: Colors.white,
+                                                strokeWidth: 2,
+                                              ),
+                                            )
+                                          : Text(
+                                              'Continue payment',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium
+                                        ?.copyWith(
+                                          color: Colors.white,
+                                        ),
+                                  ),
+                                ).paddingSymmetric(horizontal: 10),
+                              ),
                             ),
                           ),
-                        ),
                       ],
                     ),
                     Positioned(

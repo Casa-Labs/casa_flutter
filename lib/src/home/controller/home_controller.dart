@@ -297,6 +297,8 @@ class HomeController extends GetxController {
         reactiveProducts.assignAll(products);
         currentPage++;
       }
+      isLoading.value = false;
+      update();
     } catch (e) {
       logg.e('Error fetching paginated product data: $e');
     } finally {

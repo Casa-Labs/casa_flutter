@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
+import '../../../utils/bool.dart';
 import '../../../utils/preference_manager.dart';
 import '../../../utils/utils.dart';
 import '../../auth/model/auth_models.dart';
@@ -218,6 +219,8 @@ class OrderReviewController extends GetxController {
         amount: amount.toInt(),
         onPaymentSuccess: onPaymentSuccess,
       );
+    }else{
+      Boolean.isPaymentLoading.value = false;
     }
 
     logg.d('create order $createOrderResponse');
@@ -245,13 +248,16 @@ class OrderReviewController extends GetxController {
           final errorMessage = verifyPaymentResponse?.errorMessage ??
               verifyPaymentResponse?.verifyPayment?.message;
           showToast(message: errorMessage ?? '');
+          Boolean.isPaymentLoading.value = false;
         }
       }, // Success Handler
       handlePaymentError: (final PaymentFailureResponse? response) {
         showToast(message: response?.message ?? '');
+        Boolean.isPaymentLoading.value = false;
       }, // Error Handler
       handleExternalWallet: (final ExternalWalletResponse? response) {
         showToast(message: 'External Wallet - ${response?.walletName ?? ''}');
+        Boolean.isPaymentLoading.value = false;
       }, // External wallet Handler
     );
   }

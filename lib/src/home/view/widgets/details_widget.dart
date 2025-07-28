@@ -62,6 +62,8 @@ class ProductDetails extends StatelessWidget {
               const SizedBox(height: 35),
               Text('Size:', style: textTheme.bodyLarge),
               const SizedBox(height: 10),
+              Text('NOTE : Add to cart to see availability for size and colour accurately.', style: textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600)),
+              const SizedBox(height: 10),
               // Pass the size as a list from API => done
               SelectSizeButton(
                 size: size,

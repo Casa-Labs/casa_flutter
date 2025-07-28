@@ -36,11 +36,20 @@ class WishlistController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getUserClosets();
+
     selectedImage.value = imageLinks[0];
     searchController.addListener(() {
       searchQuery.value = searchController.text;
     });
+  }
+
+  @override
+  void onReady() {
+    if ((PreferenceManager.getString(PreferenceManager.token) ?? "")
+        .isNotEmpty) {
+      getUserClosets();
+    }
+    super.onReady();
   }
 
 // ========== UI FUNCTIONS ========== //
@@ -125,10 +134,10 @@ class WishlistController extends GetxController {
           createCloset();
         } else {
           if (response.getUserClosets!.first.clothingItems!.isEmpty) {
-            addItemToCloset(
-                closetId: response.getUserClosets!.first.id.toString(),
-                imageUrl: AppStrings.defaultClosetImageUrl,
-                name: AppStrings.defaultClosetName);
+              addItemToCloset(
+                  closetId: response.getUserClosets!.first.id.toString(),
+                  imageUrl: AppStrings.defaultClosetImageUrl,
+                  name: AppStrings.defaultClosetName);
           } else {
             getUserClosetList(response.getUserClosets);
             wishlistData(getUserClosetList.first.clothingItems);
