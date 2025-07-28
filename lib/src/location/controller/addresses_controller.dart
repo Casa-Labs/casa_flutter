@@ -6,6 +6,7 @@ import 'package:casaflutter/src/location/model/service/location_service.dart';
 import 'package:casaflutter/utils/preference_manager.dart';
 import 'package:get/get.dart';
 
+import '../../../utils/bool.dart';
 import '../../auth/model/auth_models.dart';
 
 class AddressesController extends GetxController {
@@ -148,6 +149,7 @@ class AddressesController extends GetxController {
     final isSelected = addressList.any((element) => element.isSelected);
     if (addressList.length == 1 || isSelected) {
       isAddressSelected(true);
+      Boolean.isPaymentLoading.value = true;
     } else {
       isAddressSelected(false);
       message('Please select delivery address.');

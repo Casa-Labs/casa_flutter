@@ -78,6 +78,7 @@ class _AutoScrollBrandListState extends State<AutoScrollBrandList> {
       child: ListView.builder(
         controller: _scrollController,
         scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.only(top: 5),
         physics: NeverScrollableScrollPhysics(),
         itemCount: itemCount,
         itemBuilder: (context, index) {
@@ -97,12 +98,20 @@ class _AutoScrollBrandListState extends State<AutoScrollBrandList> {
                   margin: EdgeInsets.symmetric(horizontal: 7),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
                     image: DecorationImage(
                       image: CachedNetworkImageProvider(
                         brandItem.logo ?? ImageConstants.dummyNetworkPortrait,
                       ),
                       fit: BoxFit.fill,
                     ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.3),
+                        blurRadius: 5,
+                        offset: Offset(0, 0),
+                      ),
+                    ]
                   ),
                 ),
                 SizedBox(height: 8),

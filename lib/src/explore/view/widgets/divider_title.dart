@@ -11,7 +11,7 @@ class DividerTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 15),
+      padding:  EdgeInsets.symmetric(horizontal: 10,vertical: text == "BRANDS"? 0 : 15),
       child: Text(text, style: Theme.of(context).textTheme.bodyLarge),
     );
   }

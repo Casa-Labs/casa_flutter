@@ -46,7 +46,7 @@ class Payment {
       final userDetails = User.fromJson(userDetailsMap);
 
       final Map<String, Object> options = <String, Object>{
-        'key': RazorpayConst.devKeyId,
+        'key': RazorpayConst.liveKeyId,
         'amount': amount,
         'name': 'Casa',
         'order_id': orderId,

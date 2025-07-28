@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 class FilterSelectionDialog extends StatefulWidget {
   final bool showTabs;
+  final bool? isCircleShow;
   final List<String> categories;
+  final List<String>? brandLogo;
   final List<String>? initiallySelected;
   final void Function(List<String>) onClear;
   final void Function(List<String>) onDone;
@@ -14,6 +16,8 @@ class FilterSelectionDialog extends StatefulWidget {
     required this.categories,
     required this.onClear,
     required this.onDone,
+    this.brandLogo,
+    this.isCircleShow,
     this.initiallySelected,
   });
 
@@ -59,6 +63,10 @@ class _FilterSelectionDialogState extends State<FilterSelectionDialog> {
                 itemCount: widget.categories.length,
                 itemBuilder: (context, index) {
                   final category = widget.categories[index];
+                  var brand = "";
+                  if ((widget.brandLogo ?? []).isNotEmpty) {
+                    brand = widget.brandLogo![index];
+                  }
                   final isSelected = selected.contains(category);
                   return GestureDetector(
                     onTap: () {
@@ -70,7 +78,7 @@ class _FilterSelectionDialogState extends State<FilterSelectionDialog> {
                         }
                       });
                     },
-                    child: _buildCategoryTile(category, isSelected),
+                    child: _buildCategoryTile(category, isSelected, brand),
                   );
                 },
               ),
@@ -98,7 +106,7 @@ class _FilterSelectionDialogState extends State<FilterSelectionDialog> {
     );
   }
 
-  Widget _buildCategoryTile(String category, bool isSelected) {
+  Widget _buildCategoryTile(String category, bool isSelected, String? brand) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Container(
@@ -112,10 +120,26 @@ class _FilterSelectionDialogState extends State<FilterSelectionDialog> {
         ),
         child: Row(
           children: [
-            CircleAvatar(
-              backgroundColor: isSelected ? Colors.white : Colors.grey.shade300,
-              radius: 18,
-            ),
+            widget.isCircleShow ?? true ?
+            (brand ?? "").isNotEmpty
+                ? Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Colors.black)
+              ),
+                  child: CircleAvatar(
+                      radius: 20,
+                              backgroundColor: Colors.white,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(18),
+                          child: Image.network(brand ?? "",fit: BoxFit.fill,)),
+                    ),
+                )
+                : CircleAvatar(
+                    backgroundColor:
+                        isSelected ? Colors.white : Colors.grey.shade300,
+                    radius: 18,
+                  ) : SizedBox(),
             const SizedBox(width: 10),
             Expanded(
               child: Text(

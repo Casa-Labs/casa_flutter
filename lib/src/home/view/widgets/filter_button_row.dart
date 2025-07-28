@@ -48,6 +48,8 @@ class FilterButtonRow extends StatelessWidget {
                     builder: (context) => FilterSelectionDialog(
                       showTabs: false,
                       categories: filter.list,
+                      brandLogo: filter.brandLogo,
+                      isCircleShow:filter.isCircleShow ,
                       initiallySelected: filter.getSelectedValues?.call() ?? [],
                       onClear: (values) {
                         filter.onClear?.call(values);
@@ -73,7 +75,9 @@ class FilterButtonRow extends StatelessWidget {
 
 class FilterButtonModel {
   final String title;
+  final bool? isCircleShow;
   final List<String> list;
+  final List<String>? brandLogo;
   final void Function(List<String>)? onClear;
   final void Function(List<String>)? onDone;
   final List<String> Function()? getSelectedValues;
@@ -82,6 +86,8 @@ class FilterButtonModel {
     required this.title,
     required this.list,
     this.onClear,
+    this.isCircleShow,
+    this.brandLogo,
     this.onDone,
     this.getSelectedValues,
   });

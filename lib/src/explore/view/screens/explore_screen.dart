@@ -86,6 +86,7 @@ class ExploreScreen extends StatelessWidget {
                             children: [
                               InkWell(
                                 onTap: () async {
+                                  HapticFeedback.lightImpact();
                                   if (exploreCtrl.selectedIndex.value == 0) {
                                     return;
                                   }
@@ -133,7 +134,8 @@ class ExploreScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Padding(
+                              Container(
+                                // color: Colors.red,
                                 padding: const EdgeInsets.only(
                                   bottom: 50.0,
                                   left: 15.0,
@@ -153,6 +155,7 @@ class ExploreScreen extends StatelessWidget {
                             children: [
                               InkWell(
                                 onTap: () async {
+                                  HapticFeedback.lightImpact();
                                   if (exploreCtrl.selectedIndex.value == 1) {
                                     return;
                                   }
@@ -265,12 +268,13 @@ class ExploreSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         // spacing: 20,
         children: [
-          const SizedBox.shrink(),
+          // const SizedBox.shrink(),
           Column(
             children: [
               DividerTitle(
                 text: 'BRANDS',
               ),
+              SizedBox(height: 15),
               exploreCtrl.brands.isEmpty
                   ? Text('No Brands Found',
                       style: Theme.of(context).textTheme.bodyLarge)

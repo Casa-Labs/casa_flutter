@@ -41,6 +41,7 @@ class ProductDescriptionScreen extends StatelessWidget {
   final orderReviewController = Get.find<OrderReviewController>();
   final wishController = Get.find<WishlistController>();
   final exploreCtrl = Get.put(ExploreController());
+
   @override
   Widget build(BuildContext context) {
     // TODO : Terrible logic of relying on explore controller but will fix it later
@@ -67,47 +68,59 @@ class ProductDescriptionScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(PaddingSize.commonPadding),
                 controller: productDescriptionCtrl.scrollController,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    spacing: 10,
-                    children: [
-                      CircleAvatar(
-                        backgroundImage: CachedNetworkImageProvider(
-                          product?.store?.logo ??
-                              ImageConstants.dummyNetworkPortrait,
+                  InkWell(
+                    onTap: () {
+                      context.pushNamed(
+                        RouteNames.store,
+                        pathParameters: {'id': product?.store?.id ?? ''},
+                      );
+                    },
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      spacing: 10,
+                      children: [
+                        CircleAvatar(
+                          backgroundImage: CachedNetworkImageProvider(
+                            product?.store?.logo ??
+                                ImageConstants.dummyNetworkPortrait,
+                          ),
+                          radius: 30,
                         ),
-                        radius: 30,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            product?.store?.name ?? AppStrings.productBrand,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall
-                                ?.copyWith(fontWeight: FontWeight.w600),
-                          ),
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              textStyle: Theme.of(context).textTheme.bodyMedium,
-                              padding: EdgeInsets.only(right: 10, bottom: 10),
-                              minimumSize: Size.zero,
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              product?.store?.name ?? AppStrings.productBrand,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall
+                                  ?.copyWith(fontWeight: FontWeight.w600),
                             ),
-                            onPressed: () {
-                              context.pushNamed(
-                                RouteNames.store,
-                                pathParameters: {
-                                  'id': product?.store?.id ?? ''
-                                },
-                              );
-                            },
-                            child: const Text('Visit store'),
-                          ),
-                        ],
-                      )
-                    ],
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                textStyle:
+                                    Theme.of(context).textTheme.bodyMedium,
+                                padding: EdgeInsets.only(right: 10, bottom: 10),
+                                minimumSize: Size.zero,
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              onPressed: () {
+                                context.pushNamed(
+                                  RouteNames.store,
+                                  pathParameters: {
+                                    'id': product?.store?.id ?? ''
+                                  },
+                                );
+                              },
+                              child: const Text(
+                                'Visit store',
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 20),
                   Center(
@@ -308,21 +321,27 @@ class ProductDescriptionScreen extends StatelessWidget {
                   ProductImageGrid(
                     productImages: product?.productImages ?? [],
                   ),
-                  _buildPolicyTile(
-                    title: 'RETURN POLICY',
-                    isExpanded: exploreCtrl.isShowReturn,
-                    onTap: () => exploreCtrl.changeReturnPolicy(),
-                    content:
-                        product!.customReturnPolicy ?? AppStrings.returnPolicy,
-                  ),
+                  GetBuilder<ExploreController>(
+                      builder: (controller) {
+                    return _buildPolicyTile(
+                      title: 'RETURN POLICY',
+                      isExpanded: exploreCtrl.isShowReturn,
+                      onTap: () => exploreCtrl.changeReturnPolicy(),
+                      content: product!.customReturnPolicy ??
+                          AppStrings.returnPolicy,
+                    );
+                  }),
                   const SizedBox(height: 20),
-                  _buildPolicyTile(
-                    title: 'SHIPPING POLICY',
-                    isExpanded: exploreCtrl.isShowShipping,
-                    onTap: () => exploreCtrl.changeShippingPolicy(),
-                    content: product.customShippingPolicy ??
-                        AppStrings.shippingPolicy,
-                  ),
+                  GetBuilder<ExploreController>(
+                      builder: (controller) {
+                    return _buildPolicyTile(
+                      title: 'SHIPPING POLICY',
+                      isExpanded: exploreCtrl.isShowShipping,
+                      onTap: () => exploreCtrl.changeShippingPolicy(),
+                      content: product?.customShippingPolicy ??
+                          AppStrings.shippingPolicy,
+                    );
+                  }),
                   const SizedBox(height: 20),
 
                   // TODO : Need to refactor review to rely on obx

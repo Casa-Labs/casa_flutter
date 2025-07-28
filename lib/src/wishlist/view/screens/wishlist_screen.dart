@@ -33,6 +33,12 @@ class WishlistScreen extends StatelessWidget {
           : SafeArea(
               child: SingleChildScrollView(
                 child: Obx(() {
+                  if (wishController.filteredWishlist.isEmpty &&
+                      (PreferenceManager.getString(PreferenceManager.token) ??
+                              "")
+                          .isNotEmpty) {
+                    wishController.getUserClosets();
+                  }
                   return Column(
                     children: [
                       Padding(

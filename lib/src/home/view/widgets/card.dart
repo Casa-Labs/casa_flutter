@@ -55,7 +55,7 @@ class Cards extends StatelessWidget {
                           Align(
                             alignment: Alignment.center,
                             child: SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.74,
+                              height: MediaQuery.of(context).size.height * 0.72,
                               width: MediaQuery.of(context).size.width,
                               child: ClipRRect(
                                 borderRadius:
@@ -164,15 +164,19 @@ class Cards extends StatelessWidget {
                                                 maxRadius: 24,
                                                 backgroundColor:
                                                     Colors.transparent,
-                                                child: CachedNetworkImage(
-                                                  imageUrl: (product.store
-                                                                  ?.logo ??
-                                                              '')
-                                                          .isNotEmpty
-                                                      ? product.store?.logo ??
-                                                          ''
-                                                      : ImageConstants
-                                                          .dummyNetworkPortrait,
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(24),
+                                                  child: CachedNetworkImage(
+                                                    imageUrl: (product.store
+                                                                    ?.logo ??
+                                                                '')
+                                                            .isNotEmpty
+                                                        ? product.store?.logo ??
+                                                            ''
+                                                        : ImageConstants
+                                                            .dummyNetworkPortrait,
+                                                    fit: BoxFit.fill,
+                                                  ),
                                                 ),
                                               ),
                                             ),
