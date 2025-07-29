@@ -7,9 +7,9 @@ import 'package:get/get.dart';
 class SearchService {
   final searchViewCtrl = Get.find<SearchViewController>();
 
-  Future<void> searchProducts({required String searchText}) async {
+  Future<void> searchProducts(Map<String, dynamic> params) async {
     var response =
-        await GraphQLManager().getProductsForSearch({"search": searchText});
+        await GraphQLManager().getProductsForSearch(params);
 
     if (!response.hasException && response.data != null) {
       final productsResponse =

@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:casaflutter/src/common/widgets/buttons/select_size_button.dart';
 import 'package:casaflutter/src/home/controller/home_controller.dart';
 import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../routes/app_routes.dart';
 import '../../../../utils/color_constant.dart';
@@ -365,12 +367,59 @@ class ProductImageGrid extends StatelessWidget {
           },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: Image.network(
-              productImages[index],
-              fit: BoxFit.cover,
-            ),
+            child:
+            CachedNetworkImage(
+              imageUrl: productImages[index],
+              imageBuilder: (context, imageProvider) {
+                return Container(
+                  height: 210,
+                  width: 100,
+                  margin: EdgeInsets.only(right: 20),
+                  decoration: BoxDecoration(
+                    borderRadius:
+                    BorderRadius.circular(15),
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
+              },
+              errorWidget: (context, url, error) {
+                return Container(
+                  height: 210,
+                  width: 100,
+                  margin: EdgeInsets.only(right: 20),
+                  decoration: BoxDecoration(
+                    borderRadius:
+                    BorderRadius.circular(15),
+                    image:  DecorationImage(
+                      image: AssetImage(ImageConstants.errorImage),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
+              },
+              placeholder: (context, url) =>
+                  Shimmer.fromColors(
+                    baseColor: Colors.white
+                        .withValues(alpha: 0.5),
+                    highlightColor: Colors.black
+                        .withValues(alpha: 0.5),
+                    child: Container(
+                      height: 210,
+                      width: 100,
+                      margin:
+                      EdgeInsets.only(right: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius:
+                        BorderRadius.circular(15),
+                      ),
+                    ),
+                  )
           ),
-        );
+        ));
       },
     );
   }
@@ -389,9 +438,56 @@ class ProductImageGrid extends StatelessWidget {
                 boundaryMargin: const EdgeInsets.all(100),
                 minScale: 0.8,
                 maxScale: 4.0,
-                child: Image.network(
-                  imageUrl,
-                  fit: BoxFit.cover,
+                child:  CachedNetworkImage(
+                    imageUrl: imageUrl,
+                    imageBuilder: (context, imageProvider) {
+                      return Container(
+                        height: 210,
+                        width: 100,
+                        margin: EdgeInsets.only(right: 20),
+                        decoration: BoxDecoration(
+                          borderRadius:
+                          BorderRadius.circular(15),
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    },
+                    errorWidget: (context, url, error) {
+                      return Container(
+                        height: 210,
+                        width: 100,
+                        margin: EdgeInsets.only(right: 20),
+                        decoration: BoxDecoration(
+                          borderRadius:
+                          BorderRadius.circular(15),
+                          image:  DecorationImage(
+                            image: AssetImage(ImageConstants.errorImage),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    },
+                    placeholder: (context, url) =>
+                        Shimmer.fromColors(
+                          baseColor: Colors.white
+                              .withValues(alpha: 0.5),
+                          highlightColor: Colors.black
+                              .withValues(alpha: 0.5),
+                          child: Container(
+                            height: 210,
+                            width: 100,
+                            margin:
+                            EdgeInsets.only(right: 20),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                              BorderRadius.circular(15),
+                            ),
+                          ),
+                        )
                 ),
               ),
               Positioned(

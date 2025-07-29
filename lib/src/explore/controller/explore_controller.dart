@@ -40,7 +40,7 @@ class ExploreController extends GetxController {
 
   // Related Products ( Products Call) pagination
   RxInt relatedProductsPage = 1.obs;
-  RxInt relatedProductsLimit = 40.obs;
+  RxInt relatedProductsLimit = 20.obs;
   RxBool relatedProductsIsLoadingMore = false.obs;
   RxBool relatedProductsHasMore = true.obs;
 

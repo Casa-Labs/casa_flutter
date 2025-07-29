@@ -149,14 +149,17 @@ class HomeController extends GetxController {
             !noMoreData) {
           FilterController filterController = Get.find<FilterController>();
           final Map<String, dynamic> updatedFilters;
+          List<String?> productIds = products.map((product) => product.id).toList();
           if (selectedGender.value.isNotEmpty) {
             updatedFilters = {
               "gender": selectedGender.value,
               ...filterController.getCleanFilters(),
+              "skipProducts":productIds
             };
           } else {
             updatedFilters = {
               ...filterController.getCleanFilters(),
+              "skipProducts":productIds
             };
           }
           fetchProducts(updatedFilters);

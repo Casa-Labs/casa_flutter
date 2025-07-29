@@ -9,6 +9,8 @@ import 'package:get/get.dart';
 
 import '../../home/model/home_models.dart' as home;
 import '../model/explore_products_model.dart' as epm;
+import 'package:casaflutter/src/explore/model/product_by_id_model.dart' as pim;
+import '../model/service/explore_service.dart';
 
 class ProductDescriptionController extends GetxController {
   // ========= CONTROLLERS ========= //
@@ -24,6 +26,9 @@ class ProductDescriptionController extends GetxController {
   RxInt relatedProductsLimit = 10.obs;
   RxBool relatedProductsIsLoadingMore = false.obs;
   RxBool relatedProductsHasMore = true.obs;
+  final Rxn<pim.GetProductDetails> productDetail = Rxn<pim.GetProductDetails>();
+  final RxBool isLoadingProduct = true.obs;
+  final RxBool hasError = false.obs;
 
   // ========== STATES ========== //
 
@@ -31,6 +36,7 @@ class ProductDescriptionController extends GetxController {
   void onReady() async {
     super.onReady();
     await getRelatedProductsCall(isInitialLoad: true);
+
 
     // Todo : Handling via a list view controller since infinite scroll is present in product description screen. Fix it later.
 
@@ -51,6 +57,8 @@ class ProductDescriptionController extends GetxController {
   }
 
   // ========== UI FUNCTIONS ========== //
+
+
 
   home.Product getProductData(model.GetProductDetails getProductDet) {
     List<home.Sizes> sizes = [];
@@ -113,6 +121,7 @@ class ProductDescriptionController extends GetxController {
 
   // ========== APIs FUNCTIONS ========== //
 
+
   // TODO : Clean up the pagination logic, API calls should be handled by service
   Future<void> getRelatedProductsCall({bool isInitialLoad = false}) async {
     logg.i('Get Related Products call in product description');
@@ -156,5 +165,25 @@ class ProductDescriptionController extends GetxController {
     }
 
     relatedProductsIsLoadingMore.value = false;
+  }
+
+  Future<void> fetchProductDetails(String id) async {
+    try {
+      isLoadingProduct.value = true;
+      hasError.value = false;
+      final result = await getProductDetailsByIdCall(id);
+      productDetail.value = result;
+      getRelatedProductsCall(isInitialLoad: true);
+    } catch (e) {
+      logg.e('Error fetching product details: $e');
+      hasError.value = true;
+    } finally {
+      isLoadingProduct.value = false;
+    }
+  }
+
+  Future<pim.GetProductDetails> getProductDetailsByIdCall(
+      String productId) async {
+    return await ExploreService().getProductDetailsById(productId);
   }
 }
