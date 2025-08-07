@@ -48,6 +48,7 @@ class SearchViewScreen extends StatelessWidget {
                             childAspectRatio: 0.49,
                             mainAxisSpacing: 15),
                     itemCount: searchViewCtrl.productsList.length,
+                    controller: searchViewCtrl.scrollController,
                     itemBuilder: (context, index) {
                       final product = searchViewCtrl.productsList[index];
                       return ProductCard(

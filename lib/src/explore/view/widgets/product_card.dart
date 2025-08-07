@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/color_constant.dart';
+import '../../../../utils/string_constant.dart';
 
 class ProductCard extends StatelessWidget {
   final String name;
@@ -50,6 +51,21 @@ class ProductCard extends StatelessWidget {
                     fit: BoxFit.cover,
                     width: double.infinity,
                     height: 300,
+                    errorWidget: (context, url, error) {
+                      return Container(
+                        height: 210,
+                        width: 100,
+                        margin: EdgeInsets.only(right: 20),
+                        decoration: BoxDecoration(
+                          borderRadius:
+                          BorderRadius.circular(15),
+                          image:  DecorationImage(
+                            image: AssetImage(ImageConstants.errorImage),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                   Positioned(
                     bottom: 0,
