@@ -48,8 +48,6 @@ class ProductCard extends StatelessWidget {
                 children: [
                   CachedNetworkImage(
                     imageUrl: imageURL,
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
                     fit: BoxFit.cover,
                     width: double.infinity,
                     height: 300,
@@ -59,9 +57,8 @@ class ProductCard extends StatelessWidget {
                         width: 100,
                         margin: EdgeInsets.only(right: 20),
                         decoration: BoxDecoration(
-                          borderRadius:
-                          BorderRadius.circular(15),
-                          image:  DecorationImage(
+                          borderRadius: BorderRadius.circular(15),
+                          image: DecorationImage(
                             image: AssetImage(ImageConstants.errorImage),
                             fit: BoxFit.cover,
                           ),
