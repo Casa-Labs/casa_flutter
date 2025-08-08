@@ -87,7 +87,8 @@ class StoreScreen extends StatelessWidget {
                               image: CachedNetworkImageProvider(
                                 productList.first.product?.store?.logo ??
                                     ImageConstants.dummyNetworkPortrait,
-                                // height: 130,
+                                // height: 130
+
                               ),
                             )),
                       ),

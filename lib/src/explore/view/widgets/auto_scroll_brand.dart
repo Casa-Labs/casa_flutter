@@ -73,7 +73,7 @@ class _AutoScrollBrandListState extends State<AutoScrollBrandList> {
     final itemCount = widget.brands.length * 2;
 
     return SizedBox(
-      height: 120,
+      height: 125,
       width: double.infinity,
       child: ListView.builder(
         controller: _scrollController,

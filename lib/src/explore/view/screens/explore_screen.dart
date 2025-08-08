@@ -9,7 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shimmer/shimmer.dart';
-
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/string_constant.dart';
 import '../../../wishlist/view/screens/add_to_closet.dart';
@@ -268,103 +267,147 @@ class ExploreSection extends StatelessWidget {
         // spacing: 20,
         children: [
           // const SizedBox.shrink(),
-          // Column(
-          //   children: [
-          //     DividerTitle(
-          //       text: 'BRANDS',
-          //     ),
-          //     SizedBox(height: 15),
-          //     exploreCtrl.brands.isEmpty
-          //         ? Text('No Brands Found',
-          //             style: Theme.of(context).textTheme.bodyLarge)
-          //         : /*SizedBox(
-          //             height: 60,
-          //             width: double.infinity,
-          //             child: Align(
-          //               alignment: Alignment.centerLeft,
-          //               child:
-          //               CarouselSlider.builder(
-          //                 itemCount: exploreCtrl.brands.length,
-          //                 itemBuilder: (BuildContext context, int index, int realIndex) {
-          //                   final brand = exploreCtrl.brands[index];
-          //                   return InkWell(
-          //                     onTap: () {
-          //                       context.pushNamed(
-          //                         RouteNames.store,
-          //                         pathParameters: {'id': brand.id ?? ''},
-          //                       );
-          //                     },
-          //                     child: Container(
-          //                       width: 55,
-          //                       margin: EdgeInsets.symmetric(horizontal: 8),
-          //                       decoration: BoxDecoration(
-          //                         shape: BoxShape.circle,
-          //                         border:
-          //                         Border.all(color: BorderColor.black),
-          //                         image: DecorationImage(
-          //                             image: CachedNetworkImageProvider(
-          //                                 brand.logo ??
-          //                                     ImageConstants
-          //                                         .dummyNetworkPortrait),
-          //                             fit: BoxFit.cover),
-          //                       ),
-          //                     ),
-          //                   );
-          //                 },
-          //                 options: CarouselOptions(
-          //                     initialPage: 0,
-          //                     enableInfiniteScroll: true,
-          //                     reverse: false,
-          //                     autoPlay: true,
-          //
-          //                     viewportFraction: 1,
-          //                     scrollDirection: Axis.horizontal),
-          //               ),
-          //               */ /*ListView.builder(
-          //                   shrinkWrap: true,
-          //                   scrollDirection: Axis.horizontal,
-          //                   itemCount: exploreCtrl.brands.length,
-          //                   itemBuilder: (context, index) {
-          //                     final brand = exploreCtrl.brands[index];
-          //                     return InkWell(
-          //                       onTap: () {
-          //                         context.pushNamed(
-          //                           RouteNames.store,
-          //                           pathParameters: {'id': brand.id ?? ''},
-          //                         );
-          //                       },
-          //                       child: Container(
-          //                         width: 55,
-          //                         margin: EdgeInsets.symmetric(horizontal: 8),
-          //                         decoration: BoxDecoration(
-          //                           shape: BoxShape.circle,
-          //                           border:
-          //                               Border.all(color: BorderColor.black),
-          //                           image: DecorationImage(
-          //                               image: CachedNetworkImageProvider(
-          //                                   brand.logo ??
-          //                                       ImageConstants
-          //                                           .dummyNetworkPortrait),
-          //                               fit: BoxFit.cover),
-          //                         ),
-          //                       ),
-          //                     );
-          //                   }),*/ /*
-          //             ),
-          //           ),*/
-          //         //     AutoScrollBrandList(
-          //         //         brands: exploreCtrl.brands,
-          //         //         isRight: false,
-          //         //         scrollSpeed: 3),
-          //         // SizedBox(height: 10),
-          //         // AutoScrollBrandList(
-          //         //     brands: exploreCtrl.brands,
-          //         //     isRight: true,
-          //         //     scrollSpeed: 2),
-          //
-          //         const SizedBox.shrink(),
-          //   ],
-          // ),
+          Column(
+            children: [
+              DividerTitle(
+                text: 'BRANDS',
+              ),
+              SizedBox(height: 15),
+              exploreCtrl.brands.isEmpty
+                  ? Text('No Brands Found',
+                      style: Theme.of(context).textTheme.bodyLarge)
+                  : /*SizedBox(
+                      height: 60,
+                      width: double.infinity,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child:
+                        CarouselSlider.builder(
+                          itemCount: exploreCtrl.brands.length,
+                          itemBuilder: (BuildContext context, int index, int realIndex) {
+                            final brand = exploreCtrl.brands[index];
+                            return InkWell(
+                              onTap: () {
+                                context.pushNamed(
+                                  RouteNames.store,
+                                  pathParameters: {'id': brand.id ?? ''},
+                                );
+                              },
+                              child: Container(
+                                width: 55,
+                                margin: EdgeInsets.symmetric(horizontal: 8),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border:
+                                  Border.all(color: BorderColor.black),
+                                  image: DecorationImage(
+                                      image: CachedNetworkImageProvider(
+                                          brand.logo ??
+                                              ImageConstants
+                                                  .dummyNetworkPortrait),
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                            );
+                          },
+                          options: CarouselOptions(
+                              initialPage: 0,
+                              enableInfiniteScroll: true,
+                              reverse: false,
+                              autoPlay: true,
+
+                              viewportFraction: 1,
+                              scrollDirection: Axis.horizontal),
+                        ),
+                        ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: exploreCtrl.brands.length,
+                            itemBuilder: (context, index) {
+                              final brand = exploreCtrl.brands[index];
+                              return InkWell(
+                                onTap: () {
+                                  context.pushNamed(
+                                    RouteNames.store,
+                                    pathParameters: {'id': brand.id ?? ''},
+                                  );
+                                },
+                                child: Container(
+                                  width: 55,
+                                  margin: EdgeInsets.symmetric(horizontal: 8),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border:
+                                        Border.all(color: BorderColor.black),
+                                    image: DecorationImage(
+                                        image: CachedNetworkImageProvider(
+                                            brand.logo ??
+                                                ImageConstants
+                                                    .dummyNetworkPortrait),
+                                        fit: BoxFit.cover),
+                                  ),
+                                ),
+                              );
+                            }),
+                      ),
+                    ),*/
+              SizedBox(
+                height: 125,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.only(top: 5),
+                  shrinkWrap: true,
+                  itemCount: exploreCtrl.brands.length,
+                  itemBuilder: (context, index) {
+                    final brandItem = exploreCtrl.brands[index];
+                    return InkWell(
+                      onTap: () {
+                        context.pushNamed(
+                          RouteNames.store,
+                          pathParameters: {'id': brandItem.id ?? ''},
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 90,
+                            height: 90,
+                            margin: EdgeInsets.symmetric(horizontal: 7),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                image: DecorationImage(
+                                  image: CachedNetworkImageProvider(
+                                    brandItem.logo ?? ImageConstants.dummyNetworkPortrait,
+                                  ),
+                                  fit: BoxFit.fill,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.3),
+                                    blurRadius: 5,
+                                    offset: Offset(0, 0),
+                                  ),
+                                ]
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(brandItem.name ?? "",style: Theme.of(context).textTheme.bodySmall)
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+                  // AutoScrollBrandList(
+                  //     brands: exploreCtrl.brands,
+                  //     isRight: false,
+                  //     scrollSpeed: 3),
+              SizedBox(height: 10),
+              // AutoScrollBrandList(
+              //     brands: exploreCtrl.brands, isRight: true, scrollSpeed: 2),
+            ],
+          ),
 
           // Trending Now Column
           Column(
@@ -409,6 +452,21 @@ class ExploreSection extends StatelessWidget {
                                                   BorderRadius.circular(15),
                                               image: DecorationImage(
                                                 image: imageProvider,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        errorWidget: (context, url, error) {
+                                          return Container(
+                                            height: 210,
+                                            width: 100,
+                                            margin: EdgeInsets.only(right: 20),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                              BorderRadius.circular(15),
+                                              image:  DecorationImage(
+                                                image: AssetImage(ImageConstants.errorImage),
                                                 fit: BoxFit.cover,
                                               ),
                                             ),
@@ -509,6 +567,21 @@ class ExploreSection extends StatelessWidget {
                                             ),
                                           );
                                         },
+                                        errorWidget: (context, url, error) {
+                                          return Container(
+                                            height: 210,
+                                            width: 100,
+                                            margin: EdgeInsets.only(right: 20),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                              BorderRadius.circular(15),
+                                              image:  DecorationImage(
+                                                image: AssetImage(ImageConstants.errorImage),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          );
+                                        },
                                         placeholder: (context, url) =>
                                             Shimmer.fromColors(
                                               baseColor: Colors.white
@@ -578,6 +651,21 @@ class ExploreSection extends StatelessWidget {
                                                   BorderRadius.circular(15),
                                               image: DecorationImage(
                                                 image: imageProvider,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        errorWidget: (context, url, error) {
+                                          return Container(
+                                            height: 210,
+                                            width: 100,
+                                            margin: EdgeInsets.only(right: 20),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                              BorderRadius.circular(15),
+                                              image:  DecorationImage(
+                                                image: AssetImage(ImageConstants.errorImage),
                                                 fit: BoxFit.cover,
                                               ),
                                             ),

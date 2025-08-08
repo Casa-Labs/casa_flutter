@@ -40,6 +40,7 @@ class ImageConstants {
   static String logoFourteen = 'assets/splash/logo_fourteen.png';
   static String logoFifteen = 'assets/splash/logo_fifteen.png';
   static String logoSeven = 'assets/splash/logo_seven.png';
+  static String errorImage = 'assets/images/no_image.jpg';
 }
 
 class IconConstants {

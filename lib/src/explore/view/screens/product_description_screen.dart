@@ -30,18 +30,33 @@ import '../../../wishlist/controller/wishlist_controller.dart';
 import '../../../wishlist/view/screens/add_to_closet.dart';
 import '../widgets/quantity_selector_button.dart';
 
-class ProductDescriptionScreen extends StatelessWidget {
+class ProductDescriptionScreen extends StatefulWidget {
   final String id;
 
-  ProductDescriptionScreen({super.key, required this.id});
+  const ProductDescriptionScreen({super.key, required this.id});
 
+  @override
+  State<ProductDescriptionScreen> createState() => _ProductDescriptionScreenState();
+}
+
+class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
   final productDescriptionCtrl = Get.put(ProductDescriptionController());
-  final homeController = Get.find<HomeController>();
-  final cartController = Get.find<CartController>();
-  final orderReviewController = Get.find<OrderReviewController>();
-  final wishController = Get.find<WishlistController>();
-  final exploreCtrl = Get.put(ExploreController());
 
+  final homeController = Get.find<HomeController>();
+
+  final cartController = Get.find<CartController>();
+
+  final orderReviewController = Get.find<OrderReviewController>();
+
+  final wishController = Get.find<WishlistController>();
+
+  @override
+  void initState() {
+    productDescriptionCtrl.fetchProductDetails(widget.id);
+    super.initState();
+  }
+
+  // final exploreCtrl = Get.put(ExploreController());
   @override
   Widget build(BuildContext context) {
     // TODO : Terrible logic of relying on explore controller but will fix it later
@@ -50,556 +65,555 @@ class ProductDescriptionScreen extends StatelessWidget {
       appBar: CommonAppBar(
         title: '',
       ),
-      body: FutureBuilder<model.GetProductDetails>(
-        future: exploreCtrl.getProductDetailsByIdCall(id),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            logg.e(snapshot.error);
-            return const Center(child: Text("Can't fetch product details"));
-          } else if (!snapshot.hasData || snapshot.data == null) {
-            return const Center(child: Text("No product details available"));
-          } else {
-            final product = snapshot.data;
-            productDescriptionCtrl.getRelatedProductsCall(isInitialLoad: true);
-            return Obx(
-              () => ListView(
-                padding: const EdgeInsets.all(PaddingSize.commonPadding),
-                controller: productDescriptionCtrl.scrollController,
+      body: Obx(() {
+        if (productDescriptionCtrl.isLoadingProduct.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (productDescriptionCtrl.hasError.value) {
+          return const Center(child: Text("Can't fetch product details"));
+        }
+
+        final product = productDescriptionCtrl.productDetail.value;
+
+        if (product == null) {
+          return const Center(child: Text("No product details available"));
+        }
+
+        return ListView(
+          controller: productDescriptionCtrl.scrollController,
+          padding: const EdgeInsets.all(PaddingSize.commonPadding),
+          children: [
+            InkWell(
+              onTap: () {
+                context.pushNamed(
+                  RouteNames.store,
+                  pathParameters: {'id': product.store?.id ?? ''},
+                );
+              },
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                spacing: 10,
                 children: [
-                  InkWell(
-                    onTap: () {
-                      context.pushNamed(
-                        RouteNames.store,
-                        pathParameters: {'id': product?.store?.id ?? ''},
-                      );
-                    },
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      spacing: 10,
-                      children: [
-                        CircleAvatar(
-                          backgroundImage: CachedNetworkImageProvider(
-                            product?.store?.logo ??
-                                ImageConstants.dummyNetworkPortrait,
-                          ),
-                          radius: 30,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              product?.store?.name ?? AppStrings.productBrand,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall
-                                  ?.copyWith(fontWeight: FontWeight.w600),
-                            ),
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                textStyle:
-                                    Theme.of(context).textTheme.bodyMedium,
-                                padding: EdgeInsets.only(right: 10, bottom: 10),
-                                minimumSize: Size.zero,
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              ),
-                              onPressed: () {
-                                context.pushNamed(
-                                  RouteNames.store,
-                                  pathParameters: {
-                                    'id': product?.store?.id ?? ''
-                                  },
-                                );
-                              },
-                              child: const Text(
-                                'Visit store',
-                                style: TextStyle(color: Colors.blue),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
+                  CircleAvatar(
+                    backgroundImage: CachedNetworkImageProvider(
+                      product.store?.logo ??
+                          ImageConstants.dummyNetworkPortrait,
                     ),
+                    radius: 30,
                   ),
-                  const SizedBox(height: 20),
-                  Center(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Stack(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        product.store?.name ?? AppStrings.productBrand,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleSmall
+                            ?.copyWith(fontWeight: FontWeight.w600),
+                      ),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          textStyle:
+                          Theme.of(context).textTheme.bodyMedium,
+                          padding: EdgeInsets.only(right: 10, bottom: 10),
+                          minimumSize: Size.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
+                        onPressed: () {
+                          context.pushNamed(
+                            RouteNames.store,
+                            pathParameters: {
+                              'id': product.store?.id ?? ''
+                            },
+                          );
+                        },
+                        child: const Text(
+                          'Visit store',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Stack(
+                  children: [
+                    CachedNetworkImage(
+                      scale: 1.82,
+                      imageUrl: product.mainImage ??
+                          ImageConstants.dummyNetworkPortrait,
+                    ),
+                    Positioned(
+                      bottom: 10,
+                      right: 10,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        spacing: 10,
                         children: [
-                          CachedNetworkImage(
-                            scale: 1.82,
-                            imageUrl: product?.mainImage ??
-                                ImageConstants.dummyNetworkPortrait,
-                          ),
-                          Positioned(
-                            bottom: 10,
-                            right: 10,
+                          Padding(
+                            padding: const EdgeInsets.only(right: 12),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
                               spacing: 10,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 12),
-                                  child: Column(
-                                    spacing: 10,
-                                    children: [
-                                      IconButton(
-                                        onPressed: () {
-                                          final token =
-                                              PreferenceManager.getString(
-                                                  PreferenceManager.token);
-                                          if (token == null || token.isEmpty) {
-                                            context
-                                                .pushNamed(RouteNames.signIn);
-                                          } else {
-                                            HapticFeedback.heavyImpact();
+                                IconButton(
+                                  onPressed: () {
+                                    final token =
+                                    PreferenceManager.getString(
+                                        PreferenceManager.token);
+                                    if (token == null || token.isEmpty) {
+                                      context
+                                          .pushNamed(RouteNames.signIn);
+                                    } else {
+                                      HapticFeedback.heavyImpact();
 
-                                            cartController.addProductsToCart(
-                                                productDescriptionCtrl
-                                                    .getProductData(product!),
-                                                product.quantity!,
-                                                product.sizeValue!);
-                                          }
-                                        },
-                                        icon: Image.asset(
-                                          IconConstants.cartAdd,
-                                          height: 40.0,
-                                          width: 40.0,
-                                        ),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          final token =
-                                              PreferenceManager.getString(
-                                                  PreferenceManager.token);
-                                          if (token == null || token.isEmpty) {
-                                            context
-                                                .pushNamed(RouteNames.signIn);
-                                          } else {
-                                            HapticFeedback.heavyImpact();
-                                            wishController.selectedClosets
-                                                .clear();
-                                            showModalBottomSheet(
-                                              context: context,
-                                              isScrollControlled: true,
-                                              builder: (context) {
-                                                return AddToCloset(
-                                                  imageUrl: product
-                                                          ?.mainImage ??
-                                                      ImageConstants
-                                                          .dummyNetworkPortrait,
-                                                  itemId:
-                                                      product!.id.toString(),
-                                                );
-                                              },
-                                            );
-                                          }
-                                        },
-                                        icon: Image.asset(
-                                          IconConstants.bookMark,
-                                          height: 40.0,
-                                          width: 40.0,
-                                        ),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          HapticFeedback.heavyImpact();
-                                          showDialog(
-                                            context: context,
-                                            builder: (_) => ShareAppDialog(
-                                              appName: "CASA",
-                                              androidAppLink:
-                                                  "https://play.google.com/store/apps/details?id=com.casashop.casaflutterapp",
-                                              iosAppLink:
-                                                  "https://apps.apple.com/app",
-                                            ),
-                                          );
-                                        },
-                                        icon: Image.asset(
-                                          IconConstants.forward,
-                                          height: 40.0,
-                                          width: 40.0,
-                                        ),
-                                      ),
-                                    ],
+                                      cartController.addProductsToCart(
+                                          productDescriptionCtrl
+                                              .getProductData(product!),
+                                          product.quantity!,
+                                          product.sizeValue!);
+                                    }
+                                  },
+                                  icon: Image.asset(
+                                    IconConstants.cartAdd,
+                                    height: 40.0,
+                                    width: 40.0,
                                   ),
                                 ),
-                                BuyNowButton(onPressed: () {
-                                  final token = PreferenceManager.getString(
-                                      PreferenceManager.token);
-                                  if (token == null || token.isEmpty) {
-                                    context.pushNamed(RouteNames.signIn);
-                                  } else {
+                                IconButton(
+                                  onPressed: () {
+                                    final token =
+                                    PreferenceManager.getString(
+                                        PreferenceManager.token);
+                                    if (token == null || token.isEmpty) {
+                                      context
+                                          .pushNamed(RouteNames.signIn);
+                                    } else {
+                                      HapticFeedback.heavyImpact();
+                                      wishController.selectedClosets
+                                          .clear();
+                                      showModalBottomSheet(
+                                        context: context,
+                                        isScrollControlled: true,
+                                        builder: (context) {
+                                          return AddToCloset(
+                                            imageUrl: product
+                                                .mainImage ??
+                                                ImageConstants
+                                                    .dummyNetworkPortrait,
+                                            itemId:
+                                            product!.id.toString(),
+                                          );
+                                        },
+                                      );
+                                    }
+                                  },
+                                  icon: Image.asset(
+                                    IconConstants.bookMark,
+                                    height: 40.0,
+                                    width: 40.0,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
                                     HapticFeedback.heavyImpact();
-                                    orderReviewController.getHomeProduct(
-                                        productDescriptionCtrl
-                                            .getProductData(product!),
-                                        product.quantity!,
-                                        product.sizeValue!);
-                                    context.pushNamed(RouteNames.orderReview);
-                                  }
-                                }),
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) => ShareAppDialog(
+                                        appName: "CASA",
+                                        androidAppLink:
+                                        "https://play.google.com/store/apps/details?id=com.casashop.casaflutterapp",
+                                        iosAppLink:
+                                        "https://apps.apple.com/app",
+                                      ),
+                                    );
+                                  },
+                                  icon: Image.asset(
+                                    IconConstants.forward,
+                                    height: 40.0,
+                                    width: 40.0,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
+                          BuyNowButton(onPressed: () {
+                            final token = PreferenceManager.getString(
+                                PreferenceManager.token);
+                            if (token == null || token.isEmpty) {
+                              context.pushNamed(RouteNames.signIn);
+                            } else {
+                              HapticFeedback.heavyImpact();
+                              orderReviewController.getHomeProduct(
+                                  productDescriptionCtrl
+                                      .getProductData(product!),
+                                  product.quantity!,
+                                  product.sizeValue!);
+                              context.pushNamed(RouteNames.orderReview);
+                            }
+                          }),
                         ],
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    product?.name ?? 'NA',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(fontWeight: FontWeight.w600, fontSize: 20),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    product?.description ?? 'NA',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    '',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  Text(
-                    'Rs ${product?.price ?? 'API Error'}',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const SizedBox(height: 20),
-                  GetBuilder<ProductDescriptionController>(
-                    builder: (controller) {
-                      return SelectSizeButton(
-                        size: controller.formattedSizesList(product!),
-                        selectedSize: product.sizeValue!,
-                        onSizeSelected: (newSize) {
-                          controller.selectSize(
-                              product, newSize); // calls update()
-                        },
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  GetBuilder<ProductDescriptionController>(
-                    builder: (controller) {
-                      return Center(
-                        child: QuantitySelectorButton(
-                          count: product!.quantity!,
-                          getQuantity: (count) {
-                            if (count < 6) {
-                              controller.quantityCount(
-                                  product, count); // calls update()
-                            }
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  AddToCartButton(
-                    onPressed: () {
-                      if ((PreferenceManager.getString(
-                                  PreferenceManager.token) ??
-                              "")
-                          .isEmpty) {
-                        router.goNamed(RouteNames.signIn);
-                      } else {
-                        HapticFeedback.heavyImpact();
-
-                        cartController.addProductsToCart(
-                            productDescriptionCtrl.getProductData(product!),
-                            product.quantity!,
-                            product.sizeValue!);
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              product.name ?? 'NA',
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(fontWeight: FontWeight.w600, fontSize: 20),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              product.description ?? 'NA',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            const SizedBox(height: 10),
+            Text(
+              '',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            Text(
+              'Rs ${product.price ?? 'API Error'}',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 20),
+            GetBuilder<ProductDescriptionController>(
+              builder: (controller) {
+                return SelectSizeButton(
+                  size: controller.formattedSizesList(product!),
+                  selectedSize: product.sizeValue!,
+                  onSizeSelected: (newSize) {
+                    controller.selectSize(
+                        product, newSize); // calls update()
+                  },
+                );
+              },
+            ),
+            const SizedBox(height: 20),
+            GetBuilder<ProductDescriptionController>(
+              builder: (controller) {
+                return Center(
+                  child: QuantitySelectorButton(
+                    count: product!.quantity!,
+                    getQuantity: (count) {
+                      if (count < 6) {
+                        controller.quantityCount(
+                            product, count); // calls update()
                       }
                     },
                   ),
-                  const SizedBox(height: 30),
-                  ProductImageGrid(
-                    productImages: product?.productImages ?? [],
-                  ),
-                  GetBuilder<ExploreController>(
-                      builder: (controller) {
-                    return _buildPolicyTile(
-                      title: 'RETURN POLICY',
-                      isExpanded: exploreCtrl.isShowReturn,
-                      onTap: () => exploreCtrl.changeReturnPolicy(),
-                      content: product!.customReturnPolicy ??
-                          AppStrings.returnPolicy,
-                    );
-                  }),
-                  const SizedBox(height: 20),
-                  GetBuilder<ExploreController>(
-                      builder: (controller) {
-                    return _buildPolicyTile(
-                      title: 'SHIPPING POLICY',
-                      isExpanded: exploreCtrl.isShowShipping,
-                      onTap: () => exploreCtrl.changeShippingPolicy(),
-                      content: product?.customShippingPolicy ??
-                          AppStrings.shippingPolicy,
-                    );
-                  }),
-                  const SizedBox(height: 20),
+                );
+              },
+            ),
+            const SizedBox(height: 20),
+            AddToCartButton(
+              onPressed: () {
+                if ((PreferenceManager.getString(
+                    PreferenceManager.token) ??
+                    "")
+                    .isEmpty) {
+                  router.goNamed(RouteNames.signIn);
+                } else {
+                  HapticFeedback.heavyImpact();
 
-                  // TODO : Need to refactor review to rely on obx
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     Text(
-                  //       'Reviews',
-                  //       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  //             fontWeight: FontWeight.bold,
-                  //           ),
-                  //     ),
-                  //     ElevatedButton(
-                  //         style: ElevatedButton.styleFrom(
-                  //           backgroundColor: ButtonColor.black,
-                  //           foregroundColor: ButtonColor.white,
-                  //         ),
-                  //         onPressed: () {
-                  //           showModalBottomSheet(
-                  //             context: context,
-                  //             isScrollControlled: true,
-                  //             builder: (context) {
-                  //               return ProductWriteReviewWidget(
-                  //                 product: product,
-                  //               );
-                  //             },
-                  //           );
-                  //         },
-                  //         child: Text("Write a review")),
-                  //   ],
-                  // ),
-                  // const SizedBox(height: 10),
-                  //
+                  cartController.addProductsToCart(
+                      productDescriptionCtrl.getProductData(product!),
+                      product.quantity!,
+                      product.sizeValue!);
+                }
+              },
+            ),
+            const SizedBox(height: 30),
+            ProductImageGrid(
+              productImages: product.productImages ?? [],
+            ),
+            // GetBuilder<ExploreController>(
+            //     builder: (controller) {
+            //   return _buildPolicyTile(
+            //     title: 'RETURN POLICY',
+            //     isExpanded: exploreCtrl.isShowReturn,
+            //     onTap: () => exploreCtrl.changeReturnPolicy(),
+            //     content: product!.customReturnPolicy ??
+            //         AppStrings.returnPolicy,
+            //   );
+            // }),
+            // const SizedBox(height: 20),
+            // GetBuilder<ExploreController>(
+            //     builder: (controller) {
+            //   return _buildPolicyTile(
+            //     title: 'SHIPPING POLICY',
+            //     isExpanded: exploreCtrl.isShowShipping,
+            //     onTap: () => exploreCtrl.changeShippingPolicy(),
+            //     content: product?.customShippingPolicy ??
+            //         AppStrings.shippingPolicy,
+            //   );
+            // }),
+            const SizedBox(height: 20),
 
-                  // FutureBuilder<GetProductReviewModel?>(
-                  //   future: homeController.getReviews(product.id ?? ''),
-                  //   builder: (context, snapshot) {
-                  //     if (snapshot.connectionState == ConnectionState.waiting) {
-                  //       return const Center(child: CircularProgressIndicator());
-                  //     }
-                  //
-                  //     if (snapshot.hasError) {
-                  //       logg.e('Error loading reviews: ${snapshot.error}');
-                  //
-                  //       return Text('No reviews yet');
-                  //     }
-                  //
-                  //     final reviews =
-                  //         snapshot.data?.getProductInteractions ?? [];
-                  //
-                  //     if (reviews.isEmpty) {
-                  //       return const Text('No reviews yet');
-                  //     }
-                  //
-                  //     return Column(
-                  //       children: [
-                  //         ListView.builder(
-                  //           shrinkWrap: true,
-                  //           physics: const NeverScrollableScrollPhysics(),
-                  //           itemCount: reviews.length > 2 ? 2 : reviews.length,
-                  //           itemBuilder: (context, index) {
-                  //             final review = reviews[index];
-                  //             return Padding(
-                  //               padding: const EdgeInsets.only(bottom: 15),
-                  //               child: Row(
-                  //                 crossAxisAlignment: CrossAxisAlignment.start,
-                  //                 children: [
-                  //                   Container(
-                  //                     padding: const EdgeInsets.all(1),
-                  //                     decoration: BoxDecoration(
-                  //                         border: Border.all(
-                  //                             color: ButtonColor.black),
-                  //                         borderRadius:
-                  //                             BorderRadius.circular(50)),
-                  //                     child: CircleAvatar(
-                  //                       maxRadius: 28,
-                  //                       backgroundColor:
-                  //                           const Color(0xFF002957),
-                  //                       child: Text(
-                  //                         review.user?.name
-                  //                                 ?.substring(0, 1)
-                  //                                 .toUpperCase() ??
-                  //                             "U",
-                  //                         style: Theme.of(context)
-                  //                             .textTheme
-                  //                             .bodyMedium!
-                  //                             .copyWith(color: TextColor.white),
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                   const SizedBox(width: 10),
-                  //                   Expanded(
-                  //                     child: Column(
-                  //                       crossAxisAlignment:
-                  //                           CrossAxisAlignment.start,
-                  //                       children: [
-                  //                         Text(
-                  //                           review.user?.name ?? 'Anonymous',
-                  //                           style: Theme.of(context)
-                  //                               .textTheme
-                  //                               .bodyLarge!
-                  //                               .copyWith(
-                  //                                 fontWeight: FontWeight.bold,
-                  //                               ),
-                  //                         ),
-                  //                         const SizedBox(height: 5),
-                  //                         Row(
-                  //                           children: [
-                  //                             ...List.generate(
-                  //                               5,
-                  //                               (i) => Icon(
-                  //                                 Icons.star,
-                  //                                 size: 16,
-                  //                                 color:
-                  //                                     i < (review.rating ?? 0)
-                  //                                         ? Colors.black
-                  //                                         : Colors.grey,
-                  //                               ),
-                  //                             ),
-                  //                             const SizedBox(width: 10),
-                  //                             Text(
-                  //                               '${review.rating ?? 0}/5',
-                  //                               style: Theme.of(context)
-                  //                                   .textTheme
-                  //                                   .bodyMedium!
-                  //                                   .copyWith(
-                  //                                     fontWeight:
-                  //                                         FontWeight.bold,
-                  //                                   ),
-                  //                             ),
-                  //                           ],
-                  //                         ),
-                  //                         if (review.comment != null &&
-                  //                             review.comment!.isNotEmpty) ...[
-                  //                           const SizedBox(height: 5),
-                  //                           Text(
-                  //                             review.comment!,
-                  //                             style: Theme.of(context)
-                  //                                 .textTheme
-                  //                                 .bodyMedium,
-                  //                           ),
-                  //                         ],
-                  //                         const SizedBox(height: 5),
-                  //                         Text(
-                  //                           homeController.formatTimestamp(
-                  //                               review.createdAt ?? 'NA'),
-                  //                           style: Theme.of(context)
-                  //                               .textTheme
-                  //                               .bodySmall,
-                  //                         ),
-                  //                       ],
-                  //                     ),
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             );
-                  //           },
-                  //         ),
-                  //       ],
-                  //     );
-                  //   },
-                  // ),
-                  // const SizedBox(height: 30),
-                  // Related Grid View
-                  Column(
+            // TODO : Need to refactor review to rely on obx
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Text(
+            //       'Reviews',
+            //       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+            //             fontWeight: FontWeight.bold,
+            //           ),
+            //     ),
+            //     ElevatedButton(
+            //         style: ElevatedButton.styleFrom(
+            //           backgroundColor: ButtonColor.black,
+            //           foregroundColor: ButtonColor.white,
+            //         ),
+            //         onPressed: () {
+            //           showModalBottomSheet(
+            //             context: context,
+            //             isScrollControlled: true,
+            //             builder: (context) {
+            //               return ProductWriteReviewWidget(
+            //                 product: product,
+            //               );
+            //             },
+            //           );
+            //         },
+            //         child: Text("Write a review")),
+            //   ],
+            // ),
+            // const SizedBox(height: 10),
+            //
+
+            // FutureBuilder<GetProductReviewModel?>(
+            //   future: homeController.getReviews(product.id ?? ''),
+            //   builder: (context, snapshot) {
+            //     if (snapshot.connectionState == ConnectionState.waiting) {
+            //       return const Center(child: CircularProgressIndicator());
+            //     }
+            //
+            //     if (snapshot.hasError) {
+            //       logg.e('Error loading reviews: ${snapshot.error}');
+            //
+            //       return Text('No reviews yet');
+            //     }
+            //
+            //     final reviews =
+            //         snapshot.data?.getProductInteractions ?? [];
+            //
+            //     if (reviews.isEmpty) {
+            //       return const Text('No reviews yet');
+            //     }
+            //
+            //     return Column(
+            //       children: [
+            //         ListView.builder(
+            //           shrinkWrap: true,
+            //           physics: const NeverScrollableScrollPhysics(),
+            //           itemCount: reviews.length > 2 ? 2 : reviews.length,
+            //           itemBuilder: (context, index) {
+            //             final review = reviews[index];
+            //             return Padding(
+            //               padding: const EdgeInsets.only(bottom: 15),
+            //               child: Row(
+            //                 crossAxisAlignment: CrossAxisAlignment.start,
+            //                 children: [
+            //                   Container(
+            //                     padding: const EdgeInsets.all(1),
+            //                     decoration: BoxDecoration(
+            //                         border: Border.all(
+            //                             color: ButtonColor.black),
+            //                         borderRadius:
+            //                             BorderRadius.circular(50)),
+            //                     child: CircleAvatar(
+            //                       maxRadius: 28,
+            //                       backgroundColor:
+            //                           const Color(0xFF002957),
+            //                       child: Text(
+            //                         review.user?.name
+            //                                 ?.substring(0, 1)
+            //                                 .toUpperCase() ??
+            //                             "U",
+            //                         style: Theme.of(context)
+            //                             .textTheme
+            //                             .bodyMedium!
+            //                             .copyWith(color: TextColor.white),
+            //                       ),
+            //                     ),
+            //                   ),
+            //                   const SizedBox(width: 10),
+            //                   Expanded(
+            //                     child: Column(
+            //                       crossAxisAlignment:
+            //                           CrossAxisAlignment.start,
+            //                       children: [
+            //                         Text(
+            //                           review.user?.name ?? 'Anonymous',
+            //                           style: Theme.of(context)
+            //                               .textTheme
+            //                               .bodyLarge!
+            //                               .copyWith(
+            //                                 fontWeight: FontWeight.bold,
+            //                               ),
+            //                         ),
+            //                         const SizedBox(height: 5),
+            //                         Row(
+            //                           children: [
+            //                             ...List.generate(
+            //                               5,
+            //                               (i) => Icon(
+            //                                 Icons.star,
+            //                                 size: 16,
+            //                                 color:
+            //                                     i < (review.rating ?? 0)
+            //                                         ? Colors.black
+            //                                         : Colors.grey,
+            //                               ),
+            //                             ),
+            //                             const SizedBox(width: 10),
+            //                             Text(
+            //                               '${review.rating ?? 0}/5',
+            //                               style: Theme.of(context)
+            //                                   .textTheme
+            //                                   .bodyMedium!
+            //                                   .copyWith(
+            //                                     fontWeight:
+            //                                         FontWeight.bold,
+            //                                   ),
+            //                             ),
+            //                           ],
+            //                         ),
+            //                         if (review.comment != null &&
+            //                             review.comment!.isNotEmpty) ...[
+            //                           const SizedBox(height: 5),
+            //                           Text(
+            //                             review.comment!,
+            //                             style: Theme.of(context)
+            //                                 .textTheme
+            //                                 .bodyMedium,
+            //                           ),
+            //                         ],
+            //                         const SizedBox(height: 5),
+            //                         Text(
+            //                           homeController.formatTimestamp(
+            //                               review.createdAt ?? 'NA'),
+            //                           style: Theme.of(context)
+            //                               .textTheme
+            //                               .bodySmall,
+            //                         ),
+            //                       ],
+            //                     ),
+            //                   ),
+            //                 ],
+            //               ),
+            //             );
+            //           },
+            //         ),
+            //       ],
+            //     );
+            //   },
+            // ),
+            // const SizedBox(height: 30),
+            // Related Grid View
+            Column(
+              children: [
+                DividerTitle(text: 'RELATED'),
+                const SizedBox(height: 25),
+                productDescriptionCtrl.relatedProducts.isEmpty
+                    ? Text('No related clothes found',
+                    style: Theme.of(context).textTheme.bodyLarge)
+                    : Padding(
+                  padding:
+                  const EdgeInsets.symmetric(horizontal: 10),
+                  child: Obx(() => Column(
                     children: [
-                      DividerTitle(text: 'RELATED'),
-                      const SizedBox(height: 25),
-                      productDescriptionCtrl.relatedProducts.isEmpty
-                          ? Text('No related clothes found',
-                              style: Theme.of(context).textTheme.bodyLarge)
-                          : Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: Obx(() => Column(
-                                    children: [
-                                      GridView.builder(
-                                        shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
-                                        gridDelegate:
-                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 2,
-                                                crossAxisSpacing: 20,
-                                                childAspectRatio: 0.45,
-                                                mainAxisSpacing: 15),
-                                        itemCount: productDescriptionCtrl
-                                            .relatedProducts.length,
-                                        itemBuilder: (context, index) {
-                                          final product = productDescriptionCtrl
-                                              .relatedProducts[index];
-                                          return ProductCard(
-                                            name: product?.name ?? 'API Error',
-                                            price: product?.price ?? 0.0,
-                                            imageURL: product?.mainImage ??
-                                                ImageConstants
-                                                    .dummyNetworkPortrait,
-                                            wishlistOnPressed: () {
-                                              if ((PreferenceManager.getString(
-                                                          PreferenceManager
-                                                              .token) ??
-                                                      "")
-                                                  .isEmpty) {
-                                                router
-                                                    .goNamed(RouteNames.signIn);
-                                              } else {
-                                                HapticFeedback.heavyImpact();
-                                                wishController.selectedClosets
-                                                    .clear();
-                                                showModalBottomSheet(
-                                                  context: context,
-                                                  isScrollControlled: true,
-                                                  builder: (context) {
-                                                    return AddToCloset(
-                                                      imageUrl: product!
-                                                          .mainImage
-                                                          .toString(),
-                                                      itemId:
-                                                          product.id.toString(),
-                                                    );
-                                                  },
-                                                );
-                                              }
-                                            },
-                                            onTap: () {
-                                              context.pushNamed(
-                                                RouteNames.productDescription,
-                                                pathParameters: {
-                                                  'id': product?.id ?? ''
-                                                },
-                                              );
-                                            },
-                                          );
-                                        },
-                                      ),
-                                      Obx(() => productDescriptionCtrl
-                                              .relatedProductsIsLoadingMore
-                                              .value
-                                          ? Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 20),
-                                              child: Center(
-                                                child:
-                                                    CircularProgressIndicator(),
-                                              ),
-                                            )
-                                          : const SizedBox.shrink()),
-                                    ],
-                                  )),
-                            ),
+                      GridView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 20,
+                            childAspectRatio: 0.45,
+                            mainAxisSpacing: 15),
+                        itemCount: productDescriptionCtrl
+                            .relatedProducts.length,
+                        itemBuilder: (context, index) {
+                          final product = productDescriptionCtrl
+                              .relatedProducts[index];
+                          return ProductCard(
+                            name: product?.name ?? 'API Error',
+                            price: product?.price ?? 0.0,
+                            imageURL: product?.mainImage ??
+                                ImageConstants
+                                    .dummyNetworkPortrait,
+                            wishlistOnPressed: () {
+                              if ((PreferenceManager.getString(
+                                  PreferenceManager
+                                      .token) ??
+                                  "")
+                                  .isEmpty) {
+                                router
+                                    .goNamed(RouteNames.signIn);
+                              } else {
+                                HapticFeedback.heavyImpact();
+                                wishController.selectedClosets
+                                    .clear();
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  builder: (context) {
+                                    return AddToCloset(
+                                      imageUrl: product!
+                                          .mainImage
+                                          .toString(),
+                                      itemId:
+                                      product.id.toString(),
+                                    );
+                                  },
+                                );
+                              }
+                            },
+                            onTap: () {
+                              context.pushNamed(
+                                RouteNames.productDescription,
+                                pathParameters: {
+                                  'id': product?.id ?? ''
+                                },
+                              );
+                            },
+                          );
+                        },
+                      ),
+                      Obx(() => productDescriptionCtrl
+                          .relatedProductsIsLoadingMore
+                          .value
+                          ? Padding(
+                        padding:
+                        const EdgeInsets.symmetric(
+                            vertical: 20),
+                        child: Center(
+                          child:
+                          CircularProgressIndicator(),
+                        ),
+                      )
+                          : const SizedBox.shrink()),
                     ],
-                  ),
-                ],
-              ),
-            );
-          }
-        },
-      ),
+                  )),
+                ),
+              ],
+            ),
+          ],
+        );
+      }),
+
     );
   }
 
