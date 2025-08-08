@@ -38,19 +38,19 @@ android {
         versionName = "1.0.4"
     }
 
-    signingConfigs {
-        release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-        }
-    }
+//    signingConfigs {
+//        release {
+//            keyAlias keystoreProperties['keyAlias']
+//            keyPassword keystoreProperties['keyPassword']
+//            storeFile file(keystoreProperties['storeFile'])
+//            storePassword keystoreProperties['storePassword']
+//        }
+//    }
 
     buildTypes {
         release {
-            signingConfig signingConfigs.release // Uncomment to use release signing
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release // Uncomment to use release signing
+            signingConfig signingConfigs.debug
         }
     }
 }
