@@ -37,8 +37,8 @@ class OrderReviewController extends GetxController {
   RxDouble baseAmount = 0.0.obs;
   RxDouble gst = 0.0.obs;
   RxBool isExpaned = false.obs;
-  double deliveryCharge = 30.00;
-  double platFormFee = 10.00;
+  double deliveryCharge = 0.00;
+  double platFormFee = 0.00;
   RxString message = ''.obs;
   RxBool isBlinking = false.obs;
   Timer? _blinkingTimer;
@@ -110,9 +110,10 @@ class OrderReviewController extends GetxController {
     }
     itemtotal.value = double.parse(totalSum.toStringAsFixed(2));
     tax.value = double.parse((itemtotal.value * 18 / 118).toStringAsFixed(2));
-    baseAmount.value = double.parse((itemtotal.value - tax.value).toStringAsFixed(2));
-    total.value =
-        double.parse((itemtotal.value + deliveryCharge + platFormFee).toStringAsFixed(2));
+    baseAmount.value =
+        double.parse((itemtotal.value - tax.value).toStringAsFixed(2));
+    total.value = double.parse(
+        (itemtotal.value + deliveryCharge + platFormFee).toStringAsFixed(2));
   }
 
   // ========== APIs FUNCTIONS ========== //
@@ -219,7 +220,7 @@ class OrderReviewController extends GetxController {
         amount: amount.toInt(),
         onPaymentSuccess: onPaymentSuccess,
       );
-    }else{
+    } else {
       Boolean.isPaymentLoading.value = false;
     }
 

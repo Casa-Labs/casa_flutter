@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:casaflutter/src/cart/view/widgets/size_guide_dialog.dart';
 import 'package:casaflutter/src/common/widgets/show_toast.dart';
 import 'package:casaflutter/utils/color_constant.dart';
@@ -55,11 +56,23 @@ class CartItem extends StatelessWidget {
                 maxRadius: 24,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(24),
-                  child: Image.network(item.store != null &&
-                          item.store!.logo != null &&
-                          item.store!.logo!.isNotEmpty
-                      ? item.store!.logo!
-                      : ImageConstants.dummyNetworkPortrait),
+                  child: CachedNetworkImage(
+                    imageUrl: item.store != null &&
+                            item.store!.logo != null &&
+                            item.store!.logo!.isNotEmpty
+                        ? item.store!.logo!
+                        : ImageConstants.dummyNetworkPortrait,
+                    errorWidget: (context, url, error) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(ImageConstants.errorImage),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 )),
           ),
         ),
@@ -91,9 +104,21 @@ class CartItem extends StatelessWidget {
                   child: SizedBox(
                       height: MediaQuery.of(context).size.height * 0.2,
                       width: MediaQuery.of(context).size.width * 0.25,
-                      child: Image.network(
-                          item.mainImage ?? ImageConstants.dummyNetworkPortrait,
-                          fit: BoxFit.fill)
+                      child: CachedNetworkImage(
+                        imageUrl: item.mainImage ??
+                            ImageConstants.dummyNetworkPortrait,
+                        fit: BoxFit.fill,
+                        errorWidget: (context, url, error) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(ImageConstants.errorImage),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          );
+                        },
+                      )
                       //  Image.asset(
                       //   'assets/images/placeholder.png',
                       //   fit: BoxFit.fill,
