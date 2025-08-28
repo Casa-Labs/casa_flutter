@@ -6,6 +6,7 @@ import 'package:casaflutter/src/home/view/widgets/filter_button_row.dart';
 import 'package:casaflutter/src/home/view/widgets/home_search_app_bar.dart';
 import 'package:casaflutter/src/home/view/widgets/swipe_animation.dart';
 import 'package:casaflutter/utils/color_constant.dart';
+import 'package:casaflutter/utils/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -58,8 +59,13 @@ class HomeScreen extends StatelessWidget {
                     filters: [
                       FilterButtonModel(
                         title: 'Brand',
-                        list: homeCtrl.brand.map((item) => item.name!).toList(),
-                        brandLogo: homeCtrl.brand.map((item) => item.logo!).toList(),
+                        list: homeCtrl.brand
+                            .map((item) => item.name ?? "")
+                            .toList(),
+                        brandLogo: homeCtrl.brand
+                            .map((item) =>
+                                item.logo ?? ImageConstants.errorImage)
+                            .toList(),
                         getSelectedValues: () {
                           return homeCtrl.brand
                               .where((e) => filterController
@@ -284,15 +290,14 @@ class HomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(height: 5),
-                        GetBuilder<HomeController>(builder: (logic) {
-                          return
-                            homeCtrl.products.isNotEmpty
+                          GetBuilder<HomeController>(builder: (logic) {
+                            return homeCtrl.products.isNotEmpty
                                 ? _cardSwiper(
-                                homeCtrl, context, homeCtrl.products)
+                                    homeCtrl, context, homeCtrl.products)
                                 : Center(
-                              child: Text('No products found'),
-                            );
-                        })
+                                    child: Text('No products found'),
+                                  );
+                          })
                         ],
                       ),
                     ),

@@ -1,17 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:casaflutter/src/common/widgets/buttons/buy_now_button.dart';
 import 'package:casaflutter/src/common/widgets/common_app_bars.dart';
-import 'package:casaflutter/src/explore/controller/explore_controller.dart';
 import 'package:casaflutter/src/explore/controller/product_description_controller.dart';
-import 'package:casaflutter/src/explore/model/product_by_id_model.dart'
-    as model;
 import 'package:casaflutter/src/explore/view/widgets/divider_title.dart';
 import 'package:casaflutter/src/explore/view/widgets/product_card.dart';
 import 'package:casaflutter/src/home/view/widgets/details_widget.dart';
 import 'package:casaflutter/utils/color_constant.dart';
 import 'package:casaflutter/utils/font.dart';
 import 'package:casaflutter/utils/string_constant.dart';
-import 'package:casaflutter/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -36,7 +32,8 @@ class ProductDescriptionScreen extends StatefulWidget {
   const ProductDescriptionScreen({super.key, required this.id});
 
   @override
-  State<ProductDescriptionScreen> createState() => _ProductDescriptionScreenState();
+  State<ProductDescriptionScreen> createState() =>
+      _ProductDescriptionScreenState();
 }
 
 class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
@@ -114,8 +111,7 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                       ),
                       TextButton(
                         style: TextButton.styleFrom(
-                          textStyle:
-                          Theme.of(context).textTheme.bodyMedium,
+                          textStyle: Theme.of(context).textTheme.bodyMedium,
                           padding: EdgeInsets.only(right: 10, bottom: 10),
                           minimumSize: Size.zero,
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -123,9 +119,7 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                         onPressed: () {
                           context.pushNamed(
                             RouteNames.store,
-                            pathParameters: {
-                              'id': product.store?.id ?? ''
-                            },
+                            pathParameters: {'id': product.store?.id ?? ''},
                           );
                         },
                         child: const Text(
@@ -163,12 +157,10 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                               children: [
                                 IconButton(
                                   onPressed: () {
-                                    final token =
-                                    PreferenceManager.getString(
+                                    final token = PreferenceManager.getString(
                                         PreferenceManager.token);
                                     if (token == null || token.isEmpty) {
-                                      context
-                                          .pushNamed(RouteNames.signIn);
+                                      context.pushNamed(RouteNames.signIn);
                                     } else {
                                       HapticFeedback.heavyImpact();
 
@@ -187,27 +179,22 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    final token =
-                                    PreferenceManager.getString(
+                                    final token = PreferenceManager.getString(
                                         PreferenceManager.token);
                                     if (token == null || token.isEmpty) {
-                                      context
-                                          .pushNamed(RouteNames.signIn);
+                                      context.pushNamed(RouteNames.signIn);
                                     } else {
                                       HapticFeedback.heavyImpact();
-                                      wishController.selectedClosets
-                                          .clear();
+                                      wishController.selectedClosets.clear();
                                       showModalBottomSheet(
                                         context: context,
                                         isScrollControlled: true,
                                         builder: (context) {
                                           return AddToCloset(
-                                            imageUrl: product
-                                                .mainImage ??
+                                            imageUrl: product.mainImage ??
                                                 ImageConstants
                                                     .dummyNetworkPortrait,
-                                            itemId:
-                                            product!.id.toString(),
+                                            itemId: product!.id.toString(),
                                           );
                                         },
                                       );
@@ -227,9 +214,9 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                                       builder: (_) => ShareAppDialog(
                                         appName: "CASA",
                                         androidAppLink:
-                                        "https://play.google.com/store/apps/details?id=com.casashop.casaflutterapp",
+                                            "https://play.google.com/store/apps/details?id=com.casashop.casaflutterapp",
                                         iosAppLink:
-                                        "https://apps.apple.com/app",
+                                            "https://apps.apple.com/app",
                                       ),
                                     );
                                   },
@@ -293,8 +280,7 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                   size: controller.formattedSizesList(product!),
                   selectedSize: product.sizeValue!,
                   onSizeSelected: (newSize) {
-                    controller.selectSize(
-                        product, newSize); // calls update()
+                    controller.selectSize(product, newSize); // calls update()
                   },
                 );
               },
@@ -304,7 +290,7 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
               builder: (controller) {
                 return Center(
                   child: QuantitySelectorButton(
-                    count: product!.quantity!,
+                    count: product.quantity!,
                     getQuantity: (count) {
                       if (count < 6) {
                         controller.quantityCount(
@@ -318,9 +304,7 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
             const SizedBox(height: 20),
             AddToCartButton(
               onPressed: () {
-                if ((PreferenceManager.getString(
-                    PreferenceManager.token) ??
-                    "")
+                if ((PreferenceManager.getString(PreferenceManager.token) ?? "")
                     .isEmpty) {
                   router.goNamed(RouteNames.signIn);
                 } else {
@@ -528,92 +512,82 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                 const SizedBox(height: 25),
                 productDescriptionCtrl.relatedProducts.isEmpty
                     ? Text('No related clothes found',
-                    style: Theme.of(context).textTheme.bodyLarge)
+                        style: Theme.of(context).textTheme.bodyLarge)
                     : Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 10),
-                  child: Obx(() => Column(
-                    children: [
-                      GridView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 20,
-                            childAspectRatio: 0.45,
-                            mainAxisSpacing: 15),
-                        itemCount: productDescriptionCtrl
-                            .relatedProducts.length,
-                        itemBuilder: (context, index) {
-                          final product = productDescriptionCtrl
-                              .relatedProducts[index];
-                          return ProductCard(
-                            name: product?.name ?? 'API Error',
-                            price: product?.price ?? 0.0,
-                            imageURL: product?.mainImage ??
-                                ImageConstants
-                                    .dummyNetworkPortrait,
-                            wishlistOnPressed: () {
-                              if ((PreferenceManager.getString(
-                                  PreferenceManager
-                                      .token) ??
-                                  "")
-                                  .isEmpty) {
-                                router
-                                    .goNamed(RouteNames.signIn);
-                              } else {
-                                HapticFeedback.heavyImpact();
-                                wishController.selectedClosets
-                                    .clear();
-                                showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: true,
-                                  builder: (context) {
-                                    return AddToCloset(
-                                      imageUrl: product!
-                                          .mainImage
-                                          .toString(),
-                                      itemId:
-                                      product.id.toString(),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Obx(() => Column(
+                              children: [
+                                GridView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          crossAxisSpacing: 20,
+                                          childAspectRatio: 0.45,
+                                          mainAxisSpacing: 15),
+                                  itemCount: productDescriptionCtrl
+                                      .relatedProducts.length,
+                                  itemBuilder: (context, index) {
+                                    final product = productDescriptionCtrl
+                                        .relatedProducts[index];
+                                    return ProductCard(
+                                      name: product?.name ?? 'API Error',
+                                      price: product?.price ?? 0.0,
+                                      imageURL: product?.mainImage ??
+                                          ImageConstants.dummyNetworkPortrait,
+                                      wishlistOnPressed: () {
+                                        if ((PreferenceManager.getString(
+                                                    PreferenceManager.token) ??
+                                                "")
+                                            .isEmpty) {
+                                          router.goNamed(RouteNames.signIn);
+                                        } else {
+                                          HapticFeedback.heavyImpact();
+                                          wishController.selectedClosets
+                                              .clear();
+                                          showModalBottomSheet(
+                                            context: context,
+                                            isScrollControlled: true,
+                                            builder: (context) {
+                                              return AddToCloset(
+                                                imageUrl: product!.mainImage
+                                                    .toString(),
+                                                itemId: product.id.toString(),
+                                              );
+                                            },
+                                          );
+                                        }
+                                      },
+                                      onTap: () {
+                                        context.pushNamed(
+                                          RouteNames.productDescription,
+                                          pathParameters: {
+                                            'id': product?.id ?? ''
+                                          },
+                                        );
+                                      },
                                     );
                                   },
-                                );
-                              }
-                            },
-                            onTap: () {
-                              context.pushNamed(
-                                RouteNames.productDescription,
-                                pathParameters: {
-                                  'id': product?.id ?? ''
-                                },
-                              );
-                            },
-                          );
-                        },
+                                ),
+                                Obx(() => productDescriptionCtrl
+                                        .relatedProductsIsLoadingMore.value
+                                    ? Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 20),
+                                        child: Center(
+                                          child: CircularProgressIndicator(),
+                                        ),
+                                      )
+                                    : const SizedBox.shrink()),
+                              ],
+                            )),
                       ),
-                      Obx(() => productDescriptionCtrl
-                          .relatedProductsIsLoadingMore
-                          .value
-                          ? Padding(
-                        padding:
-                        const EdgeInsets.symmetric(
-                            vertical: 20),
-                        child: Center(
-                          child:
-                          CircularProgressIndicator(),
-                        ),
-                      )
-                          : const SizedBox.shrink()),
-                    ],
-                  )),
-                ),
               ],
             ),
           ],
         );
       }),
-
     );
   }
 

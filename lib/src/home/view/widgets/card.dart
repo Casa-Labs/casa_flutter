@@ -61,9 +61,23 @@ class Cards extends StatelessWidget {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(22)),
                                 child: CachedNetworkImage(
-                                    imageUrl: product.mainImage ??
-                                        ImageConstants.dummyNetworkPortrait,
-                                    fit: BoxFit.fill),
+                                  imageUrl: product.mainImage ??
+                                      ImageConstants.dummyNetworkPortrait,
+                                  fit: BoxFit.fill,
+                                  errorWidget: (context, url, error) {
+                                    return Container(
+                                      margin: EdgeInsets.only(right: 20),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                              ImageConstants.errorImage),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ),
@@ -165,7 +179,8 @@ class Cards extends StatelessWidget {
                                                 backgroundColor:
                                                     Colors.transparent,
                                                 child: ClipRRect(
-                                                  borderRadius: BorderRadius.circular(24),
+                                                  borderRadius:
+                                                      BorderRadius.circular(24),
                                                   child: CachedNetworkImage(
                                                     imageUrl: (product.store
                                                                     ?.logo ??
@@ -175,6 +190,21 @@ class Cards extends StatelessWidget {
                                                             ''
                                                         : ImageConstants
                                                             .dummyNetworkPortrait,
+                                                    errorWidget:
+                                                        (context, url, error) {
+                                                      return Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          image:
+                                                              DecorationImage(
+                                                            image: AssetImage(
+                                                                ImageConstants
+                                                                    .errorImage),
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
                                                     fit: BoxFit.fill,
                                                   ),
                                                 ),

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:casaflutter/src/cart/model/cart_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -32,12 +33,22 @@ class OrderViewItemWidget extends StatelessWidget {
             backgroundColor: Colors.transparent,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(24),
-              child: Image.network(
-                item.store != null &&
+              child: CachedNetworkImage(
+                imageUrl: item.store != null &&
                         item.store!.logo != null &&
                         item.store!.logo!.isNotEmpty
                     ? item.store!.logo!
                     : ImageConstants.dummyNetworkPortrait,
+                errorWidget: (context, url, error) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(ImageConstants.errorImage),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ),
@@ -82,10 +93,22 @@ class OrderViewItemWidget extends StatelessWidget {
                           child: SizedBox(
                               height: MediaQuery.of(context).size.height * 0.2,
                               width: MediaQuery.of(context).size.width * 0.25,
-                              child: Image.network(
-                                  item.mainImage ??
-                                      ImageConstants.dummyNetworkPortrait,
-                                  fit: BoxFit.fill)
+                              child: CachedNetworkImage(
+                                imageUrl: item.mainImage ??
+                                    ImageConstants.dummyNetworkPortrait,
+                                fit: BoxFit.fill,
+                                errorWidget: (context, url, error) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                            ImageConstants.errorImage),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              )
                               //  Image.asset(
                               //   'assets/images/placeholder.png',
                               //   fit: BoxFit.fill,
