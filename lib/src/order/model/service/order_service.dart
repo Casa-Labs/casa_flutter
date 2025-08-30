@@ -7,19 +7,21 @@ class OrderService {
   final GraphQLManager _graphQLManager = GraphQLManager();
 
   Future<CreateOrderResponse?> createOrder({
-    required CreateOrder createOrderRequestModel,
+    required CreateOrderRequest createOrderRequestModel,
   }) async {
     final CreateOrderResponse createOrderResponse;
 
+    final input = createOrderRequestModel.input;
+
     final response = await _graphQLManager.createOrder(
-      createOrderRequestModel.userId ?? "",
-      createOrderRequestModel.totalAmount ?? 0,
-      createOrderRequestModel.deliveryType ?? "",
-      createOrderRequestModel.discountCode ?? "",
-      createOrderRequestModel.deliveryInstructions ?? "",
-      createOrderRequestModel.items ?? [],
-      createOrderRequestModel.paymentInfo ?? PaymentInfo(),
-      createOrderRequestModel.shippingInfo ?? ShippingInfo(),
+      input?.userId ?? "",
+      input?.totalAmount ?? 0,
+      input?.deliveryType ?? "",
+      input?.discountCode ?? "",
+      input?.deliveryInstructions ?? "",
+      input?.items ?? [],
+      input?.paymentInfo ?? PaymentInfo(),
+      input?.shippingInfo ?? ShippingInfo(),
     );
 
     createOrderResponse = CreateOrderResponse.fromJson(response.data);

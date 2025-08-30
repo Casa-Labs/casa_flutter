@@ -182,20 +182,22 @@ class OrderReviewController extends GetxController {
       address: address.address,
     );
 
-    CreateOrder createOrder = CreateOrder(
-      userId: PreferenceManager.getString(PreferenceManager.userId) ?? "",
-      items: productItem,
-      totalAmount: total.value.toInt(),
-      shippingInfo: shippingInfo,
-      deliveryType: 'STANDARD',
-      deliveryInstructions: instructionController.text,
-      paymentInfo: PaymentInfo(
-        method: "CARD",
-        paidAmount: total.value.toInt(),
-        paymentDate: "2025-01-20",
-        serviceProvider: "razorpay",
+    CreateOrderRequest createOrder = CreateOrderRequest(
+      input: CreateOrderInput(
+        userId: PreferenceManager.getString(PreferenceManager.userId) ?? "",
+        items: productItem,
+        totalAmount: total.value.toInt(),
+        shippingInfo: shippingInfo,
+        deliveryType: 'STANDARD',
+        deliveryInstructions: instructionController.text,
+        paymentInfo: PaymentInfo(
+          method: "CARD",
+          paidAmount: total.value.toInt(),
+          paymentDate: "2025-01-20",
+          serviceProvider: "razorpay",
+        ),
+        discountCode: null, // currently not implemented on backend - 30/08/2025
       ),
-      discountCode: "CASA20",
     );
 
     final createOrderResponse = await _orderService.createOrder(
