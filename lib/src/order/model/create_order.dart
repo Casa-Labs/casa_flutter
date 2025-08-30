@@ -1,4 +1,23 @@
-class CreateOrder {
+class CreateOrderRequest {
+  CreateOrderInput? input;
+
+  CreateOrderRequest({this.input});
+
+  CreateOrderRequest.fromJson(Map<String, dynamic> json) {
+    input =
+        json['input'] != null ? CreateOrderInput.fromJson(json['input']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (input != null) {
+      data['input'] = input!.toJson();
+    }
+    return data;
+  }
+}
+
+class CreateOrderInput {
   int? totalAmount;
   String? deliveryInstructions;
   String? deliveryType;
@@ -8,17 +27,17 @@ class CreateOrder {
   PaymentInfo? paymentInfo;
   String? discountCode;
 
-  CreateOrder(
+  CreateOrderInput(
       {this.totalAmount,
-        this.deliveryInstructions,
-        this.deliveryType,
-        this.shippingInfo,
-        this.items,
-        this.userId,
-        this.paymentInfo,
-        this.discountCode});
+      this.deliveryInstructions,
+      this.deliveryType,
+      this.shippingInfo,
+      this.items,
+      this.userId,
+      this.paymentInfo,
+      this.discountCode});
 
-  CreateOrder.fromJson(Map<String, dynamic> json) {
+  CreateOrderInput.fromJson(Map<String, dynamic> json) {
     totalAmount = json['totalAmount'];
     deliveryInstructions = json['deliveryInstructions'];
     deliveryType = json['deliveryType'];
